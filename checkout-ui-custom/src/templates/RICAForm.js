@@ -39,7 +39,7 @@ const RICAForm = () => `
     <p class="input tfg-rica-province tfg-custom-input">
       <label>Province</label>
       <select class="input-xlarge tfg-custom-selector rica-field" id="tfg-rica-province">
-        <option value="" disabled selected>State</option>
+        <option value="" disabled selected>Select</option>
         <option value="EC">Eastern Cape</option>
         <option value="FS">Free State</option>
         <option value="GP">Gauteng</option>
