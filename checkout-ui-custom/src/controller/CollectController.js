@@ -11,7 +11,7 @@ const CollectController = (() => {
   };
 
   const setTranslations = () => {
-    if(state.transalated) return;
+    if (state.transalated) return;
 
     $('p.vtex-omnishipping-1-x-shippingSectionTitle').text('Collect options');
     $('#change-pickup-button').text('Available pickup points');
@@ -104,26 +104,17 @@ const CollectController = (() => {
     }
   };
 
-  //! TODO: al merger a develop podemos refactorizar esta función llevándola a utils
-  const setInputPhone = () => {
-    const phoneInput = document.querySelector('input#custom-pickup-complement');
-
-    if (phoneInput) {
-      phoneInput.setAttribute('placeholder', '');
-    }
-  };
-
   const addCustomPhoneInput = () => {
-    if ($('input#custom-pickup-complement').length === 0) {
-      $('.btn-go-to-payment-wrapper').before(PickupComplementField);
-      setInputPhone();
 
-      /* Set orderForm value if exists */
-      const phoneNumber = window.vtexjs.checkout.orderForm?.clientProfileData?.phone ?? '';
+    if ($('input#custom-pickup-complement').length > 0) return;
+    
+    $('.btn-go-to-payment-wrapper').before(PickupComplementField);
 
-      if (phoneNumber) {
-        $('input#custom-pickup-complement').val(phoneNumber);
-      }
+    /* Set orderForm value if exists */
+    const phoneNumber = window.vtexjs.checkout.orderForm?.clientProfileData?.phone ?? '';
+
+    if (phoneNumber) {
+      $('input#custom-pickup-complement').val(phoneNumber);
     }
   };
 
@@ -163,7 +154,7 @@ const CollectController = (() => {
           $('div.shp-pickup-receiver').removeClass('show');
         }
 
-       if(!state.transalated) setTranslations();
+        if (!state.transalated) setTranslations();
         bindingEvents();
       }
 
@@ -218,7 +209,7 @@ const CollectController = (() => {
     runCustomization();
   });
 
-  const publicInit = () => {};
+  const publicInit = () => { };
 
   return {
     init: publicInit,
