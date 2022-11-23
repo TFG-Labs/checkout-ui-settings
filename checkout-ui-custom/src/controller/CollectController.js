@@ -4,8 +4,6 @@ import { isValidNumberBash } from '../utils/functions';
 
 const CollectController = (() => {
   const state = {
-    inCollect: false,
-    pickupSelected: false,
     validForm: false,
     transalated: false,
   };
@@ -20,7 +18,7 @@ const CollectController = (() => {
       "Search for addresses that you frequently use and we'll locate stores nearby."
     );
 
-    if (state.pickupSelected) {
+    if ($('.ask-for-geolocation').length === 0) {
       $('label.shp-pickup-receiver__label').text("Recipient's name");
     }
 
@@ -107,7 +105,7 @@ const CollectController = (() => {
   const addCustomPhoneInput = () => {
 
     if ($('input#custom-pickup-complement').length > 0) return;
-    
+
     $('.btn-go-to-payment-wrapper').before(PickupComplementField);
 
     /* Set orderForm value if exists */
@@ -139,48 +137,52 @@ const CollectController = (() => {
   const runCustomization = () => {
     const shippingLoaded = $('div#postalCode-finished-loading').length > 0;
 
-    if (window.location.hash === STEPS.SHIPPING && shippingLoaded) {
-      state.inCollect = $('#shipping-option-pickup-in-point').hasClass('shp-method-option-active');
-      state.pickupSelected = $('div.ask-for-geolocation').length === 0;
+    if (window.location.hash === STEPS.SHIPPING) {
 
-      if (state.inCollect) {
-        if (state.pickupSelected) {
-          $('button.shp-pickup-receiver__btn').trigger('click');
-          $('div.shp-pickup-receiver').addClass('show');
+      if (shippingLoaded) {
+        const inCollect = $('#shipping-option-pickup-in-point').hasClass('shp-method-option-active');
+        const pickupSelected = $('.ask-for-geolocation').length === 0;
 
-          addCustomPhoneInput();
-          addCustomBtnPayment();
-        } else {
-          $('div.shp-pickup-receiver').removeClass('show');
+        if (inCollect) {
+          if (pickupSelected) {
+            $('.shp-pickup-receiver__btn').trigger('click');
+            $('.shp-pickup-receiver').addClass('show');
+            addCustomPhoneInput();
+            addCustomBtnPayment();
+          } else {
+            $('.shp-pickup-receiver').removeClass('show');
+          }
+
+          if (!state.transalated) setTranslations();
+          bindingEvents();
         }
 
-        if (!state.transalated) setTranslations();
-        bindingEvents();
+        /* If it has been redirected because of missing values, the click is forced to show the errors */
+        if (localStorage.getItem('shipping-incomplete-values')) {
+          $('#custom-go-to-payment').trigger('click');
+          localStorage.removeItem('shipping-incomplete-values');
+        }
+      } else {
+        /* Remove box-pickup-complement so that the input does not appear in the other steps of the checkout process  */
+        $('#box-pickup-complement').remove();
       }
 
-      /* If it has been redirected because of missing values, the click is forced to show the errors */
-      if (localStorage.getItem('shipping-incomplete-values')) {
-        $('#custom-go-to-payment').trigger('click');
-        localStorage.removeItem('shipping-incomplete-values');
-      }
-    } else {
-      /* Remove box-pickup-complement so that the input does not appear in the other steps of the checkout process  */
-      $('#box-pickup-complement').remove();
 
-      if (window.location.hash === STEPS.PAYMENT) {
-        setTimeout(() => {
-          const address = window.vtexjs.checkout.orderForm?.shippingData?.address;
-          const savingCollect = localStorage.getItem('saving-shipping-collect');
+    }
 
-          if (!savingCollect) {
-            /* Redirect to shipping if required fields are empty */
-            if (address && address.addressType === AD_TYPE.PICKUP && (!address.receiverName || !address.complement)) {
-              window.location.hash = STEPS.SHIPPING;
-              localStorage.setItem('shipping-incomplete-values', true);
-            }
+    if (window.location.hash === STEPS.PAYMENT) {
+      setTimeout(() => {
+        const address = window.vtexjs.checkout.orderForm?.shippingData?.address;
+        const savingCollect = localStorage.getItem('saving-shipping-collect');
+
+        if (!savingCollect) {
+          /* Redirect to shipping if required fields are empty */
+          if (address && address.addressType === AD_TYPE.PICKUP && (!address.receiverName || !address.complement)) {
+            window.location.hash = STEPS.SHIPPING;
+            localStorage.setItem('shipping-incomplete-values', true);
           }
-        }, 1000);
-      }
+        }
+      }, 1000);
     }
 
     // eslint-disable-next-line no-use-before-define
