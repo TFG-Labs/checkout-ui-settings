@@ -7,9 +7,12 @@ const CollectController = (() => {
     inCollect: false,
     pickupSelected: false,
     validForm: false,
+    transalated: false,
   };
 
-  const changeTranslations = () => {
+  const setTranslations = () => {
+    if(state.transalated) return;
+
     $('p.vtex-omnishipping-1-x-shippingSectionTitle').text('Collect options');
     $('#change-pickup-button').text('Available pickup points');
     $('h2.vtex-omnishipping-1-x-geolocationTitle.ask-for-geolocation-title').text('Find nearby Click & Collect points');
@@ -20,6 +23,8 @@ const CollectController = (() => {
     if (state.pickupSelected) {
       $('label.shp-pickup-receiver__label').text("Recipient's name");
     }
+
+    state.transalated = true;
   };
 
   const bindingEvents = () => {
@@ -158,7 +163,7 @@ const CollectController = (() => {
           $('div.shp-pickup-receiver').removeClass('show');
         }
 
-        changeTranslations();
+       if(!state.transalated) setTranslations();
         bindingEvents();
       }
 
