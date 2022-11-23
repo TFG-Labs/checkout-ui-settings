@@ -93,42 +93,37 @@ const CollectController = (() => {
   };
 
   const addCustomPhoneInput = () => {
-
     if ($('input#custom-pickup-complement').length > 0) return;
 
     $('.btn-go-to-payment-wrapper').before(PickupComplementField);
 
-    /* Set orderForm value if exists */
+    /* Use orderForm value if exists */
     const phoneNumber = window.vtexjs.checkout.orderForm?.clientProfileData?.phone ?? '';
-
-    if (phoneNumber) {
-      $('input#custom-pickup-complement').val(phoneNumber);
-    }
+    if (phoneNumber) $('input#custom-pickup-complement').val(phoneNumber);
   };
 
   //! TODO: al merger a develop podemos refactorizar esta función llevándola a utils
   const addCustomBtnPayment = () => {
-    if ($('#custom-go-to-payment').length <= 0) {
-      const nativePaymentBtn = $('#btn-go-to-payment');
-      const customPaymentBtn = nativePaymentBtn.clone(false);
+    if ($('#custom-go-to-payment').length > 0) return;
 
-      $(nativePaymentBtn).hide();
-      $(customPaymentBtn).data('bind', '');
-      $(customPaymentBtn).removeAttr('id').attr('id', 'custom-go-to-payment');
-      $(customPaymentBtn).removeAttr('data-bind');
-      $(customPaymentBtn).css('display', 'block');
+    const nativePaymentBtn = $('#btn-go-to-payment');
+    const customPaymentBtn = nativePaymentBtn.clone(false);
 
-      $('p.btn-go-to-payment-wrapper').append(customPaymentBtn);
+    $(nativePaymentBtn).hide();
+    $(customPaymentBtn).data('bind', '');
+    $(customPaymentBtn).removeAttr('id').attr('id', 'custom-go-to-payment');
+    $(customPaymentBtn).removeAttr('data-bind');
+    $(customPaymentBtn).css('display', 'block');
 
-      $(customPaymentBtn).on('click', saveCollectFields);
-    }
+    $('p.btn-go-to-payment-wrapper').append(customPaymentBtn);
+
+    $(customPaymentBtn).on('click', saveCollectFields);
   };
 
   const runCustomization = () => {
     const shippingLoaded = $('div#postalCode-finished-loading').length > 0;
 
     if (window.location.hash === STEPS.SHIPPING) {
-
       if (shippingLoaded) {
         const inCollect = $('#shipping-option-pickup-in-point').hasClass('shp-method-option-active');
         const pickupSelected = $('.ask-for-geolocation').length === 0;
@@ -155,8 +150,6 @@ const CollectController = (() => {
         /* Remove box-pickup-complement so that the input does not appear in the other steps of the checkout process  */
         $('#box-pickup-complement').remove();
       }
-
-
     }
 
     if (window.location.hash === STEPS.PAYMENT) {
@@ -200,7 +193,7 @@ const CollectController = (() => {
     runCustomization();
   });
 
-  const publicInit = () => { };
+  const publicInit = () => {};
 
   return {
     init: publicInit,
