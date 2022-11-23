@@ -25,16 +25,6 @@ const CollectController = (() => {
     state.transalated = true;
   };
 
-  const bindingEvents = () => {
-    // eslint-disable-next-line func-names
-    $(document).on('keyup', 'div.shipping-container #custom-pickup-complement', function () {
-      /* Forzamos el cambio del valor de placeholder para que no marque undefined */
-      if (!$(this).val()) {
-        $(this).attr('placeholder', '');
-      }
-    });
-  };
-
   const checkFields = (fields) => {
     fields.forEach((field) => {
       let isValid = true;
@@ -154,7 +144,6 @@ const CollectController = (() => {
           }
 
           if (!state.transalated) setTranslations();
-          bindingEvents();
         }
 
         /* If it has been redirected because of missing values, the click is forced to show the errors */
