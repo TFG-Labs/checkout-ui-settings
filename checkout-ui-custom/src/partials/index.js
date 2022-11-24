@@ -1,20 +1,21 @@
+import AddressForm, { CollectRecipientPhoneField, SuburbField } from './AddressForm';
+import AlertBox from './AlertBox';
 import FurnitureForm from './FurnitureForm';
-import TVorRICAMsg from './TVorRICAMsg';
-import TVIDForm from './TVIDForm';
-import RICAForm from './RICAForm';
 import InputError from './InputError';
 import MixedProducts from './MixedProducts';
-import AddressForm, { SuburbField, PickupComplementField } from './AddressForm';
-import AlertBox from './AlertBox';
+import RICAForm from './RICAForm';
+import TVIDForm from './TVIDForm';
+import TVorRICAMsg from './TVorRICAMsg';
 
 export {
   FurnitureForm,
   TVorRICAMsg,
-  TVIDForm, RICAForm,
+  TVIDForm,
+  RICAForm,
   InputError,
   MixedProducts,
   AddressForm,
   SuburbField,
   AlertBox,
-  PickupComplementField
+  CollectRecipientPhoneField,
 };

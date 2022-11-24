@@ -51,7 +51,8 @@ export const preparePhoneField = (input) => {
   phoneInput.value = formattedPhoneNumber(phoneInput.value);
 
   const $phoneInput = $(input);
-  $phoneInput.keyup((e) => {
+  $phoneInput.off('keyup');
+  $phoneInput.on('keyup', (e) => {
     const value = e.currentTarget.value.replace(/[^0-9+*#]+/g, '').trim();
     let displayValue = value;
 

@@ -210,6 +210,11 @@ const clearObserver = (observer, name = '') => {
   });
 };
 
+const deliveryPhoneNumber = () =>
+  window?.vtexjs?.checkout?.orderForm?.shippingData?.address?.complement ??
+  window?.vtexjs?.checkout?.orderForm?.clientProfileData?.phone ??
+  '';
+
 export {
   getShippingData,
   saveAddress,
@@ -221,4 +226,5 @@ export {
   setMasterdataFields,
   isValidNumberBash,
   clearObserver,
+  deliveryPhoneNumber,
 };

@@ -4,7 +4,7 @@ const AddressForm = () => `<p class="input custom-field-receiverName tfg-custom-
     </p>
     <p class="input custom-field-complement tfg-custom-addressForm">
       <label>Mobile number</label>
-      <input id="custom-field-complement" class="input-xlarge success" type="text" field="complement"/>
+      <input id="custom-field-complement" class="input-xlarge success" type="tel" field="complement"/>
     </p>
     <p class="input custom-field-companyBuilding tfg-custom-addressForm">
       <label>Company/Building</label>
@@ -17,10 +17,10 @@ export const SuburbField = () => `<p class="input custom-field-neighborhood tfg-
 <input id="custom-field-neighborhood" class="input-xlarge success" type="text" field="neighborhood"/>
 </p>`;
 
-export const PickupComplementField = () => `
+export const CollectRecipientPhoneField = (number = '') => `
   <p id="box-pickup-complement" class="input custom-field-complement tfg-custom-addressForm">
     <label>Mobile number</label>
-    <input id="custom-pickup-complement" class="input-xlarge success" type="text" field="complement"/>
+    <input id="custom-pickup-complement" class="input-xlarge success" type="tel" field="complement" value="${number}"/>
   </p>`;
 
 export default AddressForm;

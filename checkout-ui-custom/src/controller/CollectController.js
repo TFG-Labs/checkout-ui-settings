@@ -1,6 +1,7 @@
-import { InputError, PickupComplementField } from '../partials';
+import { CollectRecipientPhoneField, InputError } from '../partials';
 import { AD_TYPE, observerConfig, RECIPIENT_NAME, STEPS, TIMEOUT_750 } from '../utils/const';
-import { clearObserver, isValidNumberBash } from '../utils/functions';
+import { clearObserver, deliveryPhoneNumber, isValidNumberBash } from '../utils/functions';
+import { preparePhoneField } from '../utils/phoneFields';
 
 const CollectController = (() => {
   const state = {
@@ -92,14 +93,15 @@ const CollectController = (() => {
     }
   };
 
-  const addCustomPhoneInput = () => {
+  const addRecipientPhoneField = () => {
     if ($('input#custom-pickup-complement').length > 0) return;
 
-    $('.shp-pickup-receiver').append(PickupComplementField);
-
     /* Use orderForm value if exists */
-    const phoneNumber = window.vtexjs.checkout.orderForm?.clientProfileData?.phone ?? '';
-    if (phoneNumber) $('input#custom-pickup-complement').val(phoneNumber);
+    const phoneNumber = deliveryPhoneNumber();
+
+    $('.shp-pickup-receiver').append(CollectRecipientPhoneField(phoneNumber));
+
+    preparePhoneField('input#custom-pickup-complement');
   };
 
   //! TODO: al merger a develop podemos refactorizar esta función llevándola a utils
@@ -132,7 +134,7 @@ const CollectController = (() => {
           if (pickupSelected) {
             $('.shp-pickup-receiver__btn').trigger('click');
             $('.shp-pickup-receiver').addClass('show');
-            addCustomPhoneInput();
+            addRecipientPhoneField();
             addCustomBtnPayment();
           } else {
             $('.shp-pickup-receiver').removeClass('show');

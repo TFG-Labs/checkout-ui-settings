@@ -1,4 +1,5 @@
 import { STEPS, TIMEOUT_500 } from '../utils/const';
+import { deliveryPhoneNumber } from '../utils/functions';
 import setTranslations from '../utils/translations';
 
 const AddressController = (() => {
@@ -128,9 +129,7 @@ const AddressController = (() => {
   $(document).on('click', '#shipping-option-delivery', () => {
     setTimeout(() => {
       if (!$('#ship-complement').val()) {
-        const phoneNumber = window.vtexjs.checkout.orderForm?.clientProfileData?.phone ?? '';
-
-        $('#ship-complement').val(phoneNumber);
+        $('#ship-complement').val(deliveryPhoneNumber());
       }
     }, TIMEOUT_500);
   });
