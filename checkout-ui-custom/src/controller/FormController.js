@@ -1,7 +1,13 @@
 /* eslint-disable func-names */
-import { InputError } from '../templates';
+import { InputError } from '../partials';
 import { FURNITURE_APP, observerConfig, RICA_APP, STEPS, TIMEOUT_750, TV_APP } from '../utils/const';
-import { checkoutSendCustomData, isValidNumberBash, saveAddress, setRicaFields } from '../utils/functions';
+import {
+  checkoutSendCustomData,
+  clearObserver,
+  isValidNumberBash,
+  saveAddress,
+  setRicaFields,
+} from '../utils/functions';
 import ViewController from './ViewController';
 
 const FormController = (() => {
@@ -216,6 +222,8 @@ const FormController = (() => {
     });
 
     observer.observe(shippingContainer, observerConfig);
+
+    clearObserver(observer, 'form');
   };
 
   $(document).on('change', '.vtex-omnishipping-1-x-deliveryGroup #tfg-delivery-floor', function () {

@@ -203,6 +203,13 @@ const waitAndResetLocalStorage = () => {
 
 const isValidNumberBash = (tel) => validatePhoneNumber(tel);
 
+const clearObserver = (observer, name = '') => {
+  $(document).on('click', '.shipping-container .box-step #custom-go-to-payment', () => {
+    console.info(`=== ${name.toUpperCase()} observer KILL ===`);
+    // if (observer) observer.disconnect();
+  });
+};
+
 export {
   getShippingData,
   saveAddress,
@@ -213,4 +220,5 @@ export {
   setRicaFields,
   setMasterdataFields,
   isValidNumberBash,
+  clearObserver,
 };

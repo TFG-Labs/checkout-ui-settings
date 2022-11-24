@@ -1,6 +1,6 @@
-import { InputError, PickupComplementField } from '../templates';
-import { AD_TYPE, observerConfig, STEPS, TIMEOUT_750 } from '../utils/const';
-import { isValidNumberBash } from '../utils/functions';
+import { InputError, PickupComplementField } from '../partials';
+import { AD_TYPE, observerConfig, RECIPIENT_NAME, STEPS, TIMEOUT_750 } from '../utils/const';
+import { clearObserver, isValidNumberBash } from '../utils/functions';
 
 const CollectController = (() => {
   const state = {
@@ -19,8 +19,8 @@ const CollectController = (() => {
       "Search for addresses that you frequently use and we'll locate stores nearby."
     );
 
-    if ($('.ask-for-geolocation').length === 0) {
-      $('label.shp-pickup-receiver__label').text("Recipient's name");
+    if ($('label.shp-pickup-receiver__label').text() !== RECIPIENT_NAME) {
+      $('label.shp-pickup-receiver__label').text(RECIPIENT_NAME);
     }
 
     state.transalated = true;
@@ -38,7 +38,6 @@ const CollectController = (() => {
           break;
         case 'custom-pickup-complement':
           isValid = isValidNumberBash($(`#${field}`).val());
-
           parent = '#box-pickup-complement';
           break;
         default:
@@ -96,7 +95,7 @@ const CollectController = (() => {
   const addCustomPhoneInput = () => {
     if ($('input#custom-pickup-complement').length > 0) return;
 
-    $('.btn-go-to-payment-wrapper').before(PickupComplementField);
+    $('.shp-pickup-receiver').append(PickupComplementField);
 
     /* Use orderForm value if exists */
     const phoneNumber = window.vtexjs.checkout.orderForm?.clientProfileData?.phone ?? '';
@@ -147,9 +146,6 @@ const CollectController = (() => {
           $('#custom-go-to-payment').trigger('click');
           localStorage.removeItem('shipping-incomplete-values');
         }
-      } else {
-        /* Remove box-pickup-complement so that the input does not appear in the other steps of the checkout process  */
-        $('#box-pickup-complement').remove();
       }
     }
 
@@ -187,6 +183,7 @@ const CollectController = (() => {
     });
 
     observer.observe(shippingContainer, observerConfig);
+    clearObserver(observer, 'collect');
   };
 
   // EVENTS SUBSCRIPTION

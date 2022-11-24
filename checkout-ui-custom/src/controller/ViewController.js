@@ -1,8 +1,9 @@
-import { FurnitureForm, MixedProducts, RICAForm, TVIDForm, TVorRICAMsg } from '../templates';
+import { FurnitureForm, MixedProducts, RICAForm, TVIDForm, TVorRICAMsg } from '../partials';
 import { AD_TYPE, FURNITURE_FEES, RICA_APP, STEPS, TIMEOUT_500, TIMEOUT_750 } from '../utils/const';
 import {
   addBorderTop,
   checkoutGetCustomData,
+  clearObserver,
   getShippingData,
   setMasterdataFields,
   setRicaFields,
@@ -248,6 +249,8 @@ const ViewController = (() => {
     });
 
     observer.observe(shippingContainer, observerConfig);
+
+    clearObserver(observer, 'view');
   };
 
   const publicInit = () => {};

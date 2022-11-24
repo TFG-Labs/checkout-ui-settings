@@ -21,6 +21,9 @@ const RICA_APP = 'ricafields';
 const TV_APP = 'tvfields';
 const FURNITURE_APP = 'furniturefields';
 
+// COLLECT
+const RECIPIENT_NAME = "Recipient's name";
+
 // Furniture fees Url
 const FURNITURE_FEES =
   'http://image.tfgmedia.co.za/image/1/process/500x790?source=http://cdn.tfgmedia.co.za' +
@@ -49,4 +52,5 @@ export {
   BASE_URL_API,
   TV_APP,
   FURNITURE_APP,
+  RECIPIENT_NAME,
 };
