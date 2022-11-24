@@ -1,12 +1,13 @@
 /* eslint-disable func-names */
 import { InputError } from '../templates';
-import { FURNITURE_APP, RICA_APP, STEPS, TIMEOUT_750, TV_APP } from '../utils/const';
+import { FURNITURE_APP, observerConfig, RICA_APP, STEPS, TIMEOUT_750, TV_APP } from '../utils/const';
 import { checkoutSendCustomData, isValidNumberBash, saveAddress, setRicaFields } from '../utils/functions';
 import ViewController from './ViewController';
 
 const FormController = (() => {
   const state = {
     validForm: true,
+    runningObserver: false,
   };
 
   const checkField = (field) => {
@@ -197,17 +198,24 @@ const FormController = (() => {
 
   // INPUT EVENT SUBSCRIPTION
   const runFormObserver = () => {
-    const elementToObserveChange = document.querySelector('.shipping-container .box-step');
-    const observerConfig = { attributes: false, childList: true, characterData: false };
+    if ($('.shipping-container .box-step').length < 1 || state.runningObserver) return;
+
+    console.info('=== start FORM observer ===');
+
+    const shippingContainer = document.querySelector('.shipping-container .box-step');
+
     const observer = new MutationObserver(() => {
+      state.runningObserver = true;
+      console.info('=== FORM observer CREATE ===');
+
+      // TODO fix wrong DOM element
       if (window.location.hash === STEPS.SHIPPING && !$('btn-link vtex-omnishipping-1-x-btnDelivery').length) {
+        console.info('=== FORM observer RUN ===');
         runCustomization();
       }
     });
 
-    if (elementToObserveChange) {
-      observer.observe(elementToObserveChange, observerConfig);
-    }
+    observer.observe(shippingContainer, observerConfig);
   };
 
   $(document).on('change', '.vtex-omnishipping-1-x-deliveryGroup #tfg-delivery-floor', function () {

@@ -20,6 +20,7 @@ const ViewController = (() => {
     showRICAForm: false,
     showTVorRICAMsg: false,
     showMixedProductsMsg: false,
+    runningObserver: false,
   };
 
   const checkCartCategories = () => {
@@ -229,17 +230,24 @@ const ViewController = (() => {
   });
 
   const runViewObserver = () => {
-    const elementToObserveChange = document.querySelector('.shipping-container .box-step');
+    if ($('.shipping-container .box-step').length < 1 || state.runningObserver) return;
+
+    console.info('=== start VIEW observer ===');
+
+    const shippingContainer = document.querySelector('.shipping-container .box-step');
+
     const observerConfig = { attributes: false, childList: true, characterData: false };
+
     const observer = new MutationObserver(() => {
+      state.runningObserver = true;
+      console.info('=== VIEW observer CREATE ===');
       if (window.location.hash === STEPS.SHIPPING && !$('btn-link vtex-omnishipping-1-x-btnDelivery').length) {
+        console.info('=== VIEW observer RUN ===');
         runCustomization();
       }
     });
 
-    if (elementToObserveChange) {
-      observer.observe(elementToObserveChange, observerConfig);
-    }
+    observer.observe(shippingContainer, observerConfig);
   };
 
   const publicInit = () => {};

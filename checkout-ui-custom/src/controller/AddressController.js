@@ -125,7 +125,7 @@ const AddressController = (() => {
     runCustomization();
   });
 
-  $(document).on('click', '#shipping-data .btn-link.vtex-omnishipping-1-x-btnDelivery', () => {
+  $(document).on('click', '#shipping-option-delivery', () => {
     setTimeout(() => {
       if (!$('#ship-complement').val()) {
         const phoneNumber = window.vtexjs.checkout.orderForm?.clientProfileData?.phone ?? '';

@@ -1,11 +1,12 @@
 import { InputError, PickupComplementField } from '../templates';
-import { AD_TYPE, STEPS, TIMEOUT_750 } from '../utils/const';
+import { AD_TYPE, observerConfig, STEPS, TIMEOUT_750 } from '../utils/const';
 import { isValidNumberBash } from '../utils/functions';
 
 const CollectController = (() => {
   const state = {
     validForm: false,
     transalated: false,
+    runningObserver: false,
   };
 
   const setTranslations = () => {
@@ -173,15 +174,19 @@ const CollectController = (() => {
 
   /* We need this observer to detect the change in the deliver and collect buttons */
   const runCollectObserver = () => {
-    const elementToObserveChange = document.querySelector('.shipping-container .box-step');
-    const observerConfig = { attributes: false, childList: true, characterData: false };
+    if ($('.shipping-container .box-step').length < 1 || state.runningObserver) return;
+
+    console.info('=== start COLLECT observer ===');
+
+    const shippingContainer = document.querySelector('.shipping-container .box-step');
     const observer = new MutationObserver(() => {
+      console.info('=== COLLECT observer CREATE ===');
+
+      state.runningObserver = true;
       runCustomization();
     });
 
-    if (elementToObserveChange) {
-      observer.observe(elementToObserveChange, observerConfig);
-    }
+    observer.observe(shippingContainer, observerConfig);
   };
 
   // EVENTS SUBSCRIPTION
