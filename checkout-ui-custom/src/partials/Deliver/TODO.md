@@ -1,8 +1,8 @@
 [ ] Checkbox fields - make sure correct values are passed (based on checked status) when submitted.
 [ ] Add Business Name field (shown if addressType === 'business') ?
 [ ] Format phone numbers correctly
-[ ] Rica - Prevent clearing of ID field on changing "Same as delivery address"
 [ ] Address search styling.
+[x] Rica - Prevent clearing of ID field on changing "Same as delivery address"
 [x] use clearAddresses() to clear addresses at an appropriate time (ensure that next user has their own data and not someone elses!)
 [x] Populate extra fields on clicking Change (?)
 [x] Order item availability - Postal code validation - "this item can't be shipped"
