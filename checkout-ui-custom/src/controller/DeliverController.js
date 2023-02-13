@@ -38,6 +38,7 @@ const DeliverController = (() => {
       state.hasTVs = hasTVs;
       state.hasSim = hasSimCards;
     }
+
     $('.shipping-data .box-step').append(
       DeliverContainer({
         hasFurn: state.hasFurn,
@@ -79,28 +80,27 @@ const DeliverController = (() => {
   });
 
   $(document).ready(() => {
-    window.vtexjs.checkout.getOrderForm().then(() => {
-      clearAddresses();
-      if (window.location.hash === STEPS.SHIPPING) {
-        setupDeliver();
-        $('.bash--delivery-container.hide').removeClass('hide');
-      } else if ($('.bash--delivery-container:not(.hide)').length) {
-        $('.bash--delivery-container:not(.hide)').addClass('hide');
-      }
-    });
+    clearAddresses();
+    if (window.location.hash === STEPS.SHIPPING) {
+      setupDeliver();
+      $('.bash--delivery-container.hide').removeClass('hide');
+      $('.bash--delivery-container').css('display', 'flex');
+    } else if ($('.bash--delivery-container:not(.hide)').length) {
+      $('.bash--delivery-container:not(.hide)').addClasså('hide');
+      $('.bash--delivery-container').css('display', 'none');
+    }
   });
 
   $(window).on('hashchange', () => {
-    window.vtexjs.checkout.getOrderForm().then(() => {
-      if (window.location.hash === STEPS.SHIPPING) {
-        setupDeliver();
-        setCartClasses();
-        $('.bash--delivery-container').css('display', 'flex');
-        $('.bash--delivery-container.hide').removeClass('hide');
-      } else if ($('.bash--delivery-container:not(.hide)').length) {
-        $('.bash--delivery-container:not(.hide)').addClass('hide');
-      }
-    });
+    if (window.location.hash === STEPS.SHIPPING) {
+      setupDeliver();
+      setCartClasses();
+      $('.bash--delivery-container').css('display', 'flex');
+      $('.bash--delivery-container.hide').removeClass('hide');
+    } else if ($('.bash--delivery-container:not(.hide)').length) {
+      $('.bash--delivery-container:not(.hide)').addClass('hide');
+      $('.bash--delivery-container').css('display', 'none');
+    }
   });
 
   // Define which tab is active ;/
