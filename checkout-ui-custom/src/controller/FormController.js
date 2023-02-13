@@ -186,6 +186,18 @@ const FormController = (() => {
     }
   };
 
+  // EVENTS SUBSCRIPTION
+
+  $(document).ready(() => {
+    window.vtexjs.checkout.getOrderForm().then(() => runCustomization());
+  });
+
+  $(window).on('hashchange', () => {
+    window.vtexjs.checkout.getOrderForm().then(() => runCustomization());
+  });
+
+  $(window).on('orderFormUpdated.vtex', () => runCustomization());
+
   $(document).on('change', '.vtex-omnishipping-1-x-deliveryGroup #tfg-delivery-floor', function () {
     if ($(this).val() === 'Ground') {
       $('#tfg-lift-stairs').val('');
@@ -227,15 +239,6 @@ const FormController = (() => {
   });
 
   $(document).on('click', '#shipping-data .btn-link.vtex-omnishipping-1-x-btnDelivery', () => {
-    runCustomization();
-  });
-
-  // EVENTS SUBSCRIPTION
-  $(document).ready(() => {
-    runCustomization();
-  });
-
-  $(window).on('hashchange orderFormUpdated.vtex', () => {
     runCustomization();
   });
 
