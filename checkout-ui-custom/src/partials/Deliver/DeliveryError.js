@@ -1,4 +1,4 @@
-export const DeliveryErrorContainer = () => ` 
+const DeliveryErrorContainer = () => ` 
  
 <div id="bash-delivery-error-container"   >
 </div>`;

@@ -1,4 +1,4 @@
-import { RICA_APP, STEPS, TV_APP } from '../../utils/const';
+import { RECIPIENT_DELIMITER, RICA_APP, STEPS, TV_APP } from '../../utils/const';
 import { clearLoaders, getSpecialCategories } from '../../utils/functions';
 import {
   addOrUpdateAddress,
@@ -7,9 +7,9 @@ import {
   sendOrderFormCustomData,
   updateAddressListing,
 } from '../../utils/services';
+import { requiredAddressFields, requiredRicaFields, requiredTVFields, validAddressTypes } from './constants';
 import { DeliveryError } from './DeliveryError';
 import { Alert } from './Elements/Alert';
-import { requiredAddressFields, requiredRicaFields, requiredTVFields, validAddressTypes } from './constants';
 
 export const setDeliveryLoading = () => {
   document.querySelector('.bash--delivery-container').classList.add('shimmer');
@@ -73,12 +73,16 @@ const provinceShortCode = (province) => {
   }
 };
 
-export const getBestRecipient = () => {
-  const receiverName = window?.vtexjs?.checkout?.orderForm?.shippingData?.address?.receiverName;
+export const getBestRecipient = (field = 'client-first-name') => {
+  if (!window?.vtexjs?.checkout?.orderForm) return {};
+  // eslint-disable-next-line no-unused-vars
+  const [receiverName, _phone] = window?.vtexjs?.checkout?.orderForm?.shippingData?.address?.receiverName?.split(
+    RECIPIENT_DELIMITER
+  ) || ['', ''];
   const firstName = window?.vtexjs?.checkout?.orderForm?.clientProfileData?.firstName;
   const lastName = window?.vtexjs?.checkout?.orderForm?.clientProfileData?.lastName;
   const clientProfileName = `${firstName ?? ''} ${lastName ?? ''}`.trim();
-  return receiverName || document.getElementById('client-first-name')?.value || clientProfileName;
+  return receiverName || document.getElementById(field)?.value || clientProfileName;
 };
 
 const populateAddressFromSearch = (address) => {

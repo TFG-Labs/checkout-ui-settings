@@ -1,3 +1,5 @@
+import { RECIPIENT_DELIMITER } from './const';
+
 /**
  * validatePhoneNumber
  * Determine if number is valid.
@@ -64,9 +66,14 @@ export const preparePhoneField = (input) => {
   });
 };
 
-export const getBestPhoneNumber = () =>
-  window.vtexjs.checkout.orderForm?.shippingData?.address?.complement ||
-  window.vtexjs.checkout.orderForm?.clientProfileData?.phone ||
-  document?.getElementById('client-phone')?.value;
+export const getBestPhoneNumber = (field = 'client-phone') => {
+  const shippingData = window.vtexjs.checkout.orderForm?.shippingData;
+  const clientProfileData = window.vtexjs.checkout.orderForm?.clientProfileData;
+
+  // eslint-disable-next-line no-unused-vars
+  const [_receiverName, phoneNumber] = shippingData?.address?.receiverName.split(RECIPIENT_DELIMITER) || ['', ''];
+
+  return phoneNumber || clientProfileData?.phone || document?.getElementById(field)?.value;
+};
 
 export default { validatePhoneNumber };

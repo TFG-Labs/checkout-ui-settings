@@ -47,7 +47,7 @@ const FormController = (() => {
     state.validForm = true;
 
     /* Checking Receiver & Receiver Phone */
-    if ($('div.address-list.vtex-omnishipping-1-x-addressList').length <= 0) {
+    if ($('div.address-list.vtex-omnishipping-1-x-addressList').length <= 0 && $('input#ship-complement').length > 0) {
       checkField('ship-receiverName');
 
       if (!isValidNumberBash(document.querySelector('.vtex-omnishipping-1-x-address input#ship-complement').value)) {

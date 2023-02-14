@@ -1,7 +1,7 @@
 import { FURNITURE_FEE_LINK } from '../../utils/const';
+import Addresses from './Addresses';
 import AddressForm from './AddressForm';
 import AddressSearch from './AddressSearch';
-import Addresses from './Addresses';
 import DeliveryErrorContainer from './DeliveryError';
 import DeliveryOptions from './DeliveryOptions';
 import Alert from './Elements/Alert';

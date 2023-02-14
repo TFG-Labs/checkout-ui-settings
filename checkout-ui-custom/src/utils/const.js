@@ -25,6 +25,7 @@ const NONE = 'none';
 // APP CONFIGURATION IDs
 const RICA_APP = 'ricafields';
 const TV_APP = 'tvfields';
+const PICKUP_APP = 'pickup';
 
 // Furniture fees Url
 const FURNITURE_FEES =
@@ -54,6 +55,8 @@ const FURNITURE_CAT = '1169288799';
 const TV_CAT = '938942995';
 const SIM_CAT = '24833302';
 
+const RECIPIENT_DELIMITER = ' ';
+
 export {
   STEPS,
   TIMEOUT_500,
@@ -73,5 +76,6 @@ export {
   MANUAL,
   PICKUP,
   NONE,
+  RECIPIENT_DELIMITER,
+  PICKUP_APP,
 };
-
