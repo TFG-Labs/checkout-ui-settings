@@ -1,18 +1,13 @@
 /* eslint-disable func-names */
-import { STEPS, TIMEOUT_750, RICA_APP, FURNITURE_APP, TV_APP } from '../utils/const';
-import {
-  saveAddress,
-  checkoutSendCustomData,
-  setRicaFields,
-  isValidNumberBash
-} from '../utils/functions';
-import { InputError } from '../templates';
+import { InputError } from '../partials';
+import { RICA_APP, STEPS, TIMEOUT_750, TV_APP } from '../utils/const';
+import { checkoutSendCustomData, isValidNumberBash, saveAddress, setRicaFields } from '../utils/functions';
 import ViewController from './ViewController';
-import AddressController from './AddressController';
 
 const FormController = (() => {
   const state = {
-    validForm: true
+    validForm: true,
+    runningObserver: false,
   };
 
   const checkField = (field) => {
@@ -32,12 +27,6 @@ const FormController = (() => {
     });
   };
 
-  const checkFurnitureForm = () => {
-    const furnitureFields = ['tfg-building-type', 'tfg-parking-distance', 'tfg-delivery-floor', 'tfg-lift-stairs'];
-
-    checkFields(furnitureFields);
-  };
-
   const checkRICAForm = () => {
     const ricaFields = [
       'tfg-rica-id-passport',
@@ -46,7 +35,7 @@ const FormController = (() => {
       'tfg-rica-suburb',
       'tfg-rica-city',
       'tfg-rica-postal-code',
-      'tfg-rica-province'
+      'tfg-rica-province',
     ];
 
     checkFields(ricaFields);
@@ -72,31 +61,12 @@ const FormController = (() => {
     }
 
     /* Checking Custom Fields */
-    if (ViewController.state.showFurnitureForm) {
-      checkFurnitureForm();
-    }
     if (ViewController.state.showRICAForm) {
       checkRICAForm();
     }
     if (ViewController.state.showTVIDForm) {
       checkField('tfg-tv-licence');
     }
-  };
-
-  const getFurnitureFormFields = () => {
-    const furnitureFields = {};
-
-    furnitureFields.furnitureReady = true;
-    furnitureFields.buildingType = $('#tfg-building-type').val();
-    furnitureFields.parkingDistance = $('#tfg-parking-distance').val();
-    furnitureFields.deliveryFloor = $('#tfg-delivery-floor').val();
-    if (!$('#tfg-lift-stairs').attr('disabled')) {
-      furnitureFields.liftOrStairs = $('#tfg-lift-stairs').val();
-    }
-    furnitureFields.hasSufficientSpace = $('#tfg-sufficient-space').is(':checked');
-    furnitureFields.assembleFurniture = $('#tfg-assemble-furniture').is(':checked');
-
-    return furnitureFields;
   };
 
   const getRICAFields = () => {
@@ -117,22 +87,19 @@ const FormController = (() => {
 
   const saveAddressType = () => {
     const addressType = localStorage.getItem('addressType');
-    window.vtexjs.checkout.getOrderForm()
-      .then((orderForm) => {
-        const { shippingData } = orderForm;
-        shippingData.selectedAddresses[0].addressType = addressType;
-        return window.vtexjs.checkout.sendAttachment('shippingData', shippingData);
-      });
+    window.vtexjs.checkout.getOrderForm().then((orderForm) => {
+      const { shippingData } = orderForm;
+      shippingData.selectedAddresses[0].addressType = addressType;
+      return window.vtexjs.checkout.sendAttachment('shippingData', shippingData);
+    });
   };
 
   const getTVFormFields = () => ({ tvID: $('#tfg-tv-licence').val() });
 
   const saveShippingForm = () => {
-    const { showFurnitureForm, showRICAForm, showTVIDForm } = ViewController.state;
+    const { showRICAForm, showTVIDForm } = ViewController.state;
 
     checkForm();
-
-    console.log('!! saveShippingForm - state', state);
 
     if (state.validForm) {
       // Fields saved in orderForm
@@ -144,11 +111,6 @@ const FormController = (() => {
       // Fields saved in Masterdata
       const masterdataFields = {};
 
-      if (showFurnitureForm) {
-        const furnitureFields = getFurnitureFormFields();
-        checkoutSendCustomData(FURNITURE_APP, furnitureFields);
-        Object.assign(masterdataFields, furnitureFields);
-      }
       if (showTVIDForm) {
         const tvFields = getTVFormFields();
         checkoutSendCustomData(TV_APP, tvFields);
@@ -182,7 +144,24 @@ const FormController = (() => {
   };
 
   const runCustomization = () => {
+    // If user has no addresses, and has Deliver selected.
+
+    if (
+      $('div.address-list').length < 1 &&
+      $('#shipping-option-delivery').hasClass('shp-method-option-active') &&
+      $('body').data('delivery-view') !== 'address-list'
+    ) {
+      $('body:not(.has-no-addresses)').addClass('has-no-addresses');
+    } else {
+      $('body.has-no-addresses').removeClass('has-no-addresses');
+    }
+
     if (window.location.hash === STEPS.SHIPPING) {
+      if ($('.shipping-summary-info').length && $('.shipping-summary-info').text() === 'Waiting for more information') {
+        window.location.hash = STEPS.PROFILE;
+        return;
+      }
+
       setTimeout(() => {
         const selectedDelivery = $('#shipping-option-delivery').hasClass('shp-method-option-active');
         if (selectedDelivery) {
@@ -197,9 +176,12 @@ const FormController = (() => {
 
   // INPUT EVENT SUBSCRIPTION
   const runFormObserver = () => {
+    if (state.runningObserver) return;
+
     const elementToObserveChange = document.querySelector('.shipping-container .box-step');
     const observerConfig = { attributes: false, childList: true, characterData: false };
     const observer = new MutationObserver(() => {
+      state.runningObserver = true;
       if (window.location.hash === STEPS.SHIPPING && !$('btn-link vtex-omnishipping-1-x-btnDelivery').length) {
         runCustomization();
       }
@@ -235,7 +217,7 @@ const FormController = (() => {
     }
   );
 
-  $(document).on('change', '.vtex-omnishipping-1-x-addressForm input', function () {
+  $(document).on('change keyup', '.vtex-omnishipping-1-x-addressForm input, #tfg-tv-licence', function () {
     if ($(this).val()) {
       $(this).parent().removeClass('error');
       $(this).next('span.help.error').remove();
@@ -263,11 +245,9 @@ const FormController = (() => {
     runCustomization();
   });
 
-  const publicInit = () => { };
-
   return {
-    init: publicInit,
-    state
+    state,
+    init: () => {},
   };
 })();
 

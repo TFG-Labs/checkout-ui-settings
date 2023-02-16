@@ -1,28 +1,29 @@
-/* eslint-disable import/prefer-default-export */
-import { BASE_URL_API, RICA_APP } from './const';
+import { BASE_URL_API, FURNITURE_CAT, RICA_APP, SIM_CAT, TV_CAT } from './const';
+import { getBestPhoneNumber, validatePhoneNumber } from './phoneFields';
 
 // API Functions
+
+const catchError = (message) => {
+  console.error('ERROR', message);
+  throw new Error(message);
+};
+
 const getHeadersByConfig = ({ cookie, cache, json }) => {
   const headers = new Headers();
-  if (cookie) {
-    headers.append('Cookie', document?.cookie);
-  }
-  if (cache) {
-    headers.append('Cache-Control', 'no-cache');
-  }
-  if (json) {
-    headers.append('Content-type', 'application/json');
-  }
+  if (cookie) headers.append('Cookie', document?.cookie);
+  if (cache) headers.append('Cache-Control', 'no-cache');
+  if (json) headers.append('Content-type', 'application/json');
   return headers;
 };
 
+// TODO remove when no longer used in favour of services.
+
 const getShippingData = async (addressName, fields) => {
   let data = {};
-
   const headers = getHeadersByConfig({ cookie: true, cache: true, json: false });
   const options = {
     headers,
-    credentials: 'include'
+    credentials: 'include',
   };
 
   const response = await fetch(
@@ -30,7 +31,7 @@ const getShippingData = async (addressName, fields) => {
     options
   )
     .then((res) => res.json())
-    .catch((err) => console.error(err));
+    .catch((error) => catchError(`GET_ADDRESS_ERROR: ${error?.message}`));
 
   if (response && !response.error && response.data && response.data.length > 0) {
     [data] = response.data;
@@ -39,6 +40,7 @@ const getShippingData = async (addressName, fields) => {
   return data;
 };
 
+// TODO remove when no longer used in favour of services.
 const saveAddress = async (fields = {}) => {
   let path;
   const { email } = window.vtexjs.checkout.orderForm.clientProfileData;
@@ -46,7 +48,7 @@ const saveAddress = async (fields = {}) => {
 
   if (!address) return;
 
-  // AD already exists (?)
+  // Address already exists (?)
   const savedAddress = address?.addressId ? await getShippingData(address.addressId, '?_fields=id') : {};
 
   // Guardado del nuevo addressType
@@ -58,11 +60,13 @@ const saveAddress = async (fields = {}) => {
     path = `${BASE_URL_API}masterdata/addresses`;
   }
 
+  address.complement = address.complement || getBestPhoneNumber();
+
   // Importante respetar el orden de address para no sobreescribir receiver, complement y neighborhood
   const newAddress = {
     userId: email,
     ...address,
-    ...fields
+    ...fields,
   };
 
   if (!savedAddress.id) {
@@ -75,7 +79,7 @@ const saveAddress = async (fields = {}) => {
     method: 'PATCH',
     headers,
     body: JSON.stringify(newAddress),
-    credentials: 'include'
+    credentials: 'include',
   };
 
   await fetch(path, options)
@@ -85,7 +89,7 @@ const saveAddress = async (fields = {}) => {
         res.json();
       }
     })
-    .catch((error) => console.log(error));
+    .catch((error) => catchError(`SAVE_ADDRESS_ERROR: ${error?.message}`));
 };
 
 const setMasterdataFields = async (completeFurnitureForm, completeTVIDForm, tries = 1) => {
@@ -94,8 +98,8 @@ const setMasterdataFields = async (completeFurnitureForm, completeTVIDForm, trie
     const { address } = window.vtexjs.checkout.orderForm.shippingData;
 
     /* Setting Masterdata custom fields */
-    const fields = '?_fields=buildingType,parkingDistance,deliveryFloor,liftOrStairs,hasSufficientSpace'
-      + ',assembleFurniture,tvID';
+    const fields =
+      '?_fields=buildingType,parkingDistance,deliveryFloor,liftOrStairs,hasSufficientSpace,assembleFurniture,tvID';
 
     const shippingData = await getShippingData(address.addressId, fields);
 
@@ -150,7 +154,7 @@ const checkoutSendCustomData = (appId, customData) => {
     url: `/api/checkout/pub/orderForm/${orderFormId}/customData/${appId}`,
     dataType: 'json',
     contentType: 'application/json; charset=utf-8',
-    data: JSON.stringify(customData)
+    data: JSON.stringify(customData),
   });
 };
 
@@ -168,7 +172,7 @@ const setRicaFields = (getDataFrom = 'customApps') => {
       suburb: address.neighborhood,
       city: address.city,
       postalCode: address.postalCode,
-      province: address.state
+      province: address.state,
     };
   } else if (getDataFrom === 'customApps') {
     ricaFields = checkoutGetCustomData(RICA_APP);
@@ -200,10 +204,43 @@ const waitAndResetLocalStorage = () => {
   }, 5000);
 };
 
-const isValidNumberBash = (tel) => {
-  const pattern = new RegExp('^\\d{10}$');
-  tel = tel.trim();
-  return !!tel.match(pattern);
+const isValidNumberBash = (tel) => validatePhoneNumber(tel);
+
+const getSpecialCategories = (items) => {
+  const furnitureCategories = [FURNITURE_CAT];
+  const tvCategories = [TV_CAT];
+  const simCardCategories = [SIM_CAT];
+  const categories = [];
+  let hasTVs = false;
+  let hasSimCards = false;
+  let hasFurniture = false;
+  let hasFurnitureMixed = false;
+
+  items.forEach((item) => {
+    const itemCategories = item.productCategoryIds.split('/');
+    categories.push(itemCategories);
+    itemCategories.forEach((category) => {
+      if (!category) return;
+      if (tvCategories.includes(category)) hasTVs = true;
+      if (simCardCategories.includes(category)) hasSimCards = true;
+      if (furnitureCategories.includes(category)) hasFurniture = true;
+    });
+  });
+
+  hasFurnitureMixed = items.length > 1 && hasFurniture && !categories.every((c) => c === FURNITURE_CAT);
+
+  return {
+    hasFurniture,
+    hasSimCards,
+    hasTVs,
+    hasFurnitureMixed,
+    categories,
+  };
+};
+
+export const clearLoaders = () => {
+  ('happened')
+  $('.shimmer').removeClass('shimmer');
 };
 
 export {
@@ -215,5 +252,7 @@ export {
   checkoutSendCustomData,
   setRicaFields,
   setMasterdataFields,
-  isValidNumberBash
+  isValidNumberBash,
+  getSpecialCategories,
 };
+
