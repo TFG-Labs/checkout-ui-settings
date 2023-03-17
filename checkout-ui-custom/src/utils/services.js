@@ -33,7 +33,7 @@ export const getAddresses = async () => {
   if (addresses.length > 0) return { data: addresses };
 
   // Fallback to get addresses from API.
-return window.vtexjs.checkout.getOrderForm().then((orderForm) => {
+  return window.vtexjs.checkout.getOrderForm().then((orderForm) => {
     const { email } = orderForm?.clientProfileData;
 
     const fields = [
@@ -54,6 +54,7 @@ return window.vtexjs.checkout.getOrderForm().then((orderForm) => {
       'state',
       'country',
       'tvID',
+      'geoCoordinate',
     ].join(',');
 
     const headers = getHeadersByConfig({ cookie: true, cache: true, json: false });
@@ -66,9 +67,9 @@ return window.vtexjs.checkout.getOrderForm().then((orderForm) => {
 
     return fetch(
       `${BASE_URL_API}masterdata/addresses?t=${cacheBust}&_fields=${fields}&_where=${encodeURIComponent(
-        `userIdQuery=${email}`
+        `userIdQuery=${email}`,
       )}`,
-      options
+      options,
     )
       .then((res) => res.json())
       .then(async (data) => {
@@ -79,7 +80,7 @@ return window.vtexjs.checkout.getOrderForm().then((orderForm) => {
         return data;
       })
       .catch((error) => catchError(`GET_ADDRESSES_ERROR: ${error?.message}`));
-  })
+  });
 };
 
 // GET Address by ID / Name?
@@ -93,7 +94,7 @@ const getAddress = async (addressName, fields) => {
 
   const response = await fetch(
     `${BASE_URL_API}masterdata/addresses/${fields}&_where=addressName=${addressName}&timestamp=${Date.now()}`,
-    options
+    options,
   )
     .then((res) => res.json())
     .catch((error) => catchError(`GET_ADDRESS_ERROR: ${error?.message}`));
@@ -233,19 +234,15 @@ export const getOrderFormCustomData = (appId) => {
   return fields;
 };
 
-export const removeFromCart = (index) =>
-  window.vtexjs.checkout
-    .updateItems([
-      {
-        index: `${index}`,
-        quantity: 0,
-      },
-    ])
-    .then((orderForm) => {
-      console.info('ITEM REMOVED', { orderForm });
-    })
-    .done(() => {
-      clearLoaders();
-    });
+export const removeFromCart = (index) => window.vtexjs.checkout
+  .updateItems([
+    {
+      index: `${index}`,
+      quantity: 0,
+    },
+  ])
+  .done(() => {
+    clearLoaders();
+  });
 
 export default getAddresses;
