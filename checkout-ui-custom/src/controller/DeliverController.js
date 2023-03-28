@@ -250,8 +250,11 @@ const DeliverController = (() => {
         }
 
         break;
+      case "FB_LOG":
+
+        break;
       default:
-        console.error('Unknown action', data.action);
+        console.warn('Unknown action', data.action);
     }
   });
 
