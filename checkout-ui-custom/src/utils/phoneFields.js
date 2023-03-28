@@ -46,8 +46,8 @@ const formattedPhoneNumber = (value, doFormat = true) => {
 export const preparePhoneField = (input) => {
   const phoneInput = document.querySelector(input);
   if (!phoneInput) return;
-  phoneInput.setAttribute('type', 'tel');
-  phoneInput.setAttribute('maxlength', 12);
+  phoneInput?.setAttribute('type', 'tel');
+  phoneInput?.setAttribute('maxlength', 12);
   phoneInput.value = formattedPhoneNumber(phoneInput.value);
 
   const $phoneInput = $(input);

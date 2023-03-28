@@ -79,7 +79,7 @@ const setMasterdataFields = async (completeFurnitureForm, completeTVIDForm, trie
 
 // Functions to manage CustomData
 const checkoutGetCustomData = (appId) => {
-  const { customData } = window.vtexjs.checkout.orderForm;
+  const customData = window?.vtexjs?.checkout?.orderForm?.customData
   let fields = {};
 
   if (customData && customData.customApps && customData.customApps.length > 0) {
@@ -197,7 +197,7 @@ export const scrollToInvalidField = () => {
   // to handle elements that may be invalid but
   // aren't necessarily highest on the page
   invalidInputs.sort((a, b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top);
-  invalidInputs[0].scrollIntoView({ block: 'center', behavior: 'smooth' });
+  invalidInputs?.[0]?.scrollIntoView({ block: 'center', behavior: 'smooth' });
 };
 
 export {
