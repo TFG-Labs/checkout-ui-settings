@@ -17,6 +17,7 @@ import {
 } from '../partials/Deliver/utils';
 import { FURNITURE_CAT, STEPS } from '../utils/const';
 import { getSpecialCategories, scrollToInvalidField } from '../utils/functions';
+import sendEvent from '../utils/sendEvent';
 import { clearAddresses, getAddressByName, removeFromCart } from '../utils/services';
 
 const DeliverController = (() => {
@@ -239,7 +240,7 @@ const DeliverController = (() => {
 
     switch (data.action) {
       case 'setDeliveryView':
-        document.querySelector('.bash--delivery-container').setAttribute('data-view', data.view);
+        document.querySelector('.bash--delivery-container')?.setAttribute('data-view', data.view);
         if (data.view === 'address-form' || data.view === 'address-edit') {
           preparePhoneField('#bash--input-complement');
           if (data.content) {
