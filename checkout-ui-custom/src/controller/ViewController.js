@@ -1,4 +1,6 @@
 import { MixedProducts, TVorRICAMsg } from '../partials';
+import MapContainer from '../partials/Collect/MapContainer';
+import ShippingTabs from '../partials/ShippingTabs';
 import { FURNITURE_CAT, TIMEOUT_500 } from '../utils/const';
 import { addBorderTop, getSpecialCategories } from '../utils/functions';
 
@@ -11,6 +13,35 @@ const ViewController = (() => {
     showMixedProductsMsg: false,
     runningObserver: false,
   };
+
+
+  const setUpTabs = () => {
+    if ($('#shipping-tabs--tabs').length) return
+    $("#shipping-data").find(".box-step").prepend(ShippingTabs())
+
+    $('#shipping-tab-deliver').off('click')
+    $('#shipping-tab-deliver').on('click', () => {
+      $('#shipping-tab-deliver').addClass('active')
+      $('#shipping-tab-collect').removeClass('active')
+      $(".pickup-map-container").css("display", "none")
+      $("#bash--delivery-container").css("display", "flex")
+    })
+
+    $('#shipping-tab-collect').off('click')
+    $('#shipping-tab-collect').on('click', () => {
+      $('#shipping-tab-collect').addClass('active')
+      $('#shipping-tab-deliver').removeClass('active')
+      $("#bash--delivery-container").css("display", "none")
+      $(".pickup-map-container").css("display", "flex")
+      if (!$('#pickup-map-container').length) {
+        // if ($('.vtex-omnishipping-1-x-ask').length) {
+        // $('.vtex-omnishipping-1-x-ask').empty();
+        $("#shipping-data").find(".box-step").append(MapContainer())
+      }
+    })
+
+
+  }
 
   const checkCartCategories = () => {
     if (window.vtexjs.checkout.orderForm) {
@@ -58,6 +89,9 @@ const ViewController = (() => {
   const runCustomization = () => {
     /* Hiding subheader when there is furniture in cart */
     setTimeout(() => {
+      // TODO enable tabs
+      // setUpTabs()
+
       checkCartCategories();
 
       if (state.showFurnitureForm) {
@@ -89,7 +123,7 @@ const ViewController = (() => {
     state,
     setView,
     showCustomSections,
-    init: () => {},
+    init: () => { },
   };
 })();
 

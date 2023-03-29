@@ -244,8 +244,12 @@ const DeliverController = (() => {
         if (data.view === 'address-form' || data.view === 'address-edit') {
           preparePhoneField('#bash--input-complement');
           if (data.content) {
-            const address = JSON.parse(decodeURIComponent($(`#${data.content}`).data('address')));
-            populateAddressForm(address);
+            try {
+              const address = JSON.parse(decodeURIComponent($(`#${data.content}`).data('address')));
+              populateAddressForm(address);
+            } catch (e) {
+              console.warn("Could not parse address", data.content)
+            }
           }
         }
 
