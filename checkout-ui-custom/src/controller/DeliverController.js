@@ -13,6 +13,7 @@ import {
   updateDeliveryFeeDisplay
 } from '../partials/Deliver/utils';
 import { AD_TYPE, STEPS } from '../utils/const';
+import formatAddressSummary from '../utils/formatAddressSummary';
 import {
   clearLoaders,
   getSpecialCategories,
@@ -108,7 +109,7 @@ const DeliverController = (() => {
 
   // EVENTS
 
-  $(window).unload(() => {
+  $(window).unload(async () => {
     clearAddresses();
   });
 
@@ -182,6 +183,8 @@ const DeliverController = (() => {
         description: 'User redirect to shipping because Extra Fields are invalid.',
       });
     }
+
+    formatAddressSummary()
   });
 
   // Change view
