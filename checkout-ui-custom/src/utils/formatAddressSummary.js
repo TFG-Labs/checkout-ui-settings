@@ -15,12 +15,11 @@ const formatDeliverySummary = () => {
     shippingData: { selectedAddresses },
   } = window.vtexjs.checkout.orderForm;
 
-  const { receiverName, neighborhood } = selectedAddresses[0];
+  const { receiverName, neighborhood, street } = selectedAddresses[0];
 
   const deliveryParent = 'div.shp-summary-group-address.vtex-omnishipping-1-x-SummaryItemAddress';
 
   const deliverContext = getOrderFormCustomData(DELIVER_APP);
-  console.info('## formatDeliverySummary ##', { deliverContext });
   let data = {};
 
   try {
@@ -40,8 +39,11 @@ const formatDeliverySummary = () => {
     <div>
   `);
 
-  // Add business name
-  if (businessName) $(deliveryParent).find('.street').prepend(`${businessName}, `);
+  let streetAddress = street;
+  if (businessName) streetAddress = `${businessName}, ${street}`;
+
+  // Add business name, fix street to show NUmber as well
+  $(deliveryParent).find('.street').html(streetAddress);
 
   // Add suburb
   if (neighborhood) $(deliveryParent).find('.city').prepend(`${neighborhood}, `);
