@@ -15,7 +15,7 @@ const formatDeliverySummary = () => {
     shippingData: { selectedAddresses },
   } = window.vtexjs.checkout.orderForm;
 
-  const { receiverName } = selectedAddresses[0];
+  const { receiverName, neighborhood } = selectedAddresses[0];
 
   const deliveryParent = 'div.shp-summary-group-address.vtex-omnishipping-1-x-SummaryItemAddress';
 
@@ -34,11 +34,20 @@ const formatDeliverySummary = () => {
   if (receiverName) nameAndNumber.push(receiverName);
   if (receiverPhone) nameAndNumber.push(formatPhoneNumber(prependZero(receiverPhone)));
 
-  $(deliveryParent).prepend(`
+  $(deliveryParent).append(`
     <div id="summary-delivery-recipient">
-      ${[nameAndNumber.join(' - '), businessName].join('<br />')}
+      ${nameAndNumber.join(' - ')}
     <div>
   `);
+
+  // Add business name
+  if (businessName) $(deliveryParent).find('.street').prepend(`${businessName}, `);
+
+  // Add suburb
+  if (neighborhood) $(deliveryParent).find('.city').prepend(`${neighborhood}, `);
+
+  // missing comma before postal code ;(
+  $(deliveryParent).find('.postalCode-delimiter').html(', ');
 };
 
 const formatCollectionSummary = () => {
