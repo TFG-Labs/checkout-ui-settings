@@ -155,7 +155,9 @@ const DeliverController = (() => {
       if (errors) populateDeliveryError(errors);
     }
 
-    if (addressType === AD_TYPE.PICKUP) {
+    if (addressType === AD_TYPE.PICKUP // sometimes addressType is undefined ;(
+      || $('#shipping-option-pickup-in-point').hasClass('shp-method-option-active')
+    ) {
       // User has Collect enabled, but has Rica or TV products,
       // or Furniture + Non Furn.
       if (hasTVs || hasSimCards || hasFurnitureMixed) {
@@ -173,6 +175,7 @@ const DeliverController = (() => {
 
     setCartClasses();
     updateDeliveryFeeDisplay();
+    formatAddressSummary();
 
     if (window.location.hash === STEPS.PAYMENT && !customShippingDataIsValid()) {
       scrollToInvalidField();
@@ -183,8 +186,6 @@ const DeliverController = (() => {
         description: 'User redirect to shipping because Extra Fields are invalid.',
       });
     }
-
-    formatAddressSummary()
   });
 
   // Change view

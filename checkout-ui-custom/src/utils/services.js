@@ -11,7 +11,6 @@ const DB = new CheckoutDB();
 
 export const getAddresses = async () => {
   // Try to get addresses from users local store.
-  // TODO: When should addresses be reloaded/updated?
 
   const addresses = await DB.getAddresses();
   if (addresses.length > 0) return { data: addresses };
@@ -205,12 +204,9 @@ export const getOrderFormCustomData = (appId) => {
   const customData = window?.vtexjs?.checkout?.orderForm?.customData;
   let fields = {};
 
-  if (customData && customData.customApps && customData.customApps.length > 0) {
-    customData.customApps.forEach((app) => {
-      if (app.id === appId) {
-        fields = app.fields;
-      }
-    });
+  if (customData?.customApps.length > 0) {
+    const customApp = customData.customApps.find((i) => i.id === appId);
+    fields = customApp.fields;
   }
 
   return fields;
