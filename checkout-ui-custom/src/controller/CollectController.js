@@ -242,10 +242,7 @@ const CollectController = (() => {
       },
     ).trim();
 
-    if (!$('#pickup-receiver').val() && receiverName !== '') {
-      console.info('prePopulateReceiverName', { receiverName });
-      $('#pickup-receiver').val(receiverName);
-    }
+    if (!$('#pickup-receiver').val() && receiverName !== '') $('#pickup-receiver').val(receiverName);
   };
 
   const addCustomPhoneInput = () => {
