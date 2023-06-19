@@ -206,7 +206,7 @@ export const getOrderFormCustomData = (appId) => {
 
   if (customData?.customApps.length > 0) {
     const customApp = customData.customApps.find((i) => i.id === appId);
-    fields = customApp.fields;
+    fields = customApp?.fields;
   }
 
   return fields;
