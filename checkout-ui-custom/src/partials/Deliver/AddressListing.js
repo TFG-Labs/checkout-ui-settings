@@ -1,19 +1,19 @@
+import { formatPhoneNumber, prependZero } from '../../utils/phoneFields';
 import Radio from './Elements/Radio';
-import { formatPhoneNumber, prependZero } from './utils';
 
 const isSelectedAddress = (address, selectedAddress) => {
   const addressObject = JSON.stringify({
-    street: address.street,
-    neighborhood: address.neighborhood,
-    city: address.city,
-    postalCode: address.postalCode,
+    street: address?.street || '',
+    neighborhood: address?.neighborhood || '',
+    city: address?.city || '',
+    postalCode: address?.postalCode || '',
   });
 
   const selectedAddressObject = JSON.stringify({
-    street: selectedAddress.street,
-    neighborhood: selectedAddress.neighborhood,
-    city: selectedAddress.city,
-    postalCode: selectedAddress.postalCode,
+    street: selectedAddress?.street || '',
+    neighborhood: selectedAddress?.neighborhood || '',
+    city: selectedAddress?.city || '',
+    postalCode: selectedAddress?.postalCode || '',
   });
 
   return addressObject === selectedAddressObject;
@@ -22,15 +22,30 @@ const isSelectedAddress = (address, selectedAddress) => {
 const AddressListing = (address) => {
   if (!address) return '';
 
-  const { number, street, neighborhood, postalCode, city, receiverName, addressName, complement } = address;
+  const {
+    businessName,
+    number,
+    street,
+    neighborhood,
+    postalCode,
+    city,
+    receiverName,
+    addressName,
+    complement,
+    receiverPhone,
+  } = address;
 
-  const addressLine = [`${number ? `${number} ` : ''}${street}`, neighborhood ?? city, postalCode].join(', ').trim();
-
-  const contactLine = [receiverName, formatPhoneNumber(prependZero(complement))].join(' - ');
+  const addressLine = [
+    `${businessName ? `${businessName}, ` : ''} ${number ? `${number.trim()} ` : ''}${street}`,
+    neighborhood ?? city,
+    postalCode,
+  ]
+    .join(', ')
+    .trim();
+  const contactLine = [receiverName, formatPhoneNumber(prependZero(receiverPhone || complement))].join(' - ');
 
   // orderform
   const selectedAddress = window?.vtexjs?.checkout?.orderForm?.shippingData?.address;
-
   const addressString = encodeURIComponent(JSON.stringify(address));
 
   return `
@@ -38,7 +53,7 @@ const AddressListing = (address) => {
   <div class="address-radio">
   ${Radio({
     name: 'selected-address',
-    options: [{ checked: !!selectedAddress ?? isSelectedAddress(address, selectedAddress), value: addressName }],
+    options: [{ checked: isSelectedAddress(address, selectedAddress), value: addressName }],
   })}
   </div>
   <div class="address-text">

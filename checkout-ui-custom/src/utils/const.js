@@ -29,6 +29,8 @@ const RICA_APP = 'ricafields';
 const TV_APP = 'tvfields';
 const PICKUP_APP = 'pickup';
 
+const DELIVER_APP = 'deliver';
+
 // Furniture fees Url
 const FURNITURE_FEES =
   'http://image.tfgmedia.co.za/image/1/process/500x790?source=http://cdn.tfgmedia.co.za' +
@@ -39,9 +41,20 @@ const COUNTRIES = {
 };
 const COUNTRIES_AVAILABLES = [COUNTRIES.za.code];
 
-const BASE_URL_API = window.location.host.includes('bash.com')
-  ? 'https://store-api.www.bash.com/custom-api/'
-  : `${window.location.protocol}//${window.location.host}/custom-api/`;
+const getUrlApi = () => {
+  const prodHosts = ['bash.com', 'preprod--thefoschini.myvtex.com'];
+  const stageHosts = ['thefoschiniqa.myvtex.com', 'staging.tfglabs.dev'];
+
+  if (prodHosts.includes(window.location.host)) {
+    return 'https://store-api.www.bash.com/custom-api/';
+  }
+  if (stageHosts.includes(window.location.host)) {
+    return 'https://store-api.staging.tfglabs.dev/custom-api/';
+  }
+  return `${window.location.protocol}//${window.location.host}/custom-api/`;
+};
+
+const BASE_URL_API = getUrlApi();
 
 const FURNITURE_FEE_LINK = `
 <a 
@@ -53,7 +66,6 @@ const FURNITURE_FEE_LINK = `
 </a>
 `;
 
-const FURNITURE_CAT = '1169288799';
 const TV_CAT = '938942995';
 const SIM_CAT = '24833302';
 
@@ -71,11 +83,11 @@ export {
   FURNITURE_FEE_LINK,
   SIM_CAT,
   TV_CAT,
-  FURNITURE_CAT,
   GEOLOCATE,
   MANUAL,
   PICKUP,
   NONE,
   PICKUP_APP,
+  DELIVER_APP
 };
 
