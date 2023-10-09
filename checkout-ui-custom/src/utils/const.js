@@ -36,6 +36,11 @@ const FURNITURE_FEES =
   'http://image.tfgmedia.co.za/image/1/process/500x790?source=http://cdn.tfgmedia.co.za' +
   '/15/Marketing/HTMLPages/Furniture_Delivery_Fees_tab_image.jpg';
 
+// SHIPPING
+export const FREE_DELIVERY_THRESHOLD = 50000;
+export const DELIVERY_FEE = 5000;
+export const COLLECT_FEE = 2500;
+
 const COUNTRIES = {
   za: { code: 'za', phonePlaceholder: '(+27)' }, // South Africa
 };
@@ -70,24 +75,23 @@ const TV_CAT = '938942995';
 const SIM_CAT = '24833302';
 
 export {
+  AD_TYPE,
+  BASE_URL_API,
+  COUNTRIES,
+  COUNTRIES_AVAILABLES,
+  DELIVER_APP,
+  FURNITURE_FEES,
+  FURNITURE_FEE_LINK,
+  GEOLOCATE,
+  MANUAL,
+  NONE,
+  PICKUP,
+  PICKUP_APP,
+  RICA_APP,
+  SIM_CAT,
   STEPS,
   TIMEOUT_500,
   TIMEOUT_750,
-  RICA_APP,
-  FURNITURE_FEES,
-  COUNTRIES,
-  COUNTRIES_AVAILABLES,
-  AD_TYPE,
-  BASE_URL_API,
   TV_APP,
-  FURNITURE_FEE_LINK,
-  SIM_CAT,
   TV_CAT,
-  GEOLOCATE,
-  MANUAL,
-  PICKUP,
-  NONE,
-  PICKUP_APP,
-  DELIVER_APP
 };
-
