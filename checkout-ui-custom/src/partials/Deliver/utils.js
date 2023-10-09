@@ -1,5 +1,13 @@
 // @ts-nocheck
-import { AD_TYPE, COLLECT_FEE, DELIVERY_FEE, PICKUP, RICA_APP, TV_APP } from '../../utils/const';
+import {
+  AD_TYPE,
+  COLLECT_FEE,
+  DELIVERY_FEE,
+  FREE_DELIVERY_THRESHOLD,
+  PICKUP,
+  RICA_APP,
+  TV_APP,
+} from '../../utils/const';
 import { getSpecialCategories, hideBusinessName, isValidNumberBash, showBusinessName } from '../../utils/functions';
 import isInSouthAfrica from '../../utils/isInSouthAfrica';
 import { getBestPhoneNumber } from '../../utils/phoneFields';
@@ -396,6 +404,17 @@ export const showAlertBox = () => {
   setTimeout(() => {
     $('.alert-container').slideUp();
   }, 5000);
+};
+
+export const setCollectButtonLabel = () => {
+  const itemsTotal = window.vtexjs.checkout.orderForm?.totalizers.find((item) => item.id === 'Items').value || 0;
+
+  $('#shipping-option-pickup-in-point:not([title])').attr('title', '(free for orders over R500)');
+  if (itemsTotal >= FREE_DELIVERY_THRESHOLD) {
+    $('#shipping-option-pickup-in-point').find('.shp-method-option-text:not(.free-delivery)').addClass('free-delivery');
+  } else {
+    $('#shipping-option-pickup-in-point').find('.shp-method-option-text.free-delivery').removeClass('free-delivery');
+  }
 };
 
 export default mapGoogleAddress;

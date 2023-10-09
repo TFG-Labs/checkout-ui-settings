@@ -1,3 +1,4 @@
+// @ts-nocheck
 /* eslint-disable func-names */
 import DeliverContainer from '../partials/Deliver/DeliverContainer';
 import ExtraFieldsContainer from '../partials/Deliver/ExtraFieldsContainer';
@@ -10,7 +11,7 @@ import {
   populateRicaFields,
   populateTVFields,
   setCartClasses,
-  updateDeliveryFeeDisplay
+  updateDeliveryFeeDisplay,
 } from '../partials/Deliver/utils';
 import { AD_TYPE, STEPS } from '../utils/const';
 import {
@@ -18,7 +19,7 @@ import {
   getSpecialCategories,
   hideBusinessName,
   scrollToInvalidField,
-  showBusinessName
+  showBusinessName,
 } from '../utils/functions';
 import { preparePhoneField } from '../utils/phoneFields';
 import sendEvent from '../utils/sendEvent';
@@ -52,7 +53,6 @@ const DeliverController = (() => {
 
   const setupDeliver = () => {
     unblockShippingError();
-
     if ($('#bash--delivery-container').length) return;
 
     if (window.vtexjs.checkout.orderForm) {
@@ -70,7 +70,7 @@ const DeliverController = (() => {
       DeliverContainer({
         hasFurnOnly: state.hasFurnOnly,
         hasFurnMixed: state.hasFurnMixed,
-      }),
+      })
     );
 
     if (state.hasFurn) {
@@ -86,7 +86,7 @@ const DeliverController = (() => {
         ExtraFieldsContainer({
           hasSim: state.hasSim,
           hasTV: state.hasTVs,
-        }),
+        })
       );
 
       if (state.hasSim) populateRicaFields();
@@ -212,13 +212,15 @@ const DeliverController = (() => {
 
     if (!address) return;
 
-    getAddressByName(address.addressName).then((addressByName) => {
-      setAddress(addressByName || address, { validateExtraFields: false });
-      $('input[type="radio"][name="selected-address"]:checked').attr('checked', false);
-      $(this).attr('checked', true);
-    }).catch((e) => {
-      console.error('Could not get address - address selection', e?.message);
-    });
+    getAddressByName(address.addressName)
+      .then((addressByName) => {
+        setAddress(addressByName || address, { validateExtraFields: false });
+        $('input[type="radio"][name="selected-address"]:checked').attr('checked', false);
+        $(this).attr('checked', true);
+      })
+      .catch((e) => {
+        console.error('Could not get address - address selection', e?.message);
+      });
   });
 
   // Rica - show/hide address fields
@@ -265,7 +267,7 @@ const DeliverController = (() => {
 
   // Invalid fields - remove styling on click, keyup
   $(document).on('keyup click', '.invalid', function () {
-    $(this).removeClass("invalid")
+    $(this).removeClass('invalid');
   });
 
   // Form validation
@@ -300,7 +302,7 @@ const DeliverController = (() => {
 
   return {
     state,
-    init: () => { },
+    init: () => {},
   };
 })();
 export default DeliverController;
