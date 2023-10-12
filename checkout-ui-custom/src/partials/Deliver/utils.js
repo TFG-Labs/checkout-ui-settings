@@ -3,7 +3,7 @@ import {
   AD_TYPE,
   COLLECT_FEE,
   DELIVERY_FEE,
-  FREE_DELIVERY_THRESHOLD,
+  FREE_SHIPPING_THRESHOLD,
   PICKUP,
   RICA_APP,
   TV_APP,
@@ -407,14 +407,16 @@ export const showAlertBox = () => {
 };
 
 export const setCollectButtonLabel = () => {
-  const itemsTotal = window.vtexjs.checkout.orderForm?.totalizers.find((item) => item.id === 'Items').value || 0;
+  const { totalizers } = window?.vtexjs?.checkout.orderForm;
+  const itemsValue = totalizers.find((x) => x.id === 'Items')?.value;
+  const discounts = totalizers.find((x) => x.id === 'Discounts')?.value || 0;
 
-  $('#shipping-option-pickup-in-point:not([title])').attr('title', '(free for orders over R500)');
-  if (itemsTotal >= FREE_DELIVERY_THRESHOLD) {
-    $('#shipping-option-pickup-in-point').find('.shp-method-option-text:not(.free-delivery)').addClass('free-delivery');
-  } else {
-    $('#shipping-option-pickup-in-point').find('.shp-method-option-text.free-delivery').removeClass('free-delivery');
-  }
+  // Collection is free, or the order is over the free shipping threshold
+  const isFree = itemsValue + discounts > FREE_SHIPPING_THRESHOLD || COLLECT_FEE === 0;
+
+  $('#shipping-option-pickup-in-point')
+    .find('.shp-method-option-text')
+    .attr('data-fee', isFree && 'free');
 };
 
 export default mapGoogleAddress;

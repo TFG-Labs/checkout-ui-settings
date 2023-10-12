@@ -1,3 +1,4 @@
+// @ts-nocheck
 // Checkout steps
 const STEPS = {
   CART: '#/cart',
@@ -37,9 +38,9 @@ const FURNITURE_FEES =
   '/15/Marketing/HTMLPages/Furniture_Delivery_Fees_tab_image.jpg';
 
 // SHIPPING
-export const FREE_DELIVERY_THRESHOLD = 50000;
-export const DELIVERY_FEE = 5000;
-export const COLLECT_FEE = 2500;
+export const DELIVERY_FEE = 6000;
+export const COLLECT_FEE = 25;
+export const FREE_SHIPPING_THRESHOLD = 50000;
 
 const COUNTRIES = {
   za: { code: 'za', phonePlaceholder: '(+27)' }, // South Africa
