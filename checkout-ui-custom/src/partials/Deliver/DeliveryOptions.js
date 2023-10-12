@@ -25,7 +25,7 @@ const DeliveryOptions = ({ hasFurnOnly, hasFurnitureMixed }) => {
    </div>
 
   <div id="bash--delivery-fee" class="bash--delivery-fee">
-    R50
+    R60
   </div>
 </label>
 
