@@ -1,6 +1,7 @@
 // @ts-nocheck
 import { requiredAddressFields } from '../partials/Deliver/constants';
 import { addressIsValid, showAlertBox } from '../partials/Deliver/utils';
+import { correctCoords } from './isInSouthAfrica';
 import { addOrUpdateAddress, getAddressByName } from './services';
 import setAddress from './setAddress';
 
@@ -50,7 +51,8 @@ const submitAddressForm = async (event) => {
   address.addressName = address.addressName || address.addressId;
   address.addressId = address.addressId || address.addressName;
 
-  const geoCoords = [parseFloat(address.lng) || '', parseFloat(address.lat) || ''];
+  const geoCoords = correctCoords([parseFloat(address.lng) || 0, parseFloat(address.lat) || 0]);
+
   address.geoCoordinate = geoCoords; // for MasterData
   address.geoCoordinates = geoCoords; // for shippingData
 
