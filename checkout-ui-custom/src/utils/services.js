@@ -1,3 +1,4 @@
+// @ts-nocheck
 /* eslint-disable no-new-wrappers */
 import AddressListing from '../partials/Deliver/AddressListing';
 import CheckoutDB from './checkoutDB';
@@ -53,9 +54,9 @@ export const getAddresses = async () => {
 
   return fetch(
     `${BASE_URL_API}masterdata/addresses?t=${cacheBust}&_fields=${fields}&_where=${encodeURIComponent(
-      `userIdQuery=${email}`,
+      `userIdQuery=${email}`
     )}`,
-    options,
+    options
   )
     .then((res) => res.json())
     .then(async (data) => {
@@ -79,7 +80,7 @@ const getAddress = async (addressName, fields) => {
 
   const response = await fetch(
     `${BASE_URL_API}masterdata/addresses/${fields}&_where=addressName=${addressName}&timestamp=${Date.now()}`,
-    options,
+    options
   )
     .then((res) => res.json())
     .catch((error) => catchError(`GET_ADDRESS_ERROR: ${error?.message}`));
@@ -164,6 +165,13 @@ export const addOrUpdateAddress = async (address) => {
 
   if (!address.addressId) address.addressId = address.addressName;
 
+  try {
+    address.geoCoordinate = correctCoords(address.geoCoordinate || [0, 0]);
+    address.geoCoordinates = address.geoCoordinate;
+  } catch (e) {
+    catchError('Could not correct coords.', e);
+  }
+
   // Add or update at local store. Update UI.
   DB.addOrUpdateAddress(address).then(() => updateAddressListing(address));
 
@@ -216,15 +224,16 @@ export const getOrderFormCustomData = (appId) => {
   return fields;
 };
 
-export const removeFromCart = (index) => window.vtexjs.checkout
-  .updateItems([
-    {
-      index: `${index}`,
-      quantity: 0,
-    },
-  ])
-  .done(() => {
-    clearLoaders();
-  });
+export const removeFromCart = (index) =>
+  window.vtexjs.checkout
+    .updateItems([
+      {
+        index: `${index}`,
+        quantity: 0,
+      },
+    ])
+    .done(() => {
+      clearLoaders();
+    });
 
 export default getAddresses;
