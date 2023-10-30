@@ -1,6 +1,6 @@
+// @ts-nocheck
 import { PICKUP, RICA_APP, TV_APP } from '../../utils/const';
 import { getSpecialCategories, hideBusinessName, isValidNumberBash, showBusinessName } from '../../utils/functions';
-import isInSouthAfrica from '../../utils/isInSouthAfrica';
 import { getBestPhoneNumber } from '../../utils/phoneFields';
 import { getOrderFormCustomData } from '../../utils/services';
 import { DeliveryError } from './DeliveryError';
@@ -127,22 +127,9 @@ export const populateAddressForm = (address) => {
   // Clear any populated fields
   document.getElementById('bash--address-form')?.reset();
   hideBusinessName();
-  let lat;
-  let lng;
+  let lat, lng;
   try {
-    [lng, lat] = JSON.parse(JSON.stringify(geoCoordinate));
-
-    if (!isInSouthAfrica([lng, lat])) {
-      // Coordinates are most likely still at [lat, lng]
-      if (isInSouthAfrica[(lat, lng)]) {
-        lng = lat;
-        lat = lng;
-      } else {
-        // Unset the coordinates
-        lng = 0;
-        lat = 0;
-      }
-    }
+    [lng, lat] = correctCoords(JSON.parse(JSON.stringify(geoCoordinate)));
   } catch (e) {
     console.warn('Could not parse geo coords', { address, geoCoordinate });
   }
