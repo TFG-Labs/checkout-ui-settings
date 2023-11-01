@@ -1,3 +1,7 @@
+// @ts-nocheck
+
+import { CUSTOMER_APP } from './const';
+
 /**
  * validatePhoneNumber
  * Determine if number is valid.
@@ -86,17 +90,25 @@ export const preparePhoneField = (input) => {
 };
 
 export const getBestPhoneNumber = ({ preferred = undefined, type = 'profile', fields }) => {
+  const customContext = getOrderFormCustomData(CUSTOMER_APP);
+
   if (type === 'collect') {
-    return preferred || fields?.phone
-      || document?.getElementById('client-phone')?.value
-      || window.vtexjs.checkout.orderForm?.clientProfileData?.phone
-      || '';
+    return (
+      preferred ||
+      fields?.phone ||
+      document?.getElementById('client-phone')?.value ||
+      customContext?.phone ||
+      window.vtexjs.checkout.orderForm?.clientProfileData?.phone ||
+      ''
+    );
   }
 
-  return (preferred
-    || window.vtexjs.checkout.orderForm?.clientProfileData?.phone
-    || document?.getElementById('client-phone')?.value
-    || ''
+  return (
+    preferred ||
+    window.vtexjs.checkout.orderForm?.clientProfileData?.phone ||
+    customContext?.phone ||
+    document?.getElementById('client-phone')?.value ||
+    ''
   );
 };
 

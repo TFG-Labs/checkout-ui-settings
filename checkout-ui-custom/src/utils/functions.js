@@ -1,3 +1,4 @@
+// @ts-nocheck
 import * as Sentry from '@sentry/browser';
 import { RICA_APP, SIM_CAT, TV_CAT } from './const';
 import { validatePhoneNumber } from './phoneFields';
@@ -95,12 +96,19 @@ const getSpecialCategories = (items) => {
     categories.push(itemCategories);
     itemCategories.forEach((category) => {
       if (!category) return;
-      if (tvCategories.includes(category)) { hasTVs = true; return; }
-      if (simCardCategories.includes(category)) { hasSimCards = true; }
+      if (tvCategories.includes(category)) {
+        hasTVs = true;
+        return;
+      }
+      if (simCardCategories.includes(category)) {
+        hasSimCards = true;
+      }
     });
 
-    if (item.modalType === 'FURNITURE') { hasFurniture = true; furnitureCount += 1; }
-
+    if (item.modalType === 'FURNITURE') {
+      hasFurniture = true;
+      furnitureCount += 1;
+    }
   });
 
   hasFurnitureOnly = furnitureCount === items.length;
@@ -147,10 +155,9 @@ export const scrollToInvalidField = () => {
 
 export {
   addBorderTop,
-  waitAndResetLocalStorage,
   checkoutGetCustomData,
-  setRicaFields,
-  isValidNumberBash,
   getSpecialCategories,
+  isValidNumberBash,
+  setRicaFields,
+  waitAndResetLocalStorage,
 };
-

@@ -28,7 +28,7 @@ const NONE = 'none';
 const RICA_APP = 'ricafields';
 const TV_APP = 'tvfields';
 const PICKUP_APP = 'pickup';
-
+export const CUSTOMER_APP = 'customer-context';
 const DELIVER_APP = 'deliver';
 
 // Furniture fees Url
@@ -88,6 +88,5 @@ export {
   PICKUP,
   NONE,
   PICKUP_APP,
-  DELIVER_APP
+  DELIVER_APP,
 };
-
