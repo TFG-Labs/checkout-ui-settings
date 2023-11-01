@@ -17,8 +17,8 @@ import { sendOrderFormCustomData, updateAddressListing } from './services';
 const updateDeliveryData = ({ businessName, receiverPhone }) => {
   sendOrderFormCustomData(DELIVER_APP, {
     jsonString: JSON.stringify({
-      businessName: businessName || '',
-      receiverPhone: receiverPhone || '',
+      businessName: businessName || '-',
+      receiverPhone: receiverPhone || '-',
     }),
   });
 };
