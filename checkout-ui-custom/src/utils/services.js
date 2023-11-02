@@ -4,6 +4,7 @@ import AddressListing from '../partials/Deliver/AddressListing';
 import CheckoutDB from './checkoutDB';
 import { BASE_URL_API } from './const';
 import { catchError, clearLoaders, getHeadersByConfig } from './functions';
+import { correctCoords } from './isInSouthAfrica';
 
 // API Functions
 // GET addresses
