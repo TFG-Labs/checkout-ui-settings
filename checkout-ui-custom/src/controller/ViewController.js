@@ -25,7 +25,7 @@ const ViewController = (() => {
         - after filter categories, this array includes at least one furniture id
         - there are only one category OR not all the categories in the array are furniture
       */
-      state.showMixedProductsMsg = hasFurnitureMixed
+      state.showMixedProductsMsg = hasFurnitureMixed;
     }
   };
 

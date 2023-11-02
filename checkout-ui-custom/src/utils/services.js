@@ -225,16 +225,15 @@ export const getOrderFormCustomData = (appId) => {
   return fields;
 };
 
-export const removeFromCart = (index) =>
-  window.vtexjs.checkout
-    .updateItems([
-      {
-        index: `${index}`,
-        quantity: 0,
-      },
-    ])
-    .done(() => {
-      clearLoaders();
-    });
+export const removeFromCart = (index) => window.vtexjs.checkout
+  .updateItems([
+    {
+      index: `${index}`,
+      quantity: 0,
+    },
+  ])
+  .done(() => {
+    clearLoaders();
+  });
 
 export default getAddresses;

@@ -265,7 +265,7 @@ const DeliverController = (() => {
 
   // Invalid fields - remove styling on click, keyup
   $(document).on('keyup click', '.invalid', function () {
-    $(this).removeClass("invalid")
+    $(this).removeClass('invalid');
   });
 
   // Form validation
