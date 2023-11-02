@@ -1,6 +1,7 @@
 // @ts-nocheck
 import { PICKUP, RICA_APP, TV_APP } from '../../utils/const';
 import { getSpecialCategories, hideBusinessName, isValidNumberBash, showBusinessName } from '../../utils/functions';
+import { correctCoords } from '../../utils/isInSouthAfrica';
 import { getBestPhoneNumber } from '../../utils/phoneFields';
 import { getOrderFormCustomData } from '../../utils/services';
 import { DeliveryError } from './DeliveryError';
@@ -127,7 +128,8 @@ export const populateAddressForm = (address) => {
   // Clear any populated fields
   document.getElementById('bash--address-form')?.reset();
   hideBusinessName();
-  let lat, lng;
+  let lat;
+  let lng;
   try {
     [lng, lat] = correctCoords(JSON.parse(JSON.stringify(geoCoordinate)));
   } catch (e) {
