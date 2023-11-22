@@ -56,38 +56,29 @@ const getUrlApi = () => {
 
 const BASE_URL_API = getUrlApi();
 
-const FURNITURE_FEE_LINK = `
-<a 
-  href="${FURNITURE_FEES}"
-  class="furniture-fees-link" 
-  target="_blank"
->
-  Furniture delivery costs
-</a>
-`;
+const FURNITURE_FEE_LINK = '';
 
 const TV_CAT = '938942995';
 const SIM_CAT = '24833302';
 
 export {
+  AD_TYPE,
+  BASE_URL_API,
+  COUNTRIES,
+  COUNTRIES_AVAILABLES,
+  DELIVER_APP,
+  FURNITURE_FEES,
+  FURNITURE_FEE_LINK,
+  GEOLOCATE,
+  MANUAL,
+  NONE,
+  PICKUP,
+  PICKUP_APP,
+  RICA_APP,
+  SIM_CAT,
   STEPS,
   TIMEOUT_500,
   TIMEOUT_750,
-  RICA_APP,
-  FURNITURE_FEES,
-  COUNTRIES,
-  COUNTRIES_AVAILABLES,
-  AD_TYPE,
-  BASE_URL_API,
   TV_APP,
-  FURNITURE_FEE_LINK,
-  SIM_CAT,
   TV_CAT,
-  GEOLOCATE,
-  MANUAL,
-  PICKUP,
-  NONE,
-  PICKUP_APP,
-  DELIVER_APP
 };
-
