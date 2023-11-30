@@ -12,19 +12,16 @@ import { clearLoaders, getSpecialCategories } from './functions';
 import sendEvent from './sendEvent';
 import { sendOrderFormCustomData, updateAddressListing } from './services';
 
-const updateDeliveryData = ({ businessName, receiverPhone }) => {
-  sendOrderFormCustomData(DELIVER_APP, {
-    jsonString: JSON.stringify(
-      {
-        businessName: businessName || '',
-        receiverPhone: receiverPhone || ''
-      }
-    )
-  });
-};
+const updateDeliveryData = ({ businessName, receiverPhone }) => sendOrderFormCustomData(DELIVER_APP, {
+  jsonString: JSON.stringify(
+    {
+      businessName: businessName || '',
+      receiverPhone: receiverPhone || ''
+    }
+  )
+});
 
 const setAddress = (address, options = { validateExtraFields: true }) => {
-  console.info('### setAddress ###', { address });
   const { validateExtraFields } = options;
   const { items } = window.vtexjs.checkout.orderForm;
   const { hasTVs, hasSimCards } = getSpecialCategories(items);
@@ -63,7 +60,7 @@ const setAddress = (address, options = { validateExtraFields: true }) => {
   // Country must always be 'ZAF'
   address.country = 'ZAF';
 
-  const { shippingData } = window?.vtexjs?.checkout?.orderForm;
+  const shippingData = window?.vtexjs?.checkout?.orderForm?.shippingData;
 
   shippingData.address = address;
   shippingData.selectedAddresses = [address];
@@ -100,7 +97,6 @@ const setAddress = (address, options = { validateExtraFields: true }) => {
 
       if (address.addressName) updateAddressListing(address);
 
-      console.info('### Update customData ###', { address });
       try {
         updateDeliveryData({ businessName: address.businessName, receiverPhone: address.receiverPhone });
       } catch (e) {

@@ -100,7 +100,6 @@ const getSpecialCategories = (items) => {
     });
 
     if (item.modalType === 'FURNITURE') { hasFurniture = true; furnitureCount += 1; }
-
   });
 
   hasFurnitureOnly = furnitureCount === items.length;
@@ -133,7 +132,9 @@ export const showBusinessName = ({ focus = false }) => {
 
 export const hideBusinessName = () => {
   $('.bash--textfield-businessName').addClass('optional').slideUp();
-  $('#bash--input-businessName').removeAttr('required');
+  $('#bash--input-businessName').attr('required', false);
+  $('#bash--input-businessName').val('');
+  $('#bash--input-businessName').blur();
 };
 
 export const scrollToInvalidField = () => {
@@ -146,11 +147,6 @@ export const scrollToInvalidField = () => {
 };
 
 export {
-  addBorderTop,
-  waitAndResetLocalStorage,
-  checkoutGetCustomData,
-  setRicaFields,
-  isValidNumberBash,
-  getSpecialCategories,
+  addBorderTop, checkoutGetCustomData, getSpecialCategories, isValidNumberBash, setRicaFields, waitAndResetLocalStorage
 };
 

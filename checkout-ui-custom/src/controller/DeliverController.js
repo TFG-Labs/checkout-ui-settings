@@ -13,6 +13,7 @@ import {
   updateDeliveryFeeDisplay
 } from '../partials/Deliver/utils';
 import { AD_TYPE, STEPS } from '../utils/const';
+import formatAddressSummary from '../utils/formatAddressSummary';
 import {
   clearLoaders,
   getSpecialCategories,
@@ -108,7 +109,7 @@ const DeliverController = (() => {
 
   // EVENTS
 
-  $(window).unload(() => {
+  $(window).unload(async () => {
     clearAddresses();
   });
 
@@ -154,7 +155,9 @@ const DeliverController = (() => {
       if (errors) populateDeliveryError(errors);
     }
 
-    if (addressType === AD_TYPE.PICKUP) {
+    if (addressType === AD_TYPE.PICKUP // sometimes addressType is undefined ;(
+      || $('#shipping-option-pickup-in-point').hasClass('shp-method-option-active')
+    ) {
       // User has Collect enabled, but has Rica or TV products,
       // or Furniture + Non Furn.
       if (hasTVs || hasSimCards || hasFurnitureMixed) {
@@ -172,6 +175,7 @@ const DeliverController = (() => {
 
     setCartClasses();
     updateDeliveryFeeDisplay();
+    formatAddressSummary();
 
     if (window.location.hash === STEPS.PAYMENT && !customShippingDataIsValid()) {
       scrollToInvalidField();
