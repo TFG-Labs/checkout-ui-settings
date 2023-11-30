@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { PICKUP, RICA_APP, TV_APP } from '../../utils/const';
 import { getSpecialCategories, hideBusinessName, isValidNumberBash, showBusinessName } from '../../utils/functions';
 import isInSouthAfrica from '../../utils/isInSouthAfrica';
@@ -383,10 +384,9 @@ export const populateDeliveryError = (errors = []) => {
   if (errors.length > 0) $('html, body').animate({ scrollTop: $('#bash-delivery-error-container').offset().top }, 400);
 };
 
-export const showAlertBox = () => {
+export const showAlertBox = (alertText = 'Address saved') => {
   $('.alert-container').addClass('show');
   $('.alert-container').slideDown();
-  const alertText = $('[data-view="address-form"]').length > 0 ? 'Address added' : 'Address updated';
   $('#bash-alert-container').html(Alert({ text: alertText }));
   // After 5 seconds, remove the element
   setTimeout(() => {
