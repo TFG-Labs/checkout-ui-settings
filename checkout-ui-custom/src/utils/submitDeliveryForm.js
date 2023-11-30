@@ -1,3 +1,5 @@
+// @ts-nocheck
+import { NoAddressSelectedError } from '../partials/Deliver/DeliveryError';
 import { requiredRicaFields, requiredTVFields } from '../partials/Deliver/constants';
 import { setDeliveryLoading } from '../partials/Deliver/utils';
 import { RICA_APP, STEPS, TV_APP } from './const';
@@ -20,7 +22,8 @@ const submitDeliveryForm = async (event) => {
 
   // Prevent sending without having selected an address.
   if ($(selectedAddressRadio).length < 1) {
-    $('html, body').animate({ scrollTop: $('#bash--delivery-form').offset().top }, 400);
+    $('html, body').animate({ scrollTop: $('#bash-delivery-error-container').offset().top }, 400);
+    $('#bash-delivery-error-container').html(NoAddressSelectedError());
     return;
   }
 
