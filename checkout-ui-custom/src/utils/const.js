@@ -41,42 +41,44 @@ const COUNTRIES = {
 };
 const COUNTRIES_AVAILABLES = [COUNTRIES.za.code];
 
-const BASE_URL_API = window.location.host.includes('bash.com')
-  ? 'https://store-api.www.bash.com/custom-api/'
-  : `${window.location.protocol}//${window.location.host}/custom-api/`;
+const getUrlApi = () => {
+  const prodHosts = ['bash.com', 'preprod--thefoschini.myvtex.com'];
+  const stageHosts = ['thefoschiniqa.myvtex.com', 'staging.tfglabs.dev'];
 
-const FURNITURE_FEE_LINK = `
-<a 
-  href="${FURNITURE_FEES}"
-  class="furniture-fees-link" 
-  target="_blank"
->
-  Furniture delivery costs
-</a>
-`;
+  if (prodHosts.includes(window.location.host)) {
+    return 'https://store-api.www.bash.com/custom-api/';
+  }
+  if (stageHosts.includes(window.location.host)) {
+    return 'https://store-api.staging.tfglabs.dev/custom-api/';
+  }
+  return `${window.location.protocol}//${window.location.host}/custom-api/`;
+};
+
+const BASE_URL_API = getUrlApi();
+
+const FURNITURE_FEE_LINK = '';
 
 const TV_CAT = '938942995';
 const SIM_CAT = '24833302';
 
 export {
+  AD_TYPE,
+  BASE_URL_API,
+  COUNTRIES,
+  COUNTRIES_AVAILABLES,
+  DELIVER_APP,
+  FURNITURE_FEES,
+  FURNITURE_FEE_LINK,
+  GEOLOCATE,
+  MANUAL,
+  NONE,
+  PICKUP,
+  PICKUP_APP,
+  RICA_APP,
+  SIM_CAT,
   STEPS,
   TIMEOUT_500,
   TIMEOUT_750,
-  RICA_APP,
-  FURNITURE_FEES,
-  COUNTRIES,
-  COUNTRIES_AVAILABLES,
-  AD_TYPE,
-  BASE_URL_API,
   TV_APP,
-  FURNITURE_FEE_LINK,
-  SIM_CAT,
   TV_CAT,
-  GEOLOCATE,
-  MANUAL,
-  PICKUP,
-  NONE,
-  PICKUP_APP,
-  DELIVER_APP
 };
-

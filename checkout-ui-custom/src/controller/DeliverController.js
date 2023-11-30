@@ -220,6 +220,8 @@ const DeliverController = (() => {
       setAddress(addressByName || address, { validateExtraFields: false });
       $('input[type="radio"][name="selected-address"]:checked').attr('checked', false);
       $(this).attr('checked', true);
+    }).catch((e) => {
+      console.error('Could not get address - address selection', e?.message);
     });
   });
 
@@ -263,6 +265,11 @@ const DeliverController = (() => {
     removeFromCart($(this).data('index')).done(() => {
       clearLoaders();
     });
+  });
+
+  // Invalid fields - remove styling on click, keyup
+  $(document).on('keyup click', '.invalid', function () {
+    $(this).removeClass("invalid")
   });
 
   // Form validation

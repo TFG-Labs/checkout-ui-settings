@@ -1,686 +1,5757 @@
-/*
- * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
- * This devtool is neither made for production nor for readable output files.
- * It uses "eval()" calls to create a separate source file in the browser devtools.
- * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
- * or disable the default devtool with "devtool: false".
- * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
- */
-/******/ (() => { // webpackBootstrap
-/******/ 	"use strict";
-/******/ 	var __webpack_modules__ = ({
-
-/***/ "./node_modules/@sentry/core/esm/constants.js":
-/*!****************************************************!*\
-  !*** ./node_modules/@sentry/core/esm/constants.js ***!
-  \****************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"DEFAULT_ENVIRONMENT\": () => (/* binding */ DEFAULT_ENVIRONMENT)\n/* harmony export */ });\nconst DEFAULT_ENVIRONMENT = 'production';\n\n\n//# sourceMappingURL=constants.js.map\n\n\n//# sourceURL=webpack://custom-shipping-step-by-items/./node_modules/@sentry/core/esm/constants.js?");
-
-/***/ }),
-
-/***/ "./node_modules/@sentry/core/esm/exports.js":
-/*!**************************************************!*\
-  !*** ./node_modules/@sentry/core/esm/exports.js ***!
-  \**************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"addBreadcrumb\": () => (/* binding */ addBreadcrumb),\n/* harmony export */   \"captureEvent\": () => (/* binding */ captureEvent),\n/* harmony export */   \"captureException\": () => (/* binding */ captureException),\n/* harmony export */   \"captureMessage\": () => (/* binding */ captureMessage),\n/* harmony export */   \"configureScope\": () => (/* binding */ configureScope),\n/* harmony export */   \"setContext\": () => (/* binding */ setContext),\n/* harmony export */   \"setExtra\": () => (/* binding */ setExtra),\n/* harmony export */   \"setExtras\": () => (/* binding */ setExtras),\n/* harmony export */   \"setTag\": () => (/* binding */ setTag),\n/* harmony export */   \"setTags\": () => (/* binding */ setTags),\n/* harmony export */   \"setUser\": () => (/* binding */ setUser),\n/* harmony export */   \"startTransaction\": () => (/* binding */ startTransaction),\n/* harmony export */   \"withScope\": () => (/* binding */ withScope)\n/* harmony export */ });\n/* harmony import */ var _hub_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./hub.js */ \"./node_modules/@sentry/core/esm/hub.js\");\n\n\n// Note: All functions in this file are typed with a return value of `ReturnType<Hub[HUB_FUNCTION]>`,\n// where HUB_FUNCTION is some method on the Hub class.\n//\n// This is done to make sure the top level SDK methods stay in sync with the hub methods.\n// Although every method here has an explicit return type, some of them (that map to void returns) do not\n// contain `return` keywords. This is done to save on bundle size, as `return` is not minifiable.\n\n/**\n * Captures an exception event and sends it to Sentry.\n *\n * @param exception An exception-like object.\n * @param captureContext Additional scope data to apply to exception event.\n * @returns The generated eventId.\n */\n// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types\nfunction captureException(exception, captureContext) {\n  return (0,_hub_js__WEBPACK_IMPORTED_MODULE_0__.getCurrentHub)().captureException(exception, { captureContext });\n}\n\n/**\n * Captures a message event and sends it to Sentry.\n *\n * @param message The message to send to Sentry.\n * @param Severity Define the level of the message.\n * @returns The generated eventId.\n */\nfunction captureMessage(\n  message,\n  // eslint-disable-next-line deprecation/deprecation\n  captureContext,\n) {\n  // This is necessary to provide explicit scopes upgrade, without changing the original\n  // arity of the `captureMessage(message, level)` method.\n  const level = typeof captureContext === 'string' ? captureContext : undefined;\n  const context = typeof captureContext !== 'string' ? { captureContext } : undefined;\n  return (0,_hub_js__WEBPACK_IMPORTED_MODULE_0__.getCurrentHub)().captureMessage(message, level, context);\n}\n\n/**\n * Captures a manually created event and sends it to Sentry.\n *\n * @param event The event to send to Sentry.\n * @returns The generated eventId.\n */\nfunction captureEvent(event, hint) {\n  return (0,_hub_js__WEBPACK_IMPORTED_MODULE_0__.getCurrentHub)().captureEvent(event, hint);\n}\n\n/**\n * Callback to set context information onto the scope.\n * @param callback Callback function that receives Scope.\n */\nfunction configureScope(callback) {\n  (0,_hub_js__WEBPACK_IMPORTED_MODULE_0__.getCurrentHub)().configureScope(callback);\n}\n\n/**\n * Records a new breadcrumb which will be attached to future events.\n *\n * Breadcrumbs will be added to subsequent events to provide more context on\n * user's actions prior to an error or crash.\n *\n * @param breadcrumb The breadcrumb to record.\n */\nfunction addBreadcrumb(breadcrumb) {\n  (0,_hub_js__WEBPACK_IMPORTED_MODULE_0__.getCurrentHub)().addBreadcrumb(breadcrumb);\n}\n\n/**\n * Sets context data with the given name.\n * @param name of the context\n * @param context Any kind of data. This data will be normalized.\n */\n// eslint-disable-next-line @typescript-eslint/no-explicit-any\nfunction setContext(name, context) {\n  (0,_hub_js__WEBPACK_IMPORTED_MODULE_0__.getCurrentHub)().setContext(name, context);\n}\n\n/**\n * Set an object that will be merged sent as extra data with the event.\n * @param extras Extras object to merge into current context.\n */\nfunction setExtras(extras) {\n  (0,_hub_js__WEBPACK_IMPORTED_MODULE_0__.getCurrentHub)().setExtras(extras);\n}\n\n/**\n * Set key:value that will be sent as extra data with the event.\n * @param key String of extra\n * @param extra Any kind of data. This data will be normalized.\n */\nfunction setExtra(key, extra) {\n  (0,_hub_js__WEBPACK_IMPORTED_MODULE_0__.getCurrentHub)().setExtra(key, extra);\n}\n\n/**\n * Set an object that will be merged sent as tags data with the event.\n * @param tags Tags context object to merge into current context.\n */\nfunction setTags(tags) {\n  (0,_hub_js__WEBPACK_IMPORTED_MODULE_0__.getCurrentHub)().setTags(tags);\n}\n\n/**\n * Set key:value that will be sent as tags data with the event.\n *\n * Can also be used to unset a tag, by passing `undefined`.\n *\n * @param key String key of tag\n * @param value Value of tag\n */\nfunction setTag(key, value) {\n  (0,_hub_js__WEBPACK_IMPORTED_MODULE_0__.getCurrentHub)().setTag(key, value);\n}\n\n/**\n * Updates user context information for future events.\n *\n * @param user User context object to be set in the current context. Pass `null` to unset the user.\n */\nfunction setUser(user) {\n  (0,_hub_js__WEBPACK_IMPORTED_MODULE_0__.getCurrentHub)().setUser(user);\n}\n\n/**\n * Creates a new scope with and executes the given operation within.\n * The scope is automatically removed once the operation\n * finishes or throws.\n *\n * This is essentially a convenience function for:\n *\n *     pushScope();\n *     callback();\n *     popScope();\n *\n * @param callback that will be enclosed into push/popScope.\n */\nfunction withScope(callback) {\n  (0,_hub_js__WEBPACK_IMPORTED_MODULE_0__.getCurrentHub)().withScope(callback);\n}\n\n/**\n * Starts a new `Transaction` and returns it. This is the entry point to manual tracing instrumentation.\n *\n * A tree structure can be built by adding child spans to the transaction, and child spans to other spans. To start a\n * new child span within the transaction or any span, call the respective `.startChild()` method.\n *\n * Every child span must be finished before the transaction is finished, otherwise the unfinished spans are discarded.\n *\n * The transaction must be finished with a call to its `.finish()` method, at which point the transaction with all its\n * finished child spans will be sent to Sentry.\n *\n * NOTE: This function should only be used for *manual* instrumentation. Auto-instrumentation should call\n * `startTransaction` directly on the hub.\n *\n * @param context Properties of the new `Transaction`.\n * @param customSamplingContext Information given to the transaction sampling function (along with context-dependent\n * default values). See {@link Options.tracesSampler}.\n *\n * @returns The transaction which was just started\n */\nfunction startTransaction(\n  context,\n  customSamplingContext,\n) {\n  return (0,_hub_js__WEBPACK_IMPORTED_MODULE_0__.getCurrentHub)().startTransaction({ ...context }, customSamplingContext);\n}\n\n\n//# sourceMappingURL=exports.js.map\n\n\n//# sourceURL=webpack://custom-shipping-step-by-items/./node_modules/@sentry/core/esm/exports.js?");
-
-/***/ }),
-
-/***/ "./node_modules/@sentry/core/esm/hub.js":
-/*!**********************************************!*\
-  !*** ./node_modules/@sentry/core/esm/hub.js ***!
-  \**********************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"API_VERSION\": () => (/* binding */ API_VERSION),\n/* harmony export */   \"Hub\": () => (/* binding */ Hub),\n/* harmony export */   \"getCurrentHub\": () => (/* binding */ getCurrentHub),\n/* harmony export */   \"getHubFromCarrier\": () => (/* binding */ getHubFromCarrier),\n/* harmony export */   \"getMainCarrier\": () => (/* binding */ getMainCarrier),\n/* harmony export */   \"makeMain\": () => (/* binding */ makeMain),\n/* harmony export */   \"setHubOnCarrier\": () => (/* binding */ setHubOnCarrier)\n/* harmony export */ });\n/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @sentry/utils */ \"./node_modules/@sentry/utils/esm/misc.js\");\n/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @sentry/utils */ \"./node_modules/@sentry/utils/esm/time.js\");\n/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @sentry/utils */ \"./node_modules/@sentry/utils/esm/logger.js\");\n/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @sentry/utils */ \"./node_modules/@sentry/utils/esm/worldwide.js\");\n/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @sentry/utils */ \"./node_modules/@sentry/utils/esm/node.js\");\n/* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./constants.js */ \"./node_modules/@sentry/core/esm/constants.js\");\n/* harmony import */ var _scope_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./scope.js */ \"./node_modules/@sentry/core/esm/scope.js\");\n/* harmony import */ var _session_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./session.js */ \"./node_modules/@sentry/core/esm/session.js\");\n\n\n\n\n\n/**\n * API compatibility version of this hub.\n *\n * WARNING: This number should only be increased when the global interface\n * changes and new methods are introduced.\n *\n * @hidden\n */\nconst API_VERSION = 4;\n\n/**\n * Default maximum number of breadcrumbs added to an event. Can be overwritten\n * with {@link Options.maxBreadcrumbs}.\n */\nconst DEFAULT_BREADCRUMBS = 100;\n\n/**\n * A layer in the process stack.\n * @hidden\n */\n\n/**\n * @inheritDoc\n */\nclass Hub  {\n  /** Is a {@link Layer}[] containing the client and scope */\n\n  /** Contains the last event id of a captured event.  */\n\n  /**\n   * Creates a new instance of the hub, will push one {@link Layer} into the\n   * internal stack on creation.\n   *\n   * @param client bound to the hub.\n   * @param scope bound to the hub.\n   * @param version number, higher number means higher priority.\n   */\n   constructor(client, scope = new _scope_js__WEBPACK_IMPORTED_MODULE_0__.Scope(),   _version = API_VERSION) {this._version = _version;\n    this._stack = [{ scope }];\n    if (client) {\n      this.bindClient(client);\n    }\n  }\n\n  /**\n   * @inheritDoc\n   */\n   isOlderThan(version) {\n    return this._version < version;\n  }\n\n  /**\n   * @inheritDoc\n   */\n   bindClient(client) {\n    const top = this.getStackTop();\n    top.client = client;\n    if (client && client.setupIntegrations) {\n      client.setupIntegrations();\n    }\n  }\n\n  /**\n   * @inheritDoc\n   */\n   pushScope() {\n    // We want to clone the content of prev scope\n    const scope = _scope_js__WEBPACK_IMPORTED_MODULE_0__.Scope.clone(this.getScope());\n    this.getStack().push({\n      client: this.getClient(),\n      scope,\n    });\n    return scope;\n  }\n\n  /**\n   * @inheritDoc\n   */\n   popScope() {\n    if (this.getStack().length <= 1) return false;\n    return !!this.getStack().pop();\n  }\n\n  /**\n   * @inheritDoc\n   */\n   withScope(callback) {\n    const scope = this.pushScope();\n    try {\n      callback(scope);\n    } finally {\n      this.popScope();\n    }\n  }\n\n  /**\n   * @inheritDoc\n   */\n   getClient() {\n    return this.getStackTop().client ;\n  }\n\n  /** Returns the scope of the top stack. */\n   getScope() {\n    return this.getStackTop().scope;\n  }\n\n  /** Returns the scope stack for domains or the process. */\n   getStack() {\n    return this._stack;\n  }\n\n  /** Returns the topmost scope layer in the order domain > local > process. */\n   getStackTop() {\n    return this._stack[this._stack.length - 1];\n  }\n\n  /**\n   * @inheritDoc\n   */\n   captureException(exception, hint) {\n    const eventId = (this._lastEventId = hint && hint.event_id ? hint.event_id : (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__.uuid4)());\n    const syntheticException = new Error('Sentry syntheticException');\n    this._withClient((client, scope) => {\n      client.captureException(\n        exception,\n        {\n          originalException: exception,\n          syntheticException,\n          ...hint,\n          event_id: eventId,\n        },\n        scope,\n      );\n    });\n    return eventId;\n  }\n\n  /**\n   * @inheritDoc\n   */\n   captureMessage(\n    message,\n    // eslint-disable-next-line deprecation/deprecation\n    level,\n    hint,\n  ) {\n    const eventId = (this._lastEventId = hint && hint.event_id ? hint.event_id : (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__.uuid4)());\n    const syntheticException = new Error(message);\n    this._withClient((client, scope) => {\n      client.captureMessage(\n        message,\n        level,\n        {\n          originalException: message,\n          syntheticException,\n          ...hint,\n          event_id: eventId,\n        },\n        scope,\n      );\n    });\n    return eventId;\n  }\n\n  /**\n   * @inheritDoc\n   */\n   captureEvent(event, hint) {\n    const eventId = hint && hint.event_id ? hint.event_id : (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__.uuid4)();\n    if (!event.type) {\n      this._lastEventId = eventId;\n    }\n\n    this._withClient((client, scope) => {\n      client.captureEvent(event, { ...hint, event_id: eventId }, scope);\n    });\n    return eventId;\n  }\n\n  /**\n   * @inheritDoc\n   */\n   lastEventId() {\n    return this._lastEventId;\n  }\n\n  /**\n   * @inheritDoc\n   */\n   addBreadcrumb(breadcrumb, hint) {\n    const { scope, client } = this.getStackTop();\n\n    if (!client) return;\n\n    const { beforeBreadcrumb = null, maxBreadcrumbs = DEFAULT_BREADCRUMBS } =\n      (client.getOptions && client.getOptions()) || {};\n\n    if (maxBreadcrumbs <= 0) return;\n\n    const timestamp = (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_2__.dateTimestampInSeconds)();\n    const mergedBreadcrumb = { timestamp, ...breadcrumb };\n    const finalBreadcrumb = beforeBreadcrumb\n      ? ((0,_sentry_utils__WEBPACK_IMPORTED_MODULE_3__.consoleSandbox)(() => beforeBreadcrumb(mergedBreadcrumb, hint)) )\n      : mergedBreadcrumb;\n\n    if (finalBreadcrumb === null) return;\n\n    if (client.emit) {\n      client.emit('beforeAddBreadcrumb', finalBreadcrumb, hint);\n    }\n\n    scope.addBreadcrumb(finalBreadcrumb, maxBreadcrumbs);\n  }\n\n  /**\n   * @inheritDoc\n   */\n   setUser(user) {\n    this.getScope().setUser(user);\n  }\n\n  /**\n   * @inheritDoc\n   */\n   setTags(tags) {\n    this.getScope().setTags(tags);\n  }\n\n  /**\n   * @inheritDoc\n   */\n   setExtras(extras) {\n    this.getScope().setExtras(extras);\n  }\n\n  /**\n   * @inheritDoc\n   */\n   setTag(key, value) {\n    this.getScope().setTag(key, value);\n  }\n\n  /**\n   * @inheritDoc\n   */\n   setExtra(key, extra) {\n    this.getScope().setExtra(key, extra);\n  }\n\n  /**\n   * @inheritDoc\n   */\n  // eslint-disable-next-line @typescript-eslint/no-explicit-any\n   setContext(name, context) {\n    this.getScope().setContext(name, context);\n  }\n\n  /**\n   * @inheritDoc\n   */\n   configureScope(callback) {\n    const { scope, client } = this.getStackTop();\n    if (client) {\n      callback(scope);\n    }\n  }\n\n  /**\n   * @inheritDoc\n   */\n   run(callback) {\n    const oldHub = makeMain(this);\n    try {\n      callback(this);\n    } finally {\n      makeMain(oldHub);\n    }\n  }\n\n  /**\n   * @inheritDoc\n   */\n   getIntegration(integration) {\n    const client = this.getClient();\n    if (!client) return null;\n    try {\n      return client.getIntegration(integration);\n    } catch (_oO) {\n      (typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__) && _sentry_utils__WEBPACK_IMPORTED_MODULE_3__.logger.warn(`Cannot retrieve integration ${integration.id} from the current Hub`);\n      return null;\n    }\n  }\n\n  /**\n   * @inheritDoc\n   */\n   startTransaction(context, customSamplingContext) {\n    return this._callExtensionMethod('startTransaction', context, customSamplingContext);\n  }\n\n  /**\n   * @inheritDoc\n   */\n   traceHeaders() {\n    return this._callExtensionMethod('traceHeaders');\n  }\n\n  /**\n   * @inheritDoc\n   */\n   captureSession(endSession = false) {\n    // both send the update and pull the session from the scope\n    if (endSession) {\n      return this.endSession();\n    }\n\n    // only send the update\n    this._sendSessionUpdate();\n  }\n\n  /**\n   * @inheritDoc\n   */\n   endSession() {\n    const layer = this.getStackTop();\n    const scope = layer.scope;\n    const session = scope.getSession();\n    if (session) {\n      (0,_session_js__WEBPACK_IMPORTED_MODULE_4__.closeSession)(session);\n    }\n    this._sendSessionUpdate();\n\n    // the session is over; take it off of the scope\n    scope.setSession();\n  }\n\n  /**\n   * @inheritDoc\n   */\n   startSession(context) {\n    const { scope, client } = this.getStackTop();\n    const { release, environment = _constants_js__WEBPACK_IMPORTED_MODULE_5__.DEFAULT_ENVIRONMENT } = (client && client.getOptions()) || {};\n\n    // Will fetch userAgent if called from browser sdk\n    const { userAgent } = _sentry_utils__WEBPACK_IMPORTED_MODULE_6__.GLOBAL_OBJ.navigator || {};\n\n    const session = (0,_session_js__WEBPACK_IMPORTED_MODULE_4__.makeSession)({\n      release,\n      environment,\n      user: scope.getUser(),\n      ...(userAgent && { userAgent }),\n      ...context,\n    });\n\n    // End existing session if there's one\n    const currentSession = scope.getSession && scope.getSession();\n    if (currentSession && currentSession.status === 'ok') {\n      (0,_session_js__WEBPACK_IMPORTED_MODULE_4__.updateSession)(currentSession, { status: 'exited' });\n    }\n    this.endSession();\n\n    // Afterwards we set the new session on the scope\n    scope.setSession(session);\n\n    return session;\n  }\n\n  /**\n   * Returns if default PII should be sent to Sentry and propagated in ourgoing requests\n   * when Tracing is used.\n   */\n   shouldSendDefaultPii() {\n    const client = this.getClient();\n    const options = client && client.getOptions();\n    return Boolean(options && options.sendDefaultPii);\n  }\n\n  /**\n   * Sends the current Session on the scope\n   */\n   _sendSessionUpdate() {\n    const { scope, client } = this.getStackTop();\n    if (!scope) return;\n\n    const session = scope.getSession();\n    if (session) {\n      if (client && client.captureSession) {\n        client.captureSession(session);\n      }\n    }\n  }\n\n  /**\n   * Internal helper function to call a method on the top client if it exists.\n   *\n   * @param method The method to call on the client.\n   * @param args Arguments to pass to the client function.\n   */\n   _withClient(callback) {\n    const { scope, client } = this.getStackTop();\n    if (client) {\n      callback(client, scope);\n    }\n  }\n\n  /**\n   * Calls global extension method and binding current instance to the function call\n   */\n  // @ts-ignore Function lacks ending return statement and return type does not include 'undefined'. ts(2366)\n  // eslint-disable-next-line @typescript-eslint/no-explicit-any\n   _callExtensionMethod(method, ...args) {\n    const carrier = getMainCarrier();\n    const sentry = carrier.__SENTRY__;\n    if (sentry && sentry.extensions && typeof sentry.extensions[method] === 'function') {\n      return sentry.extensions[method].apply(this, args);\n    }\n    (typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__) && _sentry_utils__WEBPACK_IMPORTED_MODULE_3__.logger.warn(`Extension method ${method} couldn't be found, doing nothing.`);\n  }\n}\n\n/**\n * Returns the global shim registry.\n *\n * FIXME: This function is problematic, because despite always returning a valid Carrier,\n * it has an optional `__SENTRY__` property, which then in turn requires us to always perform an unnecessary check\n * at the call-site. We always access the carrier through this function, so we can guarantee that `__SENTRY__` is there.\n **/\nfunction getMainCarrier() {\n  _sentry_utils__WEBPACK_IMPORTED_MODULE_6__.GLOBAL_OBJ.__SENTRY__ = _sentry_utils__WEBPACK_IMPORTED_MODULE_6__.GLOBAL_OBJ.__SENTRY__ || {\n    extensions: {},\n    hub: undefined,\n  };\n  return _sentry_utils__WEBPACK_IMPORTED_MODULE_6__.GLOBAL_OBJ;\n}\n\n/**\n * Replaces the current main hub with the passed one on the global object\n *\n * @returns The old replaced hub\n */\nfunction makeMain(hub) {\n  const registry = getMainCarrier();\n  const oldHub = getHubFromCarrier(registry);\n  setHubOnCarrier(registry, hub);\n  return oldHub;\n}\n\n/**\n * Returns the default hub instance.\n *\n * If a hub is already registered in the global carrier but this module\n * contains a more recent version, it replaces the registered version.\n * Otherwise, the currently registered hub will be returned.\n */\nfunction getCurrentHub() {\n  // Get main carrier (global for every environment)\n  const registry = getMainCarrier();\n\n  // If there's no hub, or its an old API, assign a new one\n  if (!hasHubOnCarrier(registry) || getHubFromCarrier(registry).isOlderThan(API_VERSION)) {\n    setHubOnCarrier(registry, new Hub());\n  }\n\n  // Prefer domains over global if they are there (applicable only to Node environment)\n  if ((0,_sentry_utils__WEBPACK_IMPORTED_MODULE_7__.isNodeEnv)()) {\n    return getHubFromActiveDomain(registry);\n  }\n  // Return hub that lives on a global object\n  return getHubFromCarrier(registry);\n}\n\n/**\n * Try to read the hub from an active domain, and fallback to the registry if one doesn't exist\n * @returns discovered hub\n */\nfunction getHubFromActiveDomain(registry) {\n  try {\n    const sentry = getMainCarrier().__SENTRY__;\n    const activeDomain = sentry && sentry.extensions && sentry.extensions.domain && sentry.extensions.domain.active;\n\n    // If there's no active domain, just return global hub\n    if (!activeDomain) {\n      return getHubFromCarrier(registry);\n    }\n\n    // If there's no hub on current domain, or it's an old API, assign a new one\n    if (!hasHubOnCarrier(activeDomain) || getHubFromCarrier(activeDomain).isOlderThan(API_VERSION)) {\n      const registryHubTopStack = getHubFromCarrier(registry).getStackTop();\n      setHubOnCarrier(activeDomain, new Hub(registryHubTopStack.client, _scope_js__WEBPACK_IMPORTED_MODULE_0__.Scope.clone(registryHubTopStack.scope)));\n    }\n\n    // Return hub that lives on a domain\n    return getHubFromCarrier(activeDomain);\n  } catch (_Oo) {\n    // Return hub that lives on a global object\n    return getHubFromCarrier(registry);\n  }\n}\n\n/**\n * This will tell whether a carrier has a hub on it or not\n * @param carrier object\n */\nfunction hasHubOnCarrier(carrier) {\n  return !!(carrier && carrier.__SENTRY__ && carrier.__SENTRY__.hub);\n}\n\n/**\n * This will create a new {@link Hub} and add to the passed object on\n * __SENTRY__.hub.\n * @param carrier object\n * @hidden\n */\nfunction getHubFromCarrier(carrier) {\n  return (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_6__.getGlobalSingleton)('hub', () => new Hub(), carrier);\n}\n\n/**\n * This will set passed {@link Hub} on the passed object's __SENTRY__.hub attribute\n * @param carrier object\n * @param hub Hub\n * @returns A boolean indicating success or failure\n */\nfunction setHubOnCarrier(carrier, hub) {\n  if (!carrier) return false;\n  const __SENTRY__ = (carrier.__SENTRY__ = carrier.__SENTRY__ || {});\n  __SENTRY__.hub = hub;\n  return true;\n}\n\n\n//# sourceMappingURL=hub.js.map\n\n\n//# sourceURL=webpack://custom-shipping-step-by-items/./node_modules/@sentry/core/esm/hub.js?");
-
-/***/ }),
-
-/***/ "./node_modules/@sentry/core/esm/scope.js":
-/*!************************************************!*\
-  !*** ./node_modules/@sentry/core/esm/scope.js ***!
-  \************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"Scope\": () => (/* binding */ Scope),\n/* harmony export */   \"addGlobalEventProcessor\": () => (/* binding */ addGlobalEventProcessor)\n/* harmony export */ });\n/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @sentry/utils */ \"./node_modules/@sentry/utils/esm/is.js\");\n/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @sentry/utils */ \"./node_modules/@sentry/utils/esm/time.js\");\n/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @sentry/utils */ \"./node_modules/@sentry/utils/esm/syncpromise.js\");\n/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @sentry/utils */ \"./node_modules/@sentry/utils/esm/logger.js\");\n/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @sentry/utils */ \"./node_modules/@sentry/utils/esm/misc.js\");\n/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @sentry/utils */ \"./node_modules/@sentry/utils/esm/worldwide.js\");\n/* harmony import */ var _session_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./session.js */ \"./node_modules/@sentry/core/esm/session.js\");\n\n\n\n/**\n * Default value for maximum number of breadcrumbs added to an event.\n */\nconst DEFAULT_MAX_BREADCRUMBS = 100;\n\n/**\n * Holds additional event information. {@link Scope.applyToEvent} will be\n * called by the client before an event will be sent.\n */\nclass Scope  {\n  /** Flag if notifying is happening. */\n\n  /** Callback for client to receive scope changes. */\n\n  /** Callback list that will be called after {@link applyToEvent}. */\n\n  /** Array of breadcrumbs. */\n\n  /** User */\n\n  /** Tags */\n\n  /** Extra */\n\n  /** Contexts */\n\n  /** Attachments */\n\n  /**\n   * A place to stash data which is needed at some point in the SDK's event processing pipeline but which shouldn't get\n   * sent to Sentry\n   */\n\n  /** Fingerprint */\n\n  /** Severity */\n  // eslint-disable-next-line deprecation/deprecation\n\n  /** Transaction Name */\n\n  /** Span */\n\n  /** Session */\n\n  /** Request Mode Session Status */\n\n  // NOTE: Any field which gets added here should get added not only to the constructor but also to the `clone` method.\n\n   constructor() {\n    this._notifyingListeners = false;\n    this._scopeListeners = [];\n    this._eventProcessors = [];\n    this._breadcrumbs = [];\n    this._attachments = [];\n    this._user = {};\n    this._tags = {};\n    this._extra = {};\n    this._contexts = {};\n    this._sdkProcessingMetadata = {};\n  }\n\n  /**\n   * Inherit values from the parent scope.\n   * @param scope to clone.\n   */\n   static clone(scope) {\n    const newScope = new Scope();\n    if (scope) {\n      newScope._breadcrumbs = [...scope._breadcrumbs];\n      newScope._tags = { ...scope._tags };\n      newScope._extra = { ...scope._extra };\n      newScope._contexts = { ...scope._contexts };\n      newScope._user = scope._user;\n      newScope._level = scope._level;\n      newScope._span = scope._span;\n      newScope._session = scope._session;\n      newScope._transactionName = scope._transactionName;\n      newScope._fingerprint = scope._fingerprint;\n      newScope._eventProcessors = [...scope._eventProcessors];\n      newScope._requestSession = scope._requestSession;\n      newScope._attachments = [...scope._attachments];\n      newScope._sdkProcessingMetadata = { ...scope._sdkProcessingMetadata };\n    }\n    return newScope;\n  }\n\n  /**\n   * Add internal on change listener. Used for sub SDKs that need to store the scope.\n   * @hidden\n   */\n   addScopeListener(callback) {\n    this._scopeListeners.push(callback);\n  }\n\n  /**\n   * @inheritDoc\n   */\n   addEventProcessor(callback) {\n    this._eventProcessors.push(callback);\n    return this;\n  }\n\n  /**\n   * @inheritDoc\n   */\n   setUser(user) {\n    this._user = user || {};\n    if (this._session) {\n      (0,_session_js__WEBPACK_IMPORTED_MODULE_0__.updateSession)(this._session, { user });\n    }\n    this._notifyScopeListeners();\n    return this;\n  }\n\n  /**\n   * @inheritDoc\n   */\n   getUser() {\n    return this._user;\n  }\n\n  /**\n   * @inheritDoc\n   */\n   getRequestSession() {\n    return this._requestSession;\n  }\n\n  /**\n   * @inheritDoc\n   */\n   setRequestSession(requestSession) {\n    this._requestSession = requestSession;\n    return this;\n  }\n\n  /**\n   * @inheritDoc\n   */\n   setTags(tags) {\n    this._tags = {\n      ...this._tags,\n      ...tags,\n    };\n    this._notifyScopeListeners();\n    return this;\n  }\n\n  /**\n   * @inheritDoc\n   */\n   setTag(key, value) {\n    this._tags = { ...this._tags, [key]: value };\n    this._notifyScopeListeners();\n    return this;\n  }\n\n  /**\n   * @inheritDoc\n   */\n   setExtras(extras) {\n    this._extra = {\n      ...this._extra,\n      ...extras,\n    };\n    this._notifyScopeListeners();\n    return this;\n  }\n\n  /**\n   * @inheritDoc\n   */\n   setExtra(key, extra) {\n    this._extra = { ...this._extra, [key]: extra };\n    this._notifyScopeListeners();\n    return this;\n  }\n\n  /**\n   * @inheritDoc\n   */\n   setFingerprint(fingerprint) {\n    this._fingerprint = fingerprint;\n    this._notifyScopeListeners();\n    return this;\n  }\n\n  /**\n   * @inheritDoc\n   */\n   setLevel(\n    // eslint-disable-next-line deprecation/deprecation\n    level,\n  ) {\n    this._level = level;\n    this._notifyScopeListeners();\n    return this;\n  }\n\n  /**\n   * @inheritDoc\n   */\n   setTransactionName(name) {\n    this._transactionName = name;\n    this._notifyScopeListeners();\n    return this;\n  }\n\n  /**\n   * @inheritDoc\n   */\n   setContext(key, context) {\n    if (context === null) {\n      // eslint-disable-next-line @typescript-eslint/no-dynamic-delete\n      delete this._contexts[key];\n    } else {\n      this._contexts[key] = context;\n    }\n\n    this._notifyScopeListeners();\n    return this;\n  }\n\n  /**\n   * @inheritDoc\n   */\n   setSpan(span) {\n    this._span = span;\n    this._notifyScopeListeners();\n    return this;\n  }\n\n  /**\n   * @inheritDoc\n   */\n   getSpan() {\n    return this._span;\n  }\n\n  /**\n   * @inheritDoc\n   */\n   getTransaction() {\n    // Often, this span (if it exists at all) will be a transaction, but it's not guaranteed to be. Regardless, it will\n    // have a pointer to the currently-active transaction.\n    const span = this.getSpan();\n    return span && span.transaction;\n  }\n\n  /**\n   * @inheritDoc\n   */\n   setSession(session) {\n    if (!session) {\n      delete this._session;\n    } else {\n      this._session = session;\n    }\n    this._notifyScopeListeners();\n    return this;\n  }\n\n  /**\n   * @inheritDoc\n   */\n   getSession() {\n    return this._session;\n  }\n\n  /**\n   * @inheritDoc\n   */\n   update(captureContext) {\n    if (!captureContext) {\n      return this;\n    }\n\n    if (typeof captureContext === 'function') {\n      const updatedScope = (captureContext )(this);\n      return updatedScope instanceof Scope ? updatedScope : this;\n    }\n\n    if (captureContext instanceof Scope) {\n      this._tags = { ...this._tags, ...captureContext._tags };\n      this._extra = { ...this._extra, ...captureContext._extra };\n      this._contexts = { ...this._contexts, ...captureContext._contexts };\n      if (captureContext._user && Object.keys(captureContext._user).length) {\n        this._user = captureContext._user;\n      }\n      if (captureContext._level) {\n        this._level = captureContext._level;\n      }\n      if (captureContext._fingerprint) {\n        this._fingerprint = captureContext._fingerprint;\n      }\n      if (captureContext._requestSession) {\n        this._requestSession = captureContext._requestSession;\n      }\n    } else if ((0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__.isPlainObject)(captureContext)) {\n      // eslint-disable-next-line no-param-reassign\n      captureContext = captureContext ;\n      this._tags = { ...this._tags, ...captureContext.tags };\n      this._extra = { ...this._extra, ...captureContext.extra };\n      this._contexts = { ...this._contexts, ...captureContext.contexts };\n      if (captureContext.user) {\n        this._user = captureContext.user;\n      }\n      if (captureContext.level) {\n        this._level = captureContext.level;\n      }\n      if (captureContext.fingerprint) {\n        this._fingerprint = captureContext.fingerprint;\n      }\n      if (captureContext.requestSession) {\n        this._requestSession = captureContext.requestSession;\n      }\n    }\n\n    return this;\n  }\n\n  /**\n   * @inheritDoc\n   */\n   clear() {\n    this._breadcrumbs = [];\n    this._tags = {};\n    this._extra = {};\n    this._user = {};\n    this._contexts = {};\n    this._level = undefined;\n    this._transactionName = undefined;\n    this._fingerprint = undefined;\n    this._requestSession = undefined;\n    this._span = undefined;\n    this._session = undefined;\n    this._notifyScopeListeners();\n    this._attachments = [];\n    return this;\n  }\n\n  /**\n   * @inheritDoc\n   */\n   addBreadcrumb(breadcrumb, maxBreadcrumbs) {\n    const maxCrumbs = typeof maxBreadcrumbs === 'number' ? maxBreadcrumbs : DEFAULT_MAX_BREADCRUMBS;\n\n    // No data has been changed, so don't notify scope listeners\n    if (maxCrumbs <= 0) {\n      return this;\n    }\n\n    const mergedBreadcrumb = {\n      timestamp: (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_2__.dateTimestampInSeconds)(),\n      ...breadcrumb,\n    };\n    this._breadcrumbs = [...this._breadcrumbs, mergedBreadcrumb].slice(-maxCrumbs);\n    this._notifyScopeListeners();\n\n    return this;\n  }\n\n  /**\n   * @inheritDoc\n   */\n   getLastBreadcrumb() {\n    return this._breadcrumbs[this._breadcrumbs.length - 1];\n  }\n\n  /**\n   * @inheritDoc\n   */\n   clearBreadcrumbs() {\n    this._breadcrumbs = [];\n    this._notifyScopeListeners();\n    return this;\n  }\n\n  /**\n   * @inheritDoc\n   */\n   addAttachment(attachment) {\n    this._attachments.push(attachment);\n    return this;\n  }\n\n  /**\n   * @inheritDoc\n   */\n   getAttachments() {\n    return this._attachments;\n  }\n\n  /**\n   * @inheritDoc\n   */\n   clearAttachments() {\n    this._attachments = [];\n    return this;\n  }\n\n  /**\n   * Applies data from the scope to the event and runs all event processors on it.\n   *\n   * @param event Event\n   * @param hint Object containing additional information about the original exception, for use by the event processors.\n   * @hidden\n   */\n   applyToEvent(event, hint = {}) {\n    if (this._extra && Object.keys(this._extra).length) {\n      event.extra = { ...this._extra, ...event.extra };\n    }\n    if (this._tags && Object.keys(this._tags).length) {\n      event.tags = { ...this._tags, ...event.tags };\n    }\n    if (this._user && Object.keys(this._user).length) {\n      event.user = { ...this._user, ...event.user };\n    }\n    if (this._contexts && Object.keys(this._contexts).length) {\n      event.contexts = { ...this._contexts, ...event.contexts };\n    }\n    if (this._level) {\n      event.level = this._level;\n    }\n    if (this._transactionName) {\n      event.transaction = this._transactionName;\n    }\n\n    // We want to set the trace context for normal events only if there isn't already\n    // a trace context on the event. There is a product feature in place where we link\n    // errors with transaction and it relies on that.\n    if (this._span) {\n      event.contexts = { trace: this._span.getTraceContext(), ...event.contexts };\n      const transactionName = this._span.transaction && this._span.transaction.name;\n      if (transactionName) {\n        event.tags = { transaction: transactionName, ...event.tags };\n      }\n    }\n\n    this._applyFingerprint(event);\n\n    event.breadcrumbs = [...(event.breadcrumbs || []), ...this._breadcrumbs];\n    event.breadcrumbs = event.breadcrumbs.length > 0 ? event.breadcrumbs : undefined;\n\n    event.sdkProcessingMetadata = { ...event.sdkProcessingMetadata, ...this._sdkProcessingMetadata };\n\n    return this._notifyEventProcessors([...getGlobalEventProcessors(), ...this._eventProcessors], event, hint);\n  }\n\n  /**\n   * Add data which will be accessible during event processing but won't get sent to Sentry\n   */\n   setSDKProcessingMetadata(newData) {\n    this._sdkProcessingMetadata = { ...this._sdkProcessingMetadata, ...newData };\n\n    return this;\n  }\n\n  /**\n   * This will be called after {@link applyToEvent} is finished.\n   */\n   _notifyEventProcessors(\n    processors,\n    event,\n    hint,\n    index = 0,\n  ) {\n    return new _sentry_utils__WEBPACK_IMPORTED_MODULE_3__.SyncPromise((resolve, reject) => {\n      const processor = processors[index];\n      if (event === null || typeof processor !== 'function') {\n        resolve(event);\n      } else {\n        const result = processor({ ...event }, hint) ;\n\n        (typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__) &&\n          processor.id &&\n          result === null &&\n          _sentry_utils__WEBPACK_IMPORTED_MODULE_4__.logger.log(`Event processor \"${processor.id}\" dropped event`);\n\n        if ((0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__.isThenable)(result)) {\n          void result\n            .then(final => this._notifyEventProcessors(processors, final, hint, index + 1).then(resolve))\n            .then(null, reject);\n        } else {\n          void this._notifyEventProcessors(processors, result, hint, index + 1)\n            .then(resolve)\n            .then(null, reject);\n        }\n      }\n    });\n  }\n\n  /**\n   * This will be called on every set call.\n   */\n   _notifyScopeListeners() {\n    // We need this check for this._notifyingListeners to be able to work on scope during updates\n    // If this check is not here we'll produce endless recursion when something is done with the scope\n    // during the callback.\n    if (!this._notifyingListeners) {\n      this._notifyingListeners = true;\n      this._scopeListeners.forEach(callback => {\n        callback(this);\n      });\n      this._notifyingListeners = false;\n    }\n  }\n\n  /**\n   * Applies fingerprint from the scope to the event if there's one,\n   * uses message if there's one instead or get rid of empty fingerprint\n   */\n   _applyFingerprint(event) {\n    // Make sure it's an array first and we actually have something in place\n    event.fingerprint = event.fingerprint ? (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_5__.arrayify)(event.fingerprint) : [];\n\n    // If we have something on the scope, then merge it with event\n    if (this._fingerprint) {\n      event.fingerprint = event.fingerprint.concat(this._fingerprint);\n    }\n\n    // If we have no data at all, remove empty array default\n    if (event.fingerprint && !event.fingerprint.length) {\n      delete event.fingerprint;\n    }\n  }\n}\n\n/**\n * Returns the global event processors.\n */\nfunction getGlobalEventProcessors() {\n  return (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_6__.getGlobalSingleton)('globalEventProcessors', () => []);\n}\n\n/**\n * Add a EventProcessor to be kept globally.\n * @param callback EventProcessor to add\n */\nfunction addGlobalEventProcessor(callback) {\n  getGlobalEventProcessors().push(callback);\n}\n\n\n//# sourceMappingURL=scope.js.map\n\n\n//# sourceURL=webpack://custom-shipping-step-by-items/./node_modules/@sentry/core/esm/scope.js?");
-
-/***/ }),
-
-/***/ "./node_modules/@sentry/core/esm/session.js":
-/*!**************************************************!*\
-  !*** ./node_modules/@sentry/core/esm/session.js ***!
-  \**************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"closeSession\": () => (/* binding */ closeSession),\n/* harmony export */   \"makeSession\": () => (/* binding */ makeSession),\n/* harmony export */   \"updateSession\": () => (/* binding */ updateSession)\n/* harmony export */ });\n/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @sentry/utils */ \"./node_modules/@sentry/utils/esm/time.js\");\n/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @sentry/utils */ \"./node_modules/@sentry/utils/esm/misc.js\");\n/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @sentry/utils */ \"./node_modules/@sentry/utils/esm/object.js\");\n\n\n/**\n * Creates a new `Session` object by setting certain default parameters. If optional @param context\n * is passed, the passed properties are applied to the session object.\n *\n * @param context (optional) additional properties to be applied to the returned session object\n *\n * @returns a new `Session` object\n */\nfunction makeSession(context) {\n  // Both timestamp and started are in seconds since the UNIX epoch.\n  const startingTime = (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_0__.timestampInSeconds)();\n\n  const session = {\n    sid: (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__.uuid4)(),\n    init: true,\n    timestamp: startingTime,\n    started: startingTime,\n    duration: 0,\n    status: 'ok',\n    errors: 0,\n    ignoreDuration: false,\n    toJSON: () => sessionToJSON(session),\n  };\n\n  if (context) {\n    updateSession(session, context);\n  }\n\n  return session;\n}\n\n/**\n * Updates a session object with the properties passed in the context.\n *\n * Note that this function mutates the passed object and returns void.\n * (Had to do this instead of returning a new and updated session because closing and sending a session\n * makes an update to the session after it was passed to the sending logic.\n * @see BaseClient.captureSession )\n *\n * @param session the `Session` to update\n * @param context the `SessionContext` holding the properties that should be updated in @param session\n */\n// eslint-disable-next-line complexity\nfunction updateSession(session, context = {}) {\n  if (context.user) {\n    if (!session.ipAddress && context.user.ip_address) {\n      session.ipAddress = context.user.ip_address;\n    }\n\n    if (!session.did && !context.did) {\n      session.did = context.user.id || context.user.email || context.user.username;\n    }\n  }\n\n  session.timestamp = context.timestamp || (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_0__.timestampInSeconds)();\n\n  if (context.ignoreDuration) {\n    session.ignoreDuration = context.ignoreDuration;\n  }\n  if (context.sid) {\n    // Good enough uuid validation. — Kamil\n    session.sid = context.sid.length === 32 ? context.sid : (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__.uuid4)();\n  }\n  if (context.init !== undefined) {\n    session.init = context.init;\n  }\n  if (!session.did && context.did) {\n    session.did = `${context.did}`;\n  }\n  if (typeof context.started === 'number') {\n    session.started = context.started;\n  }\n  if (session.ignoreDuration) {\n    session.duration = undefined;\n  } else if (typeof context.duration === 'number') {\n    session.duration = context.duration;\n  } else {\n    const duration = session.timestamp - session.started;\n    session.duration = duration >= 0 ? duration : 0;\n  }\n  if (context.release) {\n    session.release = context.release;\n  }\n  if (context.environment) {\n    session.environment = context.environment;\n  }\n  if (!session.ipAddress && context.ipAddress) {\n    session.ipAddress = context.ipAddress;\n  }\n  if (!session.userAgent && context.userAgent) {\n    session.userAgent = context.userAgent;\n  }\n  if (typeof context.errors === 'number') {\n    session.errors = context.errors;\n  }\n  if (context.status) {\n    session.status = context.status;\n  }\n}\n\n/**\n * Closes a session by setting its status and updating the session object with it.\n * Internally calls `updateSession` to update the passed session object.\n *\n * Note that this function mutates the passed session (@see updateSession for explanation).\n *\n * @param session the `Session` object to be closed\n * @param status the `SessionStatus` with which the session was closed. If you don't pass a status,\n *               this function will keep the previously set status, unless it was `'ok'` in which case\n *               it is changed to `'exited'`.\n */\nfunction closeSession(session, status) {\n  let context = {};\n  if (status) {\n    context = { status };\n  } else if (session.status === 'ok') {\n    context = { status: 'exited' };\n  }\n\n  updateSession(session, context);\n}\n\n/**\n * Serializes a passed session object to a JSON object with a slightly different structure.\n * This is necessary because the Sentry backend requires a slightly different schema of a session\n * than the one the JS SDKs use internally.\n *\n * @param session the session to be converted\n *\n * @returns a JSON object of the passed session\n */\nfunction sessionToJSON(session) {\n  return (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_2__.dropUndefinedKeys)({\n    sid: `${session.sid}`,\n    init: session.init,\n    // Make sure that sec is converted to ms for date constructor\n    started: new Date(session.started * 1000).toISOString(),\n    timestamp: new Date(session.timestamp * 1000).toISOString(),\n    status: session.status,\n    errors: session.errors,\n    did: typeof session.did === 'number' || typeof session.did === 'string' ? `${session.did}` : undefined,\n    duration: session.duration,\n    attrs: {\n      release: session.release,\n      environment: session.environment,\n      ip_address: session.ipAddress,\n      user_agent: session.userAgent,\n    },\n  });\n}\n\n\n//# sourceMappingURL=session.js.map\n\n\n//# sourceURL=webpack://custom-shipping-step-by-items/./node_modules/@sentry/core/esm/session.js?");
-
-/***/ }),
-
-/***/ "./node_modules/@sentry/utils/esm/browser.js":
-/*!***************************************************!*\
-  !*** ./node_modules/@sentry/utils/esm/browser.js ***!
-  \***************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"getDomElement\": () => (/* binding */ getDomElement),\n/* harmony export */   \"getLocationHref\": () => (/* binding */ getLocationHref),\n/* harmony export */   \"htmlTreeAsString\": () => (/* binding */ htmlTreeAsString)\n/* harmony export */ });\n/* harmony import */ var _is_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./is.js */ \"./node_modules/@sentry/utils/esm/is.js\");\n/* harmony import */ var _worldwide_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./worldwide.js */ \"./node_modules/@sentry/utils/esm/worldwide.js\");\n\n\n\n// eslint-disable-next-line deprecation/deprecation\nconst WINDOW = (0,_worldwide_js__WEBPACK_IMPORTED_MODULE_0__.getGlobalObject)();\n\nconst DEFAULT_MAX_STRING_LENGTH = 80;\n\n/**\n * Given a child DOM element, returns a query-selector statement describing that\n * and its ancestors\n * e.g. [HTMLElement] => body > div > input#foo.btn[name=baz]\n * @returns generated DOM path\n */\nfunction htmlTreeAsString(\n  elem,\n  options = {},\n) {\n\n  // try/catch both:\n  // - accessing event.target (see getsentry/raven-js#838, #768)\n  // - `htmlTreeAsString` because it's complex, and just accessing the DOM incorrectly\n  // - can throw an exception in some circumstances.\n  try {\n    let currentElem = elem ;\n    const MAX_TRAVERSE_HEIGHT = 5;\n    const out = [];\n    let height = 0;\n    let len = 0;\n    const separator = ' > ';\n    const sepLength = separator.length;\n    let nextStr;\n    const keyAttrs = Array.isArray(options) ? options : options.keyAttrs;\n    const maxStringLength = (!Array.isArray(options) && options.maxStringLength) || DEFAULT_MAX_STRING_LENGTH;\n\n    while (currentElem && height++ < MAX_TRAVERSE_HEIGHT) {\n      nextStr = _htmlElementAsString(currentElem, keyAttrs);\n      // bail out if\n      // - nextStr is the 'html' element\n      // - the length of the string that would be created exceeds maxStringLength\n      //   (ignore this limit if we are on the first iteration)\n      if (nextStr === 'html' || (height > 1 && len + out.length * sepLength + nextStr.length >= maxStringLength)) {\n        break;\n      }\n\n      out.push(nextStr);\n\n      len += nextStr.length;\n      currentElem = currentElem.parentNode;\n    }\n\n    return out.reverse().join(separator);\n  } catch (_oO) {\n    return '<unknown>';\n  }\n}\n\n/**\n * Returns a simple, query-selector representation of a DOM element\n * e.g. [HTMLElement] => input#foo.btn[name=baz]\n * @returns generated DOM path\n */\nfunction _htmlElementAsString(el, keyAttrs) {\n  const elem = el\n\n;\n\n  const out = [];\n  let className;\n  let classes;\n  let key;\n  let attr;\n  let i;\n\n  if (!elem || !elem.tagName) {\n    return '';\n  }\n\n  out.push(elem.tagName.toLowerCase());\n\n  // Pairs of attribute keys defined in `serializeAttribute` and their values on element.\n  const keyAttrPairs =\n    keyAttrs && keyAttrs.length\n      ? keyAttrs.filter(keyAttr => elem.getAttribute(keyAttr)).map(keyAttr => [keyAttr, elem.getAttribute(keyAttr)])\n      : null;\n\n  if (keyAttrPairs && keyAttrPairs.length) {\n    keyAttrPairs.forEach(keyAttrPair => {\n      out.push(`[${keyAttrPair[0]}=\"${keyAttrPair[1]}\"]`);\n    });\n  } else {\n    if (elem.id) {\n      out.push(`#${elem.id}`);\n    }\n\n    // eslint-disable-next-line prefer-const\n    className = elem.className;\n    if (className && (0,_is_js__WEBPACK_IMPORTED_MODULE_1__.isString)(className)) {\n      classes = className.split(/\\s+/);\n      for (i = 0; i < classes.length; i++) {\n        out.push(`.${classes[i]}`);\n      }\n    }\n  }\n  const allowedAttrs = ['aria-label', 'type', 'name', 'title', 'alt'];\n  for (i = 0; i < allowedAttrs.length; i++) {\n    key = allowedAttrs[i];\n    attr = elem.getAttribute(key);\n    if (attr) {\n      out.push(`[${key}=\"${attr}\"]`);\n    }\n  }\n  return out.join('');\n}\n\n/**\n * A safe form of location.href\n */\nfunction getLocationHref() {\n  try {\n    return WINDOW.document.location.href;\n  } catch (oO) {\n    return '';\n  }\n}\n\n/**\n * Gets a DOM element by using document.querySelector.\n *\n * This wrapper will first check for the existance of the function before\n * actually calling it so that we don't have to take care of this check,\n * every time we want to access the DOM.\n *\n * Reason: DOM/querySelector is not available in all environments.\n *\n * We have to cast to any because utils can be consumed by a variety of environments,\n * and we don't want to break TS users. If you know what element will be selected by\n * `document.querySelector`, specify it as part of the generic call. For example,\n * `const element = getDomElement<Element>('selector');`\n *\n * @param selector the selector string passed on to document.querySelector\n */\n// eslint-disable-next-line @typescript-eslint/no-explicit-any\nfunction getDomElement(selector) {\n  if (WINDOW.document && WINDOW.document.querySelector) {\n    return WINDOW.document.querySelector(selector) ;\n  }\n  return null;\n}\n\n\n//# sourceMappingURL=browser.js.map\n\n\n//# sourceURL=webpack://custom-shipping-step-by-items/./node_modules/@sentry/utils/esm/browser.js?");
-
-/***/ }),
-
-/***/ "./node_modules/@sentry/utils/esm/env.js":
-/*!***********************************************!*\
-  !*** ./node_modules/@sentry/utils/esm/env.js ***!
-  \***********************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"getSDKSource\": () => (/* binding */ getSDKSource),\n/* harmony export */   \"isBrowserBundle\": () => (/* binding */ isBrowserBundle)\n/* harmony export */ });\n/*\n * This module exists for optimizations in the build process through rollup and terser.  We define some global\n * constants, which can be overridden during build. By guarding certain pieces of code with functions that return these\n * constants, we can control whether or not they appear in the final bundle. (Any code guarded by a false condition will\n * never run, and will hence be dropped during treeshaking.) The two primary uses for this are stripping out calls to\n * `logger` and preventing node-related code from appearing in browser bundles.\n *\n * Attention:\n * This file should not be used to define constants/flags that are intended to be used for tree-shaking conducted by\n * users. These flags should live in their respective packages, as we identified user tooling (specifically webpack)\n * having issues tree-shaking these constants across package boundaries.\n * An example for this is the __SENTRY_DEBUG__ constant. It is declared in each package individually because we want\n * users to be able to shake away expressions that it guards.\n */\n\n/**\n * Figures out if we're building a browser bundle.\n *\n * @returns true if this is a browser bundle build.\n */\nfunction isBrowserBundle() {\n  return typeof __SENTRY_BROWSER_BUNDLE__ !== 'undefined' && !!__SENTRY_BROWSER_BUNDLE__;\n}\n\n/**\n * Get source of SDK.\n */\nfunction getSDKSource() {\n  // @ts-ignore \"npm\" is injected by rollup during build process\n  return \"npm\";\n}\n\n\n//# sourceMappingURL=env.js.map\n\n\n//# sourceURL=webpack://custom-shipping-step-by-items/./node_modules/@sentry/utils/esm/env.js?");
-
-/***/ }),
-
-/***/ "./node_modules/@sentry/utils/esm/is.js":
-/*!**********************************************!*\
-  !*** ./node_modules/@sentry/utils/esm/is.js ***!
-  \**********************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"isDOMError\": () => (/* binding */ isDOMError),\n/* harmony export */   \"isDOMException\": () => (/* binding */ isDOMException),\n/* harmony export */   \"isElement\": () => (/* binding */ isElement),\n/* harmony export */   \"isError\": () => (/* binding */ isError),\n/* harmony export */   \"isErrorEvent\": () => (/* binding */ isErrorEvent),\n/* harmony export */   \"isEvent\": () => (/* binding */ isEvent),\n/* harmony export */   \"isInstanceOf\": () => (/* binding */ isInstanceOf),\n/* harmony export */   \"isNaN\": () => (/* binding */ isNaN),\n/* harmony export */   \"isPlainObject\": () => (/* binding */ isPlainObject),\n/* harmony export */   \"isPrimitive\": () => (/* binding */ isPrimitive),\n/* harmony export */   \"isRegExp\": () => (/* binding */ isRegExp),\n/* harmony export */   \"isString\": () => (/* binding */ isString),\n/* harmony export */   \"isSyntheticEvent\": () => (/* binding */ isSyntheticEvent),\n/* harmony export */   \"isThenable\": () => (/* binding */ isThenable)\n/* harmony export */ });\n// eslint-disable-next-line @typescript-eslint/unbound-method\nconst objectToString = Object.prototype.toString;\n\n/**\n * Checks whether given value's type is one of a few Error or Error-like\n * {@link isError}.\n *\n * @param wat A value to be checked.\n * @returns A boolean representing the result.\n */\nfunction isError(wat) {\n  switch (objectToString.call(wat)) {\n    case '[object Error]':\n    case '[object Exception]':\n    case '[object DOMException]':\n      return true;\n    default:\n      return isInstanceOf(wat, Error);\n  }\n}\n/**\n * Checks whether given value is an instance of the given built-in class.\n *\n * @param wat The value to be checked\n * @param className\n * @returns A boolean representing the result.\n */\nfunction isBuiltin(wat, className) {\n  return objectToString.call(wat) === `[object ${className}]`;\n}\n\n/**\n * Checks whether given value's type is ErrorEvent\n * {@link isErrorEvent}.\n *\n * @param wat A value to be checked.\n * @returns A boolean representing the result.\n */\nfunction isErrorEvent(wat) {\n  return isBuiltin(wat, 'ErrorEvent');\n}\n\n/**\n * Checks whether given value's type is DOMError\n * {@link isDOMError}.\n *\n * @param wat A value to be checked.\n * @returns A boolean representing the result.\n */\nfunction isDOMError(wat) {\n  return isBuiltin(wat, 'DOMError');\n}\n\n/**\n * Checks whether given value's type is DOMException\n * {@link isDOMException}.\n *\n * @param wat A value to be checked.\n * @returns A boolean representing the result.\n */\nfunction isDOMException(wat) {\n  return isBuiltin(wat, 'DOMException');\n}\n\n/**\n * Checks whether given value's type is a string\n * {@link isString}.\n *\n * @param wat A value to be checked.\n * @returns A boolean representing the result.\n */\nfunction isString(wat) {\n  return isBuiltin(wat, 'String');\n}\n\n/**\n * Checks whether given value is a primitive (undefined, null, number, boolean, string, bigint, symbol)\n * {@link isPrimitive}.\n *\n * @param wat A value to be checked.\n * @returns A boolean representing the result.\n */\nfunction isPrimitive(wat) {\n  return wat === null || (typeof wat !== 'object' && typeof wat !== 'function');\n}\n\n/**\n * Checks whether given value's type is an object literal\n * {@link isPlainObject}.\n *\n * @param wat A value to be checked.\n * @returns A boolean representing the result.\n */\nfunction isPlainObject(wat) {\n  return isBuiltin(wat, 'Object');\n}\n\n/**\n * Checks whether given value's type is an Event instance\n * {@link isEvent}.\n *\n * @param wat A value to be checked.\n * @returns A boolean representing the result.\n */\nfunction isEvent(wat) {\n  return typeof Event !== 'undefined' && isInstanceOf(wat, Event);\n}\n\n/**\n * Checks whether given value's type is an Element instance\n * {@link isElement}.\n *\n * @param wat A value to be checked.\n * @returns A boolean representing the result.\n */\nfunction isElement(wat) {\n  return typeof Element !== 'undefined' && isInstanceOf(wat, Element);\n}\n\n/**\n * Checks whether given value's type is an regexp\n * {@link isRegExp}.\n *\n * @param wat A value to be checked.\n * @returns A boolean representing the result.\n */\nfunction isRegExp(wat) {\n  return isBuiltin(wat, 'RegExp');\n}\n\n/**\n * Checks whether given value has a then function.\n * @param wat A value to be checked.\n */\nfunction isThenable(wat) {\n  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access\n  return Boolean(wat && wat.then && typeof wat.then === 'function');\n}\n\n/**\n * Checks whether given value's type is a SyntheticEvent\n * {@link isSyntheticEvent}.\n *\n * @param wat A value to be checked.\n * @returns A boolean representing the result.\n */\nfunction isSyntheticEvent(wat) {\n  return isPlainObject(wat) && 'nativeEvent' in wat && 'preventDefault' in wat && 'stopPropagation' in wat;\n}\n\n/**\n * Checks whether given value is NaN\n * {@link isNaN}.\n *\n * @param wat A value to be checked.\n * @returns A boolean representing the result.\n */\nfunction isNaN(wat) {\n  return typeof wat === 'number' && wat !== wat;\n}\n\n/**\n * Checks whether given value's type is an instance of provided constructor.\n * {@link isInstanceOf}.\n *\n * @param wat A value to be checked.\n * @param base A constructor to be used in a check.\n * @returns A boolean representing the result.\n */\nfunction isInstanceOf(wat, base) {\n  try {\n    return wat instanceof base;\n  } catch (_e) {\n    return false;\n  }\n}\n\n\n//# sourceMappingURL=is.js.map\n\n\n//# sourceURL=webpack://custom-shipping-step-by-items/./node_modules/@sentry/utils/esm/is.js?");
-
-/***/ }),
-
-/***/ "./node_modules/@sentry/utils/esm/logger.js":
-/*!**************************************************!*\
-  !*** ./node_modules/@sentry/utils/esm/logger.js ***!
-  \**************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"CONSOLE_LEVELS\": () => (/* binding */ CONSOLE_LEVELS),\n/* harmony export */   \"consoleSandbox\": () => (/* binding */ consoleSandbox),\n/* harmony export */   \"logger\": () => (/* binding */ logger)\n/* harmony export */ });\n/* harmony import */ var _worldwide_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./worldwide.js */ \"./node_modules/@sentry/utils/esm/worldwide.js\");\n\n\n/** Prefix for logging strings */\nconst PREFIX = 'Sentry Logger ';\n\nconst CONSOLE_LEVELS = ['debug', 'info', 'warn', 'error', 'log', 'assert', 'trace'] ;\n\n/**\n * Temporarily disable sentry console instrumentations.\n *\n * @param callback The function to run against the original `console` messages\n * @returns The results of the callback\n */\nfunction consoleSandbox(callback) {\n  if (!(\"console\" in _worldwide_js__WEBPACK_IMPORTED_MODULE_0__.GLOBAL_OBJ)) {\n    return callback();\n  }\n\n  const originalConsole = _worldwide_js__WEBPACK_IMPORTED_MODULE_0__.GLOBAL_OBJ.console ;\n  const wrappedLevels = {};\n\n  // Restore all wrapped console methods\n  CONSOLE_LEVELS.forEach(level => {\n    // TODO(v7): Remove this check as it's only needed for Node 6\n    const originalWrappedFunc =\n      originalConsole[level] && (originalConsole[level] ).__sentry_original__;\n    if (level in originalConsole && originalWrappedFunc) {\n      wrappedLevels[level] = originalConsole[level] ;\n      originalConsole[level] = originalWrappedFunc ;\n    }\n  });\n\n  try {\n    return callback();\n  } finally {\n    // Revert restoration to wrapped state\n    Object.keys(wrappedLevels).forEach(level => {\n      originalConsole[level] = wrappedLevels[level ];\n    });\n  }\n}\n\nfunction makeLogger() {\n  let enabled = false;\n  const logger = {\n    enable: () => {\n      enabled = true;\n    },\n    disable: () => {\n      enabled = false;\n    },\n  };\n\n  if ((typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__)) {\n    CONSOLE_LEVELS.forEach(name => {\n      // eslint-disable-next-line @typescript-eslint/no-explicit-any\n      logger[name] = (...args) => {\n        if (enabled) {\n          consoleSandbox(() => {\n            _worldwide_js__WEBPACK_IMPORTED_MODULE_0__.GLOBAL_OBJ.console[name](`${PREFIX}[${name}]:`, ...args);\n          });\n        }\n      };\n    });\n  } else {\n    CONSOLE_LEVELS.forEach(name => {\n      logger[name] = () => undefined;\n    });\n  }\n\n  return logger ;\n}\n\n// Ensure we only have a single logger instance, even if multiple versions of @sentry/utils are being used\nlet logger;\nif ((typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__)) {\n  logger = (0,_worldwide_js__WEBPACK_IMPORTED_MODULE_0__.getGlobalSingleton)('logger', makeLogger);\n} else {\n  logger = makeLogger();\n}\n\n\n//# sourceMappingURL=logger.js.map\n\n\n//# sourceURL=webpack://custom-shipping-step-by-items/./node_modules/@sentry/utils/esm/logger.js?");
-
-/***/ }),
-
-/***/ "./node_modules/@sentry/utils/esm/misc.js":
-/*!************************************************!*\
-  !*** ./node_modules/@sentry/utils/esm/misc.js ***!
-  \************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"addContextToFrame\": () => (/* binding */ addContextToFrame),\n/* harmony export */   \"addExceptionMechanism\": () => (/* binding */ addExceptionMechanism),\n/* harmony export */   \"addExceptionTypeValue\": () => (/* binding */ addExceptionTypeValue),\n/* harmony export */   \"arrayify\": () => (/* binding */ arrayify),\n/* harmony export */   \"checkOrSetAlreadyCaught\": () => (/* binding */ checkOrSetAlreadyCaught),\n/* harmony export */   \"getEventDescription\": () => (/* binding */ getEventDescription),\n/* harmony export */   \"parseSemver\": () => (/* binding */ parseSemver),\n/* harmony export */   \"uuid4\": () => (/* binding */ uuid4)\n/* harmony export */ });\n/* harmony import */ var _object_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./object.js */ \"./node_modules/@sentry/utils/esm/object.js\");\n/* harmony import */ var _string_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./string.js */ \"./node_modules/@sentry/utils/esm/string.js\");\n/* harmony import */ var _worldwide_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./worldwide.js */ \"./node_modules/@sentry/utils/esm/worldwide.js\");\n\n\n\n\n/**\n * UUID4 generator\n *\n * @returns string Generated UUID4.\n */\nfunction uuid4() {\n  const gbl = _worldwide_js__WEBPACK_IMPORTED_MODULE_0__.GLOBAL_OBJ ;\n  const crypto = gbl.crypto || gbl.msCrypto;\n\n  if (crypto && crypto.randomUUID) {\n    return crypto.randomUUID().replace(/-/g, '');\n  }\n\n  const getRandomByte =\n    crypto && crypto.getRandomValues ? () => crypto.getRandomValues(new Uint8Array(1))[0] : () => Math.random() * 16;\n\n  // http://stackoverflow.com/questions/105034/how-to-create-a-guid-uuid-in-javascript/2117523#2117523\n  // Concatenating the following numbers as strings results in '10000000100040008000100000000000'\n  return (([1e7] ) + 1e3 + 4e3 + 8e3 + 1e11).replace(/[018]/g, c =>\n    // eslint-disable-next-line no-bitwise\n    ((c ) ^ ((getRandomByte() & 15) >> ((c ) / 4))).toString(16),\n  );\n}\n\nfunction getFirstException(event) {\n  return event.exception && event.exception.values ? event.exception.values[0] : undefined;\n}\n\n/**\n * Extracts either message or type+value from an event that can be used for user-facing logs\n * @returns event's description\n */\nfunction getEventDescription(event) {\n  const { message, event_id: eventId } = event;\n  if (message) {\n    return message;\n  }\n\n  const firstException = getFirstException(event);\n  if (firstException) {\n    if (firstException.type && firstException.value) {\n      return `${firstException.type}: ${firstException.value}`;\n    }\n    return firstException.type || firstException.value || eventId || '<unknown>';\n  }\n  return eventId || '<unknown>';\n}\n\n/**\n * Adds exception values, type and value to an synthetic Exception.\n * @param event The event to modify.\n * @param value Value of the exception.\n * @param type Type of the exception.\n * @hidden\n */\nfunction addExceptionTypeValue(event, value, type) {\n  const exception = (event.exception = event.exception || {});\n  const values = (exception.values = exception.values || []);\n  const firstException = (values[0] = values[0] || {});\n  if (!firstException.value) {\n    firstException.value = value || '';\n  }\n  if (!firstException.type) {\n    firstException.type = type || 'Error';\n  }\n}\n\n/**\n * Adds exception mechanism data to a given event. Uses defaults if the second parameter is not passed.\n *\n * @param event The event to modify.\n * @param newMechanism Mechanism data to add to the event.\n * @hidden\n */\nfunction addExceptionMechanism(event, newMechanism) {\n  const firstException = getFirstException(event);\n  if (!firstException) {\n    return;\n  }\n\n  const defaultMechanism = { type: 'generic', handled: true };\n  const currentMechanism = firstException.mechanism;\n  firstException.mechanism = { ...defaultMechanism, ...currentMechanism, ...newMechanism };\n\n  if (newMechanism && 'data' in newMechanism) {\n    const mergedData = { ...(currentMechanism && currentMechanism.data), ...newMechanism.data };\n    firstException.mechanism.data = mergedData;\n  }\n}\n\n// https://semver.org/#is-there-a-suggested-regular-expression-regex-to-check-a-semver-string\nconst SEMVER_REGEXP =\n  /^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$/;\n\n/**\n * Represents Semantic Versioning object\n */\n\n/**\n * Parses input into a SemVer interface\n * @param input string representation of a semver version\n */\nfunction parseSemver(input) {\n  const match = input.match(SEMVER_REGEXP) || [];\n  const major = parseInt(match[1], 10);\n  const minor = parseInt(match[2], 10);\n  const patch = parseInt(match[3], 10);\n  return {\n    buildmetadata: match[5],\n    major: isNaN(major) ? undefined : major,\n    minor: isNaN(minor) ? undefined : minor,\n    patch: isNaN(patch) ? undefined : patch,\n    prerelease: match[4],\n  };\n}\n\n/**\n * This function adds context (pre/post/line) lines to the provided frame\n *\n * @param lines string[] containing all lines\n * @param frame StackFrame that will be mutated\n * @param linesOfContext number of context lines we want to add pre/post\n */\nfunction addContextToFrame(lines, frame, linesOfContext = 5) {\n  // When there is no line number in the frame, attaching context is nonsensical and will even break grouping\n  if (frame.lineno === undefined) {\n    return;\n  }\n\n  const maxLines = lines.length;\n  const sourceLine = Math.max(Math.min(maxLines, frame.lineno - 1), 0);\n\n  frame.pre_context = lines\n    .slice(Math.max(0, sourceLine - linesOfContext), sourceLine)\n    .map((line) => (0,_string_js__WEBPACK_IMPORTED_MODULE_1__.snipLine)(line, 0));\n\n  frame.context_line = (0,_string_js__WEBPACK_IMPORTED_MODULE_1__.snipLine)(lines[Math.min(maxLines - 1, sourceLine)], frame.colno || 0);\n\n  frame.post_context = lines\n    .slice(Math.min(sourceLine + 1, maxLines), sourceLine + 1 + linesOfContext)\n    .map((line) => (0,_string_js__WEBPACK_IMPORTED_MODULE_1__.snipLine)(line, 0));\n}\n\n/**\n * Checks whether or not we've already captured the given exception (note: not an identical exception - the very object\n * in question), and marks it captured if not.\n *\n * This is useful because it's possible for an error to get captured by more than one mechanism. After we intercept and\n * record an error, we rethrow it (assuming we've intercepted it before it's reached the top-level global handlers), so\n * that we don't interfere with whatever effects the error might have had were the SDK not there. At that point, because\n * the error has been rethrown, it's possible for it to bubble up to some other code we've instrumented. If it's not\n * caught after that, it will bubble all the way up to the global handlers (which of course we also instrument). This\n * function helps us ensure that even if we encounter the same error more than once, we only record it the first time we\n * see it.\n *\n * Note: It will ignore primitives (always return `false` and not mark them as seen), as properties can't be set on\n * them. {@link: Object.objectify} can be used on exceptions to convert any that are primitives into their equivalent\n * object wrapper forms so that this check will always work. However, because we need to flag the exact object which\n * will get rethrown, and because that rethrowing happens outside of the event processing pipeline, the objectification\n * must be done before the exception captured.\n *\n * @param A thrown exception to check or flag as having been seen\n * @returns `true` if the exception has already been captured, `false` if not (with the side effect of marking it seen)\n */\nfunction checkOrSetAlreadyCaught(exception) {\n  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access\n  if (exception && (exception ).__sentry_captured__) {\n    return true;\n  }\n\n  try {\n    // set it this way rather than by assignment so that it's not ennumerable and therefore isn't recorded by the\n    // `ExtraErrorData` integration\n    (0,_object_js__WEBPACK_IMPORTED_MODULE_2__.addNonEnumerableProperty)(exception , '__sentry_captured__', true);\n  } catch (err) {\n    // `exception` is a primitive, so we can't mark it seen\n  }\n\n  return false;\n}\n\n/**\n * Checks whether the given input is already an array, and if it isn't, wraps it in one.\n *\n * @param maybeArray Input to turn into an array, if necessary\n * @returns The input, if already an array, or an array with the input as the only element, if not\n */\nfunction arrayify(maybeArray) {\n  return Array.isArray(maybeArray) ? maybeArray : [maybeArray];\n}\n\n\n//# sourceMappingURL=misc.js.map\n\n\n//# sourceURL=webpack://custom-shipping-step-by-items/./node_modules/@sentry/utils/esm/misc.js?");
-
-/***/ }),
-
-/***/ "./node_modules/@sentry/utils/esm/node.js":
-/*!************************************************!*\
-  !*** ./node_modules/@sentry/utils/esm/node.js ***!
-  \************************************************/
-/***/ ((module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"dynamicRequire\": () => (/* binding */ dynamicRequire),\n/* harmony export */   \"isNodeEnv\": () => (/* binding */ isNodeEnv),\n/* harmony export */   \"loadModule\": () => (/* binding */ loadModule)\n/* harmony export */ });\n/* harmony import */ var _env_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./env.js */ \"./node_modules/@sentry/utils/esm/env.js\");\n/* module decorator */ module = __webpack_require__.hmd(module);\n\n\n/**\n * NOTE: In order to avoid circular dependencies, if you add a function to this module and it needs to print something,\n * you must either a) use `console.log` rather than the logger, or b) put your function elsewhere.\n */\n\n/**\n * Checks whether we're in the Node.js or Browser environment\n *\n * @returns Answer to given question\n */\nfunction isNodeEnv() {\n  // explicitly check for browser bundles as those can be optimized statically\n  // by terser/rollup.\n  return (\n    !(0,_env_js__WEBPACK_IMPORTED_MODULE_0__.isBrowserBundle)() &&\n    Object.prototype.toString.call(typeof process !== 'undefined' ? process : 0) === '[object process]'\n  );\n}\n\n/**\n * Requires a module which is protected against bundler minification.\n *\n * @param request The module path to resolve\n */\n// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any\nfunction dynamicRequire(mod, request) {\n  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access\n  return mod.require(request);\n}\n\n/**\n * Helper for dynamically loading module that should work with linked dependencies.\n * The problem is that we _should_ be using `require(require.resolve(moduleName, { paths: [cwd()] }))`\n * However it's _not possible_ to do that with Webpack, as it has to know all the dependencies during\n * build time. `require.resolve` is also not available in any other way, so we cannot create,\n * a fake helper like we do with `dynamicRequire`.\n *\n * We always prefer to use local package, thus the value is not returned early from each `try/catch` block.\n * That is to mimic the behavior of `require.resolve` exactly.\n *\n * @param moduleName module name to require\n * @returns possibly required module\n */\nfunction loadModule(moduleName) {\n  let mod;\n\n  try {\n    mod = dynamicRequire(module, moduleName);\n  } catch (e) {\n    // no-empty\n  }\n\n  try {\n    const { cwd } = dynamicRequire(module, 'process');\n    mod = dynamicRequire(module, `${cwd()}/node_modules/${moduleName}`) ;\n  } catch (e) {\n    // no-empty\n  }\n\n  return mod;\n}\n\n\n//# sourceMappingURL=node.js.map\n\n\n//# sourceURL=webpack://custom-shipping-step-by-items/./node_modules/@sentry/utils/esm/node.js?");
-
-/***/ }),
-
-/***/ "./node_modules/@sentry/utils/esm/object.js":
-/*!**************************************************!*\
-  !*** ./node_modules/@sentry/utils/esm/object.js ***!
-  \**************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"addNonEnumerableProperty\": () => (/* binding */ addNonEnumerableProperty),\n/* harmony export */   \"convertToPlainObject\": () => (/* binding */ convertToPlainObject),\n/* harmony export */   \"dropUndefinedKeys\": () => (/* binding */ dropUndefinedKeys),\n/* harmony export */   \"extractExceptionKeysForMessage\": () => (/* binding */ extractExceptionKeysForMessage),\n/* harmony export */   \"fill\": () => (/* binding */ fill),\n/* harmony export */   \"getOriginalFunction\": () => (/* binding */ getOriginalFunction),\n/* harmony export */   \"markFunctionWrapped\": () => (/* binding */ markFunctionWrapped),\n/* harmony export */   \"objectify\": () => (/* binding */ objectify),\n/* harmony export */   \"urlEncode\": () => (/* binding */ urlEncode)\n/* harmony export */ });\n/* harmony import */ var _browser_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./browser.js */ \"./node_modules/@sentry/utils/esm/browser.js\");\n/* harmony import */ var _is_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./is.js */ \"./node_modules/@sentry/utils/esm/is.js\");\n/* harmony import */ var _string_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./string.js */ \"./node_modules/@sentry/utils/esm/string.js\");\n\n\n\n\n/**\n * Replace a method in an object with a wrapped version of itself.\n *\n * @param source An object that contains a method to be wrapped.\n * @param name The name of the method to be wrapped.\n * @param replacementFactory A higher-order function that takes the original version of the given method and returns a\n * wrapped version. Note: The function returned by `replacementFactory` needs to be a non-arrow function, in order to\n * preserve the correct value of `this`, and the original method must be called using `origMethod.call(this, <other\n * args>)` or `origMethod.apply(this, [<other args>])` (rather than being called directly), again to preserve `this`.\n * @returns void\n */\nfunction fill(source, name, replacementFactory) {\n  if (!(name in source)) {\n    return;\n  }\n\n  const original = source[name] ;\n  const wrapped = replacementFactory(original) ;\n\n  // Make sure it's a function first, as we need to attach an empty prototype for `defineProperties` to work\n  // otherwise it'll throw \"TypeError: Object.defineProperties called on non-object\"\n  if (typeof wrapped === 'function') {\n    try {\n      markFunctionWrapped(wrapped, original);\n    } catch (_Oo) {\n      // This can throw if multiple fill happens on a global object like XMLHttpRequest\n      // Fixes https://github.com/getsentry/sentry-javascript/issues/2043\n    }\n  }\n\n  source[name] = wrapped;\n}\n\n/**\n * Defines a non-enumerable property on the given object.\n *\n * @param obj The object on which to set the property\n * @param name The name of the property to be set\n * @param value The value to which to set the property\n */\nfunction addNonEnumerableProperty(obj, name, value) {\n  Object.defineProperty(obj, name, {\n    // enumerable: false, // the default, so we can save on bundle size by not explicitly setting it\n    value: value,\n    writable: true,\n    configurable: true,\n  });\n}\n\n/**\n * Remembers the original function on the wrapped function and\n * patches up the prototype.\n *\n * @param wrapped the wrapper function\n * @param original the original function that gets wrapped\n */\nfunction markFunctionWrapped(wrapped, original) {\n  const proto = original.prototype || {};\n  wrapped.prototype = original.prototype = proto;\n  addNonEnumerableProperty(wrapped, '__sentry_original__', original);\n}\n\n/**\n * This extracts the original function if available.  See\n * `markFunctionWrapped` for more information.\n *\n * @param func the function to unwrap\n * @returns the unwrapped version of the function if available.\n */\nfunction getOriginalFunction(func) {\n  return func.__sentry_original__;\n}\n\n/**\n * Encodes given object into url-friendly format\n *\n * @param object An object that contains serializable values\n * @returns string Encoded\n */\nfunction urlEncode(object) {\n  return Object.keys(object)\n    .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(object[key])}`)\n    .join('&');\n}\n\n/**\n * Transforms any `Error` or `Event` into a plain object with all of their enumerable properties, and some of their\n * non-enumerable properties attached.\n *\n * @param value Initial source that we have to transform in order for it to be usable by the serializer\n * @returns An Event or Error turned into an object - or the value argurment itself, when value is neither an Event nor\n *  an Error.\n */\nfunction convertToPlainObject(value)\n\n {\n  if ((0,_is_js__WEBPACK_IMPORTED_MODULE_0__.isError)(value)) {\n    return {\n      message: value.message,\n      name: value.name,\n      stack: value.stack,\n      ...getOwnProperties(value),\n    };\n  } else if ((0,_is_js__WEBPACK_IMPORTED_MODULE_0__.isEvent)(value)) {\n    const newObj\n\n = {\n      type: value.type,\n      target: serializeEventTarget(value.target),\n      currentTarget: serializeEventTarget(value.currentTarget),\n      ...getOwnProperties(value),\n    };\n\n    if (typeof CustomEvent !== 'undefined' && (0,_is_js__WEBPACK_IMPORTED_MODULE_0__.isInstanceOf)(value, CustomEvent)) {\n      newObj.detail = value.detail;\n    }\n\n    return newObj;\n  } else {\n    return value;\n  }\n}\n\n/** Creates a string representation of the target of an `Event` object */\nfunction serializeEventTarget(target) {\n  try {\n    return (0,_is_js__WEBPACK_IMPORTED_MODULE_0__.isElement)(target) ? (0,_browser_js__WEBPACK_IMPORTED_MODULE_1__.htmlTreeAsString)(target) : Object.prototype.toString.call(target);\n  } catch (_oO) {\n    return '<unknown>';\n  }\n}\n\n/** Filters out all but an object's own properties */\nfunction getOwnProperties(obj) {\n  if (typeof obj === 'object' && obj !== null) {\n    const extractedProps = {};\n    for (const property in obj) {\n      if (Object.prototype.hasOwnProperty.call(obj, property)) {\n        extractedProps[property] = (obj )[property];\n      }\n    }\n    return extractedProps;\n  } else {\n    return {};\n  }\n}\n\n/**\n * Given any captured exception, extract its keys and create a sorted\n * and truncated list that will be used inside the event message.\n * eg. `Non-error exception captured with keys: foo, bar, baz`\n */\nfunction extractExceptionKeysForMessage(exception, maxLength = 40) {\n  const keys = Object.keys(convertToPlainObject(exception));\n  keys.sort();\n\n  if (!keys.length) {\n    return '[object has no keys]';\n  }\n\n  if (keys[0].length >= maxLength) {\n    return (0,_string_js__WEBPACK_IMPORTED_MODULE_2__.truncate)(keys[0], maxLength);\n  }\n\n  for (let includedKeys = keys.length; includedKeys > 0; includedKeys--) {\n    const serialized = keys.slice(0, includedKeys).join(', ');\n    if (serialized.length > maxLength) {\n      continue;\n    }\n    if (includedKeys === keys.length) {\n      return serialized;\n    }\n    return (0,_string_js__WEBPACK_IMPORTED_MODULE_2__.truncate)(serialized, maxLength);\n  }\n\n  return '';\n}\n\n/**\n * Given any object, return a new object having removed all fields whose value was `undefined`.\n * Works recursively on objects and arrays.\n *\n * Attention: This function keeps circular references in the returned object.\n */\nfunction dropUndefinedKeys(inputValue) {\n  // This map keeps track of what already visited nodes map to.\n  // Our Set - based memoBuilder doesn't work here because we want to the output object to have the same circular\n  // references as the input object.\n  const memoizationMap = new Map();\n\n  // This function just proxies `_dropUndefinedKeys` to keep the `memoBuilder` out of this function's API\n  return _dropUndefinedKeys(inputValue, memoizationMap);\n}\n\nfunction _dropUndefinedKeys(inputValue, memoizationMap) {\n  if ((0,_is_js__WEBPACK_IMPORTED_MODULE_0__.isPlainObject)(inputValue)) {\n    // If this node has already been visited due to a circular reference, return the object it was mapped to in the new object\n    const memoVal = memoizationMap.get(inputValue);\n    if (memoVal !== undefined) {\n      return memoVal ;\n    }\n\n    const returnValue = {};\n    // Store the mapping of this value in case we visit it again, in case of circular data\n    memoizationMap.set(inputValue, returnValue);\n\n    for (const key of Object.keys(inputValue)) {\n      if (typeof inputValue[key] !== 'undefined') {\n        returnValue[key] = _dropUndefinedKeys(inputValue[key], memoizationMap);\n      }\n    }\n\n    return returnValue ;\n  }\n\n  if (Array.isArray(inputValue)) {\n    // If this node has already been visited due to a circular reference, return the array it was mapped to in the new object\n    const memoVal = memoizationMap.get(inputValue);\n    if (memoVal !== undefined) {\n      return memoVal ;\n    }\n\n    const returnValue = [];\n    // Store the mapping of this value in case we visit it again, in case of circular data\n    memoizationMap.set(inputValue, returnValue);\n\n    inputValue.forEach((item) => {\n      returnValue.push(_dropUndefinedKeys(item, memoizationMap));\n    });\n\n    return returnValue ;\n  }\n\n  return inputValue;\n}\n\n/**\n * Ensure that something is an object.\n *\n * Turns `undefined` and `null` into `String`s and all other primitives into instances of their respective wrapper\n * classes (String, Boolean, Number, etc.). Acts as the identity function on non-primitives.\n *\n * @param wat The subject of the objectification\n * @returns A version of `wat` which can safely be used with `Object` class methods\n */\nfunction objectify(wat) {\n  let objectified;\n  switch (true) {\n    case wat === undefined || wat === null:\n      objectified = new String(wat);\n      break;\n\n    // Though symbols and bigints do have wrapper classes (`Symbol` and `BigInt`, respectively), for whatever reason\n    // those classes don't have constructors which can be used with the `new` keyword. We therefore need to cast each as\n    // an object in order to wrap it.\n    case typeof wat === 'symbol' || typeof wat === 'bigint':\n      objectified = Object(wat);\n      break;\n\n    // this will catch the remaining primitives: `String`, `Number`, and `Boolean`\n    case (0,_is_js__WEBPACK_IMPORTED_MODULE_0__.isPrimitive)(wat):\n      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access\n      objectified = new (wat ).constructor(wat);\n      break;\n\n    // by process of elimination, at this point we know that `wat` must already be an object\n    default:\n      objectified = wat;\n      break;\n  }\n  return objectified;\n}\n\n\n//# sourceMappingURL=object.js.map\n\n\n//# sourceURL=webpack://custom-shipping-step-by-items/./node_modules/@sentry/utils/esm/object.js?");
-
-/***/ }),
-
-/***/ "./node_modules/@sentry/utils/esm/string.js":
-/*!**************************************************!*\
-  !*** ./node_modules/@sentry/utils/esm/string.js ***!
-  \**************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"escapeStringForRegex\": () => (/* binding */ escapeStringForRegex),\n/* harmony export */   \"isMatchingPattern\": () => (/* binding */ isMatchingPattern),\n/* harmony export */   \"safeJoin\": () => (/* binding */ safeJoin),\n/* harmony export */   \"snipLine\": () => (/* binding */ snipLine),\n/* harmony export */   \"stringMatchesSomePattern\": () => (/* binding */ stringMatchesSomePattern),\n/* harmony export */   \"truncate\": () => (/* binding */ truncate)\n/* harmony export */ });\n/* harmony import */ var _is_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./is.js */ \"./node_modules/@sentry/utils/esm/is.js\");\n\n\n/**\n * Truncates given string to the maximum characters count\n *\n * @param str An object that contains serializable values\n * @param max Maximum number of characters in truncated string (0 = unlimited)\n * @returns string Encoded\n */\nfunction truncate(str, max = 0) {\n  if (typeof str !== 'string' || max === 0) {\n    return str;\n  }\n  return str.length <= max ? str : `${str.slice(0, max)}...`;\n}\n\n/**\n * This is basically just `trim_line` from\n * https://github.com/getsentry/sentry/blob/master/src/sentry/lang/javascript/processor.py#L67\n *\n * @param str An object that contains serializable values\n * @param max Maximum number of characters in truncated string\n * @returns string Encoded\n */\nfunction snipLine(line, colno) {\n  let newLine = line;\n  const lineLength = newLine.length;\n  if (lineLength <= 150) {\n    return newLine;\n  }\n  if (colno > lineLength) {\n    // eslint-disable-next-line no-param-reassign\n    colno = lineLength;\n  }\n\n  let start = Math.max(colno - 60, 0);\n  if (start < 5) {\n    start = 0;\n  }\n\n  let end = Math.min(start + 140, lineLength);\n  if (end > lineLength - 5) {\n    end = lineLength;\n  }\n  if (end === lineLength) {\n    start = Math.max(end - 140, 0);\n  }\n\n  newLine = newLine.slice(start, end);\n  if (start > 0) {\n    newLine = `'{snip} ${newLine}`;\n  }\n  if (end < lineLength) {\n    newLine += ' {snip}';\n  }\n\n  return newLine;\n}\n\n/**\n * Join values in array\n * @param input array of values to be joined together\n * @param delimiter string to be placed in-between values\n * @returns Joined values\n */\n// eslint-disable-next-line @typescript-eslint/no-explicit-any\nfunction safeJoin(input, delimiter) {\n  if (!Array.isArray(input)) {\n    return '';\n  }\n\n  const output = [];\n  // eslint-disable-next-line @typescript-eslint/prefer-for-of\n  for (let i = 0; i < input.length; i++) {\n    const value = input[i];\n    try {\n      output.push(String(value));\n    } catch (e) {\n      output.push('[value cannot be serialized]');\n    }\n  }\n\n  return output.join(delimiter);\n}\n\n/**\n * Checks if the given value matches a regex or string\n *\n * @param value The string to test\n * @param pattern Either a regex or a string against which `value` will be matched\n * @param requireExactStringMatch If true, `value` must match `pattern` exactly. If false, `value` will match\n * `pattern` if it contains `pattern`. Only applies to string-type patterns.\n */\nfunction isMatchingPattern(\n  value,\n  pattern,\n  requireExactStringMatch = false,\n) {\n  if (!(0,_is_js__WEBPACK_IMPORTED_MODULE_0__.isString)(value)) {\n    return false;\n  }\n\n  if ((0,_is_js__WEBPACK_IMPORTED_MODULE_0__.isRegExp)(pattern)) {\n    return pattern.test(value);\n  }\n  if ((0,_is_js__WEBPACK_IMPORTED_MODULE_0__.isString)(pattern)) {\n    return requireExactStringMatch ? value === pattern : value.includes(pattern);\n  }\n\n  return false;\n}\n\n/**\n * Test the given string against an array of strings and regexes. By default, string matching is done on a\n * substring-inclusion basis rather than a strict equality basis\n *\n * @param testString The string to test\n * @param patterns The patterns against which to test the string\n * @param requireExactStringMatch If true, `testString` must match one of the given string patterns exactly in order to\n * count. If false, `testString` will match a string pattern if it contains that pattern.\n * @returns\n */\nfunction stringMatchesSomePattern(\n  testString,\n  patterns = [],\n  requireExactStringMatch = false,\n) {\n  return patterns.some(pattern => isMatchingPattern(testString, pattern, requireExactStringMatch));\n}\n\n/**\n * Given a string, escape characters which have meaning in the regex grammar, such that the result is safe to feed to\n * `new RegExp()`.\n *\n * Based on https://github.com/sindresorhus/escape-string-regexp. Vendored to a) reduce the size by skipping the runtime\n * type-checking, and b) ensure it gets down-compiled for old versions of Node (the published package only supports Node\n * 12+).\n *\n * @param regexString The string to escape\n * @returns An version of the string with all special regex characters escaped\n */\nfunction escapeStringForRegex(regexString) {\n  // escape the hyphen separately so we can also replace it with a unicode literal hyphen, to avoid the problems\n  // discussed in https://github.com/sindresorhus/escape-string-regexp/issues/20.\n  return regexString.replace(/[|\\\\{}()[\\]^$+*?.]/g, '\\\\$&').replace(/-/g, '\\\\x2d');\n}\n\n\n//# sourceMappingURL=string.js.map\n\n\n//# sourceURL=webpack://custom-shipping-step-by-items/./node_modules/@sentry/utils/esm/string.js?");
-
-/***/ }),
-
-/***/ "./node_modules/@sentry/utils/esm/syncpromise.js":
-/*!*******************************************************!*\
-  !*** ./node_modules/@sentry/utils/esm/syncpromise.js ***!
-  \*******************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"SyncPromise\": () => (/* binding */ SyncPromise),\n/* harmony export */   \"rejectedSyncPromise\": () => (/* binding */ rejectedSyncPromise),\n/* harmony export */   \"resolvedSyncPromise\": () => (/* binding */ resolvedSyncPromise)\n/* harmony export */ });\n/* harmony import */ var _is_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./is.js */ \"./node_modules/@sentry/utils/esm/is.js\");\n\n\n/* eslint-disable @typescript-eslint/explicit-function-return-type */\n\n/** SyncPromise internal states */\nvar States; (function (States) {\n  /** Pending */\n  const PENDING = 0; States[States[\"PENDING\"] = PENDING] = \"PENDING\";\n  /** Resolved / OK */\n  const RESOLVED = 1; States[States[\"RESOLVED\"] = RESOLVED] = \"RESOLVED\";\n  /** Rejected / Error */\n  const REJECTED = 2; States[States[\"REJECTED\"] = REJECTED] = \"REJECTED\";\n})(States || (States = {}));\n\n// Overloads so we can call resolvedSyncPromise without arguments and generic argument\n\n/**\n * Creates a resolved sync promise.\n *\n * @param value the value to resolve the promise with\n * @returns the resolved sync promise\n */\nfunction resolvedSyncPromise(value) {\n  return new SyncPromise(resolve => {\n    resolve(value);\n  });\n}\n\n/**\n * Creates a rejected sync promise.\n *\n * @param value the value to reject the promise with\n * @returns the rejected sync promise\n */\nfunction rejectedSyncPromise(reason) {\n  return new SyncPromise((_, reject) => {\n    reject(reason);\n  });\n}\n\n/**\n * Thenable class that behaves like a Promise and follows it's interface\n * but is not async internally\n */\nclass SyncPromise {\n   __init() {this._state = States.PENDING;}\n   __init2() {this._handlers = [];}\n\n   constructor(\n    executor,\n  ) {SyncPromise.prototype.__init.call(this);SyncPromise.prototype.__init2.call(this);SyncPromise.prototype.__init3.call(this);SyncPromise.prototype.__init4.call(this);SyncPromise.prototype.__init5.call(this);SyncPromise.prototype.__init6.call(this);\n    try {\n      executor(this._resolve, this._reject);\n    } catch (e) {\n      this._reject(e);\n    }\n  }\n\n  /** JSDoc */\n   then(\n    onfulfilled,\n    onrejected,\n  ) {\n    return new SyncPromise((resolve, reject) => {\n      this._handlers.push([\n        false,\n        result => {\n          if (!onfulfilled) {\n            // TODO: ¯\\_(ツ)_/¯\n            // TODO: FIXME\n            resolve(result );\n          } else {\n            try {\n              resolve(onfulfilled(result));\n            } catch (e) {\n              reject(e);\n            }\n          }\n        },\n        reason => {\n          if (!onrejected) {\n            reject(reason);\n          } else {\n            try {\n              resolve(onrejected(reason));\n            } catch (e) {\n              reject(e);\n            }\n          }\n        },\n      ]);\n      this._executeHandlers();\n    });\n  }\n\n  /** JSDoc */\n   catch(\n    onrejected,\n  ) {\n    return this.then(val => val, onrejected);\n  }\n\n  /** JSDoc */\n   finally(onfinally) {\n    return new SyncPromise((resolve, reject) => {\n      let val;\n      let isRejected;\n\n      return this.then(\n        value => {\n          isRejected = false;\n          val = value;\n          if (onfinally) {\n            onfinally();\n          }\n        },\n        reason => {\n          isRejected = true;\n          val = reason;\n          if (onfinally) {\n            onfinally();\n          }\n        },\n      ).then(() => {\n        if (isRejected) {\n          reject(val);\n          return;\n        }\n\n        resolve(val );\n      });\n    });\n  }\n\n  /** JSDoc */\n    __init3() {this._resolve = (value) => {\n    this._setResult(States.RESOLVED, value);\n  };}\n\n  /** JSDoc */\n    __init4() {this._reject = (reason) => {\n    this._setResult(States.REJECTED, reason);\n  };}\n\n  /** JSDoc */\n    __init5() {this._setResult = (state, value) => {\n    if (this._state !== States.PENDING) {\n      return;\n    }\n\n    if ((0,_is_js__WEBPACK_IMPORTED_MODULE_0__.isThenable)(value)) {\n      void (value ).then(this._resolve, this._reject);\n      return;\n    }\n\n    this._state = state;\n    this._value = value;\n\n    this._executeHandlers();\n  };}\n\n  /** JSDoc */\n    __init6() {this._executeHandlers = () => {\n    if (this._state === States.PENDING) {\n      return;\n    }\n\n    const cachedHandlers = this._handlers.slice();\n    this._handlers = [];\n\n    cachedHandlers.forEach(handler => {\n      if (handler[0]) {\n        return;\n      }\n\n      if (this._state === States.RESOLVED) {\n        // eslint-disable-next-line @typescript-eslint/no-floating-promises\n        handler[1](this._value );\n      }\n\n      if (this._state === States.REJECTED) {\n        handler[2](this._value);\n      }\n\n      handler[0] = true;\n    });\n  };}\n}\n\n\n//# sourceMappingURL=syncpromise.js.map\n\n\n//# sourceURL=webpack://custom-shipping-step-by-items/./node_modules/@sentry/utils/esm/syncpromise.js?");
-
-/***/ }),
-
-/***/ "./node_modules/@sentry/utils/esm/time.js":
-/*!************************************************!*\
-  !*** ./node_modules/@sentry/utils/esm/time.js ***!
-  \************************************************/
-/***/ ((module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"_browserPerformanceTimeOriginMode\": () => (/* binding */ _browserPerformanceTimeOriginMode),\n/* harmony export */   \"browserPerformanceTimeOrigin\": () => (/* binding */ browserPerformanceTimeOrigin),\n/* harmony export */   \"dateTimestampInSeconds\": () => (/* binding */ dateTimestampInSeconds),\n/* harmony export */   \"timestampInSeconds\": () => (/* binding */ timestampInSeconds),\n/* harmony export */   \"timestampWithMs\": () => (/* binding */ timestampWithMs),\n/* harmony export */   \"usingPerformanceAPI\": () => (/* binding */ usingPerformanceAPI)\n/* harmony export */ });\n/* harmony import */ var _node_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./node.js */ \"./node_modules/@sentry/utils/esm/node.js\");\n/* harmony import */ var _worldwide_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./worldwide.js */ \"./node_modules/@sentry/utils/esm/worldwide.js\");\n/* module decorator */ module = __webpack_require__.hmd(module);\n\n\n\n// eslint-disable-next-line deprecation/deprecation\nconst WINDOW = (0,_worldwide_js__WEBPACK_IMPORTED_MODULE_0__.getGlobalObject)();\n\n/**\n * An object that can return the current timestamp in seconds since the UNIX epoch.\n */\n\n/**\n * A TimestampSource implementation for environments that do not support the Performance Web API natively.\n *\n * Note that this TimestampSource does not use a monotonic clock. A call to `nowSeconds` may return a timestamp earlier\n * than a previously returned value. We do not try to emulate a monotonic behavior in order to facilitate debugging. It\n * is more obvious to explain \"why does my span have negative duration\" than \"why my spans have zero duration\".\n */\nconst dateTimestampSource = {\n  nowSeconds: () => Date.now() / 1000,\n};\n\n/**\n * A partial definition of the [Performance Web API]{@link https://developer.mozilla.org/en-US/docs/Web/API/Performance}\n * for accessing a high-resolution monotonic clock.\n */\n\n/**\n * Returns a wrapper around the native Performance API browser implementation, or undefined for browsers that do not\n * support the API.\n *\n * Wrapping the native API works around differences in behavior from different browsers.\n */\nfunction getBrowserPerformance() {\n  const { performance } = WINDOW;\n  if (!performance || !performance.now) {\n    return undefined;\n  }\n\n  // Replace performance.timeOrigin with our own timeOrigin based on Date.now().\n  //\n  // This is a partial workaround for browsers reporting performance.timeOrigin such that performance.timeOrigin +\n  // performance.now() gives a date arbitrarily in the past.\n  //\n  // Additionally, computing timeOrigin in this way fills the gap for browsers where performance.timeOrigin is\n  // undefined.\n  //\n  // The assumption that performance.timeOrigin + performance.now() ~= Date.now() is flawed, but we depend on it to\n  // interact with data coming out of performance entries.\n  //\n  // Note that despite recommendations against it in the spec, browsers implement the Performance API with a clock that\n  // might stop when the computer is asleep (and perhaps under other circumstances). Such behavior causes\n  // performance.timeOrigin + performance.now() to have an arbitrary skew over Date.now(). In laptop computers, we have\n  // observed skews that can be as long as days, weeks or months.\n  //\n  // See https://github.com/getsentry/sentry-javascript/issues/2590.\n  //\n  // BUG: despite our best intentions, this workaround has its limitations. It mostly addresses timings of pageload\n  // transactions, but ignores the skew built up over time that can aversely affect timestamps of navigation\n  // transactions of long-lived web pages.\n  const timeOrigin = Date.now() - performance.now();\n\n  return {\n    now: () => performance.now(),\n    timeOrigin,\n  };\n}\n\n/**\n * Returns the native Performance API implementation from Node.js. Returns undefined in old Node.js versions that don't\n * implement the API.\n */\nfunction getNodePerformance() {\n  try {\n    const perfHooks = (0,_node_js__WEBPACK_IMPORTED_MODULE_1__.dynamicRequire)(module, 'perf_hooks') ;\n    return perfHooks.performance;\n  } catch (_) {\n    return undefined;\n  }\n}\n\n/**\n * The Performance API implementation for the current platform, if available.\n */\nconst platformPerformance = (0,_node_js__WEBPACK_IMPORTED_MODULE_1__.isNodeEnv)() ? getNodePerformance() : getBrowserPerformance();\n\nconst timestampSource =\n  platformPerformance === undefined\n    ? dateTimestampSource\n    : {\n        nowSeconds: () => (platformPerformance.timeOrigin + platformPerformance.now()) / 1000,\n      };\n\n/**\n * Returns a timestamp in seconds since the UNIX epoch using the Date API.\n */\nconst dateTimestampInSeconds = dateTimestampSource.nowSeconds.bind(dateTimestampSource);\n\n/**\n * Returns a timestamp in seconds since the UNIX epoch using either the Performance or Date APIs, depending on the\n * availability of the Performance API.\n *\n * See `usingPerformanceAPI` to test whether the Performance API is used.\n *\n * BUG: Note that because of how browsers implement the Performance API, the clock might stop when the computer is\n * asleep. This creates a skew between `dateTimestampInSeconds` and `timestampInSeconds`. The\n * skew can grow to arbitrary amounts like days, weeks or months.\n * See https://github.com/getsentry/sentry-javascript/issues/2590.\n */\nconst timestampInSeconds = timestampSource.nowSeconds.bind(timestampSource);\n\n// Re-exported with an old name for backwards-compatibility.\nconst timestampWithMs = timestampInSeconds;\n\n/**\n * A boolean that is true when timestampInSeconds uses the Performance API to produce monotonic timestamps.\n */\nconst usingPerformanceAPI = platformPerformance !== undefined;\n\n/**\n * Internal helper to store what is the source of browserPerformanceTimeOrigin below. For debugging only.\n */\nlet _browserPerformanceTimeOriginMode;\n\n/**\n * The number of milliseconds since the UNIX epoch. This value is only usable in a browser, and only when the\n * performance API is available.\n */\nconst browserPerformanceTimeOrigin = (() => {\n  // Unfortunately browsers may report an inaccurate time origin data, through either performance.timeOrigin or\n  // performance.timing.navigationStart, which results in poor results in performance data. We only treat time origin\n  // data as reliable if they are within a reasonable threshold of the current time.\n\n  const { performance } = WINDOW;\n  if (!performance || !performance.now) {\n    _browserPerformanceTimeOriginMode = 'none';\n    return undefined;\n  }\n\n  const threshold = 3600 * 1000;\n  const performanceNow = performance.now();\n  const dateNow = Date.now();\n\n  // if timeOrigin isn't available set delta to threshold so it isn't used\n  const timeOriginDelta = performance.timeOrigin\n    ? Math.abs(performance.timeOrigin + performanceNow - dateNow)\n    : threshold;\n  const timeOriginIsReliable = timeOriginDelta < threshold;\n\n  // While performance.timing.navigationStart is deprecated in favor of performance.timeOrigin, performance.timeOrigin\n  // is not as widely supported. Namely, performance.timeOrigin is undefined in Safari as of writing.\n  // Also as of writing, performance.timing is not available in Web Workers in mainstream browsers, so it is not always\n  // a valid fallback. In the absence of an initial time provided by the browser, fallback to the current time from the\n  // Date API.\n  // eslint-disable-next-line deprecation/deprecation\n  const navigationStart = performance.timing && performance.timing.navigationStart;\n  const hasNavigationStart = typeof navigationStart === 'number';\n  // if navigationStart isn't available set delta to threshold so it isn't used\n  const navigationStartDelta = hasNavigationStart ? Math.abs(navigationStart + performanceNow - dateNow) : threshold;\n  const navigationStartIsReliable = navigationStartDelta < threshold;\n\n  if (timeOriginIsReliable || navigationStartIsReliable) {\n    // Use the more reliable time origin\n    if (timeOriginDelta <= navigationStartDelta) {\n      _browserPerformanceTimeOriginMode = 'timeOrigin';\n      return performance.timeOrigin;\n    } else {\n      _browserPerformanceTimeOriginMode = 'navigationStart';\n      return navigationStart;\n    }\n  }\n\n  // Either both timeOrigin and navigationStart are skewed or neither is available, fallback to Date.\n  _browserPerformanceTimeOriginMode = 'dateNow';\n  return dateNow;\n})();\n\n\n//# sourceMappingURL=time.js.map\n\n\n//# sourceURL=webpack://custom-shipping-step-by-items/./node_modules/@sentry/utils/esm/time.js?");
-
-/***/ }),
-
-/***/ "./node_modules/@sentry/utils/esm/worldwide.js":
-/*!*****************************************************!*\
-  !*** ./node_modules/@sentry/utils/esm/worldwide.js ***!
-  \*****************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"GLOBAL_OBJ\": () => (/* binding */ GLOBAL_OBJ),\n/* harmony export */   \"getGlobalObject\": () => (/* binding */ getGlobalObject),\n/* harmony export */   \"getGlobalSingleton\": () => (/* binding */ getGlobalSingleton)\n/* harmony export */ });\n/** Internal global with common properties and Sentry extensions  */\n\n// The code below for 'isGlobalObj' and 'GLOBAL_OBJ' was copied from core-js before modification\n// https://github.com/zloirock/core-js/blob/1b944df55282cdc99c90db5f49eb0b6eda2cc0a3/packages/core-js/internals/global.js\n// core-js has the following licence:\n//\n// Copyright (c) 2014-2022 Denis Pushkarev\n//\n// Permission is hereby granted, free of charge, to any person obtaining a copy\n// of this software and associated documentation files (the \"Software\"), to deal\n// in the Software without restriction, including without limitation the rights\n// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n// copies of the Software, and to permit persons to whom the Software is\n// furnished to do so, subject to the following conditions:\n//\n// The above copyright notice and this permission notice shall be included in\n// all copies or substantial portions of the Software.\n//\n// THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN\n// THE SOFTWARE.\n\n/** Returns 'obj' if it's the global object, otherwise returns undefined */\nfunction isGlobalObj(obj) {\n  return obj && obj.Math == Math ? obj : undefined;\n}\n\n/** Get's the global object for the current JavaScript runtime */\nconst GLOBAL_OBJ =\n  (typeof globalThis == 'object' && isGlobalObj(globalThis)) ||\n  // eslint-disable-next-line no-restricted-globals\n  (typeof window == 'object' && isGlobalObj(window)) ||\n  (typeof self == 'object' && isGlobalObj(self)) ||\n  (typeof __webpack_require__.g == 'object' && isGlobalObj(__webpack_require__.g)) ||\n  (function () {\n    return this;\n  })() ||\n  {};\n\n/**\n * @deprecated Use GLOBAL_OBJ instead or WINDOW from @sentry/browser. This will be removed in v8\n */\nfunction getGlobalObject() {\n  return GLOBAL_OBJ ;\n}\n\n/**\n * Returns a global singleton contained in the global `__SENTRY__` object.\n *\n * If the singleton doesn't already exist in `__SENTRY__`, it will be created using the given factory\n * function and added to the `__SENTRY__` object.\n *\n * @param name name of the global singleton on __SENTRY__\n * @param creator creator Factory function to create the singleton if it doesn't already exist on `__SENTRY__`\n * @param obj (Optional) The global object on which to look for `__SENTRY__`, if not `GLOBAL_OBJ`'s return value\n * @returns the singleton\n */\nfunction getGlobalSingleton(name, creator, obj) {\n  const gbl = (obj || GLOBAL_OBJ) ;\n  const __SENTRY__ = (gbl.__SENTRY__ = gbl.__SENTRY__ || {});\n  const singleton = __SENTRY__[name] || (__SENTRY__[name] = creator());\n  return singleton;\n}\n\n\n//# sourceMappingURL=worldwide.js.map\n\n\n//# sourceURL=webpack://custom-shipping-step-by-items/./node_modules/@sentry/utils/esm/worldwide.js?");
-
-/***/ }),
-
-/***/ "./src/checkout6-custom.js":
-/*!*********************************!*\
-  !*** ./src/checkout6-custom.js ***!
-  \*********************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _controller_CollectController__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./controller/CollectController */ \"./src/controller/CollectController.js\");\n/* harmony import */ var _controller_DeliverController__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./controller/DeliverController */ \"./src/controller/DeliverController.js\");\n/* harmony import */ var _controller_ViewController__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./controller/ViewController */ \"./src/controller/ViewController.js\");\n/* harmony import */ var _utils_sendEvent__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./utils/sendEvent */ \"./src/utils/sendEvent.js\");\n\n\n\n\nconst script = document.createElement('script');\nscript.setAttribute('src', 'https://unpkg.com/penpal@^6/dist/penpal.min.js');\ndocument.head.appendChild(script);\n\nconst loadScripts = async () => {\n  let isLoaded = window?.vtexjs?.checkout?.orderForm;\n\n  try {\n    if (!isLoaded) {\n      isLoaded = await window.vtexjs.checkout.getOrderForm();\n    }\n\n    if (isLoaded) {\n      _controller_ViewController__WEBPACK_IMPORTED_MODULE_2__[\"default\"].init();\n      _controller_CollectController__WEBPACK_IMPORTED_MODULE_0__[\"default\"].init();\n      _controller_DeliverController__WEBPACK_IMPORTED_MODULE_1__[\"default\"].init();\n    }\n  } catch (e) {\n    console.error('VTEX_ORDERFORM_ERROR: Could not load at custom-shipping-steps Entry Point', e);\n    (0,_utils_sendEvent__WEBPACK_IMPORTED_MODULE_3__[\"default\"])({\n      eventCategory: 'Checkout_SystemError',\n      action: 'OrderFormFailed',\n      label: 'Could not getOrderForm() from vtex',\n      description: 'Could not load orderForm on custom-shipping-steps Entry Point'\n    });\n    _controller_ViewController__WEBPACK_IMPORTED_MODULE_2__[\"default\"].init();\n    _controller_CollectController__WEBPACK_IMPORTED_MODULE_0__[\"default\"].init();\n    _controller_DeliverController__WEBPACK_IMPORTED_MODULE_1__[\"default\"].init();\n  }\n};\n\ndocument.addEventListener('DOMContentLoaded', loadScripts);\n\n//# sourceURL=webpack://custom-shipping-step-by-items/./src/checkout6-custom.js?");
-
-/***/ }),
-
-/***/ "./src/controller/CollectController.js":
-/*!*********************************************!*\
-  !*** ./src/controller/CollectController.js ***!
-  \*********************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var _partials__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../partials */ \"./src/partials/index.js\");\n/* harmony import */ var _partials_AddressForm__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../partials/AddressForm */ \"./src/partials/AddressForm.js\");\n/* harmony import */ var _partials_Deliver_utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../partials/Deliver/utils */ \"./src/partials/Deliver/utils.js\");\n/* harmony import */ var _utils_const__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/const */ \"./src/utils/const.js\");\n/* harmony import */ var _utils_functions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/functions */ \"./src/utils/functions.js\");\n/* harmony import */ var _utils_phoneFields__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/phoneFields */ \"./src/utils/phoneFields.js\");\n/* harmony import */ var _utils_sendEvent__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/sendEvent */ \"./src/utils/sendEvent.js\");\n/* harmony import */ var _utils_services__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/services */ \"./src/utils/services.js\");\n\n\n\n\n\n\n\n\n\nconst CollectController = (() => {\n  const state = {\n    inCollect: false,\n    pickupSelected: false,\n    validForm: false,\n    runningObserver: false,\n    collectReset: false\n  };\n\n  const changeTranslations = () => {\n    $('p.vtex-omnishipping-1-x-shippingSectionTitle').text('Collect options');\n    $('#change-pickup-button').text('Available pickup points');\n    $('h2.vtex-omnishipping-1-x-geolocationTitle.ask-for-geolocation-title').text('Find nearby Click & Collect points');\n    $('h3.vtex-omnishipping-1-x-subtitle.ask-for-geolocation-subtitle').text(\"Search for addresses that you frequently use and we'll locate stores nearby.\");\n\n    if (state.pickupSelected) {\n      $('label.shp-pickup-receiver__label').text(\"Recipient's name\");\n    }\n  };\n\n  const resetPickup = () => {\n    $('.delivery-group-content').empty();\n    $('.btn-go-to-payment-wrapper').empty();\n    $('<div><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\"><path d=\"M12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm0,19a8,8,0,1,1,8-8A8,8,0,0,1,12,20Z\" opacity=\".25\" stroke=\"#FCFCFC\" fill=\"#FCFCFC\"/><path d=\"M12,4a8,8,0,0,1,7.89,6.7A1.53,1.53,0,0,0,21.38,12h0a1.5,1.5,0,0,0,1.48-1.75,11,11,0,0,0-21.72,0A1.5,1.5,0,0,0,2.62,12h0a1.53,1.53,0,0,0,1.49-1.3A8,8,0,0,1,12,4Z\" stroke=\"#000\" fill=\"#000\"><animateTransform attributeName=\"transform\" type=\"rotate\" dur=\"0.75s\" values=\"0 12 12;360 12 12\" repeatCount=\"indefinite\"/></path></svg><div>').css({\n      display: 'flex',\n      'justify-content': 'center',\n      'align-items': 'center',\n      'min-height': '100px'\n    }).appendTo('.delivery-group-content');\n    const {\n      orderForm\n    } = window.vtexjs.checkout;\n    const {\n      shippingData\n    } = orderForm;\n    const retShipping = { ...shippingData,\n      address: null,\n      availableAddresses: shippingData.availableAddresses,\n      selectedAddresses: shippingData.selectedAddresses.filter(add => add.addressType !== 'search'),\n      logisticsInfo: shippingData.logisticsInfo\n    };\n    window.vtexjs.checkout.sendAttachment('shippingData', retShipping);\n    (0,_partials_Deliver_utils__WEBPACK_IMPORTED_MODULE_2__.setPickupLoading)();\n    pickupMap();\n  }; // Pickup Point Map\n\n\n  const pickupMap = () => {\n    // Remove potential postal code warnings\n    $('.shp-alert.vtex-omnishipping-1-x-warning').remove();\n    $('.pickup-marker-blue').remove(); // Modify view to match design for a selected pickup point\n\n    if ($('#change-pickup-button').length) {\n      $('<button class=\"vtex-omnishipping-1-x-pickupPointSeeMore button-see-pickup-point btn btn-link\" id=\"tfg-pickup-see-more-button\" type=\"button\">Collect Point Details</button>').appendTo('.vtex-omnishipping-1-x-PickupPoint');\n      $('<button class=\"vtex-change-pickup button-change-pickup-point\" id=\"tfg-pickup-button\" type=\"button\">Change</button>').appendTo('.vtex-omnishipping-1-x-PickupPoint');\n      $('#change-pickup-button').remove();\n      $('#details-pickup-button').remove();\n    } // Remove vtex no point selected and replace with our own html\n\n\n    if ($('.vtex-omnishipping-1-x-ask').length) {\n      $('.vtex-omnishipping-1-x-ask').empty();\n      $(`<div class=\"pickup-map-container\">\n          <div class=\"pickup-map-icon\">\n            <svg class=\"icon-map\" xmlns=\"http://www.w3.org/2000/svg\" width=\"48\" height=\"48\" viewBox=\"0 0 48 48\" fill=\"none\">\n              <rect width=\"48\" height=\"48\" rx=\"24\" fill=\"#2424E4\"/>\n              <path d=\"M24.2147 11C21.5065 11.0031 18.9102 12.0802 16.9952 13.9952C15.0802 15.9102 14.0031 18.5065 14 21.2147C14 29.9552 23.2861 36.5599 23.6807 36.8385C23.8389 36.9438 24.0247 37 24.2147 37C24.4047 37 24.5905 36.9438 24.7486 36.8385C25.1433 36.5599 34.4294 29.9552 34.4294 21.2147C34.4263 18.5065 33.3491 15.9102 31.4342 13.9952C29.5192 12.0802 26.9228 11.0031 24.2147 11ZM24.2147 17.5003C24.9493 17.5003 25.6675 17.7181 26.2783 18.1262C26.8891 18.5344 27.3652 19.1145 27.6464 19.7932C27.9275 20.472 28.0011 21.2188 27.8577 21.9393C27.7144 22.6599 27.3607 23.3217 26.8412 23.8412C26.3217 24.3607 25.6599 24.7144 24.9393 24.8577C24.2188 25.0011 23.472 24.9275 22.7932 24.6464C22.1145 24.3652 21.5344 23.8891 21.1262 23.2783C20.7181 22.6675 20.5003 21.9493 20.5003 21.2147C20.5003 20.2296 20.8916 19.2848 21.5882 18.5882C22.2848 17.8916 23.2296 17.5003 24.2147 17.5003Z\" fill=\"#FCFCFC\"/>\n            </svg>\n            Find nearby collect points\n            <div class=\"pickup-map-text\">\n              Search for addresses that you frequently use and we’ll locate stores nearby.\n            </div>\n          </div>\n          <button class=\"pickup-map-geolocation\" id=\"find-pickups-button-new\" type=\"button\">\n            <svg xmlns=\"http://www.w3.org/2000/svg\" width=\"15\" height=\"16\" viewBox=\"0 0 15 16\" fill=\"none\">\n              <path d=\"M1.12954 2.34666L5.24985 14.2506C5.42563 14.7639 6.15688 14.7498 6.3186 14.2295L7.97798 8.84354C8.00302 8.75549 8.05054 8.67548 8.11588 8.61138C8.18122 8.54727 8.26213 8.50127 8.35063 8.47791L13.7295 6.81854C14.2499 6.65682 14.2639 5.92557 13.7506 5.74979L1.84672 1.62948C1.74671 1.59433 1.6388 1.58815 1.53542 1.61167C1.43205 1.63519 1.33743 1.68745 1.26247 1.76241C1.18751 1.83737 1.13525 1.93199 1.11173 2.03536C1.08822 2.13873 1.09439 2.24665 1.12954 2.34666V2.34666Z\" stroke=\"#2424E4\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>\n            </svg>\n            Use my current location\n          </button>\n          <button class=\"pickup-map-manual\" id=\"find-pickups-manually-search\">\n            Manually search for an address\n          </button>\n        </div>`).appendTo('.vtex-omnishipping-1-x-ask');\n    }\n\n    $('#pkpmodal-close').unbind().click(() => {\n      $('#tfg-pickup-map').remove();\n    });\n\n    const iframeFunctions = function (state) {\n      $('<div class=\"tfg-pickup-map\" id=\"tfg-pickup-map\"><div class=\"tfg-pickup-map-content\"></div></div>').appendTo($('body'));\n      $('body').css('position', 'fixed');\n      $('body').css('width', '100%');\n      const iframe = document.createElement('iframe');\n      iframe.src = 'https://pickup-map.bashconnect.com/';\n      iframe.width = '100%';\n      iframe.height = '100%';\n      iframe.id = 'map';\n      iframe.allow = 'geolocation';\n      $(iframe).appendTo('.tfg-pickup-map-content');\n      const connection = window.Penpal.connectToChild({\n        iframe,\n        methods: {\n          sendAttachment: data => {\n            (0,_partials_Deliver_utils__WEBPACK_IMPORTED_MODULE_2__.setPickupLoading)();\n            window.vtexjs.checkout.sendAttachment('shippingData', data);\n            $('#tfg-pickup-map').remove();\n            $('body').css('overflow', 'auto');\n            $('body').css('width', 'auto');\n            $('body').css('position', 'relative');\n          },\n          getCheckoutJS: () => window.vtexjs.checkout.orderForm,\n          getSpecialFields: () => (0,_utils_functions__WEBPACK_IMPORTED_MODULE_4__.getSpecialCategories)(window.vtexjs.checkout.orderForm.items),\n          remove: () => {\n            $('#tfg-pickup-map').remove();\n            $('body').css('overflow', 'auto');\n            $('body').css('width', 'auto');\n            $('body').css('position', 'relative');\n          },\n          getState: () => state\n        }\n      });\n      $('#tfg-pickup-map').click(e => {\n        e.stopPropagation();\n        $('#tfg-pickup-map').remove();\n        $('body').css('overflow', 'auto');\n        $('body').css('width', 'auto');\n        $('body').css('position', 'relative');\n      });\n    };\n\n    $('#tfg-pickup-button').unbind().click(() => iframeFunctions(_utils_const__WEBPACK_IMPORTED_MODULE_3__.NONE));\n    $('#tfg-pickup-see-more-button').unbind().click(() => iframeFunctions(_utils_const__WEBPACK_IMPORTED_MODULE_3__.PICKUP));\n    $('#find-pickups-button-new').unbind().click(() => iframeFunctions(_utils_const__WEBPACK_IMPORTED_MODULE_3__.GEOLOCATE));\n    $('#find-pickups-manually-search').unbind().click(() => iframeFunctions(_utils_const__WEBPACK_IMPORTED_MODULE_3__.MANUAL));\n  };\n\n  const checkFields = fields => {\n    fields.forEach(field => {\n      let isValid = true;\n      let parent;\n\n      switch (field) {\n        case 'pickup-receiver':\n          isValid = !($(`#${field}`).length > 0 && !$(`#${field}`).attr('disabled') && !$(`#${field}`).val());\n          parent = '.shp-pickup-receiver';\n          break;\n\n        case 'custom-pickup-complement':\n          isValid = (0,_utils_functions__WEBPACK_IMPORTED_MODULE_4__.isValidNumberBash)($(`#${field}`).val());\n          parent = '#box-pickup-complement';\n          break;\n\n        default:\n          break;\n      }\n\n      if (!isValid) {\n        $(parent).addClass('error');\n        $(parent).append((0,_partials__WEBPACK_IMPORTED_MODULE_0__.InputError)());\n        $(`${parent} span.error`).show();\n        (0,_utils_functions__WEBPACK_IMPORTED_MODULE_4__.scrollToInvalidField)();\n        state.validForm = false;\n      } else {\n        $(parent).removeClass('error');\n      }\n    });\n  };\n\n  const checkForm = () => {\n    $('span.help.error').remove();\n    state.validForm = true;\n    checkFields(['pickup-receiver', 'custom-pickup-complement']);\n  };\n\n  const saveCollectFields = () => {\n    checkForm();\n\n    if (state.validForm) {\n      let collectPhone = $('#custom-pickup-complement').val().replace(/\\s/g, '');\n\n      if (collectPhone.length === 9 && collectPhone[0] !== '0') {\n        collectPhone = `0${collectPhone}`;\n      }\n\n      localStorage.setItem('saving-shipping-collect', true);\n      $('#btn-go-to-payment').trigger('click');\n\n      try {\n        window.vtexjs.checkout.getOrderForm().then(async orderForm => {\n          const {\n            address\n          } = orderForm.shippingData;\n          await (0,_utils_services__WEBPACK_IMPORTED_MODULE_7__.sendOrderFormCustomData)(_utils_const__WEBPACK_IMPORTED_MODULE_3__.PICKUP_APP, {\n            phone: collectPhone\n          });\n          return window.vtexjs.checkout.calculateShipping(address);\n        }).done(() => {\n          localStorage.removeItem('saving-shipping-collect');\n        });\n      } catch (e) {\n        console.error('VTEX_ORDERFORM_ERROR: Could not load at CollectController', e);\n        (0,_utils_sendEvent__WEBPACK_IMPORTED_MODULE_6__[\"default\"])({\n          eventCategory: 'Checkout_SystemError',\n          action: 'OrderFormFailed',\n          label: 'Could not getOrderForm() from vtex',\n          description: 'Could not load orderForm for Collect.'\n        });\n      }\n    }\n  };\n\n  const prePopulateReceiverName = () => {\n    const receiverName = (0,_partials_Deliver_utils__WEBPACK_IMPORTED_MODULE_2__.getBestRecipient)({\n      preferred: window?.vtexjs?.checkout?.orderForm?.shippingData?.address?.receiverName,\n      type: 'collect'\n    }).trim();\n    if (!$('#pickup-receiver').val() && receiverName !== '') $('#pickup-receiver').val(receiverName);\n  };\n\n  const addCustomPhoneInput = () => {\n    /* Set orderForm value if exists */\n    const fields = (0,_utils_services__WEBPACK_IMPORTED_MODULE_7__.getOrderFormCustomData)(_utils_const__WEBPACK_IMPORTED_MODULE_3__.PICKUP);\n    const phoneNumber = (0,_utils_phoneFields__WEBPACK_IMPORTED_MODULE_5__.getBestPhoneNumber)({\n      type: 'collect',\n      fields\n    });\n\n    if ($('#custom-pickup-complement').length === 0) {\n      $('.btn-go-to-payment-wrapper').before(_partials_AddressForm__WEBPACK_IMPORTED_MODULE_1__.PickupPhoneField);\n    }\n\n    if (phoneNumber) $('#custom-pickup-complement').val(phoneNumber);\n    prePopulateReceiverName();\n  }; //! TODO: al merger a develop podemos refactorizar esta función llevándola a utils\n\n\n  const addCustomBtnPayment = () => {\n    if ($('#custom-go-to-payment').length <= 0) {\n      const nativePaymentBtn = $('#btn-go-to-payment');\n      const customPaymentBtn = nativePaymentBtn.clone(false);\n      $(nativePaymentBtn).hide();\n      $(customPaymentBtn).data('bind', '');\n      $(customPaymentBtn).removeAttr('id').attr('id', 'custom-go-to-payment');\n      $(customPaymentBtn).removeAttr('data-bind');\n      $(customPaymentBtn).css('display', 'block');\n      $('p.btn-go-to-payment-wrapper').append(customPaymentBtn);\n      $(customPaymentBtn).on('click', saveCollectFields);\n    }\n  };\n\n  const runCustomization = () => {\n    const shippingLoaded = $('#postalCode-finished-loading').length > 0;\n    $('#shipping-option-pickup-in-point').one('click', () => {\n      state.collectReset = true;\n    });\n\n    if (window.location.hash === _utils_const__WEBPACK_IMPORTED_MODULE_3__.STEPS.SHIPPING && shippingLoaded) {\n      state.inCollect = $('#shipping-option-pickup-in-point').hasClass('shp-method-option-active');\n      state.pickupSelected = $('div.ask-for-geolocation').length === 0;\n\n      if (state.inCollect) {\n        if (!$('#tfg-pickup-button').length && !$('#tfg-pickup-see-more-button').length || !$('#find-pickups-manually-search').length && !$('#find-pickups-button-new').length) {\n          pickupMap();\n        }\n\n        (0,_utils_functions__WEBPACK_IMPORTED_MODULE_4__.clearLoaders)();\n\n        if (state.pickupSelected && !state.collectReset) {\n          $('button.shp-pickup-receiver__btn').trigger('click');\n          $('div.shp-pickup-receiver').addClass('show');\n          $('p#box-pickup-complement').addClass('show');\n          addCustomPhoneInput();\n          addCustomBtnPayment();\n        } else {\n          $('div.shp-pickup-receiver').removeClass('show');\n          $('p#box-pickup-complement').removeClass('show');\n        }\n\n        if (state.collectReset) {\n          resetPickup();\n          state.collectReset = false;\n        }\n\n        changeTranslations();\n      }\n      /* If it has been redirected because of missing values, the click is forced to show the errors */\n\n\n      if (localStorage.getItem('shipping-incomplete-values')) {\n        $('#custom-go-to-payment').trigger('click');\n        localStorage.removeItem('shipping-incomplete-values');\n      }\n    } else {\n      /* Remove box-pickup-complement so that the input does not appear in the other steps of the checkout process  */\n      $('#box-pickup-complement').remove();\n\n      if (window.location.hash === _utils_const__WEBPACK_IMPORTED_MODULE_3__.STEPS.PAYMENT) {\n        setTimeout(() => {\n          const address = window.vtexjs.checkout.orderForm?.shippingData?.address;\n          const savingCollect = localStorage.getItem('saving-shipping-collect');\n\n          if (!savingCollect) {\n            const {\n              phone\n            } = (0,_utils_services__WEBPACK_IMPORTED_MODULE_7__.getOrderFormCustomData)(_utils_const__WEBPACK_IMPORTED_MODULE_3__.PICKUP_APP);\n            /* Redirect to shipping if required fields are empty */\n\n            if (address && address.addressType === _utils_const__WEBPACK_IMPORTED_MODULE_3__.AD_TYPE.PICKUP && (!address.receiverName || !phone)) {\n              window.location.hash = _utils_const__WEBPACK_IMPORTED_MODULE_3__.STEPS.SHIPPING;\n              localStorage.setItem('shipping-incomplete-values', true);\n              (0,_utils_sendEvent__WEBPACK_IMPORTED_MODULE_6__[\"default\"])({\n                action: 'stepRedirect',\n                label: 'redirectPaymentToShipping',\n                description: 'User redirect to shipping because Collection is missing receiverName or phone number.'\n              });\n            }\n          }\n        }, 1000);\n      }\n    } // eslint-disable-next-line no-use-before-define\n\n\n    runCollectObserver();\n  };\n  /* We need this observer to detect the change in the deliver and collect buttons */\n\n\n  const runCollectObserver = () => {\n    if (state.runningObserver) return;\n    const elementToObserveChange = document.querySelector('.shipping-container .box-step');\n    const observerConfig = {\n      attributes: false,\n      childList: true,\n      characterData: false\n    };\n    const observer = new MutationObserver(() => {\n      state.runningObserver = true;\n      runCustomization();\n    });\n\n    if (elementToObserveChange) {\n      observer.observe(elementToObserveChange, observerConfig);\n    }\n  }; // EVENTS SUBSCRIPTION\n\n\n  $(document).ready(() => {\n    runCustomization();\n  });\n  $(window).on('hashchange orderFormUpdated.vtex', () => {\n    runCustomization();\n  });\n  return {\n    state,\n    init: () => {}\n  };\n})();\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (CollectController);\n\n//# sourceURL=webpack://custom-shipping-step-by-items/./src/controller/CollectController.js?");
-
-/***/ }),
-
-/***/ "./src/controller/DeliverController.js":
-/*!*********************************************!*\
-  !*** ./src/controller/DeliverController.js ***!
-  \*********************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var _partials_Deliver_DeliverContainer__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../partials/Deliver/DeliverContainer */ \"./src/partials/Deliver/DeliverContainer.js\");\n/* harmony import */ var _partials_Deliver_ExtraFieldsContainer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../partials/Deliver/ExtraFieldsContainer */ \"./src/partials/Deliver/ExtraFieldsContainer.js\");\n/* harmony import */ var _partials_Deliver_utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../partials/Deliver/utils */ \"./src/partials/Deliver/utils.js\");\n/* harmony import */ var _utils_const__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/const */ \"./src/utils/const.js\");\n/* harmony import */ var _utils_formatAddressSummary__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/formatAddressSummary */ \"./src/utils/formatAddressSummary.js\");\n/* harmony import */ var _utils_functions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/functions */ \"./src/utils/functions.js\");\n/* harmony import */ var _utils_phoneFields__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/phoneFields */ \"./src/utils/phoneFields.js\");\n/* harmony import */ var _utils_sendEvent__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/sendEvent */ \"./src/utils/sendEvent.js\");\n/* harmony import */ var _utils_services__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/services */ \"./src/utils/services.js\");\n/* harmony import */ var _utils_setAddress__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/setAddress */ \"./src/utils/setAddress.js\");\n/* harmony import */ var _utils_submitAddressForm__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/submitAddressForm */ \"./src/utils/submitAddressForm.js\");\n/* harmony import */ var _utils_submitDeliveryForm__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/submitDeliveryForm */ \"./src/utils/submitDeliveryForm.js\");\n/* eslint-disable func-names */\n\n\n\n\n\n\n\n\n\n\n\n\n\nconst DeliverController = (() => {\n  const state = {\n    view: 'list',\n    hasFurn: false,\n    hasTVs: false,\n    hasSim: false,\n    hasFurnMixed: false,\n    hasFurnOnly: false\n  };\n\n  const unblockShippingError = () => {\n    if (window.location.hash === _utils_const__WEBPACK_IMPORTED_MODULE_3__.STEPS.SHIPPING) {\n      if ($('.shipping-summary-info').length && $('.shipping-summary-info').text() === 'Waiting for more information') {\n        window.location.hash = _utils_const__WEBPACK_IMPORTED_MODULE_3__.STEPS.PROFILE;\n        (0,_utils_sendEvent__WEBPACK_IMPORTED_MODULE_7__[\"default\"])({\n          action: 'stepRedirect',\n          label: 'redirectShippingToProfile',\n          description: 'User redirect to profile - \"Waiting for more information\" error.'\n        });\n      }\n    }\n  };\n\n  const setupDeliver = () => {\n    unblockShippingError();\n    if ($('#bash--delivery-container').length) return;\n\n    if (window.vtexjs.checkout.orderForm) {\n      const items = window.vtexjs.checkout.orderForm?.items;\n      const {\n        hasFurniture,\n        hasTVs,\n        hasSimCards,\n        hasFurnitureMixed,\n        hasFurnitureOnly\n      } = (0,_utils_functions__WEBPACK_IMPORTED_MODULE_5__.getSpecialCategories)(items);\n      state.hasFurn = hasFurniture;\n      state.hasTVs = hasTVs;\n      state.hasSim = hasSimCards;\n      state.hasFurnOnly = hasFurnitureOnly;\n      state.hasFurnMixed = hasFurnitureMixed;\n    }\n\n    $('.shipping-data .box-step').append((0,_partials_Deliver_DeliverContainer__WEBPACK_IMPORTED_MODULE_0__[\"default\"])({\n      hasFurnOnly: state.hasFurnOnly,\n      hasFurnMixed: state.hasFurnMixed\n    }));\n\n    if (state.hasFurn) {\n      $('#shipping-data:not(.has-furniture)').addClass('has-furniture');\n    } else {\n      $('#shipping-data.has-furniture').removeClass('has-furniture');\n    }\n\n    const showExtraFields = state.hasFurn || state.hasSim || state.hasTVs;\n\n    if (showExtraFields) {\n      $('#bash-delivery-options').before((0,_partials_Deliver_ExtraFieldsContainer__WEBPACK_IMPORTED_MODULE_1__[\"default\"])({\n        hasSim: state.hasSim,\n        hasTV: state.hasTVs\n      }));\n      if (state.hasSim) (0,_partials_Deliver_utils__WEBPACK_IMPORTED_MODULE_2__.populateRicaFields)();\n      if (state.hasTVs) (0,_partials_Deliver_utils__WEBPACK_IMPORTED_MODULE_2__.populateTVFields)();\n    }\n\n    const fieldsToValidate = 'select, input'; // eslint-disable-next-line func-names\n\n    $(fieldsToValidate).on('invalid', function () {\n      const field = this;\n      $(field)[0].setCustomValidity(' ');\n      $(field).parents('form').addClass('show-form-errors');\n      $(field).off('change keyUp');\n      $(field).on('change keyUp', () => {\n        $(field)[0].setCustomValidity('');\n      });\n    });\n  }; // EVENTS\n\n\n  $(window).unload(async () => {\n    (0,_utils_services__WEBPACK_IMPORTED_MODULE_8__.clearAddresses)();\n  });\n  $(document).ready(() => {\n    (0,_utils_services__WEBPACK_IMPORTED_MODULE_8__.clearAddresses)();\n\n    if (window.location.hash === _utils_const__WEBPACK_IMPORTED_MODULE_3__.STEPS.SHIPPING) {\n      setupDeliver();\n      $('.bash--delivery-container.hide').removeClass('hide');\n      $('.bash--delivery-container').css('display', 'flex');\n    } else if ($('.bash--delivery-container:not(.hide)').length) {\n      $('.bash--delivery-container:not(.hide)').addClass('hide');\n      $('.bash--delivery-container').css('display', 'none');\n    }\n  });\n  $(window).on('hashchange', () => {\n    console.info('hashchange TO SHIPPING');\n\n    if (window.location.hash === _utils_const__WEBPACK_IMPORTED_MODULE_3__.STEPS.SHIPPING) {\n      setTimeout(() => {\n        console.info('SCROLL TO SHIPPING');\n        document.getElementById('shipping-data').scrollIntoView({\n          behavior: 'smooth'\n        });\n      }, 500);\n      setupDeliver();\n      (0,_partials_Deliver_utils__WEBPACK_IMPORTED_MODULE_2__.setCartClasses)();\n      $('.bash--delivery-container').css('display', 'flex');\n      $('.bash--delivery-container.hide').removeClass('hide');\n    } else if ($('.bash--delivery-container:not(.hide)').length) {\n      $('.bash--delivery-container:not(.hide)').addClass('hide');\n      $('.bash--delivery-container').css('display', 'none');\n    }\n  }); // Define which tab is active ;/\n\n  $(window).on('orderFormUpdated.vtex', () => {\n    const items = window.vtexjs.checkout.orderForm?.items;\n    const addressType = window.vtexjs.checkout.orderForm.shippingData?.address?.addressType;\n    const {\n      hasTVs,\n      hasSimCards,\n      hasFurnitureMixed\n    } = (0,_utils_functions__WEBPACK_IMPORTED_MODULE_5__.getSpecialCategories)(items);\n    const {\n      messages\n    } = window.vtexjs.checkout.orderForm;\n\n    if (window.location.hash === _utils_const__WEBPACK_IMPORTED_MODULE_3__.STEPS.SHIPPING) {\n      const errors = messages.filter(msg => msg.status === 'error');\n      if (errors) (0,_partials_Deliver_utils__WEBPACK_IMPORTED_MODULE_2__.populateDeliveryError)(errors);\n    }\n\n    if (addressType === _utils_const__WEBPACK_IMPORTED_MODULE_3__.AD_TYPE.PICKUP // sometimes addressType is undefined ;(\n    || $('#shipping-option-pickup-in-point').hasClass('shp-method-option-active')) {\n      // User has Collect enabled, but has Rica or TV products,\n      // or Furniture + Non Furn.\n      if (hasTVs || hasSimCards || hasFurnitureMixed) {\n        if (window.location.hash !== _utils_const__WEBPACK_IMPORTED_MODULE_3__.STEPS.SHIPPING) window.location.hash = _utils_const__WEBPACK_IMPORTED_MODULE_3__.STEPS.SHIPPING;\n        setTimeout(() => document.getElementById('shipping-option-delivery')?.click(), 2000);\n        return;\n      }\n\n      $('#shipping-data:not(collection-active)').addClass('collection-active');\n      $('.delivery-active').removeClass('delivery-active');\n    } else {\n      setupDeliver();\n      $('#shipping-data:not(delivery-active)').addClass('delivery-active');\n      $('.collection-active').removeClass('collection-active');\n    }\n\n    (0,_partials_Deliver_utils__WEBPACK_IMPORTED_MODULE_2__.setCartClasses)();\n    (0,_partials_Deliver_utils__WEBPACK_IMPORTED_MODULE_2__.updateDeliveryFeeDisplay)();\n    (0,_utils_formatAddressSummary__WEBPACK_IMPORTED_MODULE_4__[\"default\"])();\n\n    if (window.location.hash === _utils_const__WEBPACK_IMPORTED_MODULE_3__.STEPS.PAYMENT && !(0,_partials_Deliver_utils__WEBPACK_IMPORTED_MODULE_2__.customShippingDataIsValid)()) {\n      (0,_utils_functions__WEBPACK_IMPORTED_MODULE_5__.scrollToInvalidField)();\n      window.location.hash = _utils_const__WEBPACK_IMPORTED_MODULE_3__.STEPS.SHIPPING;\n      (0,_utils_sendEvent__WEBPACK_IMPORTED_MODULE_7__[\"default\"])({\n        action: 'stepRedirect',\n        label: 'redirectPaymentToShipping',\n        description: 'User redirect to shipping because Extra Fields are invalid.'\n      });\n    }\n  }); // Change view\n\n  $(document).on('click', 'a[data-view]', function (e) {\n    e.preventDefault();\n    const viewTarget = $(this).data('view');\n    const content = decodeURIComponent($(this).data('content'));\n    window.postMessage({\n      action: 'setDeliveryView',\n      view: viewTarget,\n      content\n    });\n  }); // Clear form on adding new address\n\n  $(document).on('click', '#no-address-search-results', () => {\n    document.getElementById('bash--address-form').reset();\n    document.getElementById('bash--input-street').focus();\n  }); // Select address\n\n  $(document).on('change', 'input[type=\"radio\"][name=\"selected-address\"]', function () {\n    const address = (0,_partials_Deliver_utils__WEBPACK_IMPORTED_MODULE_2__.parseAttribute)($(this).parents('.bash--address-listing').data('address'));\n\n    if (document.forms['bash--delivery-form']) {\n      document.forms['bash--delivery-form'].reset(); // reset prepopulated lat and long\n\n      $('#bash--input-lat').val('');\n      $('#bash--input-lng').val('');\n      document.forms['bash--delivery-form'].classList.remove('show-form-errors');\n    }\n\n    if (!address) return;\n    (0,_utils_services__WEBPACK_IMPORTED_MODULE_8__.getAddressByName)(address.addressName).then(addressByName => {\n      (0,_utils_setAddress__WEBPACK_IMPORTED_MODULE_9__[\"default\"])(addressByName || address, {\n        validateExtraFields: false\n      });\n      $('input[type=\"radio\"][name=\"selected-address\"]:checked').attr('checked', false);\n      $(this).attr('checked', true);\n    });\n  }); // Rica - show/hide address fields\n\n  $(document).on('change', '#bash--input-rica_sameAddress', function () {\n    if (this.checked) {\n      $('.rica-conditional-fields').slideUp(() => (0,_partials_Deliver_utils__WEBPACK_IMPORTED_MODULE_2__.populateRicaFields)());\n    } else {\n      (0,_partials_Deliver_utils__WEBPACK_IMPORTED_MODULE_2__.clearRicaFields)();\n      $('.rica-conditional-fields').slideDown(() => $('#bash--input-rica_fullName').focus());\n    }\n  }); // address type - change building/complex label to either business\n\n  $(document).on('change', 'input[name=\"addressType\"]', function () {\n    if ($(this).is(':checked')) {\n      if ($(this).val() === 'business') {\n        (0,_utils_functions__WEBPACK_IMPORTED_MODULE_5__.showBusinessName)({\n          focus: true\n        });\n      } else {\n        (0,_utils_functions__WEBPACK_IMPORTED_MODULE_5__.hideBusinessName)();\n      }\n    }\n  }); // switching to between shipping options\n  // hide delivery container when switching to collect\n\n  $(document).on('click', '#shipping-option-pickup-in-point, #shipping-option-delivery', function () {\n    const clickedButton = $(this).attr('id');\n\n    if (clickedButton === 'shipping-option-pickup-in-point') {\n      $('#bash--delivery-container').hide();\n    } else {\n      $('#bash--delivery-container').show();\n    }\n  });\n  $(document).on('submit', '#bash--address-form', _utils_submitAddressForm__WEBPACK_IMPORTED_MODULE_10__[\"default\"]);\n  $(document).on('submit', '#bash--delivery-form', _utils_submitDeliveryForm__WEBPACK_IMPORTED_MODULE_11__[\"default\"]);\n  $(document).on('click', '.remove-cart-item', function (e) {\n    e.preventDefault();\n    (0,_utils_services__WEBPACK_IMPORTED_MODULE_8__.removeFromCart)($(this).data('index')).done(() => {\n      (0,_utils_functions__WEBPACK_IMPORTED_MODULE_5__.clearLoaders)();\n    });\n  }); // Form validation\n\n  window.addEventListener('message', event => {\n    const {\n      data\n    } = event;\n    if (!data || !data.action) return;\n\n    switch (data.action) {\n      case 'setDeliveryView':\n        document.querySelector('.bash--delivery-container')?.setAttribute('data-view', data.view);\n\n        if (data.view === 'address-form' || data.view === 'address-edit') {\n          (0,_utils_phoneFields__WEBPACK_IMPORTED_MODULE_6__.preparePhoneField)('#bash--input-receiverPhone');\n\n          if (data.content) {\n            try {\n              const address = JSON.parse(decodeURIComponent($(`#${data.content}`).data('address')));\n              (0,_partials_Deliver_utils__WEBPACK_IMPORTED_MODULE_2__.populateAddressForm)(address);\n            } catch (e) {\n              console.warn('Could not parse address Json', data.content);\n            }\n          }\n        }\n\n        break;\n\n      case 'FB_LOG':\n        break;\n\n      default:\n        console.error('Unknown action', data.action);\n    }\n  }); // Clear local checkout DB on ext.\n  // window.addEventListener('beforeunload', clearAddresses);\n\n  return {\n    state,\n    init: () => {}\n  };\n})();\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (DeliverController);\n\n//# sourceURL=webpack://custom-shipping-step-by-items/./src/controller/DeliverController.js?");
-
-/***/ }),
-
-/***/ "./src/controller/ViewController.js":
-/*!******************************************!*\
-  !*** ./src/controller/ViewController.js ***!
-  \******************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var _partials__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../partials */ \"./src/partials/index.js\");\n/* harmony import */ var _utils_const__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/const */ \"./src/utils/const.js\");\n/* harmony import */ var _utils_functions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/functions */ \"./src/utils/functions.js\");\n\n\n\n\nconst ViewController = (() => {\n  const state = {\n    showFurnitureForm: false,\n    showTVIDForm: false,\n    showRICAForm: false,\n    showTVorRICAMsg: false,\n    showMixedProductsMsg: false,\n    runningObserver: false\n  };\n\n  const checkCartCategories = () => {\n    if (window.vtexjs.checkout.orderForm) {\n      const {\n        items\n      } = window.vtexjs.checkout.orderForm;\n      const {\n        hasTVs,\n        hasSimCards,\n        hasFurnitureMixed\n      } = (0,_utils_functions__WEBPACK_IMPORTED_MODULE_2__.getSpecialCategories)(items);\n      state.showTVIDForm = hasTVs;\n      state.showRICAForm = hasSimCards;\n      state.showTVorRICAMsg = state.showTVIDForm || state.showRICAForm;\n      /**\r\n        Conditions to show mixed products alert:\r\n        - more than one item\r\n        - after filter categories, this array includes at least one furniture id\r\n        - there are only one category OR not all the categories in the array are furniture\r\n      */\n\n      state.showMixedProductsMsg = hasFurnitureMixed;\n    }\n  };\n\n  const showCustomSections = () => {\n    const tvOrRICAMsgStepExists = $('#tfg-custom-tvrica-msg').length > 0;\n    const mixedProductsMsgExits = $('#tfg-custom-mixed-msg').length > 0;\n    let addBorder = false;\n\n    if (state.showTVorRICAMsg || state.showMixedProductsMsg) {\n      if ($('.vtex-omnishipping-1-x-deliveryChannelsWrapper.custom-disabled').length < 1) {\n        $('#shipping-option-delivery').trigger('click');\n        $('.vtex-omnishipping-1-x-deliveryChannelsWrapper').addClass('custom-disabled');\n      }\n\n      if (state.showTVorRICAMsg && !tvOrRICAMsgStepExists) {\n        $('.vtex-omnishipping-1-x-addressFormPart1').prepend((0,_partials__WEBPACK_IMPORTED_MODULE_0__.TVorRICAMsg)());\n        addBorder = true;\n      }\n\n      if (state.showMixedProductsMsg && !mixedProductsMsgExits) {\n        $('.vtex-omnishipping-1-x-addressFormPart1').prepend((0,_partials__WEBPACK_IMPORTED_MODULE_0__.MixedProducts)());\n        addBorder = true;\n      }\n    }\n\n    if (addBorder) (0,_utils_functions__WEBPACK_IMPORTED_MODULE_2__.addBorderTop)('.tfg-custom-step');\n  };\n\n  const runCustomization = () => {\n    /* Hiding subheader when there is furniture in cart */\n    setTimeout(() => {\n      checkCartCategories();\n\n      if (state.showFurnitureForm) {\n        $('div.subheader').css('display', 'none');\n      } else {\n        $('div.subheader').css('display', 'block');\n      }\n    }, _utils_const__WEBPACK_IMPORTED_MODULE_1__.TIMEOUT_500);\n  };\n\n  const setView = view => {\n    document?.body?.setAttribute('data-delivery-view', view);\n  }; // EVENTS SUBSCRIPTION\n\n\n  $(document).ready(() => {\n    runCustomization();\n  });\n  $(window).on('hashchange orderFormUpdated.vtex', () => {\n    runCustomization();\n  });\n  $(document).on('click', '#shipping-data .btn-link.vtex-omnishipping-1-x-btnDelivery', () => {\n    runCustomization();\n  });\n  return {\n    state,\n    setView,\n    showCustomSections,\n    init: () => {}\n  };\n})();\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ViewController);\n\n//# sourceURL=webpack://custom-shipping-step-by-items/./src/controller/ViewController.js?");
-
-/***/ }),
-
-/***/ "./src/partials/AddressForm.js":
-/*!*************************************!*\
-  !*** ./src/partials/AddressForm.js ***!
-  \*************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"PickupPhoneField\": () => (/* binding */ PickupPhoneField),\n/* harmony export */   \"SuburbField\": () => (/* binding */ SuburbField),\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nconst AddressForm = () => `<p class=\"input custom-field-receiverName tfg-custom-addressForm\">\n      <label>Recipient</label>\n      <input \n        id=\"custom-field-receiverName\" \n        class=\"input-xlarge success\" \n        type=\"text\"\n        name=\"receiverName\" \n      />\n    </p>\n    <p class=\"input custom-field-complement tfg-custom-addressForm\">\n      <label>Mobile number</label>\n      <input \n        id=\"custom-field-complement\" \n        class=\"input-xlarge success\" \n        type=\"tel\" \n        name=\"complement\"\n      />\n    </p>\n    <p class=\"input custom-field-companyBuilding tfg-custom-addressForm\">\n      <label>Company/Building</label>\n      <input \n      id=\"custom-field-companyBuilding\" \n      class=\"input-xlarge success\" \n      type=\"text\" \n      name=\"companyBuilding\"\n      />\n    </p>\n  `;\n\nconst SuburbField = () => `<p class=\"input custom-field-neighborhood tfg-custom-addressForm\">\n<label>Suburb</label>\n  <input \n    id=\"custom-field-neighborhood\" \n    class=\"input-xlarge success\" \n    type=\"text\" \n    name=\"neighborhood\" \n  />\n</p>`;\nconst PickupPhoneField = () => `\n  <p id=\"box-pickup-complement\" \n  class=\"input custom-field-complement tfg-custom-addressForm\">\n    <label>Mobile number</label>\n    <input \n      id=\"custom-pickup-complement\" \n      class=\"input-xlarge success\" \n      type=\"tel\" \n      name=\"complement\" \n      placeholder=\"\" \n    />\n  </p>`;\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (AddressForm);\n\n//# sourceURL=webpack://custom-shipping-step-by-items/./src/partials/AddressForm.js?");
-
-/***/ }),
-
-/***/ "./src/partials/AlertBox.js":
-/*!**********************************!*\
-  !*** ./src/partials/AlertBox.js ***!
-  \**********************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nconst AlertBox = (message, type) => `\n  <div id=\"tfg-custom-${type}-msg\" class=\"tfg-custom-msg\">\n    <p class=\"tfg-custom-icon\"></p>\n    <p class=\"tfg-custom-text\">${message}</p>\n  </div>\n`;\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (AlertBox);\n\n//# sourceURL=webpack://custom-shipping-step-by-items/./src/partials/AlertBox.js?");
-
-/***/ }),
-
-/***/ "./src/partials/Deliver/AddressForm.js":
-/*!*********************************************!*\
-  !*** ./src/partials/Deliver/AddressForm.js ***!
-  \*********************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var _Elements_FormField__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Elements/FormField */ \"./src/partials/Deliver/Elements/FormField.js\");\n/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./utils */ \"./src/partials/Deliver/utils.js\");\n\n\n\nconst AddressForm = () => {\n  const fields = [{\n    name: 'addressId',\n    type: 'hidden',\n    value: '',\n    required: false\n  }, {\n    name: 'addressName',\n    type: 'hidden',\n    value: '',\n    required: false,\n    maxLength: 50\n  }, {\n    name: 'lat',\n    required: false,\n    type: 'hidden',\n    value: ''\n  }, {\n    name: 'lng',\n    required: false,\n    type: 'hidden',\n    value: ''\n  }, {\n    name: 'street',\n    label: 'Street address',\n    required: true,\n    value: ''\n  }, {\n    name: 'addressType',\n    label: 'Address type',\n    required: true,\n    type: 'radio',\n    options: [{\n      value: 'residential',\n      label: 'Residential',\n      checked: true\n    }, {\n      value: 'business',\n      label: 'Business'\n    }]\n  }, {\n    name: 'number',\n    required: false,\n    value: '',\n    type: 'hidden'\n  }, {\n    name: 'businessName',\n    label: 'Business name',\n    required: false,\n    value: '',\n    maxLength: 100\n  }, {\n    name: 'companyBuilding',\n    label: 'Building/Complex and number',\n    required: false,\n    value: '',\n    maxLength: 100\n  }, {\n    name: 'neighborhood',\n    label: 'Suburb',\n    value: '',\n    maxLength: 750\n  }, {\n    name: 'city',\n    label: 'City',\n    required: true,\n    value: '',\n    maxLength: 750\n  }, {\n    name: 'postalCode',\n    label: 'Postal code',\n    value: '',\n    type: 'tel',\n    minlength: 4,\n    maxLength: 4\n  }, {\n    type: 'note',\n    required: false,\n    name: 'suburb-postal-reminder',\n    value: 'Make sure to specify the correct Suburb and Postal code so we can easily find your address.'\n  }, {\n    name: 'state',\n    label: 'Province',\n    type: 'dropdown',\n    options: [{\n      value: '',\n      label: 'Select'\n    }, {\n      value: 'EC',\n      label: 'Eastern Cape'\n    }, {\n      value: 'FS',\n      label: 'Free State'\n    }, {\n      value: 'GP',\n      label: 'Gauteng'\n    }, {\n      value: 'KZN',\n      label: 'KwaZulu-Natal'\n    }, {\n      value: 'LP',\n      label: 'Limpopo'\n    }, {\n      value: 'MP',\n      label: 'Mpumalanga'\n    }, {\n      value: 'NC',\n      label: 'Northern Cape'\n    }, {\n      value: 'NW',\n      label: 'North West'\n    }, {\n      value: 'WC',\n      label: 'Western Cape'\n    }]\n  }, {\n    type: 'note',\n    required: false,\n    name: 'country-display',\n    label: 'Country',\n    value: 'South Africa'\n  }, {\n    type: 'hidden',\n    required: true,\n    name: 'country',\n    value: 'ZAF'\n  }, {\n    name: 'receiverName',\n    label: 'Recipient’s name',\n    required: true,\n    value: (0,_utils__WEBPACK_IMPORTED_MODULE_1__.getBestRecipient)({\n      type: 'delivery'\n    })\n  }, // Note: historically used incorrectly for Address line 2\n  {\n    name: 'complement',\n    required: false,\n    type: 'hidden',\n    helperText: 'We send shipping updates to this number.',\n    value: ''\n  }, {\n    name: 'receiverPhone',\n    label: 'Recipient’s mobile number',\n    required: true,\n    type: 'tel',\n    helperText: 'We send shipping updates to this number.'\n  }];\n  const formFields = fields.map(field => (0,_Elements_FormField__WEBPACK_IMPORTED_MODULE_0__[\"default\"])(field)).join('');\n  return `\n  <form id=\"bash--address-form\" method=\"post\">\n    ${formFields}\n\n    <button \n      class=\"submit btn-go-to-payment btn btn-large btn-success\"\n      id=\"btn-save-address\" \n      type=\"submit\">\n      Save address\n    </button>\n  </form>\n  \n  `;\n};\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (AddressForm);\n\n//# sourceURL=webpack://custom-shipping-step-by-items/./src/partials/Deliver/AddressForm.js?");
-
-/***/ }),
-
-/***/ "./src/partials/Deliver/AddressListing.js":
-/*!************************************************!*\
-  !*** ./src/partials/Deliver/AddressListing.js ***!
-  \************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var _utils_phoneFields__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../utils/phoneFields */ \"./src/utils/phoneFields.js\");\n/* harmony import */ var _Elements_Radio__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Elements/Radio */ \"./src/partials/Deliver/Elements/Radio.js\");\n\n\n\nconst isSelectedAddress = (address, selectedAddress) => {\n  const addressObject = JSON.stringify({\n    street: address.street,\n    neighborhood: address.neighborhood,\n    city: address.city,\n    postalCode: address.postalCode\n  });\n  const selectedAddressObject = JSON.stringify({\n    street: selectedAddress.street,\n    neighborhood: selectedAddress.neighborhood,\n    city: selectedAddress.city,\n    postalCode: selectedAddress.postalCode\n  });\n  return addressObject === selectedAddressObject;\n};\n\nconst AddressListing = address => {\n  if (!address) return '';\n  const {\n    businessName,\n    number,\n    street,\n    neighborhood,\n    postalCode,\n    city,\n    receiverName,\n    addressName,\n    complement,\n    receiverPhone\n  } = address;\n  const addressLine = [`${businessName ? `${businessName}, ` : ''} ${number ? `${number.trim()} ` : ''}${street}`, neighborhood ?? city, postalCode].join(', ').trim();\n  const contactLine = [receiverName, (0,_utils_phoneFields__WEBPACK_IMPORTED_MODULE_0__.formatPhoneNumber)((0,_utils_phoneFields__WEBPACK_IMPORTED_MODULE_0__.prependZero)(receiverPhone || complement))].join(' - '); // orderform\n\n  const selectedAddress = window?.vtexjs?.checkout?.orderForm?.shippingData?.address;\n  const addressString = encodeURIComponent(JSON.stringify(address));\n  return `\n<label id=\"address-${addressName}\" class=\"bash--address-listing\" data-address=\"${addressString}\">\n  <div class=\"address-radio\">\n  ${(0,_Elements_Radio__WEBPACK_IMPORTED_MODULE_1__[\"default\"])({\n    name: 'selected-address',\n    options: [{\n      checked: !!selectedAddress ?? isSelectedAddress(address, selectedAddress),\n      value: addressName\n    }]\n  })}\n  </div>\n  <div class=\"address-text\">\n    <div>${addressLine}</div>    \n    <div>${contactLine}</div>  \n  </div>\n  <div class=\"address-edit\">\n    <a href=\"#\" data-view=\"address-edit\" data-content=\"address-${addressName}\">\n      Edit\n    </a>\n  </div>\n</label>\n`;\n};\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (AddressListing);\n\n//# sourceURL=webpack://custom-shipping-step-by-items/./src/partials/Deliver/AddressListing.js?");
-
-/***/ }),
-
-/***/ "./src/partials/Deliver/AddressSearch.js":
-/*!***********************************************!*\
-  !*** ./src/partials/Deliver/AddressSearch.js ***!
-  \***********************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var _Elements_FormField__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Elements/FormField */ \"./src/partials/Deliver/Elements/FormField.js\");\n/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./utils */ \"./src/partials/Deliver/utils.js\");\n\n\n\nconst AddressSearch = () => {\n  setTimeout(() => {\n    (0,_utils__WEBPACK_IMPORTED_MODULE_1__.initGoogleAutocomplete)();\n  }, 500);\n  const searchField = (0,_Elements_FormField__WEBPACK_IMPORTED_MODULE_0__[\"default\"])({\n    name: 'address-search',\n    placeholder: 'Start typing an address...',\n    autoComplete: 'off'\n  });\n  return `\n  \n  ${searchField}\n    <div id=\"no-address-search-results-notification\" class=\"notification info\" >\n      <span class=\"icon\"></span>\n      <div class=\"notification-content\">\n      We could not find your address. \n        <a class=\"no-results-drop-down\" href=\"\" data-view=\"address-form\" id=\"no-address-search-results\">\n          Please click here to enter it manually.\n        </a>\n    </div>\n  `;\n};\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (AddressSearch);\n\n//# sourceURL=webpack://custom-shipping-step-by-items/./src/partials/Deliver/AddressSearch.js?");
-
-/***/ }),
-
-/***/ "./src/partials/Deliver/Addresses.js":
-/*!*******************************************!*\
-  !*** ./src/partials/Deliver/Addresses.js ***!
-  \*******************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var _utils_functions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../utils/functions */ \"./src/utils/functions.js\");\n/* harmony import */ var _utils_services__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../utils/services */ \"./src/utils/services.js\");\n/* harmony import */ var _AddressListing__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./AddressListing */ \"./src/partials/Deliver/AddressListing.js\");\n\n\n\n\nconst Addresses = () => {\n  (0,_utils_services__WEBPACK_IMPORTED_MODULE_1__.getAddresses)().then(({\n    data: addresses\n  }) => {\n    const addressesHtml = addresses.map(address => (0,_AddressListing__WEBPACK_IMPORTED_MODULE_2__[\"default\"])(address));\n\n    if (document.getElementById('bash-address-list')) {\n      document.getElementById('bash-address-list').innerHTML = addressesHtml.join('');\n    }\n\n    if ($('#back-button-select-address').hasClass('inactive')) {\n      $('#back-button-select-address').show();\n    }\n\n    (0,_utils_functions__WEBPACK_IMPORTED_MODULE_0__.clearLoaders)();\n\n    if (addresses.length < 1) {\n      window.postMessage({\n        action: 'setDeliveryView',\n        view: 'address-search'\n      });\n      $('#bash--input-address-search').focus();\n      $('#back-button-select-address').hide();\n      $('#back-button-select-address').addClass('inactive');\n    }\n  }).catch(e => {\n    console.error('ERROR getAddresses', e);\n    throw new Error('Error getAddresses', e.message);\n  });\n  return `\n <div class=\"bash--addresses shimmer\" id=\"bash-address-list\">\n    Loading addresses...\n  </div>\n  `;\n};\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Addresses);\n\n//# sourceURL=webpack://custom-shipping-step-by-items/./src/partials/Deliver/Addresses.js?");
-
-/***/ }),
-
-/***/ "./src/partials/Deliver/DeliverContainer.js":
-/*!**************************************************!*\
-  !*** ./src/partials/Deliver/DeliverContainer.js ***!
-  \**************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var _utils_const__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../utils/const */ \"./src/utils/const.js\");\n/* harmony import */ var _Addresses__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Addresses */ \"./src/partials/Deliver/Addresses.js\");\n/* harmony import */ var _AddressForm__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./AddressForm */ \"./src/partials/Deliver/AddressForm.js\");\n/* harmony import */ var _AddressSearch__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./AddressSearch */ \"./src/partials/Deliver/AddressSearch.js\");\n/* harmony import */ var _DeliveryError__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./DeliveryError */ \"./src/partials/Deliver/DeliveryError.js\");\n/* harmony import */ var _DeliveryOptions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./DeliveryOptions */ \"./src/partials/Deliver/DeliveryOptions.js\");\n/* harmony import */ var _Elements_Alert__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Elements/Alert */ \"./src/partials/Deliver/Elements/Alert.js\");\n/* harmony import */ var _MixedProducts__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./MixedProducts */ \"./src/partials/Deliver/MixedProducts.js\");\n/* harmony import */ var _TVorRICAMsg__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./TVorRICAMsg */ \"./src/partials/Deliver/TVorRICAMsg.js\");\n\n\n\n\n\n\n\n\n\n\nconst DeliverContainer = ({\n  hasFurn,\n  hasFurnOnly,\n  hasFurnMixed\n}) => `\n  <div class=\"bash--delivery-container ${hasFurn && 'has-furniture'}\"\n   id=\"bash--delivery-container\" data-view=\"select-address\">\n    <div id=\"bash--shipping-messages\">\n      ${(0,_Elements_Alert__WEBPACK_IMPORTED_MODULE_6__.AlertContainer)()}\n      ${(0,_TVorRICAMsg__WEBPACK_IMPORTED_MODULE_8__[\"default\"])()}\n      ${(0,_MixedProducts__WEBPACK_IMPORTED_MODULE_7__[\"default\"])()}\n      ${(0,_DeliveryError__WEBPACK_IMPORTED_MODULE_4__.DeliveryErrorContainer)()}\n    </div>\n   <form id=\"bash--delivery-form\" name=\"bash--delivery-form\" method=\"post\">\n\n    <section class=\"bash--delivery-view\" data-section=\"select-address\">\n    <div class=\"bash--heading\">\n        <h2>Delivery address</h2>\n        <a href=\"#\" data-view=\"address-search\">Add address</a>\n      </div>\n      ${(0,_Addresses__WEBPACK_IMPORTED_MODULE_1__[\"default\"])()}\n    </section>\n\n    <section id=\"bash-delivery-options\" class=\"shipping-method bash--delivery-view\" data-section=\"select-address\">\n      <hr>\n      <div class=\"bash--heading sub-heading\">\n        <h3>Delivery method</h3>\n        ${hasFurnOnly || hasFurnMixed ? _utils_const__WEBPACK_IMPORTED_MODULE_0__.FURNITURE_FEE_LINK : ''}\n      </div>\n      ${(0,_DeliveryOptions__WEBPACK_IMPORTED_MODULE_5__[\"default\"])({\n  hasFurnOnly,\n  hasFurnitureMixed: hasFurnMixed\n})}\n      <button \n        class=\"submit btn-go-to-payment btn btn-large btn-success\"\n        id=\"btn-save-delivery\" \n        type=\"submit\">\n          Go to payment\n      </button>\n    </section>\n   </form>\n\n    <section class=\"bash--delivery-view\" data-section=\"address-search\">\n      <div class=\"bash--heading\">\n        <h3>Add a new delivery address</h3>\n        <a href='#' data-view='select-address' id='back-button-select-address'>&lt; Back</a>\n      </div>\n      <div class=\"address-search-field-container\" id=\"address-search-field-container\">\n          ${(0,_AddressSearch__WEBPACK_IMPORTED_MODULE_3__[\"default\"])()} \n      </div>\n      <p style=\"font-size: 12px; margin: 16px 0\" id=\"type-your-address-above\">\n        Type your address above or \n        <a \n          href=\"\" id=\"link-manual-address-entry\"\n          data-view=\"address-form\"\n          onClick=\"document.getElementById('bash--input-street').focus()\"\n          style=\"text-decoration: underline\" \n        >enter it manually</a>.\n      </p>\n    </section>\n    \n    <section class=\"bash--delivery-view\" data-section=\"address-form\">\n       <div class=\"bash--heading\">\n        <h3>Delivery address</h3>\n        <a href=\"#\" class=\"back-button--search\" data-view=\"address-search\">&lt; Back</a>\n        <a href=\"#\" class=\"back-button--select\" data-view=\"select-address\">&lt; Back</a>\n      </div>\n      ${(0,_AddressForm__WEBPACK_IMPORTED_MODULE_2__[\"default\"])()}\n    </section>\n    \n  </div>`;\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (DeliverContainer);\n\n//# sourceURL=webpack://custom-shipping-step-by-items/./src/partials/Deliver/DeliverContainer.js?");
-
-/***/ }),
-
-/***/ "./src/partials/Deliver/DeliveryError.js":
-/*!***********************************************!*\
-  !*** ./src/partials/Deliver/DeliveryError.js ***!
-  \***********************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"DeliveryError\": () => (/* binding */ DeliveryError),\n/* harmony export */   \"DeliveryErrorContainer\": () => (/* binding */ DeliveryErrorContainer),\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nconst DeliveryErrorContainer = () => ` \n \n<div id=\"bash-delivery-error-container\"   >\n</div>`;\nconst DeliveryError = ({\n  text,\n  fields\n}) => {\n  if (!fields.itemIndex) return '';\n  const cartItem = window.vtexjs.checkout?.orderForm.items?.[fields.itemIndex];\n  if (!cartItem) return '';\n  const imageUrl = cartItem?.imageUrl;\n  return ` \n<div id=\"bash-delivery-error\" class=\"notification error\" alt=\"${fields?.skuName ?? ''}\" >\n   <!---<div class=\"icon\"></div>--->\n   ${imageUrl ? `<img src=\"${imageUrl}\" style=\" float: right; \" />` : ''}\n   <div class=\"notification-content\">\n      <h3>Address error ${fields?.skuName ? `- ${fields?.skuName}` : ''}</h3>\n      <p>${text}</p>\n      <p>Check the postal code of your address, or \n      <a href=\"#\" \n        class=\"remove-cart-item\"\n        style=\"color: white; text-decoration: underline\"\n        data-index=\"${fields.itemIndex}\">remove this item from your cart</a>.\n      </p>\n   </div>  \n</div>  \n`;\n};\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (DeliveryErrorContainer);\n\n//# sourceURL=webpack://custom-shipping-step-by-items/./src/partials/Deliver/DeliveryError.js?");
-
-/***/ }),
-
-/***/ "./src/partials/Deliver/DeliveryOptions.js":
-/*!*************************************************!*\
-  !*** ./src/partials/Deliver/DeliveryOptions.js ***!
-  \*************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var _Elements_Radio__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Elements/Radio */ \"./src/partials/Deliver/Elements/Radio.js\");\n/* harmony import */ var _FurnitureDelivery__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./FurnitureDelivery */ \"./src/partials/Deliver/FurnitureDelivery.js\");\n/* eslint-disable no-nested-ternary */\n\n\n\nconst DeliveryOptions = ({\n  hasFurnOnly,\n  hasFurnitureMixed\n}) => {\n  let deliveryMessage = 'Delivery within 3 - 5 working days';\n  if (hasFurnitureMixed) deliveryMessage = 'Delivery within 3 - 10 working days';\n  if (hasFurnOnly) deliveryMessage = 'Delivery within 5 - 10 working days'; // Update the message in the Delivery Summary.\n\n  $('.shp-summary-package-time > span').html(deliveryMessage);\n  return `\n  <label class=\"bash--delivery-option-display\" >\n  ${(0,_Elements_Radio__WEBPACK_IMPORTED_MODULE_0__[\"default\"])({\n    name: 'delivery-option',\n    options: [{\n      checked: true,\n      value: true\n    }]\n  })}\n   \n   <div id=\"bash--delivery-option-text\" class=\"bash--delivery-option-text\">\n      <span class=\"normal-delivery\">\n        ${deliveryMessage}\n      </span>\n   </div>\n\n  <div id=\"bash--delivery-fee\" class=\"bash--delivery-fee\">\n    R50\n  </div>\n</label>\n\n${(0,_FurnitureDelivery__WEBPACK_IMPORTED_MODULE_1__[\"default\"])()}\n  `;\n};\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (DeliveryOptions);\n\n//# sourceURL=webpack://custom-shipping-step-by-items/./src/partials/Deliver/DeliveryOptions.js?");
-
-/***/ }),
-
-/***/ "./src/partials/Deliver/Elements/Alert.js":
-/*!************************************************!*\
-  !*** ./src/partials/Deliver/Elements/Alert.js ***!
-  \************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"Alert\": () => (/* binding */ Alert),\n/* harmony export */   \"AlertContainer\": () => (/* binding */ AlertContainer),\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n// message: string\nconst AlertContainer = () => '<div id=\"bash-alert-container\"></div>';\nconst Alert = ({\n  text\n}) => `<div class='alert-container'>\n      <p>${text}</p>\n    </div>\n  `;\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (AlertContainer);\n\n//# sourceURL=webpack://custom-shipping-step-by-items/./src/partials/Deliver/Elements/Alert.js?");
-
-/***/ }),
-
-/***/ "./src/partials/Deliver/Elements/Checkbox.js":
-/*!***************************************************!*\
-  !*** ./src/partials/Deliver/Elements/Checkbox.js ***!
-  \***************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nconst Checkbox = ({\n  name,\n  label,\n  checked,\n  value\n}) => `\n    <label class=\"tfg-checkbox-label\">\n       <input \n        type='checkbox' \n        name=\"${name}\" \n        id=\"bash--input-${name}\"\n        ${checked ? \"checked='checked'\" : ''}\n        value=${value ?? ''}\n      />\n      <span>${label}</span>\n    </label>\n  `;\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Checkbox);\n\n//# sourceURL=webpack://custom-shipping-step-by-items/./src/partials/Deliver/Elements/Checkbox.js?");
-
-/***/ }),
-
-/***/ "./src/partials/Deliver/Elements/DropDown.js":
-/*!***************************************************!*\
-  !*** ./src/partials/Deliver/Elements/DropDown.js ***!
-  \***************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nconst DropDown = ({\n  name,\n  disabled = false,\n  options,\n  required\n}) => {\n  const hasASelectedOption = options.find(option => option.selected === true);\n  return `\n  <select \n    name=\"${name}\" \n    ${required ? ' required ' : ''} \n    ${disabled ? ' disabled ' : ''} \n    id=\"bash--input-${name}\" \n    class=\"input-large\" \n  >\n  ${options.map(({\n    value,\n    label,\n    selected\n  }, index) => `\n    <option \n    ${index === 0 ? ' disabled ' : ''}\n    ${index === 0 && !hasASelectedOption ? ' selected ' : ''}\n    ${selected ? ' selected ' : ''}\n      value=\"${value}\" \n    >${label}</option>\n    `).join('')}\n  </select>\n  `;\n};\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (DropDown);\n\n//# sourceURL=webpack://custom-shipping-step-by-items/./src/partials/Deliver/Elements/DropDown.js?");
-
-/***/ }),
-
-/***/ "./src/partials/Deliver/Elements/FormField.js":
-/*!****************************************************!*\
-  !*** ./src/partials/Deliver/Elements/FormField.js ***!
-  \****************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var _Checkbox__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Checkbox */ \"./src/partials/Deliver/Elements/Checkbox.js\");\n/* harmony import */ var _DropDown__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DropDown */ \"./src/partials/Deliver/Elements/DropDown.js\");\n/* harmony import */ var _Note__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Note */ \"./src/partials/Deliver/Elements/Note.js\");\n/* harmony import */ var _Radio__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Radio */ \"./src/partials/Deliver/Elements/Radio.js\");\n/* harmony import */ var _TextField__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./TextField */ \"./src/partials/Deliver/Elements/TextField.js\");\n\n\n\n\n\n\nconst FormField = ({\n  label,\n  name,\n  value = '',\n  required = true,\n  type = 'text',\n  placeholder,\n  autoComplete = 'on',\n  maxLength,\n  minlength,\n  disabled = false,\n  options,\n  checked,\n  error = 'This field is required.'\n}) => {\n  const fieldId = name.replace(/\\s/g, '-');\n\n  const formField = () => {\n    switch (type) {\n      case 'radio':\n        return (0,_Radio__WEBPACK_IMPORTED_MODULE_3__[\"default\"])({\n          name,\n          options\n        });\n\n      case 'dropdown':\n        return (0,_DropDown__WEBPACK_IMPORTED_MODULE_1__[\"default\"])({\n          name,\n          disabled,\n          options,\n          required\n        });\n\n      case 'note':\n        return (0,_Note__WEBPACK_IMPORTED_MODULE_2__[\"default\"])({\n          name,\n          value\n        });\n\n      case 'checkbox':\n        return (0,_Checkbox__WEBPACK_IMPORTED_MODULE_0__[\"default\"])({\n          name,\n          label,\n          checked\n        });\n\n      default:\n        return (0,_TextField__WEBPACK_IMPORTED_MODULE_4__[\"default\"])({\n          name,\n          value,\n          required,\n          type,\n          placeholder,\n          autoComplete,\n          maxLength,\n          minlength\n        });\n    }\n  };\n\n  const separateLabel = `<label id=\"bash--label-${fieldId}\" for=\"bash--input-${fieldId}\">${label}</label>`;\n  return `\n<p class=\"input bash--${type}field-${name.replace(/\\s/g, '-')} bash--${type} ${required ? 'required' : 'optional'}\">\n  ${label && type !== 'checkbox' ? separateLabel : ''}\n  ${formField()}\n  <span class=\"bash--field-error\">${error}</span>\n</p>  \n`;\n};\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (FormField);\n\n//# sourceURL=webpack://custom-shipping-step-by-items/./src/partials/Deliver/Elements/FormField.js?");
-
-/***/ }),
-
-/***/ "./src/partials/Deliver/Elements/Note.js":
-/*!***********************************************!*\
-  !*** ./src/partials/Deliver/Elements/Note.js ***!
-  \***********************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nconst Note = ({\n  value,\n  name\n}) => `\n  <div class=\"bash--note-field ${name}\">\n  ${value}\n  </div>\n  `;\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Note);\n\n//# sourceURL=webpack://custom-shipping-step-by-items/./src/partials/Deliver/Elements/Note.js?");
-
-/***/ }),
-
-/***/ "./src/partials/Deliver/Elements/Radio.js":
-/*!************************************************!*\
-  !*** ./src/partials/Deliver/Elements/Radio.js ***!
-  \************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nconst Radio = ({\n  name,\n  options = []\n}) => `\n  \n  <div class=\"bash--radio-options\">\n  ${options.map(({\n  value,\n  label,\n  checked = false,\n  disabled = false\n}) => `\n      <label class=\"bash--radio-option\" id=\"radio-label-${name}-${value}\">\n        <input type=\"radio\" \n          ${checked ? \"checked='checked'\" : ''} \n          ${disabled ? \"disabled='disabled'\" : ''} \n          value=\"${value ?? ''}\" \n          name=\"${name}\" \n          id=\"radio-${name}-${value}\"\n        />\n          <span class=\"radio-icon\"></span> \n          ${label ? `<span class=\"radio-label\">${label}</span>` : ''}\n      </label>\n    `).join('')}\n   \n  </div>\n  `;\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Radio);\n\n//# sourceURL=webpack://custom-shipping-step-by-items/./src/partials/Deliver/Elements/Radio.js?");
-
-/***/ }),
-
-/***/ "./src/partials/Deliver/Elements/TextField.js":
-/*!****************************************************!*\
-  !*** ./src/partials/Deliver/Elements/TextField.js ***!
-  \****************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nconst TextField = ({\n  name,\n  value = '',\n  required = true,\n  type = 'text',\n  placeholder,\n  autoComplete = 'on',\n  minLength = 0,\n  maxLength = 0\n}) => {\n  const fieldId = name.replace(/\\s/g, '-');\n  return `\n  <input \n    ${required ? ' required ' : ''}\n    autocomplete=\"${autoComplete}\" \n    id=\"bash--input-${fieldId}\" \n    type=\"${type}\" \n    name=\"${name}\" \n    ${minLength > 0 ? `minlength=\"${minLength}\"` : ''}\n    ${maxLength > 0 ? `maxlength=\"${maxLength}\"` : ''}\n    placeholder=\"${placeholder ?? ''}\" \n    class=\"input-xlarge\" \n    value=\"${value}\" \n  />\n`;\n};\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (TextField);\n\n//# sourceURL=webpack://custom-shipping-step-by-items/./src/partials/Deliver/Elements/TextField.js?");
-
-/***/ }),
-
-/***/ "./src/partials/Deliver/ExtraFieldsContainer.js":
-/*!******************************************************!*\
-  !*** ./src/partials/Deliver/ExtraFieldsContainer.js ***!
-  \******************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var _RICAForm__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./RICAForm */ \"./src/partials/Deliver/RICAForm.js\");\n/* harmony import */ var _TVLicenseForm__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TVLicenseForm */ \"./src/partials/Deliver/TVLicenseForm.js\");\n\n\n\nconst ExtraFieldsContainer = ({\n  hasTV,\n  hasSim\n}) => {\n  const showTVLicenseForm = `\n    <div id=\"tv-license-form\">\n      <hr>\n      <div class=\"bash--heading sub-heading heading-with-description\">\n        <h3>TV license information needed</h3>\n        <p class=\"tfg-custom-subtitle\">Please provide your ID number to validate your TV Licence.</p>\n      </div>\n      ${(0,_TVLicenseForm__WEBPACK_IMPORTED_MODULE_1__[\"default\"])()}\n    </div>\n  `;\n  const showRICAForm = `\n    <div id=\"rica-form\">\n      <hr>\n      <div class=\"bash--heading sub-heading heading-with-description\">\n        <h3>Rica information required</h3>\n        <p class=\"tfg-custom-subtitle\">\n          To RICA your SIM card, provide your SA ID (or foreign passport) number and your address as\n          it appears on a valid proof of residence.\n        </p> \n      </div>\n        ${(0,_RICAForm__WEBPACK_IMPORTED_MODULE_0__[\"default\"])()}\n    </div>\n    `;\n  return `\n  <section class=\"bash--extra-fields bash--delivery-view\" data-section=\"select-address\">\n    ${hasTV ? showTVLicenseForm : ''}\n    ${hasSim ? showRICAForm : ''}\n  </section>`;\n};\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ExtraFieldsContainer);\n\n//# sourceURL=webpack://custom-shipping-step-by-items/./src/partials/Deliver/ExtraFieldsContainer.js?");
-
-/***/ }),
-
-/***/ "./src/partials/Deliver/FurnitureDelivery.js":
-/*!***************************************************!*\
-  !*** ./src/partials/Deliver/FurnitureDelivery.js ***!
-  \***************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nconst FurnitureDeliveryOptions = () => `\n  <div class=\"furniture-delivery-notes\">\n\n    <div id=\"furniture-delivery-mixed\" class=\"furniture-note\">\n      <h4>Only furniture delivery fees apply</h4>\n      <p>\n        We’ll ship your furniture and other items in your cart to the selected address. \n        Only the furniture delivery fee will apply for your whole order.\n      </p>\n      <p>We’ll call the recipient in the next few days to arrange the furniture delivery.</p>\n      <p>Note: Our couriers can’t hoist goods.</p>\n    </div>\n\n    <div id=\"furniture-delivery-only\" class=\"furniture-note\">\n      <h4>Furniture delivery</h4>\n      <p> We’ll call the recipient in the next few days to arrange the furniture delivery.</p>\n      <p>Note: Our couriers can’t hoist goods.</p>\n    </div>\n    \n  </div>\n  `;\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (FurnitureDeliveryOptions);\n\n//# sourceURL=webpack://custom-shipping-step-by-items/./src/partials/Deliver/FurnitureDelivery.js?");
-
-/***/ }),
-
-/***/ "./src/partials/Deliver/MixedProducts.js":
-/*!***********************************************!*\
-  !*** ./src/partials/Deliver/MixedProducts.js ***!
-  \***********************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nconst MixedProducts = () => `\n  <div id=\"tfg-custom-mixed-msg\" class=\"tfg-custom-msg\">\n    <p class=\"tfg-custom-icon\"></p>\n    <p class=\"tfg-custom-text\">\n      We'll ship your furniture and other items in your cart to the selected address. \n      Only the furniture delivery fee will apply for your whole order.\n      </p>\n  </div>\n`;\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (MixedProducts);\n\n//# sourceURL=webpack://custom-shipping-step-by-items/./src/partials/Deliver/MixedProducts.js?");
-
-/***/ }),
-
-/***/ "./src/partials/Deliver/RICAForm.js":
-/*!******************************************!*\
-  !*** ./src/partials/Deliver/RICAForm.js ***!
-  \******************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var _Elements_FormField__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Elements/FormField */ \"./src/partials/Deliver/Elements/FormField.js\");\n/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./utils */ \"./src/partials/Deliver/utils.js\");\n\n\n\nconst RICAForm = () => {\n  const {\n    shippingData: {\n      selectedAddress\n    }\n  } = window.vtexjs.checkout.orderForm; // use rica_ prefix to ensure fields are unique\n\n  const fields = [{\n    name: 'rica_idOrPassport',\n    label: 'ID or Passport number',\n    required: true,\n    value: ''\n  }, {\n    name: 'rica_sameAddress',\n    label: 'Residential address the same as delivery address',\n    type: 'checkbox',\n    checked: true,\n    required: false\n  } // for rest of the fields check if\n  // same as residential address is checked?\n  // if checked prefill the fields otherwise don't\n  ];\n  const conditionalFields = [{\n    name: 'rica_fullName',\n    label: 'Full name and surname',\n    required: true,\n    value: (0,_utils__WEBPACK_IMPORTED_MODULE_1__.getBestRecipient)({\n      type: 'delivery'\n    }) || ''\n  }, {\n    name: 'rica_streetAddress',\n    label: 'Street address',\n    required: true,\n    value: selectedAddress?.street || ''\n  }, {\n    name: 'rica_suburb',\n    label: 'Suburb',\n    value: selectedAddress?.neighborhood || ''\n  }, {\n    name: 'rica_city',\n    label: 'City',\n    required: true,\n    value: selectedAddress?.city || ''\n  }, {\n    name: 'rica_postalCode',\n    label: 'Postal code',\n    value: selectedAddress?.postalCode || '',\n    type: 'tel',\n    minlength: 4,\n    maxLength: 4\n  }, {\n    name: 'rica_province',\n    label: 'Province',\n    type: 'dropdown',\n    options: [{\n      value: '',\n      label: 'Select',\n      disabled: true\n    }, {\n      value: 'EC',\n      label: 'Eastern Cape'\n    }, {\n      value: 'FS',\n      label: 'Free State'\n    }, {\n      value: 'GP',\n      label: 'Gauteng'\n    }, {\n      value: 'KZN',\n      label: 'KwaZulu-Natal'\n    }, {\n      value: 'LP',\n      label: 'Limpopo'\n    }, {\n      value: 'MP',\n      label: 'Mpumalanga'\n    }, {\n      value: 'NC',\n      label: 'Northern Cape'\n    }, {\n      value: 'NW',\n      label: 'North West'\n    }, {\n      value: 'WC',\n      label: 'Western Cape'\n    }]\n  }, {\n    type: 'note',\n    required: false,\n    name: 'rica-country-display',\n    label: 'Country',\n    value: 'South Africa'\n  }, {\n    type: 'hidden',\n    required: true,\n    name: 'country',\n    value: 'ZAF'\n  }];\n  const formFields = fields.map(field => (0,_Elements_FormField__WEBPACK_IMPORTED_MODULE_0__[\"default\"])(field)).join('');\n  const conditionalFormFields = conditionalFields.map(field => (0,_Elements_FormField__WEBPACK_IMPORTED_MODULE_0__[\"default\"])(field)).join('');\n  return `\n    ${formFields}\n    <div class=\"rica-conditional-fields hide\">\n    ${conditionalFormFields}\n    </div>\n  `;\n};\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (RICAForm);\n\n//# sourceURL=webpack://custom-shipping-step-by-items/./src/partials/Deliver/RICAForm.js?");
-
-/***/ }),
-
-/***/ "./src/partials/Deliver/TVLicenseForm.js":
-/*!***********************************************!*\
-  !*** ./src/partials/Deliver/TVLicenseForm.js ***!
-  \***********************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var _Elements_FormField__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Elements/FormField */ \"./src/partials/Deliver/Elements/FormField.js\");\n\n\nconst TVLicenseForm = () => {\n  // use tv_ prefix to ensure fields are unique\n  const field = {\n    name: 'tv_tvID',\n    label: 'SA ID number',\n    required: true,\n    value: ''\n  };\n  return `\n    ${(0,_Elements_FormField__WEBPACK_IMPORTED_MODULE_0__[\"default\"])(field)}\n  `;\n};\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (TVLicenseForm);\n\n//# sourceURL=webpack://custom-shipping-step-by-items/./src/partials/Deliver/TVLicenseForm.js?");
-
-/***/ }),
-
-/***/ "./src/partials/Deliver/TVorRICAMsg.js":
-/*!*********************************************!*\
-  !*** ./src/partials/Deliver/TVorRICAMsg.js ***!
-  \*********************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nconst TVorRICAMsg = () => `\n  <div id=\"tfg-custom-tvrica-msg\" class=\"tfg-custom-msg\">\n    <p class=\"tfg-custom-icon\"></p>\n    <p class=\"tfg-custom-text\">\n      You can't collect this order in store because your cart contains items \n      which require either RICA or TV License validation.\n    </p>\n  </div>\n`;\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (TVorRICAMsg);\n\n//# sourceURL=webpack://custom-shipping-step-by-items/./src/partials/Deliver/TVorRICAMsg.js?");
-
-/***/ }),
-
-/***/ "./src/partials/Deliver/constants.js":
-/*!*******************************************!*\
-  !*** ./src/partials/Deliver/constants.js ***!
-  \*******************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"requiredAddressFields\": () => (/* binding */ requiredAddressFields),\n/* harmony export */   \"requiredRicaFields\": () => (/* binding */ requiredRicaFields),\n/* harmony export */   \"requiredTVFields\": () => (/* binding */ requiredTVFields),\n/* harmony export */   \"validAddressTypes\": () => (/* binding */ validAddressTypes)\n/* harmony export */ });\n/* eslint-disable import/prefer-default-export */\nconst requiredAddressFields = ['receiverName', 'street', 'neighborhood', 'state', 'city', 'country', 'postalCode'];\nconst requiredRicaFields = ['idOrPassport', 'sameAddress', 'fullName', 'streetAddress', 'suburb', 'city', 'postalCode', 'province'];\nconst requiredTVFields = ['tvID'];\nconst validAddressTypes = ['residential', 'inStore', 'commercial', 'giftRegistry', 'pickup', 'search'];\n\n//# sourceURL=webpack://custom-shipping-step-by-items/./src/partials/Deliver/constants.js?");
-
-/***/ }),
-
-/***/ "./src/partials/Deliver/utils.js":
-/*!***************************************!*\
-  !*** ./src/partials/Deliver/utils.js ***!
-  \***************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"addressIsValid\": () => (/* binding */ addressIsValid),\n/* harmony export */   \"clearRicaFields\": () => (/* binding */ clearRicaFields),\n/* harmony export */   \"customShippingDataIsValid\": () => (/* binding */ customShippingDataIsValid),\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__),\n/* harmony export */   \"getBestRecipient\": () => (/* binding */ getBestRecipient),\n/* harmony export */   \"initGoogleAutocomplete\": () => (/* binding */ initGoogleAutocomplete),\n/* harmony export */   \"mapGoogleAddress\": () => (/* binding */ mapGoogleAddress),\n/* harmony export */   \"parseAttribute\": () => (/* binding */ parseAttribute),\n/* harmony export */   \"populateAddressForm\": () => (/* binding */ populateAddressForm),\n/* harmony export */   \"populateDeliveryError\": () => (/* binding */ populateDeliveryError),\n/* harmony export */   \"populateExtraFields\": () => (/* binding */ populateExtraFields),\n/* harmony export */   \"populateRicaFields\": () => (/* binding */ populateRicaFields),\n/* harmony export */   \"populateTVFields\": () => (/* binding */ populateTVFields),\n/* harmony export */   \"setCartClasses\": () => (/* binding */ setCartClasses),\n/* harmony export */   \"setDeliveryLoading\": () => (/* binding */ setDeliveryLoading),\n/* harmony export */   \"setPickupLoading\": () => (/* binding */ setPickupLoading),\n/* harmony export */   \"showAlertBox\": () => (/* binding */ showAlertBox),\n/* harmony export */   \"updateDeliveryFeeDisplay\": () => (/* binding */ updateDeliveryFeeDisplay)\n/* harmony export */ });\n/* harmony import */ var _utils_const__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../utils/const */ \"./src/utils/const.js\");\n/* harmony import */ var _utils_functions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../utils/functions */ \"./src/utils/functions.js\");\n/* harmony import */ var _utils_phoneFields__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utils/phoneFields */ \"./src/utils/phoneFields.js\");\n/* harmony import */ var _utils_services__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../utils/services */ \"./src/utils/services.js\");\n/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./constants */ \"./src/partials/Deliver/constants.js\");\n/* harmony import */ var _DeliveryError__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./DeliveryError */ \"./src/partials/Deliver/DeliveryError.js\");\n/* harmony import */ var _Elements_Alert__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Elements/Alert */ \"./src/partials/Deliver/Elements/Alert.js\");\n\n\n\n\n\n\n\nconst setDeliveryLoading = () => {\n  document.querySelector('.bash--delivery-container').classList.add('shimmer');\n};\nconst setPickupLoading = () => {\n  document.querySelector('.delivery-group-content')?.classList?.add('shimmer');\n  document.querySelector('.vtex-omnishipping-1-x-ask')?.classList?.add('shimmer');\n};\nconst mapGoogleAddress = (addressComponents, geometry) => {\n  if (!addressComponents || addressComponents.length < 1) return {};\n  const streetNumber = addressComponents.find(item => item.types.includes('street_number'))?.long_name;\n  const street = addressComponents.find(item => item.types.includes('route'))?.long_name;\n  const neighborhood = addressComponents.find(item => item.types.includes('sublocality'))?.long_name;\n  const city = addressComponents.find(item => item.types.includes('locality'))?.long_name;\n  const postalCode = addressComponents.find(item => item.types.includes('postal_code'))?.long_name;\n  const state = addressComponents.find(item => item.types.includes('administrative_area_level_1'))?.long_name;\n  const coords = {\n    lat: '',\n    lng: ''\n  };\n\n  if (geometry) {\n    coords.lat = geometry.location.lat();\n    coords.lng = geometry.location.lng();\n  }\n\n  return {\n    street: `${streetNumber ?? ''} ${street ?? ''}`.trim(),\n    neighborhood,\n    city,\n    postalCode,\n    state,\n    ...coords\n  };\n};\n\nconst provinceShortCode = province => {\n  switch (province) {\n    case 'Select':\n      return '';\n\n    case 'Western Cape':\n      return 'WC';\n\n    case 'Easter Cape':\n      return 'EC';\n\n    case 'Gauteng':\n      return 'GP';\n\n    case 'KwaZulu-Natal':\n    case 'KwaZulu Natal':\n      return 'KZN';\n\n    case 'Northern Cape':\n      return 'NC';\n\n    case 'Limpopo':\n      return 'LP';\n\n    case 'Mpumalanga':\n      return 'MP';\n\n    case 'North West':\n      return 'NW';\n\n    case 'Freestate':\n    case 'Free State':\n      return 'FS';\n\n    default:\n      return province;\n  }\n};\n\nconst getBestRecipient = ({\n  preferred = undefined,\n  type = 'delivery'\n}) => {\n  const firstName = window?.vtexjs?.checkout?.orderForm?.clientProfileData?.firstName;\n  const lastName = window?.vtexjs?.checkout?.orderForm?.clientProfileData?.lastName;\n  const shippingReceiverName = window?.vtexjs?.checkout?.orderForm?.shippingData?.address?.receiverName;\n  const clientProfileName = `${firstName ?? ''} ${lastName ?? ''}`.trim();\n  if (type === 'collect') return preferred || shippingReceiverName || clientProfileName || '';\n  return preferred || document.getElementById('client-first-name')?.value || clientProfileName || '';\n};\n\nconst populateAddressFromSearch = address => {\n  const {\n    street,\n    neighborhood,\n    postalCode,\n    state,\n    city,\n    lat,\n    lng\n  } = address; // Clear any populated fields\n\n  document.getElementById('bash--address-form').reset(); // Clear hidden ID fields to prevent overwriting existing.\n\n  document.getElementById('bash--input-addressId').value = '';\n  document.getElementById('bash--input-addressName').value = '';\n  document.getElementById('bash--input-number').value = '  ';\n  document.getElementById('bash--input-street').value = street ?? '';\n  document.getElementById('bash--input-neighborhood').value = neighborhood ?? '';\n  document.getElementById('bash--input-city').value = city ?? '';\n  document.getElementById('bash--input-postalCode').value = postalCode ?? '';\n  document.getElementById('bash--input-state').value = provinceShortCode(state);\n  document.getElementById('bash--input-lat').value = lat || '';\n  document.getElementById('bash--input-lng').value = lng || ''; // Update previously invalid fields.\n\n  $(':invalid').trigger('change');\n};\n\nconst populateAddressForm = address => {\n  const {\n    number,\n    street,\n    addressType,\n    businessName,\n    companyBuilding,\n    neighborhood,\n    postalCode,\n    state,\n    city,\n    receiverName,\n    receiverPhone,\n    complement,\n    id,\n    addressId,\n    addressName,\n    geoCoordinate\n  } = address; // Clear any populated fields\n\n  document.getElementById('bash--address-form').reset();\n  (0,_utils_functions__WEBPACK_IMPORTED_MODULE_1__.hideBusinessName)();\n  let lat;\n  let lng;\n\n  try {\n    [lat, lng] = JSON.parse(JSON.stringify(geoCoordinate));\n  } catch (e) {\n    console.warn('Could not parse geo coords', {\n      address,\n      geoCoordinate\n    });\n  } // Only overwrite defaults if values exist.\n\n\n  if (receiverName) document.getElementById('bash--input-receiverName').value = receiverName ?? '';\n  if (complement) document.getElementById('bash--input-complement').value = complement ?? ''; // addressId indicates that address is being edited / completed.\n\n  if (id || addressId) document.getElementById('bash--input-addressId').value = id || addressId; // TODO remove this?\n\n  if (addressName) document.getElementById('bash--input-addressName').value = addressName;\n  const streetLine = `${number ? `${number} ` : ''}${street}`.replace(`, ${companyBuilding}`, ''); // Address type\n\n  if (addressType === 'commercial') {\n    $('#radio-addressType-business').click();\n    (0,_utils_functions__WEBPACK_IMPORTED_MODULE_1__.showBusinessName)({\n      focus: false\n    });\n  }\n\n  if (businessName) document.getElementById('bash--input-businessName').value = businessName;\n  document.getElementById('bash--input-number').value = '';\n  document.getElementById('bash--input-street').value = streetLine || '';\n  document.getElementById('bash--input-companyBuilding').value = companyBuilding || '';\n  document.getElementById('bash--input-neighborhood').value = neighborhood || '';\n  document.getElementById('bash--input-city').value = city || '';\n  document.getElementById('bash--input-postalCode').value = postalCode || '';\n  document.getElementById('bash--input-state').value = provinceShortCode(state);\n  document.getElementById('bash--input-lat').value = lat || '';\n  document.getElementById('bash--input-lng').value = lng || '';\n  const fields = (0,_utils_services__WEBPACK_IMPORTED_MODULE_3__.getOrderFormCustomData)(_utils_const__WEBPACK_IMPORTED_MODULE_0__.PICKUP); // Only overwrite defaults if values exist.\n\n  if (receiverName) document.getElementById('bash--input-receiverName').value = receiverName ?? '';\n  if (complement) document.getElementById('bash--input-complement').value = complement ?? '';\n  document.getElementById('bash--input-receiverPhone').value = (0,_utils_phoneFields__WEBPACK_IMPORTED_MODULE_2__.getBestPhoneNumber)({\n    preferred: receiverPhone,\n    type: 'delivery',\n    fields\n  });\n  $(':invalid').trigger('change');\n};\n\nconst checkForAddressResults = event => {\n  setTimeout(() => {\n    const pacContainers = document.querySelectorAll('.pac-container');\n    const hiddenPacContainers = document.querySelectorAll(\".pac-container[style*='display: none']\");\n\n    if (pacContainers?.length === hiddenPacContainers?.length && event.target?.value?.length > 3) {\n      $('#address-search-field-container:not(.no-results)').addClass('no-results');\n    } else {\n      $('#address-search-field-container.no-results').removeClass('no-results');\n    }\n  }, 250);\n};\n\nconst initGoogleAutocomplete = () => {\n  if (!window.google) return;\n  const input = document.getElementById('bash--input-address-search');\n  if (!input) return;\n  const autocomplete = new window.google.maps.places.Autocomplete(input, {\n    componentRestrictions: {\n      country: 'ZA'\n    }\n  });\n  window.google.maps.event.addListener(autocomplete, 'place_changed', () => {\n    const place = autocomplete.getPlace();\n    const {\n      address_components: addressComponents,\n      geometry\n    } = place;\n    const address = mapGoogleAddress(addressComponents, geometry); // Populate the form\n    // Set view to add-address\n\n    populateAddressFromSearch(address);\n    window.postMessage({\n      action: 'setDeliveryView',\n      view: 'address-form'\n    });\n    input.value = '';\n  });\n  input?.addEventListener('keyup', checkForAddressResults);\n};\nconst parseAttribute = data => {\n  try {\n    return JSON.parse(decodeURIComponent(data));\n  } catch (e) {\n    return undefined;\n  }\n};\nconst populateExtraFields = (address, fields, prefix = '', override = false) => {\n  if (!address) return;\n\n  for (let i = 0; i < fields.length; i++) {\n    const fieldId = `bash--input-${prefix}${fields[i]}`;\n\n    if (document.getElementById(fieldId) && (address[fields[i]] || override) && (!document.getElementById(fieldId).value || override)) {\n      document.getElementById(fieldId).value = address[fields[i]];\n    }\n  }\n\n  $(':invalid').trigger('change');\n};\nconst populateRicaFields = () => {\n  const {\n    address\n  } = window.vtexjs.checkout.orderForm.shippingData;\n  if (document.getElementById('bash--input-rica_streetAddress')?.value || !address) return;\n  address.fullName = getBestRecipient({\n    type: 'delivery'\n  });\n  address.streetAddress = address.street;\n  address.suburb = address.neighborhood;\n  address.province = address.state;\n  populateExtraFields(address, _constants__WEBPACK_IMPORTED_MODULE_4__.requiredRicaFields, 'rica_');\n  const data = (0,_utils_services__WEBPACK_IMPORTED_MODULE_3__.getOrderFormCustomData)(_utils_const__WEBPACK_IMPORTED_MODULE_0__.RICA_APP);\n  if (data.streetAddress) populateExtraFields(data, _constants__WEBPACK_IMPORTED_MODULE_4__.requiredRicaFields, 'rica_', true);\n};\nconst clearRicaFields = () => {\n  const idOrPassport = $('#bash--input-rica_idOrPassport').val();\n  const clearedRica = {\n    idOrPassport: idOrPassport ?? '',\n    // TODO populate with users ID\n    fullName: '',\n    streetAddress: '',\n    suburb: '',\n    city: '',\n    postalCode: '',\n    province: ''\n  };\n  populateExtraFields(clearedRica, _constants__WEBPACK_IMPORTED_MODULE_4__.requiredRicaFields, 'rica_', true);\n};\nconst populateTVFields = async () => {\n  const data = (0,_utils_services__WEBPACK_IMPORTED_MODULE_3__.getOrderFormCustomData)(_utils_const__WEBPACK_IMPORTED_MODULE_0__.TV_APP);\n  populateExtraFields(data, _constants__WEBPACK_IMPORTED_MODULE_4__.requiredTVFields, 'tv');\n}; // Runs when you setAddress\n\nconst addressIsValid = (address, validateExtraFields = true) => {\n  const {\n    items\n  } = window.vtexjs.checkout.orderForm;\n  const {\n    hasTVs,\n    hasSimCards\n  } = (0,_utils_functions__WEBPACK_IMPORTED_MODULE_1__.getSpecialCategories)(items);\n  let requiredFields = [];\n  const invalidFields = [];\n  requiredFields = [..._constants__WEBPACK_IMPORTED_MODULE_4__.requiredAddressFields];\n\n  if (hasTVs && validateExtraFields) {\n    requiredFields = [...requiredFields, ..._constants__WEBPACK_IMPORTED_MODULE_4__.requiredTVFields];\n  }\n\n  if (hasSimCards && validateExtraFields) {\n    requiredFields = [...requiredFields, ..._constants__WEBPACK_IMPORTED_MODULE_4__.requiredRicaFields];\n  }\n\n  for (let i = 0; i < requiredFields.length; i++) {\n    if (!address[requiredFields[i]]) invalidFields.push(requiredFields[i]);\n  }\n\n  return {\n    isValid: !invalidFields.length,\n    invalidFields\n  };\n};\nconst setCartClasses = () => {\n  const {\n    items\n  } = window.vtexjs.checkout.orderForm;\n  const {\n    hasTVs,\n    hasSimCards,\n    hasFurnitureMixed\n  } = (0,_utils_functions__WEBPACK_IMPORTED_MODULE_1__.getSpecialCategories)(items);\n  const $container = '#shipping-data';\n\n  if (hasTVs) {\n    $(`${$container}:not(.has-tv)`).addClass('has-tv');\n  } else {\n    $(`${$container}.has-tv`).removeClass('has-tv');\n  }\n\n  if (hasSimCards) {\n    $(`${$container}:not(.has-rica)`).addClass('has-rica');\n  } else {\n    $(`${$container}.has-rica`).removeClass('has-rica');\n  }\n\n  if (hasFurnitureMixed) {\n    $(`${$container}:not(.has-furniture-mixed)`).addClass('has-furniture-mixed');\n  } else {\n    $(`${$container}.has-furniture-mixed`).removeClass('has-furniture-mixed');\n  }\n};\nconst updateDeliveryFeeDisplay = () => {\n  if (!window.vtexjs.checkout.orderForm.totalizers) return;\n  const {\n    value: shippingFee\n  } = window.vtexjs.checkout.orderForm.totalizers.find(item => item.id === 'Shipping') || {\n    value: 5000\n  };\n  let feeText = 'Free';\n  if (shippingFee > 0) feeText = `R${(shippingFee / 100).toFixed(2).replace('.00', '')}`;\n\n  if ($('#bash--delivery-fee').length > 0) {\n    document.getElementById('bash--delivery-fee').innerHTML = feeText;\n  }\n};\nconst customShippingDataIsValid = () => {\n  const items = window.vtexjs.checkout.orderForm?.items;\n  const {\n    hasTVs,\n    hasSimCards\n  } = (0,_utils_functions__WEBPACK_IMPORTED_MODULE_1__.getSpecialCategories)(items);\n  let valid = true;\n\n  if (hasTVs) {\n    const data = (0,_utils_services__WEBPACK_IMPORTED_MODULE_3__.getOrderFormCustomData)(_utils_const__WEBPACK_IMPORTED_MODULE_0__.TV_APP);\n    if (!data.tvID) valid = false;\n  }\n\n  if (hasSimCards) {\n    const data = (0,_utils_services__WEBPACK_IMPORTED_MODULE_3__.getOrderFormCustomData)(_utils_const__WEBPACK_IMPORTED_MODULE_0__.RICA_APP);\n    if (!data.idOrPassport || !data.streetAddress || !data.postalCode) valid = false;\n  }\n\n  return valid;\n};\nconst populateDeliveryError = (errors = []) => {\n  if ($('#bash-delivery-error-container').length < 1) return;\n  const errorsHtml = errors.length > 0 ? errors.map(error => (0,_DeliveryError__WEBPACK_IMPORTED_MODULE_5__.DeliveryError)(error)) : '';\n  $('#bash-delivery-error-container').html(errorsHtml);\n  if (errors.length > 0) $('html, body').animate({\n    scrollTop: $('#bash-delivery-error-container').offset().top\n  }, 400);\n};\nconst showAlertBox = () => {\n  $('.alert-container').addClass('show');\n  $('.alert-container').slideDown();\n  const alertText = $('[data-view=\"address-form\"]').length > 0 ? 'Address added' : 'Address updated';\n  $('#bash-alert-container').html((0,_Elements_Alert__WEBPACK_IMPORTED_MODULE_6__.Alert)({\n    text: alertText\n  })); // After 5 seconds, remove the element\n\n  setTimeout(() => {\n    $('.alert-container').slideUp();\n  }, 5000);\n};\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (mapGoogleAddress);\n\n//# sourceURL=webpack://custom-shipping-step-by-items/./src/partials/Deliver/utils.js?");
-
-/***/ }),
-
-/***/ "./src/partials/InputError.js":
-/*!************************************!*\
-  !*** ./src/partials/InputError.js ***!
-  \************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nconst InputError = () => '<span class=\"help error\">This field is required.</span>';\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (InputError);\n\n//# sourceURL=webpack://custom-shipping-step-by-items/./src/partials/InputError.js?");
-
-/***/ }),
-
-/***/ "./src/partials/RICAForm.js":
-/*!**********************************!*\
-  !*** ./src/partials/RICAForm.js ***!
-  \**********************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nconst RICAForm = () => `\n  <div id=\"tfg-custom-rica-msg\" class=\"tfg-custom-step\">\n    <p class=\"tfg-custom-title\">RICA information required</p>\n    <p class=\"tfg-custom-subtitle\">\n      To RICA your SIM card, provide your SA ID (or foreign passport) number and your address as\n      it appears on a valid proof of residence.\n    </p>\n    <p class=\"input tfg-custom-input tfg-rica-id-passport\">\n      <label>ID or passport number</label>\n      <input id=\"tfg-rica-id-passport\" type=\"text\" class=\"input-xlarge tfg-input\">\n    </p>\n    <label class=\"tfg-mtop10\">Proof of residential address</label>\n    <p class=\"tfg-custom-checkbox\">\n      <label class=\"tfg-checkbox-label\">\n        <input type='checkbox' id=\"tfg-rica-same-address\" checked/>\n        <span class=\"tfg-checkbox-text\">Residential address the same as Delivery address</span>\n      </label>\n    </p>\n    <p class=\"input tfg-custom-input tfg-rica-fullname\">\n      <label>Full name and surname</label>\n      <input id=\"tfg-rica-fullname\" type=\"text\" class=\"input-xlarge tfg-input rica-field\">\n    </p>\n    <p class=\"input tfg-custom-input tfg-rica-street\">\n      <label>Street address</label>\n      <input id=\"tfg-rica-street\" type=\"text\" class=\"input-xlarge tfg-input rica-field\">\n    </p>\n    <p class=\"input tfg-custom-input tfg-rica-suburb\">\n      <label>Suburb</label>\n      <input id=\"tfg-rica-suburb\" type=\"text\" class=\"input-xlarge tfg-input rica-field\">\n    </p>\n    <p class=\"input tfg-custom-input tfg-rica-city\">\n      <label>City</label>\n      <input id=\"tfg-rica-city\" type=\"text\" class=\"input-xlarge tfg-input rica-field\">\n    </p>\n    <p class=\"input tfg-custom-input tfg-rica-postal-code\">\n      <label>Postal code</label>\n      <input id=\"tfg-rica-postal-code\" type=\"text\" class=\"input-xlarge tfg-input rica-field\">\n    </p>\n    <p class=\"input tfg-rica-province tfg-custom-input\">\n      <label>Province</label>\n      <select class=\"input-xlarge tfg-custom-selector rica-field\" id=\"tfg-rica-province\">\n        <option value=\"\" disabled selected>State</option>\n        <option value=\"EC\">Eastern Cape</option>\n        <option value=\"FS\">Free State</option>\n        <option value=\"GP\">Gauteng</option>\n        <option value=\"KZN\">KwaZulu-Natal</option>\n        <option value=\"LP\">Limpopo</option>\n        <option value=\"MP\">Mpumalanga</option>\n        <option value=\"NC\">Northern Cape</option>\n        <option value=\"NW\">North West</option>\n        <option value=\"WC\">Western Cape</option>\n      </select>\n    </p>\n    <p class=\"input tfg-rica-country tfg-custom-input\">\n      <label>Country</label>\n      <select class=\"input-xlarge tfg-custom-selector\" id=\"tfg-rica-country\" disabled>\n        <option value=\"ZAF\" selected>South Africa</option>\n      </select>\n    </p>\n  </div>\n`;\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (RICAForm);\n\n//# sourceURL=webpack://custom-shipping-step-by-items/./src/partials/RICAForm.js?");
-
-/***/ }),
-
-/***/ "./src/partials/TVIDForm.js":
-/*!**********************************!*\
-  !*** ./src/partials/TVIDForm.js ***!
-  \**********************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nconst TVIDForm = () => `\n    <div id=\"tfg-custom-tvid-step\" class=\"tfg-custom-step\">\n        <p class=\"tfg-custom-title\">TV licence required</p>\n        <p class=\"tfg-custom-subtitle\">Please provide your ID number to validate your TV Licence.</p>\n        <p class=\"input tfg-custom-input tfg-tv-licence\">\n            <label>SA ID number</label>\n            <input id=\"tfg-tv-licence\" type=\"tel\" class=\"input-xlarge tfg-input\">\n        </p>\n    </div>\n`;\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (TVIDForm);\n\n//# sourceURL=webpack://custom-shipping-step-by-items/./src/partials/TVIDForm.js?");
-
-/***/ }),
-
-/***/ "./src/partials/index.js":
-/*!*******************************!*\
-  !*** ./src/partials/index.js ***!
-  \*******************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"AddressForm\": () => (/* reexport safe */ _AddressForm__WEBPACK_IMPORTED_MODULE_0__[\"default\"]),\n/* harmony export */   \"AlertBox\": () => (/* reexport safe */ _AlertBox__WEBPACK_IMPORTED_MODULE_1__[\"default\"]),\n/* harmony export */   \"InputError\": () => (/* reexport safe */ _InputError__WEBPACK_IMPORTED_MODULE_4__[\"default\"]),\n/* harmony export */   \"MixedProducts\": () => (/* reexport safe */ _Deliver_MixedProducts__WEBPACK_IMPORTED_MODULE_2__[\"default\"]),\n/* harmony export */   \"PickupPhoneField\": () => (/* reexport safe */ _AddressForm__WEBPACK_IMPORTED_MODULE_0__.PickupPhoneField),\n/* harmony export */   \"RICAForm\": () => (/* reexport safe */ _RICAForm__WEBPACK_IMPORTED_MODULE_5__[\"default\"]),\n/* harmony export */   \"SuburbField\": () => (/* reexport safe */ _AddressForm__WEBPACK_IMPORTED_MODULE_0__.SuburbField),\n/* harmony export */   \"TVIDForm\": () => (/* reexport safe */ _TVIDForm__WEBPACK_IMPORTED_MODULE_6__[\"default\"]),\n/* harmony export */   \"TVorRICAMsg\": () => (/* reexport safe */ _Deliver_TVorRICAMsg__WEBPACK_IMPORTED_MODULE_3__[\"default\"])\n/* harmony export */ });\n/* harmony import */ var _AddressForm__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AddressForm */ \"./src/partials/AddressForm.js\");\n/* harmony import */ var _AlertBox__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AlertBox */ \"./src/partials/AlertBox.js\");\n/* harmony import */ var _Deliver_MixedProducts__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Deliver/MixedProducts */ \"./src/partials/Deliver/MixedProducts.js\");\n/* harmony import */ var _Deliver_TVorRICAMsg__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Deliver/TVorRICAMsg */ \"./src/partials/Deliver/TVorRICAMsg.js\");\n/* harmony import */ var _InputError__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./InputError */ \"./src/partials/InputError.js\");\n/* harmony import */ var _RICAForm__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./RICAForm */ \"./src/partials/RICAForm.js\");\n/* harmony import */ var _TVIDForm__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./TVIDForm */ \"./src/partials/TVIDForm.js\");\n\n\n\n\n\n\n\n\n\n//# sourceURL=webpack://custom-shipping-step-by-items/./src/partials/index.js?");
-
-/***/ }),
-
-/***/ "./src/utils/checkoutDB.js":
-/*!*********************************!*\
-  !*** ./src/utils/checkoutDB.js ***!
-  \*********************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nclass CheckoutDB {\n  constructor() {\n    this.indexedDB = window.indexedDB || window.webkitIndexedDB || window.mozIndexedDB || window.msIndexedDB || window.shimIndexedDB;\n    this.checkoutDB = indexedDB.open('checkoutDB', 1.2);\n\n    this.checkoutDB.onerror = event => {\n      console.error('CheckoutDB Error', {\n        event\n      });\n      throw new Error('Could not load checkoutDB');\n    };\n\n    this.checkoutDB.onupgradeneeded = () => {\n      const db = this.checkoutDB.result;\n      const store = db.createObjectStore('addresses', {\n        keyPath: 'addressName'\n      });\n      store.createIndex('address_street', ['street'], {\n        unique: false\n      });\n      store.createIndex('address_addressName', ['addressName'], {\n        unique: true\n      });\n      store.createIndex('address_street_suburb_city_postal', ['street', 'neighborhood', 'city', 'postalCode'], {\n        unique: true\n      });\n    };\n\n    this.checkoutDB.onsuccess = () => {\n      const db = this.checkoutDB.result;\n      const transaction = db.transaction('addresses', 'readwrite');\n      this.addresses = transaction.objectStore('addresses'); // Close DB connection\n\n      transaction.oncomplete = () => {// db.close();\n      };\n    };\n  }\n\n  store() {\n    const db = this.checkoutDB.result;\n    const transaction = db.transaction('addresses', 'readwrite');\n    return transaction.objectStore('addresses');\n  }\n\n  loadAddresses(addresses) {\n    const queries = addresses.map(address => this.addOrUpdateAddress(address));\n    return Promise.all(queries).then(values => values);\n  }\n\n  addOrUpdateAddress(address) {\n    const thisDb = this;\n    return new Promise((resolve, reject) => {\n      const query = thisDb.store().put(address);\n\n      query.onsuccess = () => {\n        resolve({\n          success: true,\n          addressId: query.result\n        });\n      };\n\n      query.onerror = error => {\n        reject(new Error({\n          sucess: false,\n          error: error?.target?.error\n        }));\n      };\n    });\n  }\n\n  getAddresses() {\n    const thisDb = this;\n    return new Promise(resolve => {\n      const query = thisDb.store().getAll();\n\n      query.onsuccess = () => resolve(query.result);\n\n      query.onerror = () => {\n        console.error('Something wrong with getAddresses ? ...');\n        resolve([]);\n      };\n    });\n  }\n\n  getAddress(id) {\n    const thisDb = this;\n    return new Promise(resolve => {\n      const query = thisDb.store().get(id);\n\n      query.onsuccess = () => resolve(query.result);\n\n      query.onerror = () => {\n        console.error('Something wrong with getAddress ? ...');\n        resolve([]);\n      };\n    });\n  }\n\n  deleteAddress(id) {\n    const query = this.addresses.delete(id);\n\n    query.onsuccess = () => query.result;\n  }\n\n  clearData() {\n    const thisDb = this;\n    return new Promise(resolve => {\n      const query = thisDb.store().clear();\n\n      query.onsuccess = () => resolve(query.result);\n\n      query.onerror = () => {\n        console.error('Something wrong with clearData ? ...');\n        resolve([]);\n      };\n    });\n  }\n\n}\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (CheckoutDB);\n\n//# sourceURL=webpack://custom-shipping-step-by-items/./src/utils/checkoutDB.js?");
-
-/***/ }),
-
-/***/ "./src/utils/const.js":
-/*!****************************!*\
-  !*** ./src/utils/const.js ***!
-  \****************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"AD_TYPE\": () => (/* binding */ AD_TYPE),\n/* harmony export */   \"BASE_URL_API\": () => (/* binding */ BASE_URL_API),\n/* harmony export */   \"COUNTRIES\": () => (/* binding */ COUNTRIES),\n/* harmony export */   \"COUNTRIES_AVAILABLES\": () => (/* binding */ COUNTRIES_AVAILABLES),\n/* harmony export */   \"DELIVER_APP\": () => (/* binding */ DELIVER_APP),\n/* harmony export */   \"FURNITURE_FEES\": () => (/* binding */ FURNITURE_FEES),\n/* harmony export */   \"FURNITURE_FEE_LINK\": () => (/* binding */ FURNITURE_FEE_LINK),\n/* harmony export */   \"GEOLOCATE\": () => (/* binding */ GEOLOCATE),\n/* harmony export */   \"MANUAL\": () => (/* binding */ MANUAL),\n/* harmony export */   \"NONE\": () => (/* binding */ NONE),\n/* harmony export */   \"PICKUP\": () => (/* binding */ PICKUP),\n/* harmony export */   \"PICKUP_APP\": () => (/* binding */ PICKUP_APP),\n/* harmony export */   \"RICA_APP\": () => (/* binding */ RICA_APP),\n/* harmony export */   \"SIM_CAT\": () => (/* binding */ SIM_CAT),\n/* harmony export */   \"STEPS\": () => (/* binding */ STEPS),\n/* harmony export */   \"TIMEOUT_500\": () => (/* binding */ TIMEOUT_500),\n/* harmony export */   \"TIMEOUT_750\": () => (/* binding */ TIMEOUT_750),\n/* harmony export */   \"TV_APP\": () => (/* binding */ TV_APP),\n/* harmony export */   \"TV_CAT\": () => (/* binding */ TV_CAT)\n/* harmony export */ });\n// Checkout steps\nconst STEPS = {\n  CART: '#/cart',\n  PROFILE: '#/profile',\n  SHIPPING: '#/shipping',\n  PAYMENT: '#/payment'\n}; // Address types\n\nconst AD_TYPE = {\n  PICKUP: 'search',\n  DELIVERY: 'residential',\n  BUSINESS: 'business',\n  COMMERCIAL: 'commercial'\n}; // TIMEOUT\n\nconst TIMEOUT_500 = 500;\nconst TIMEOUT_750 = 750; // PICKUP MAP STATES\n\nconst GEOLOCATE = 'geolocate';\nconst MANUAL = 'manual';\nconst PICKUP = 'pickup';\nconst NONE = 'none'; // APP CONFIGURATION IDs\n\nconst RICA_APP = 'ricafields';\nconst TV_APP = 'tvfields';\nconst PICKUP_APP = 'pickup';\nconst DELIVER_APP = 'deliver'; // Furniture fees Url\n\nconst FURNITURE_FEES = 'http://image.tfgmedia.co.za/image/1/process/500x790?source=http://cdn.tfgmedia.co.za' + '/15/Marketing/HTMLPages/Furniture_Delivery_Fees_tab_image.jpg';\nconst COUNTRIES = {\n  za: {\n    code: 'za',\n    phonePlaceholder: '(+27)'\n  } // South Africa\n\n};\nconst COUNTRIES_AVAILABLES = [COUNTRIES.za.code];\nconst BASE_URL_API = window.location.host.includes('bash.com') ? 'https://store-api.www.bash.com/custom-api/' : `${window.location.protocol}//${window.location.host}/custom-api/`;\nconst FURNITURE_FEE_LINK = `\n<a \n  href=\"${FURNITURE_FEES}\"\n  class=\"furniture-fees-link\" \n  target=\"_blank\"\n>\n  Furniture delivery costs\n</a>\n`;\nconst TV_CAT = '938942995';\nconst SIM_CAT = '24833302';\n\n\n//# sourceURL=webpack://custom-shipping-step-by-items/./src/utils/const.js?");
-
-/***/ }),
-
-/***/ "./src/utils/formatAddressSummary.js":
-/*!*******************************************!*\
-  !*** ./src/utils/formatAddressSummary.js ***!
-  \*******************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__),\n/* harmony export */   \"formatAddressSummary\": () => (/* binding */ formatAddressSummary)\n/* harmony export */ });\n/* harmony import */ var _const__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./const */ \"./src/utils/const.js\");\n/* harmony import */ var _phoneFields__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./phoneFields */ \"./src/utils/phoneFields.js\");\n/* harmony import */ var _services__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./services */ \"./src/utils/services.js\");\n/*\nJames Smith - 0211234567\nBash.com, 1 Energy Lane, The Apex, 6th Floor\nCape Town, WC, 7441\n  */\n\n\n\n\nconst formatDeliverySummary = () => {\n  if (document.getElementById('summary-delivery-recipient') !== null) return;\n  const {\n    shippingData: {\n      selectedAddresses\n    }\n  } = window.vtexjs.checkout.orderForm;\n  const {\n    receiverName,\n    neighborhood,\n    street\n  } = selectedAddresses[0];\n  const deliveryParent = 'div.shp-summary-group-address.vtex-omnishipping-1-x-SummaryItemAddress';\n  const deliverContext = (0,_services__WEBPACK_IMPORTED_MODULE_2__.getOrderFormCustomData)(_const__WEBPACK_IMPORTED_MODULE_0__.DELIVER_APP);\n  let data = {};\n\n  try {\n    data = JSON.parse(deliverContext.jsonString);\n  } catch (e) {\n    console.error(\"Couldn't parse deliverContext\", e?.message);\n  }\n\n  const {\n    receiverPhone,\n    businessName\n  } = data;\n  const nameAndNumber = [];\n  if (receiverName) nameAndNumber.push(receiverName);\n  if (receiverPhone) nameAndNumber.push((0,_phoneFields__WEBPACK_IMPORTED_MODULE_1__.formatPhoneNumber)((0,_phoneFields__WEBPACK_IMPORTED_MODULE_1__.prependZero)(receiverPhone)));\n  $(deliveryParent).append(`\n    <div id=\"summary-delivery-recipient\">\n      ${nameAndNumber.join(' - ')}\n    <div>\n  `);\n  let streetAddress = street;\n  if (businessName) streetAddress = `${businessName}, ${street}`; // Add business name, fix street to show NUmber as well\n\n  $(deliveryParent).find('.street').html(streetAddress); // Add suburb\n\n  if (neighborhood) $(deliveryParent).find('.city').prepend(`${neighborhood}, `); // missing comma before postal code ;(\n\n  $(deliveryParent).find('.postalCode-delimiter').html(', ');\n};\n\nconst formatCollectionSummary = () => {\n  if (document.getElementById('summary-collection-recipient') !== null) return;\n  const collectParent = 'div.shp-summary-group-title.vtex-omnishipping-1-x-SummaryItemAddress';\n  const {\n    shippingData: {\n      selectedAddresses\n    }\n  } = window.vtexjs.checkout.orderForm;\n  const {\n    receiverName\n  } = selectedAddresses[0];\n  const collectContext = (0,_services__WEBPACK_IMPORTED_MODULE_2__.getOrderFormCustomData)(_const__WEBPACK_IMPORTED_MODULE_0__.PICKUP_APP);\n  const phone = collectContext?.phone || null;\n  const nameAndNumber = [];\n  if (receiverName) nameAndNumber.push(receiverName);\n  if (phone) nameAndNumber.push((0,_phoneFields__WEBPACK_IMPORTED_MODULE_1__.formatPhoneNumber)((0,_phoneFields__WEBPACK_IMPORTED_MODULE_1__.prependZero)(phone)));\n  $(collectParent).append(`<div id=\"summary-collection-recipient\">${nameAndNumber.join(' - ')}<div>`);\n};\n\nconst formatAddressSummary = () => {\n  if (!window.vtexjs.checkout.orderForm.clientProfileData || !window.vtexjs.checkout.orderForm.shippingData) return;\n  const {\n    shippingData: {\n      selectedAddresses,\n      logisticsInfo\n    }\n  } = window.vtexjs.checkout.orderForm;\n  if (!selectedAddresses?.[0] || !logisticsInfo[0]) return;\n  const {\n    addressType\n  } = selectedAddresses[0];\n\n  if (addressType === _const__WEBPACK_IMPORTED_MODULE_0__.AD_TYPE.PICKUP) {\n    formatCollectionSummary();\n  } else {\n    formatDeliverySummary();\n  }\n};\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (formatAddressSummary);\n\n//# sourceURL=webpack://custom-shipping-step-by-items/./src/utils/formatAddressSummary.js?");
-
-/***/ }),
-
-/***/ "./src/utils/functions.js":
-/*!********************************!*\
-  !*** ./src/utils/functions.js ***!
-  \********************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"addBorderTop\": () => (/* binding */ addBorderTop),\n/* harmony export */   \"catchError\": () => (/* binding */ catchError),\n/* harmony export */   \"checkoutGetCustomData\": () => (/* binding */ checkoutGetCustomData),\n/* harmony export */   \"clearLoaders\": () => (/* binding */ clearLoaders),\n/* harmony export */   \"getHeadersByConfig\": () => (/* binding */ getHeadersByConfig),\n/* harmony export */   \"getSpecialCategories\": () => (/* binding */ getSpecialCategories),\n/* harmony export */   \"hideBusinessName\": () => (/* binding */ hideBusinessName),\n/* harmony export */   \"isValidNumberBash\": () => (/* binding */ isValidNumberBash),\n/* harmony export */   \"scrollToInvalidField\": () => (/* binding */ scrollToInvalidField),\n/* harmony export */   \"setRicaFields\": () => (/* binding */ setRicaFields),\n/* harmony export */   \"showBusinessName\": () => (/* binding */ showBusinessName),\n/* harmony export */   \"waitAndResetLocalStorage\": () => (/* binding */ waitAndResetLocalStorage)\n/* harmony export */ });\n/* harmony import */ var _sentry_browser__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @sentry/browser */ \"./node_modules/@sentry/core/esm/exports.js\");\n/* harmony import */ var _const__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./const */ \"./src/utils/const.js\");\n/* harmony import */ var _phoneFields__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./phoneFields */ \"./src/utils/phoneFields.js\");\n\n\n\nconst catchError = message => {\n  console.error('ERROR', message);\n  _sentry_browser__WEBPACK_IMPORTED_MODULE_2__.captureException(message);\n};\nconst getHeadersByConfig = ({\n  cookie,\n  cache,\n  json\n}) => {\n  const headers = new Headers();\n  if (cookie) headers.append('Cookie', document?.cookie);\n  if (cache) headers.append('Cache-Control', 'no-cache');\n  if (json) headers.append('Content-type', 'application/json');\n  return headers;\n}; // Functions to manage CustomData\n\nconst checkoutGetCustomData = appId => {\n  const customData = window?.vtexjs?.checkout?.orderForm?.customData;\n  let fields = {};\n\n  if (customData && customData.customApps && customData.customApps.length > 0) {\n    customData.customApps.forEach(app => {\n      if (app.id === appId) {\n        fields = app.fields;\n      }\n    });\n  }\n\n  return fields;\n};\n\nconst setRicaFields = (getDataFrom = 'customApps') => {\n  let ricaFields;\n\n  if (getDataFrom === 'shippingAddress') {\n    const {\n      address\n    } = window.vtexjs.checkout.orderForm.shippingData;\n    ricaFields = {\n      idOrPassport: '',\n      sameAddress: 'true',\n      fullName: address.receiverName || $('#ship-receiverName').val(),\n      streetAddress: `${address.street}, ${address.number}`,\n      suburb: address.neighborhood,\n      city: address.city,\n      postalCode: address.postalCode,\n      province: address.state\n    };\n  } else if (getDataFrom === 'customApps') {\n    ricaFields = checkoutGetCustomData(_const__WEBPACK_IMPORTED_MODULE_0__.RICA_APP);\n  }\n\n  if (ricaFields && !jQuery.isEmptyObject(ricaFields)) {\n    if (getDataFrom === 'customApps') {\n      $('#tfg-rica-id-passport').val(ricaFields.idOrPassport);\n      $('#tfg-rica-same-address').prop('checked', ricaFields.sameAddress === 'true');\n    }\n\n    $('#tfg-rica-fullname').val(ricaFields.fullName);\n    $('#tfg-rica-street').val(ricaFields.streetAddress);\n    $('#tfg-rica-suburb').val(ricaFields.suburb);\n    $('#tfg-rica-city').val(ricaFields.city);\n    $('#tfg-rica-postal-code').val(ricaFields.postalCode);\n    $('#tfg-rica-province').val(ricaFields.province);\n  }\n}; // Random Functions\n\n\nconst addBorderTop = elementClass => {\n  $(elementClass).addClass('custom-step-border');\n  $(elementClass).last().addClass('last-custom-step-border');\n};\n\nconst waitAndResetLocalStorage = () => {\n  setTimeout(() => {\n    localStorage.removeItem('shippingDataCompleted');\n  }, 5000);\n};\n\nconst isValidNumberBash = tel => (0,_phoneFields__WEBPACK_IMPORTED_MODULE_1__.validatePhoneNumber)(tel);\n\nconst getSpecialCategories = items => {\n  const tvCategories = [_const__WEBPACK_IMPORTED_MODULE_0__.TV_CAT];\n  const simCardCategories = [_const__WEBPACK_IMPORTED_MODULE_0__.SIM_CAT];\n  const categories = [];\n  let hasTVs = false;\n  let hasSimCards = false;\n  let hasFurniture = false;\n  let furnitureCount = 0;\n  let hasFurnitureMixed = false;\n  let hasFurnitureOnly = false;\n  items.forEach(item => {\n    const itemCategories = item.productCategoryIds.split('/');\n    categories.push(itemCategories);\n    itemCategories.forEach(category => {\n      if (!category) return;\n\n      if (tvCategories.includes(category)) {\n        hasTVs = true;\n        return;\n      }\n\n      if (simCardCategories.includes(category)) {\n        hasSimCards = true;\n      }\n    });\n\n    if (item.modalType === 'FURNITURE') {\n      hasFurniture = true;\n      furnitureCount += 1;\n    }\n  });\n  hasFurnitureOnly = furnitureCount === items.length;\n  hasFurnitureMixed = items.length > 1 && hasFurniture && !hasFurnitureOnly;\n  return {\n    hasFurniture,\n    hasSimCards,\n    hasTVs,\n    hasFurnitureMixed,\n    hasFurnitureOnly,\n    categories\n  };\n};\n\nconst clearLoaders = () => {\n  'happened';\n  $('.shimmer').removeClass('shimmer');\n};\nconst showBusinessName = ({\n  focus = false\n}) => {\n  $('.bash--textfield-businessName').removeClass('optional').slideDown(() => {\n    $('#bash--input-businessName').attr('required', 'required');\n    if (!$('#bash--input-businessName').val() && focus) $('#bash--input-businessName')?.focus();\n  });\n};\nconst hideBusinessName = () => {\n  $('.bash--textfield-businessName').addClass('optional').slideUp();\n  $('#bash--input-businessName').attr('required', false);\n  $('#bash--input-businessName').val('');\n  $('#bash--input-businessName').blur();\n};\nconst scrollToInvalidField = () => {\n  const invalidInputs = Array.from($('form.form-step.box-edit > :invalid, .error')); // sort inputs by offset from top of viewport\n  // to handle elements that may be invalid but\n  // aren't necessarily highest on the page\n\n  invalidInputs.sort((a, b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top);\n  invalidInputs?.[0]?.scrollIntoView({\n    block: 'center',\n    behavior: 'smooth'\n  });\n};\n\n\n//# sourceURL=webpack://custom-shipping-step-by-items/./src/utils/functions.js?");
-
-/***/ }),
-
-/***/ "./src/utils/phoneFields.js":
-/*!**********************************!*\
-  !*** ./src/utils/phoneFields.js ***!
-  \**********************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__),\n/* harmony export */   \"formatPhoneNumber\": () => (/* binding */ formatPhoneNumber),\n/* harmony export */   \"getBestPhoneNumber\": () => (/* binding */ getBestPhoneNumber),\n/* harmony export */   \"preparePhoneField\": () => (/* binding */ preparePhoneField),\n/* harmony export */   \"prependZero\": () => (/* binding */ prependZero),\n/* harmony export */   \"validatePhoneNumber\": () => (/* binding */ validatePhoneNumber)\n/* harmony export */ });\n/**\n * validatePhoneNumber\n * Determine if number is valid.\n * Numbers and spaces only, 9 digits or longer.\n * @param tel - string\n * @returns boolean\n */\nconst validatePhoneNumber = tel => {\n  if (!tel) return false;\n  tel = tel.replace(/\\s/g, '');\n  if (tel[0] === '0') return tel.match(/[0-9\\s]{10}/);\n  return tel.match(/[0-9\\s]{9,}/);\n};\n/**\n * formattedPhoneNumber\n * Add spaces to help guide the user how the number should look.\n * Adds space after 3rd and 6th digits only.\n * xxx xxx xxxxxxxxx\n * @param value - string value\n * @returns string\n */\n\nconst formattedPhoneNumber = (value, doFormat = true) => {\n  value = value.replace(/[^0-9+*#]+/g, '').trim(); // 'xxx xxx *'\n\n  if (value.length >= 6 && doFormat) {\n    return [value.slice(0, 3), value.slice(3, 6), value.slice(6)].join(' ');\n  } // 'xxx *'\n\n\n  if (value.length >= 3 && doFormat) {\n    return [value.slice(0, 3), value.slice(3)].join(' ');\n  }\n\n  return value;\n};\n/**\n * preparePhoneField\n * When phone fields are loaded onto the DOM\n * Prepare them for proper display and validation.\n *\n * @param  input - string css selector to the element.\n */\n\n\nconst preparePhoneField = input => {\n  const phoneInput = document.querySelector(input);\n  if (!phoneInput) return;\n  phoneInput.setAttribute('type', 'tel');\n  phoneInput.setAttribute('maxlength', 12);\n  phoneInput.value = formattedPhoneNumber(phoneInput.value);\n  const $phoneInput = $(input);\n  $phoneInput.keyup(e => {\n    const value = e.currentTarget.value.replace(/[^0-9+*#]+/g, '').trim();\n    let displayValue = value;\n    const isBackSpace = e.keyCode === 8;\n    displayValue = formattedPhoneNumber(value, !isBackSpace);\n    $phoneInput.parent('.text').removeClass('error');\n    $phoneInput.parent('.text').find('span.error').hide();\n    $phoneInput.val(displayValue);\n  });\n};\nconst getBestPhoneNumber = ({\n  preferred = undefined,\n  type = 'profile',\n  fields\n}) => {\n  if (type === 'collect') {\n    return preferred || fields?.phone || document?.getElementById('client-phone')?.value || window.vtexjs.checkout.orderForm?.clientProfileData?.phone || '';\n  }\n\n  return preferred || window.vtexjs.checkout.orderForm?.clientProfileData?.phone || document?.getElementById('client-phone')?.value || '';\n}; // some presaved addresses still have a missing zero,\n// this adds a zero to the phone number, if it's not there.\n\nconst prependZero = tel => {\n  if (!tel) return '';\n  let phoneNumber = tel.replace(/\\s/g, '');\n\n  if (phoneNumber.length === 9 && phoneNumber[0] !== '0') {\n    phoneNumber = `0${phoneNumber}`;\n  }\n\n  return phoneNumber;\n}; // add spaces between 3rd and 6th digit\n\nconst formatPhoneNumber = value => [value.slice(0, 3), value.slice(3, 6), value.slice(6)].join(' ');\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({\n  validatePhoneNumber\n});\n\n//# sourceURL=webpack://custom-shipping-step-by-items/./src/utils/phoneFields.js?");
-
-/***/ }),
-
-/***/ "./src/utils/sendEvent.js":
-/*!********************************!*\
-  !*** ./src/utils/sendEvent.js ***!
-  \********************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/**\n * sendEvent\n * Function to send user errors that we don't log,\n * which the user may encounter.\n *\n */\nconst sendEvent = ({\n  eventCategory = 'Checkout_UserErrors',\n\n  /* action - action the user performed, eg Credit Card Payment */\n  action = '',\n\n  /* label - Name / refrence for the error */\n  label = '',\n\n  /* description -  More info - what error was shown to user */\n  description = '',\n\n  /* value - Option to add a value (eg. transaction amount?) */\n  value = undefined\n}) => {\n  const doPush = () => {\n    window.dataLayer.push({\n      event: 'gaEvent',\n      eventCategory,\n      eventLabel: label,\n      eventAction: action,\n      eventValue: value,\n      eventDescription: description\n    });\n  }; // Wait for GTM if necessary.\n\n\n  if (!window.dataLayer) {\n    $(window).off('gtm.load');\n    $(window).on('gtm.load', doPush);\n    return;\n  }\n\n  doPush();\n};\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (sendEvent);\n\n//# sourceURL=webpack://custom-shipping-step-by-items/./src/utils/sendEvent.js?");
-
-/***/ }),
-
-/***/ "./src/utils/services.js":
-/*!*******************************!*\
-  !*** ./src/utils/services.js ***!
-  \*******************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"addOrUpdateAddress\": () => (/* binding */ addOrUpdateAddress),\n/* harmony export */   \"clearAddresses\": () => (/* binding */ clearAddresses),\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__),\n/* harmony export */   \"getAddressByName\": () => (/* binding */ getAddressByName),\n/* harmony export */   \"getAddresses\": () => (/* binding */ getAddresses),\n/* harmony export */   \"getOrderFormCustomData\": () => (/* binding */ getOrderFormCustomData),\n/* harmony export */   \"removeFromCart\": () => (/* binding */ removeFromCart),\n/* harmony export */   \"sendOrderFormCustomData\": () => (/* binding */ sendOrderFormCustomData),\n/* harmony export */   \"updateAddressListing\": () => (/* binding */ updateAddressListing),\n/* harmony export */   \"upsertAddress\": () => (/* binding */ upsertAddress)\n/* harmony export */ });\n/* harmony import */ var _partials_Deliver_AddressListing__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../partials/Deliver/AddressListing */ \"./src/partials/Deliver/AddressListing.js\");\n/* harmony import */ var _checkoutDB__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./checkoutDB */ \"./src/utils/checkoutDB.js\");\n/* harmony import */ var _const__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./const */ \"./src/utils/const.js\");\n/* harmony import */ var _functions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./functions */ \"./src/utils/functions.js\");\n/* eslint-disable no-new-wrappers */\n\n\n\n // API Functions\n// GET addresses\n\nconst DB = new _checkoutDB__WEBPACK_IMPORTED_MODULE_1__[\"default\"]();\nconst getAddresses = async () => {\n  // Try to get addresses from users local store.\n  const addresses = await DB.getAddresses();\n  if (addresses.length > 0) return {\n    data: addresses\n  }; // Fallback to get addresses from API.\n\n  const {\n    email\n  } = window?.vtexjs?.checkout?.orderForm?.clientProfileData;\n  const fields = ['id', 'addressType', 'addressQuery', 'addressName', 'reference', 'number', 'geolocation', 'receiverName', 'receiverPhone', 'complement', // todo stop populating complement, in favour of companyBuilding\n  'street', 'businessName', 'companyBuilding', 'neighborhood', 'city', 'postalCode', 'state', 'country', 'tvID', 'geoCoordinate'].join(',');\n  const headers = (0,_functions__WEBPACK_IMPORTED_MODULE_3__.getHeadersByConfig)({\n    cookie: true,\n    cache: true,\n    json: false\n  });\n  const options = {\n    headers,\n    credentials: 'include'\n  };\n  const cacheBust = Date.now();\n  return fetch(`${_const__WEBPACK_IMPORTED_MODULE_2__.BASE_URL_API}masterdata/addresses?t=${cacheBust}&_fields=${fields}&_where=${encodeURIComponent(`userIdQuery=${email}`)}`, options).then(res => res.json()).then(async data => {\n    // Store addresses locally\n    if (data.data) DB.loadAddresses(data.data); // return DB.getAddresses();\n    // API can have dups.\n\n    return data;\n  }).catch(error => (0,_functions__WEBPACK_IMPORTED_MODULE_3__.catchError)(`GET_ADDRESSES_ERROR: ${error?.message}`));\n}; // GET Address by ID / Name?\n\nconst getAddress = async (addressName, fields) => {\n  let data = {};\n  const headers = (0,_functions__WEBPACK_IMPORTED_MODULE_3__.getHeadersByConfig)({\n    cookie: true,\n    cache: true,\n    json: false\n  });\n  const options = {\n    headers,\n    credentials: 'include'\n  };\n  const response = await fetch(`${_const__WEBPACK_IMPORTED_MODULE_2__.BASE_URL_API}masterdata/addresses/${fields}&_where=addressName=${addressName}&timestamp=${Date.now()}`, options).then(res => res.json()).catch(error => (0,_functions__WEBPACK_IMPORTED_MODULE_3__.catchError)(`GET_ADDRESS_ERROR: ${error?.message}`));\n\n  if (response && !response.error && response.data && response.data.length > 0) {\n    [data] = response.data;\n  }\n\n  return data;\n}; // PATCH address\n\n\nconst upsertAddress = async address => {\n  let path;\n  const {\n    email\n  } = window.vtexjs.checkout.orderForm.clientProfileData;\n  if (!address) return Promise.reject(new Error('No address provided.')); // Address already exists (?) - ID keeps channging?\n\n  const existingAddress = address.addressName ? await getAddress(address.addressName, '?_fields=id') : {};\n\n  if (existingAddress?.id) {\n    path = `${_const__WEBPACK_IMPORTED_MODULE_2__.BASE_URL_API}masterdata/address/${existingAddress.id}`;\n  } else {\n    path = `${_const__WEBPACK_IMPORTED_MODULE_2__.BASE_URL_API}masterdata/addresses`;\n  }\n\n  const newAddress = {\n    userId: email,\n    ...address\n  };\n\n  if (!existingAddress.id) {\n    newAddress.addressName = address.addressId || `address-${Date.now()}`;\n  }\n\n  const headers = (0,_functions__WEBPACK_IMPORTED_MODULE_3__.getHeadersByConfig)({\n    cookie: true,\n    cache: true,\n    json: true\n  });\n  const options = {\n    method: 'PATCH',\n    headers,\n    body: JSON.stringify(newAddress),\n    credentials: 'include'\n  };\n  await fetch(path, options).then(res => {\n    if (res.status !== 204) {\n      return res.json();\n    }\n\n    return res;\n  }).then(result => result).catch(error => (0,_functions__WEBPACK_IMPORTED_MODULE_3__.catchError)(`SAVE_ADDRESS_ERROR: ${error?.message}`));\n};\nconst updateAddressListing = address => {\n  let $currentListing = $(`#address-${address.addressName}`);\n\n  if (!$currentListing.length) {\n    $('#bash-address-list').append((0,_partials_Deliver_AddressListing__WEBPACK_IMPORTED_MODULE_0__[\"default\"])(address));\n  } else {\n    $currentListing.after((0,_partials_Deliver_AddressListing__WEBPACK_IMPORTED_MODULE_0__[\"default\"])(address));\n    $currentListing.remove();\n    $currentListing = null;\n  }\n\n  $('input[type=\"radio\"][name=\"selected-address\"]:checked').attr('checked', false);\n  $(`input[type=\"radio\"][name=\"selected-address\"][value=\"${address.addressName}\"]`).attr('checked', true);\n};\nconst addOrUpdateAddress = async address => {\n  if (!address.addressName) {\n    const streetStr = address.street.replace(/[^a-zA-Z0-9]/g, ' ').trim().replace(/\\s/g, '-').toLowerCase();\n    address.addressName = `${Date.now()}-${streetStr}`.substring(0, 50);\n  }\n\n  if (!address.addressId) address.addressId = address.addressName; // Add or update at local store. Update UI.\n\n  DB.addOrUpdateAddress(address).then(() => updateAddressListing(address)); // Add or update at the API.\n\n  upsertAddress(address);\n};\nconst getAddressByName = async addressName => DB.getAddress(addressName);\nconst clearAddresses = async () => DB.clearData();\n/**\n * OrderForm CustomData\n * @param {Object} data - custom data.\n * @param {string} appId - unique app id.\n * @param {boolean} furniture - boolean value for sending furniture.\n * @param {boolean} rica - boolean value for sending rica fields.\n */\n\nconst sendOrderFormCustomData = async (appId, data, rica = false) => {\n  const {\n    orderFormId\n  } = window.vtexjs.checkout.orderForm;\n  const path = `/api/checkout/pub/orderForm/${orderFormId}/customData/${appId}`;\n  const body = JSON.stringify({ ...data,\n    ...(rica && {\n      sameAddress: new Boolean(data.sameAddress)\n    })\n  });\n  const options = {\n    method: 'PUT',\n    headers: {\n      'Content-Type': 'application/json'\n    },\n    body\n  };\n  return fetch(path, options);\n};\nconst getOrderFormCustomData = appId => {\n  const customData = window?.vtexjs?.checkout?.orderForm?.customData;\n  let fields = {};\n\n  if (customData?.customApps.length > 0) {\n    const customApp = customData.customApps.find(i => i.id === appId);\n    fields = customApp?.fields;\n  }\n\n  return fields;\n};\nconst removeFromCart = index => window.vtexjs.checkout.updateItems([{\n  index: `${index}`,\n  quantity: 0\n}]).done(() => {\n  (0,_functions__WEBPACK_IMPORTED_MODULE_3__.clearLoaders)();\n});\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (getAddresses);\n\n//# sourceURL=webpack://custom-shipping-step-by-items/./src/utils/services.js?");
-
-/***/ }),
-
-/***/ "./src/utils/setAddress.js":
-/*!*********************************!*\
-  !*** ./src/utils/setAddress.js ***!
-  \*********************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var _partials_Deliver_constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../partials/Deliver/constants */ \"./src/partials/Deliver/constants.js\");\n/* harmony import */ var _partials_Deliver_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../partials/Deliver/utils */ \"./src/partials/Deliver/utils.js\");\n/* harmony import */ var _const__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./const */ \"./src/utils/const.js\");\n/* harmony import */ var _functions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./functions */ \"./src/utils/functions.js\");\n/* harmony import */ var _sendEvent__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./sendEvent */ \"./src/utils/sendEvent.js\");\n/* harmony import */ var _services__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./services */ \"./src/utils/services.js\");\n\n\n\n\n\n\n\nconst updateDeliveryData = ({\n  businessName,\n  receiverPhone\n}) => (0,_services__WEBPACK_IMPORTED_MODULE_5__.sendOrderFormCustomData)(_const__WEBPACK_IMPORTED_MODULE_2__.DELIVER_APP, {\n  jsonString: JSON.stringify({\n    businessName: businessName || '',\n    receiverPhone: receiverPhone || ''\n  })\n});\n\nconst setAddress = (address, options = {\n  validateExtraFields: true\n}) => {\n  const {\n    validateExtraFields\n  } = options;\n  const {\n    items\n  } = window.vtexjs.checkout.orderForm;\n  const {\n    hasTVs,\n    hasSimCards\n  } = (0,_functions__WEBPACK_IMPORTED_MODULE_3__.getSpecialCategories)(items);\n  if (hasTVs) (0,_partials_Deliver_utils__WEBPACK_IMPORTED_MODULE_1__.populateExtraFields)(address, _partials_Deliver_constants__WEBPACK_IMPORTED_MODULE_0__.requiredTVFields, 'tv_');\n  if (hasSimCards) (0,_partials_Deliver_utils__WEBPACK_IMPORTED_MODULE_1__.populateRicaFields)();\n  const {\n    isValid,\n    invalidFields\n  } = (0,_partials_Deliver_utils__WEBPACK_IMPORTED_MODULE_1__.addressIsValid)(address, validateExtraFields);\n\n  if (!isValid) {\n    console.error({\n      invalidFields\n    });\n    (0,_partials_Deliver_utils__WEBPACK_IMPORTED_MODULE_1__.populateAddressForm)(address);\n    $('#bash--address-form').addClass('show-form-errors');\n    if (validateExtraFields) $('#bash--delivery-form')?.addClass('show-form-errors');\n    $(`#bash--input-${invalidFields[0]}`).focus();\n\n    if (_partials_Deliver_constants__WEBPACK_IMPORTED_MODULE_0__.requiredAddressFields.includes(invalidFields[0])) {\n      window.postMessage({\n        action: 'setDeliveryView',\n        view: 'address-edit'\n      });\n    }\n\n    return {\n      success: false,\n      error: 'Invalid address details.'\n    };\n  } // Fix bad addressType.\n\n\n  if (address.addressType === _const__WEBPACK_IMPORTED_MODULE_2__.AD_TYPE.BUSINESS) address.addressType = _const__WEBPACK_IMPORTED_MODULE_2__.AD_TYPE.COMMERCIAL;\n  if (!_partials_Deliver_constants__WEBPACK_IMPORTED_MODULE_0__.validAddressTypes.includes(address.addressType)) address.addressType = _const__WEBPACK_IMPORTED_MODULE_2__.AD_TYPE.DELIVERY;\n\n  if (address.number) {\n    address.street = `${address.number} ${address.street}`;\n    address.number = '';\n  } // Country must always be 'ZAF'\n\n\n  address.country = 'ZAF';\n  const shippingData = window?.vtexjs?.checkout?.orderForm?.shippingData;\n  shippingData.address = address;\n  shippingData.selectedAddresses = [address]; // Stop using \"complement\" field\n\n  if (address.complement) {\n    address.receiverPhone = address.complement;\n    shippingData.address.complement = '';\n    address.complement = '';\n  }\n\n  if (address.companyBuilding && !shippingData.address.street.includes(`, ${address.companyBuilding}`)) {\n    shippingData.address.street = `${address.street}, ${address.companyBuilding}`;\n  }\n\n  shippingData.selectedAddresses[0] = shippingData.address; // Start Shimmering\n\n  (0,_partials_Deliver_utils__WEBPACK_IMPORTED_MODULE_1__.setDeliveryLoading)();\n  return window.vtexjs.checkout.sendAttachment('shippingData', shippingData).then(orderForm => {\n    const {\n      messages\n    } = orderForm;\n    const errors = messages.filter(msg => msg.status === 'error');\n\n    if (errors.length > 0) {\n      (0,_partials_Deliver_utils__WEBPACK_IMPORTED_MODULE_1__.populateDeliveryError)(errors);\n      window.postMessage({\n        action: 'setDeliveryView',\n        view: 'address-form'\n      });\n      return {\n        success: false,\n        errors\n      };\n    }\n\n    if (address.addressName) (0,_services__WEBPACK_IMPORTED_MODULE_5__.updateAddressListing)(address);\n\n    try {\n      updateDeliveryData({\n        businessName: address.businessName,\n        receiverPhone: address.receiverPhone\n      });\n    } catch (e) {\n      (0,_sendEvent__WEBPACK_IMPORTED_MODULE_4__[\"default\"])({\n        eventCategory: 'Checkout_SystemError',\n        action: 'OrderFormFailed',\n        label: 'Could not update businessName and/or receiverPhone ',\n        description: 'Could not update businessName and/or receiverPhone.'\n      });\n    }\n\n    return {\n      success: true\n    };\n  }).done(() => (0,_functions__WEBPACK_IMPORTED_MODULE_3__.clearLoaders)());\n};\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (setAddress);\n\n//# sourceURL=webpack://custom-shipping-step-by-items/./src/utils/setAddress.js?");
-
-/***/ }),
-
-/***/ "./src/utils/submitAddressForm.js":
-/*!****************************************!*\
-  !*** ./src/utils/submitAddressForm.js ***!
-  \****************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var _partials_Deliver_constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../partials/Deliver/constants */ \"./src/partials/Deliver/constants.js\");\n/* harmony import */ var _partials_Deliver_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../partials/Deliver/utils */ \"./src/partials/Deliver/utils.js\");\n/* harmony import */ var _services__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./services */ \"./src/utils/services.js\");\n/* harmony import */ var _setAddress__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./setAddress */ \"./src/utils/setAddress.js\");\n\n\n\n\n\nconst submitAddressForm = async event => {\n  event.preventDefault(); // Prevent false positive for invalid selects.\n\n  $('select').change();\n  const form = document.forms['bash--address-form'];\n  const addressName = $('#bash--input-addressName').val();\n  const storedAddress = await (0,_services__WEBPACK_IMPORTED_MODULE_2__.getAddressByName)(addressName);\n  const fields = ['addressId', 'addressName', 'addressType', 'receiverName', 'receiverPhone', 'postalCode', 'city', 'state', 'country', 'businessName', 'street', 'neighborhood', 'complement', 'companyBuilding', 'lat', 'lng'];\n  const address = {\n    isDisposable: false,\n    reference: null,\n    geoCoordinates: [],\n    country: 'ZAF',\n    ...storedAddress,\n    number: '',\n    // stop using number field (combined with street).\n    complement: '' // stop using complement field (ifo receiverPhone).\n\n  };\n\n  for (let f = 0; f < fields.length; f++) {\n    address[fields[f]] = form[fields[f]]?.value || null;\n  }\n\n  address.addressName = address.addressName || address.addressId;\n  address.addressId = address.addressId || address.addressName; // for MasterData\n\n  address.geoCoordinate = [parseFloat(address.lat) || '', parseFloat(address.lng) || '']; // for shippingData\n\n  address.geoCoordinates = [parseFloat(address.lat) || '', parseFloat(address.lng) || ''];\n  const shippingAddress = address;\n  const {\n    isValid,\n    invalidFields\n  } = (0,_partials_Deliver_utils__WEBPACK_IMPORTED_MODULE_1__.addressIsValid)(address, false);\n\n  if (!isValid) {\n    console.error({\n      invalidFields\n    });\n    $('#bash--address-form').addClass('show-form-errors');\n    $(`#bash--input-${invalidFields[0]}`).focus();\n\n    if (_partials_Deliver_constants__WEBPACK_IMPORTED_MODULE_0__.requiredAddressFields.includes(invalidFields[0])) {\n      window.postMessage({\n        action: 'setDeliveryView',\n        view: 'address-form'\n      });\n    }\n\n    return;\n  } // Apply the selected address to customers orderForm.\n\n\n  const setAddressResponse = await (0,_setAddress__WEBPACK_IMPORTED_MODULE_3__[\"default\"])(shippingAddress, {\n    validateExtraFields: false\n  });\n  const {\n    success\n  } = setAddressResponse;\n\n  if (!success) {\n    console.error('Set address error', {\n      setAddressResponse\n    });\n    return;\n  }\n\n  await (0,_services__WEBPACK_IMPORTED_MODULE_2__.addOrUpdateAddress)(address);\n  window.postMessage({\n    action: 'setDeliveryView',\n    view: 'select-address'\n  }); // Scroll up\n\n  setTimeout(() => {\n    if ($('.bash--extra-fields').length > 0) {\n      document.querySelector('.bash--extra-fields').scrollIntoView({\n        behavior: 'smooth'\n      });\n    } else {\n      document.getElementById('bash-delivery-options').scrollIntoView({\n        behavior: 'smooth'\n      });\n    }\n  }, 500);\n  (0,_partials_Deliver_utils__WEBPACK_IMPORTED_MODULE_1__.showAlertBox)();\n};\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (submitAddressForm);\n\n//# sourceURL=webpack://custom-shipping-step-by-items/./src/utils/submitAddressForm.js?");
-
-/***/ }),
-
-/***/ "./src/utils/submitDeliveryForm.js":
-/*!*****************************************!*\
-  !*** ./src/utils/submitDeliveryForm.js ***!
-  \*****************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var _partials_Deliver_constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../partials/Deliver/constants */ \"./src/partials/Deliver/constants.js\");\n/* harmony import */ var _partials_Deliver_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../partials/Deliver/utils */ \"./src/partials/Deliver/utils.js\");\n/* harmony import */ var _const__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./const */ \"./src/utils/const.js\");\n/* harmony import */ var _functions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./functions */ \"./src/utils/functions.js\");\n/* harmony import */ var _services__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./services */ \"./src/utils/services.js\");\n/* harmony import */ var _setAddress__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./setAddress */ \"./src/utils/setAddress.js\");\n\n\n\n\n\n\n\nconst submitDeliveryForm = async event => {\n  event.preventDefault();\n  const {\n    items\n  } = window.vtexjs.checkout.orderForm;\n  const {\n    address\n  } = window.vtexjs.checkout.orderForm.shippingData;\n  const {\n    hasTVs,\n    hasSimCards\n  } = (0,_functions__WEBPACK_IMPORTED_MODULE_3__.getSpecialCategories)(items); // Prevent false positive validation errors for invalid selects.\n\n  $('select').change();\n  let fullAddress = {};\n  const selectedAddressRadio = \"[name='selected-address']:checked\"; // Prevent sending without having selected an address.\n\n  if ($(selectedAddressRadio).length < 1) {\n    $('html, body').animate({\n      scrollTop: $('#bash--delivery-form').offset().top\n    }, 400);\n    return;\n  }\n\n  (0,_partials_Deliver_utils__WEBPACK_IMPORTED_MODULE_1__.setDeliveryLoading)();\n  const dbAddress = await (0,_services__WEBPACK_IMPORTED_MODULE_4__.getAddressByName)($(selectedAddressRadio).val());\n  fullAddress = { ...address,\n    ...dbAddress\n  }; // Final check to validate that the selected address has no validation errors.\n\n  const {\n    success: didSetAddress\n  } = await (0,_setAddress__WEBPACK_IMPORTED_MODULE_5__[\"default\"])(fullAddress, {\n    validateExtraFields: false\n  });\n\n  if (!didSetAddress) {\n    console.error('Delivery Form - Address Validation error');\n    (0,_functions__WEBPACK_IMPORTED_MODULE_3__.clearLoaders)();\n    return;\n  }\n\n  const ricaData = {};\n  const tvData = {}; // Not saved to address profile.\n\n  if (hasSimCards) {\n    const fields = _partials_Deliver_constants__WEBPACK_IMPORTED_MODULE_0__.requiredRicaFields;\n\n    for (let i = 0; i < fields.length; i++) {\n      if (fields[i] === 'sameAddress') {\n        const isFieldChecked = $(`#bash--input-${fields[i]}`).is(':checked');\n        ricaData[fields[i]] = isFieldChecked;\n      }\n\n      ricaData[fields[i]] = $(`#bash--input-rica_${fields[i]}`).val() || '';\n    }\n\n    const ricaDataSent = await (0,_services__WEBPACK_IMPORTED_MODULE_4__.sendOrderFormCustomData)(_const__WEBPACK_IMPORTED_MODULE_2__.RICA_APP, ricaData, true);\n    console.info({\n      ricaDataSent\n    });\n  }\n\n  if (hasTVs) {\n    const fields = _partials_Deliver_constants__WEBPACK_IMPORTED_MODULE_0__.requiredTVFields;\n\n    for (let i = 0; i < fields.length; i++) {\n      if (!address[fields[i]]) fullAddress[fields[i]] = $(`#bash--input-tv_${fields[i]}`).val();\n      tvData[fields[i]] = $(`#bash--input-tv_${fields[i]}`).val() || '';\n    }\n\n    const tvDataSent = await (0,_services__WEBPACK_IMPORTED_MODULE_4__.sendOrderFormCustomData)(_const__WEBPACK_IMPORTED_MODULE_2__.TV_APP, tvData);\n    console.info({\n      tvDataSent\n    });\n  }\n\n  await (0,_services__WEBPACK_IMPORTED_MODULE_4__.addOrUpdateAddress)(fullAddress); // after submitting hide the delivery container\n\n  $('.bash--delivery-container').css('display', 'none');\n  window.location.hash = _const__WEBPACK_IMPORTED_MODULE_2__.STEPS.PAYMENT;\n  (0,_functions__WEBPACK_IMPORTED_MODULE_3__.clearLoaders)();\n};\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (submitDeliveryForm);\n\n//# sourceURL=webpack://custom-shipping-step-by-items/./src/utils/submitDeliveryForm.js?");
-
-/***/ })
-
-/******/ 	});
-/************************************************************************/
-/******/ 	// The module cache
-/******/ 	var __webpack_module_cache__ = {};
-/******/ 	
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/ 		// Check if module is in cache
-/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
-/******/ 		if (cachedModule !== undefined) {
-/******/ 			return cachedModule.exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = __webpack_module_cache__[moduleId] = {
-/******/ 			id: moduleId,
-/******/ 			loaded: false,
-/******/ 			exports: {}
-/******/ 		};
-/******/ 	
-/******/ 		// Execute the module function
-/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
-/******/ 	
-/******/ 		// Flag the module as loaded
-/******/ 		module.loaded = true;
-/******/ 	
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/ 	
-/************************************************************************/
-/******/ 	/* webpack/runtime/define property getters */
-/******/ 	(() => {
-/******/ 		// define getter functions for harmony exports
-/******/ 		__webpack_require__.d = (exports, definition) => {
-/******/ 			for(var key in definition) {
-/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
-/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
-/******/ 				}
-/******/ 			}
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/global */
-/******/ 	(() => {
-/******/ 		__webpack_require__.g = (function() {
-/******/ 			if (typeof globalThis === 'object') return globalThis;
-/******/ 			try {
-/******/ 				return this || new Function('return this')();
-/******/ 			} catch (e) {
-/******/ 				if (typeof window === 'object') return window;
-/******/ 			}
-/******/ 		})();
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/harmony module decorator */
-/******/ 	(() => {
-/******/ 		__webpack_require__.hmd = (module) => {
-/******/ 			module = Object.create(module);
-/******/ 			if (!module.children) module.children = [];
-/******/ 			Object.defineProperty(module, 'exports', {
-/******/ 				enumerable: true,
-/******/ 				set: () => {
-/******/ 					throw new Error('ES Modules may not assign module.exports or exports.*, Use ESM export syntax, instead: ' + module.id);
-/******/ 				}
-/******/ 			});
-/******/ 			return module;
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
-/******/ 	(() => {
-/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/make namespace object */
-/******/ 	(() => {
-/******/ 		// define __esModule on exports
-/******/ 		__webpack_require__.r = (exports) => {
-/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
-/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
-/******/ 			}
-/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/************************************************************************/
-/******/ 	
-/******/ 	// startup
-/******/ 	// Load entry module and return exports
-/******/ 	// This entry module can't be inlined because the eval devtool is used.
-/******/ 	var __webpack_exports__ = __webpack_require__("./src/checkout6-custom.js");
-/******/ 	
-/******/ })()
-;
+/*! For license information please see checkout6-custom.js.LICENSE.txt */
+(() => {
+  const e = {
+    176: (e, t, n) => {
+      function r() {
+        return (
+          !(typeof __SENTRY_BROWSER_BUNDLE__ !== 'undefined' && __SENTRY_BROWSER_BUNDLE__) &&
+          Object.prototype.toString.call(typeof process !== 'undefined' ? process : 0) === '[object process]'
+        );
+      }
+      function o(e, t) {
+        return e.require(t);
+      }
+      n.d(t, { l$: () => o, KV: () => r }), (e = n.hmd(e));
+    },
+    170: (e, t, n) => {
+      n.d(t, { ph: () => l, yW: () => u });
+      const r = n(176);
+      const o = n(235);
+      e = n.hmd(e);
+      const i = (0, o.Rf)();
+      const a = { nowSeconds: () => Date.now() / 1e3 };
+      const s = (0, r.KV)()
+        ? (function () {
+            try {
+              return (0, r.l$)(e, 'perf_hooks').performance;
+            } catch (e) {}
+          })()
+        : (function () {
+            const { performance: e } = i;
+            if (e && e.now) return { now: () => e.now(), timeOrigin: Date.now() - e.now() };
+          })();
+      const c = void 0 === s ? a : { nowSeconds: () => (s.timeOrigin + s.now()) / 1e3 };
+      const u = a.nowSeconds.bind(a);
+      const l = c.nowSeconds.bind(c);
+      let d;
+      (() => {
+        const { performance: e } = i;
+        if (!e || !e.now) return void (d = 'none');
+        const t = 36e5;
+        const n = e.now();
+        const r = Date.now();
+        const o = e.timeOrigin ? Math.abs(e.timeOrigin + n - r) : t;
+        const a = o < t;
+        const s = e.timing && e.timing.navigationStart;
+        const c = typeof s === 'number' ? Math.abs(s + n - r) : t;
+        a || c < t ? (o <= c ? ((d = 'timeOrigin'), e.timeOrigin) : (d = 'navigationStart')) : (d = 'dateNow');
+      })();
+    },
+    235: (e, t, n) => {
+      function r(e) {
+        return e && e.Math == Math ? e : void 0;
+      }
+      n.d(t, { Rf: () => i, YO: () => a, n2: () => o });
+      const o =
+        (typeof globalThis === 'object' && r(globalThis)) ||
+        (typeof window === 'object' && r(window)) ||
+        (typeof self === 'object' && r(self)) ||
+        (typeof n.g === 'object' && r(n.g)) ||
+        (function () {
+          return this;
+        })() ||
+        {};
+      function i() {
+        return o;
+      }
+      function a(e, t, n) {
+        const r = n || o;
+        const i = (r.__SENTRY__ = r.__SENTRY__ || {});
+        return i[e] || (i[e] = t());
+      }
+    },
+  };
+  const t = {};
+  function n(r) {
+    const o = t[r];
+    if (void 0 !== o) return o.exports;
+    const i = (t[r] = { id: r, loaded: !1, exports: {} });
+    return e[r](i, i.exports, n), (i.loaded = !0), i.exports;
+  }
+  (n.d = (e, t) => {
+    for (const r in t) n.o(t, r) && !n.o(e, r) && Object.defineProperty(e, r, { enumerable: !0, get: t[r] });
+  }),
+    (n.g = (function () {
+      if (typeof globalThis === 'object') return globalThis;
+      try {
+        return this || new Function('return this')();
+      } catch (e) {
+        if (typeof window === 'object') return window;
+      }
+    })()),
+    (n.hmd = (e) => (
+      (e = Object.create(e)).children || (e.children = []),
+      Object.defineProperty(e, 'exports', {
+        enumerable: !0,
+        set: () => {
+          throw new Error(
+            `ES Modules may not assign module.exports or exports.*, Use ESM export syntax, instead: ${e.id}`
+          );
+        },
+      }),
+      e
+    )),
+    (n.o = (e, t) => Object.prototype.hasOwnProperty.call(e, t)),
+    (() => {
+      const e = function () {
+        return '\n  <p id="box-pickup-complement" \n  class="input custom-field-complement tfg-custom-addressForm">\n    <label>Mobile number</label>\n    <input \n      id="custom-pickup-complement" \n      class="input-xlarge success" \n      type="tel" \n      name="complement" \n      placeholder="" \n    />\n  </p>';
+      };
+      const t = '#/shipping';
+      const r = '#/payment';
+      const o = 'search';
+      const i = 'residential';
+      const a = 'business';
+      const s = 'commercial';
+      const c = 'pickup';
+      const u = 'ricafields';
+      const l = 'tvfields';
+      const d = 'pickup';
+      const h = ['bash.com', 'preprod--thefoschini.myvtex.com'].includes(window.location.host)
+        ? 'https://store-api.www.bash.com/custom-api/'
+        : ['thefoschiniqa.myvtex.com', 'staging.tfglabs.dev'].includes(window.location.host)
+        ? 'https://store-api.staging.tfglabs.dev/custom-api/'
+        : ''.concat(window.location.protocol, '//').concat(window.location.host, '/custom-api/');
+      const p = n(235);
+      function f() {
+        const e = p.n2;
+        const t = e.crypto || e.msCrypto;
+        if (t && t.randomUUID) return t.randomUUID().replace(/-/g, '');
+        const n = t && t.getRandomValues ? () => t.getRandomValues(new Uint8Array(1))[0] : () => 16 * Math.random();
+        return ([1e7] + 1e3 + 4e3 + 8e3 + 1e11).replace(/[018]/g, (e) => (e ^ ((15 & n()) >> (e / 4))).toString(16));
+      }
+      const v = n(170);
+      const m = ['debug', 'info', 'warn', 'error', 'log', 'assert', 'trace'];
+      function y(e) {
+        if (!('console' in p.n2)) return e();
+        const t = p.n2.console;
+        const n = {};
+        m.forEach((e) => {
+          const r = t[e] && t[e].__sentry_original__;
+          e in t && r && ((n[e] = t[e]), (t[e] = r));
+        });
+        try {
+          return e();
+        } finally {
+          Object.keys(n).forEach((e) => {
+            t[e] = n[e];
+          });
+        }
+      }
+      function g() {
+        let e = !1;
+        const t = {
+          enable: () => {
+            e = !0;
+          },
+          disable: () => {
+            e = !1;
+          },
+        };
+        return (
+          typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__
+            ? m.forEach((n) => {
+                t[n] = (...t) => {
+                  e &&
+                    y(() => {
+                      p.n2.console[n](`Sentry Logger [${n}]:`, ...t);
+                    });
+                };
+              })
+            : m.forEach((e) => {
+                t[e] = () => {};
+              }),
+          t
+        );
+      }
+      let b;
+      b = typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__ ? (0, p.YO)('logger', g) : g();
+      const w = n(176);
+      const _ = 'production';
+      const x = Object.prototype.toString;
+      function k(e) {
+        return (function (e, t) {
+          return x.call(e) === `[object ${t}]`;
+        })(e, 'Object');
+      }
+      function S(e) {
+        return Boolean(e && e.then && typeof e.then === 'function');
+      }
+      let E;
+      !(function (e) {
+        (e[(e.PENDING = 0)] = 'PENDING'), (e[(e.RESOLVED = 1)] = 'RESOLVED'), (e[(e.REJECTED = 2)] = 'REJECTED');
+      })(E || (E = {}));
+      class O {
+        __init() {
+          this._state = E.PENDING;
+        }
+
+        __init2() {
+          this._handlers = [];
+        }
+
+        constructor(e) {
+          O.prototype.__init.call(this),
+            O.prototype.__init2.call(this),
+            O.prototype.__init3.call(this),
+            O.prototype.__init4.call(this),
+            O.prototype.__init5.call(this),
+            O.prototype.__init6.call(this);
+          try {
+            e(this._resolve, this._reject);
+          } catch (e) {
+            this._reject(e);
+          }
+        }
+
+        then(e, t) {
+          return new O((n, r) => {
+            this._handlers.push([
+              !1,
+              (t) => {
+                if (e)
+                  try {
+                    n(e(t));
+                  } catch (e) {
+                    r(e);
+                  }
+                else n(t);
+              },
+              (e) => {
+                if (t)
+                  try {
+                    n(t(e));
+                  } catch (e) {
+                    r(e);
+                  }
+                else r(e);
+              },
+            ]),
+              this._executeHandlers();
+          });
+        }
+
+        catch(e) {
+          return this.then((e) => e, e);
+        }
+
+        finally(e) {
+          return new O((t, n) => {
+            let r;
+            let o;
+            return this.then(
+              (t) => {
+                (o = !1), (r = t), e && e();
+              },
+              (t) => {
+                (o = !0), (r = t), e && e();
+              }
+            ).then(() => {
+              o ? n(r) : t(r);
+            });
+          });
+        }
+
+        __init3() {
+          this._resolve = (e) => {
+            this._setResult(E.RESOLVED, e);
+          };
+        }
+
+        __init4() {
+          this._reject = (e) => {
+            this._setResult(E.REJECTED, e);
+          };
+        }
+
+        __init5() {
+          this._setResult = (e, t) => {
+            this._state === E.PENDING &&
+              (S(t)
+                ? t.then(this._resolve, this._reject)
+                : ((this._state = e), (this._value = t), this._executeHandlers()));
+          };
+        }
+
+        __init6() {
+          this._executeHandlers = () => {
+            if (this._state === E.PENDING) return;
+            const e = this._handlers.slice();
+            (this._handlers = []),
+              e.forEach((e) => {
+                e[0] ||
+                  (this._state === E.RESOLVED && e[1](this._value),
+                  this._state === E.REJECTED && e[2](this._value),
+                  (e[0] = !0));
+              });
+          };
+        }
+      }
+      function j(e) {
+        return C(e, new Map());
+      }
+      function C(e, t) {
+        if (k(e)) {
+          const n = t.get(e);
+          if (void 0 !== n) return n;
+          const r = {};
+          t.set(e, r);
+          for (const n of Object.keys(e)) void 0 !== e[n] && (r[n] = C(e[n], t));
+          return r;
+        }
+        if (Array.isArray(e)) {
+          const n = t.get(e);
+          if (void 0 !== n) return n;
+          const r = [];
+          return (
+            t.set(e, r),
+            e.forEach((e) => {
+              r.push(C(e, t));
+            }),
+            r
+          );
+        }
+        return e;
+      }
+      function L(e, t = {}) {
+        if (
+          (t.user &&
+            (!e.ipAddress && t.user.ip_address && (e.ipAddress = t.user.ip_address),
+            e.did || t.did || (e.did = t.user.id || t.user.email || t.user.username)),
+          (e.timestamp = t.timestamp || (0, v.ph)()),
+          t.ignoreDuration && (e.ignoreDuration = t.ignoreDuration),
+          t.sid && (e.sid = t.sid.length === 32 ? t.sid : f()),
+          void 0 !== t.init && (e.init = t.init),
+          !e.did && t.did && (e.did = `${t.did}`),
+          typeof t.started === 'number' && (e.started = t.started),
+          e.ignoreDuration)
+        )
+          e.duration = void 0;
+        else if (typeof t.duration === 'number') e.duration = t.duration;
+        else {
+          const t = e.timestamp - e.started;
+          e.duration = t >= 0 ? t : 0;
+        }
+        t.release && (e.release = t.release),
+          t.environment && (e.environment = t.environment),
+          !e.ipAddress && t.ipAddress && (e.ipAddress = t.ipAddress),
+          !e.userAgent && t.userAgent && (e.userAgent = t.userAgent),
+          typeof t.errors === 'number' && (e.errors = t.errors),
+          t.status && (e.status = t.status);
+      }
+      class P {
+        constructor() {
+          (this._notifyingListeners = !1),
+            (this._scopeListeners = []),
+            (this._eventProcessors = []),
+            (this._breadcrumbs = []),
+            (this._attachments = []),
+            (this._user = {}),
+            (this._tags = {}),
+            (this._extra = {}),
+            (this._contexts = {}),
+            (this._sdkProcessingMetadata = {});
+        }
+
+        static clone(e) {
+          const t = new P();
+          return (
+            e &&
+              ((t._breadcrumbs = [...e._breadcrumbs]),
+              (t._tags = { ...e._tags }),
+              (t._extra = { ...e._extra }),
+              (t._contexts = { ...e._contexts }),
+              (t._user = e._user),
+              (t._level = e._level),
+              (t._span = e._span),
+              (t._session = e._session),
+              (t._transactionName = e._transactionName),
+              (t._fingerprint = e._fingerprint),
+              (t._eventProcessors = [...e._eventProcessors]),
+              (t._requestSession = e._requestSession),
+              (t._attachments = [...e._attachments]),
+              (t._sdkProcessingMetadata = { ...e._sdkProcessingMetadata })),
+            t
+          );
+        }
+
+        addScopeListener(e) {
+          this._scopeListeners.push(e);
+        }
+
+        addEventProcessor(e) {
+          return this._eventProcessors.push(e), this;
+        }
+
+        setUser(e) {
+          return (
+            (this._user = e || {}), this._session && L(this._session, { user: e }), this._notifyScopeListeners(), this
+          );
+        }
+
+        getUser() {
+          return this._user;
+        }
+
+        getRequestSession() {
+          return this._requestSession;
+        }
+
+        setRequestSession(e) {
+          return (this._requestSession = e), this;
+        }
+
+        setTags(e) {
+          return (this._tags = { ...this._tags, ...e }), this._notifyScopeListeners(), this;
+        }
+
+        setTag(e, t) {
+          return (this._tags = { ...this._tags, [e]: t }), this._notifyScopeListeners(), this;
+        }
+
+        setExtras(e) {
+          return (this._extra = { ...this._extra, ...e }), this._notifyScopeListeners(), this;
+        }
+
+        setExtra(e, t) {
+          return (this._extra = { ...this._extra, [e]: t }), this._notifyScopeListeners(), this;
+        }
+
+        setFingerprint(e) {
+          return (this._fingerprint = e), this._notifyScopeListeners(), this;
+        }
+
+        setLevel(e) {
+          return (this._level = e), this._notifyScopeListeners(), this;
+        }
+
+        setTransactionName(e) {
+          return (this._transactionName = e), this._notifyScopeListeners(), this;
+        }
+
+        setContext(e, t) {
+          return t === null ? delete this._contexts[e] : (this._contexts[e] = t), this._notifyScopeListeners(), this;
+        }
+
+        setSpan(e) {
+          return (this._span = e), this._notifyScopeListeners(), this;
+        }
+
+        getSpan() {
+          return this._span;
+        }
+
+        getTransaction() {
+          const e = this.getSpan();
+          return e && e.transaction;
+        }
+
+        setSession(e) {
+          return e ? (this._session = e) : delete this._session, this._notifyScopeListeners(), this;
+        }
+
+        getSession() {
+          return this._session;
+        }
+
+        update(e) {
+          if (!e) return this;
+          if (typeof e === 'function') {
+            const t = e(this);
+            return t instanceof P ? t : this;
+          }
+          return (
+            e instanceof P
+              ? ((this._tags = { ...this._tags, ...e._tags }),
+                (this._extra = { ...this._extra, ...e._extra }),
+                (this._contexts = { ...this._contexts, ...e._contexts }),
+                e._user && Object.keys(e._user).length && (this._user = e._user),
+                e._level && (this._level = e._level),
+                e._fingerprint && (this._fingerprint = e._fingerprint),
+                e._requestSession && (this._requestSession = e._requestSession))
+              : k(e) &&
+                ((this._tags = { ...this._tags, ...e.tags }),
+                (this._extra = { ...this._extra, ...e.extra }),
+                (this._contexts = { ...this._contexts, ...e.contexts }),
+                e.user && (this._user = e.user),
+                e.level && (this._level = e.level),
+                e.fingerprint && (this._fingerprint = e.fingerprint),
+                e.requestSession && (this._requestSession = e.requestSession)),
+            this
+          );
+        }
+
+        clear() {
+          return (
+            (this._breadcrumbs = []),
+            (this._tags = {}),
+            (this._extra = {}),
+            (this._user = {}),
+            (this._contexts = {}),
+            (this._level = void 0),
+            (this._transactionName = void 0),
+            (this._fingerprint = void 0),
+            (this._requestSession = void 0),
+            (this._span = void 0),
+            (this._session = void 0),
+            this._notifyScopeListeners(),
+            (this._attachments = []),
+            this
+          );
+        }
+
+        addBreadcrumb(e, t) {
+          const n = typeof t === 'number' ? t : 100;
+          if (n <= 0) return this;
+          const r = { timestamp: (0, v.yW)(), ...e };
+          return (this._breadcrumbs = [...this._breadcrumbs, r].slice(-n)), this._notifyScopeListeners(), this;
+        }
+
+        getLastBreadcrumb() {
+          return this._breadcrumbs[this._breadcrumbs.length - 1];
+        }
+
+        clearBreadcrumbs() {
+          return (this._breadcrumbs = []), this._notifyScopeListeners(), this;
+        }
+
+        addAttachment(e) {
+          return this._attachments.push(e), this;
+        }
+
+        getAttachments() {
+          return this._attachments;
+        }
+
+        clearAttachments() {
+          return (this._attachments = []), this;
+        }
+
+        applyToEvent(e, t = {}) {
+          if (
+            (this._extra && Object.keys(this._extra).length && (e.extra = { ...this._extra, ...e.extra }),
+            this._tags && Object.keys(this._tags).length && (e.tags = { ...this._tags, ...e.tags }),
+            this._user && Object.keys(this._user).length && (e.user = { ...this._user, ...e.user }),
+            this._contexts && Object.keys(this._contexts).length && (e.contexts = { ...this._contexts, ...e.contexts }),
+            this._level && (e.level = this._level),
+            this._transactionName && (e.transaction = this._transactionName),
+            this._span)
+          ) {
+            e.contexts = { trace: this._span.getTraceContext(), ...e.contexts };
+            const t = this._span.transaction && this._span.transaction.name;
+            t && (e.tags = { transaction: t, ...e.tags });
+          }
+          return (
+            this._applyFingerprint(e),
+            (e.breadcrumbs = [...(e.breadcrumbs || []), ...this._breadcrumbs]),
+            (e.breadcrumbs = e.breadcrumbs.length > 0 ? e.breadcrumbs : void 0),
+            (e.sdkProcessingMetadata = { ...e.sdkProcessingMetadata, ...this._sdkProcessingMetadata }),
+            this._notifyEventProcessors(
+              [...(0, p.YO)('globalEventProcessors', () => []), ...this._eventProcessors],
+              e,
+              t
+            )
+          );
+        }
+
+        setSDKProcessingMetadata(e) {
+          return (this._sdkProcessingMetadata = { ...this._sdkProcessingMetadata, ...e }), this;
+        }
+
+        _notifyEventProcessors(e, t, n, r = 0) {
+          return new O((o, i) => {
+            const a = e[r];
+            if (t === null || typeof a !== 'function') o(t);
+            else {
+              const s = a({ ...t }, n);
+              (typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__) &&
+                a.id &&
+                s === null &&
+                b.log(`Event processor "${a.id}" dropped event`),
+                S(s)
+                  ? s.then((t) => this._notifyEventProcessors(e, t, n, r + 1).then(o)).then(null, i)
+                  : this._notifyEventProcessors(e, s, n, r + 1)
+                      .then(o)
+                      .then(null, i);
+            }
+          });
+        }
+
+        _notifyScopeListeners() {
+          this._notifyingListeners ||
+            ((this._notifyingListeners = !0),
+            this._scopeListeners.forEach((e) => {
+              e(this);
+            }),
+            (this._notifyingListeners = !1));
+        }
+
+        _applyFingerprint(e) {
+          let t;
+          (e.fingerprint = e.fingerprint ? ((t = e.fingerprint), Array.isArray(t) ? t : [t]) : []),
+            this._fingerprint && (e.fingerprint = e.fingerprint.concat(this._fingerprint)),
+            e.fingerprint && !e.fingerprint.length && delete e.fingerprint;
+        }
+      }
+      const N = 100;
+      class T {
+        constructor(e, t = new P(), n = 4) {
+          (this._version = n), (this._stack = [{ scope: t }]), e && this.bindClient(e);
+        }
+
+        isOlderThan(e) {
+          return this._version < e;
+        }
+
+        bindClient(e) {
+          (this.getStackTop().client = e), e && e.setupIntegrations && e.setupIntegrations();
+        }
+
+        pushScope() {
+          const e = P.clone(this.getScope());
+          return this.getStack().push({ client: this.getClient(), scope: e }), e;
+        }
+
+        popScope() {
+          return !(this.getStack().length <= 1 || !this.getStack().pop());
+        }
+
+        withScope(e) {
+          const t = this.pushScope();
+          try {
+            e(t);
+          } finally {
+            this.popScope();
+          }
+        }
+
+        getClient() {
+          return this.getStackTop().client;
+        }
+
+        getScope() {
+          return this.getStackTop().scope;
+        }
+
+        getStack() {
+          return this._stack;
+        }
+
+        getStackTop() {
+          return this._stack[this._stack.length - 1];
+        }
+
+        captureException(e, t) {
+          const n = (this._lastEventId = t && t.event_id ? t.event_id : f());
+          const r = new Error('Sentry syntheticException');
+          return (
+            this._withClient((o, i) => {
+              o.captureException(e, { originalException: e, syntheticException: r, ...t, event_id: n }, i);
+            }),
+            n
+          );
+        }
+
+        captureMessage(e, t, n) {
+          const r = (this._lastEventId = n && n.event_id ? n.event_id : f());
+          const o = new Error(e);
+          return (
+            this._withClient((i, a) => {
+              i.captureMessage(e, t, { originalException: e, syntheticException: o, ...n, event_id: r }, a);
+            }),
+            r
+          );
+        }
+
+        captureEvent(e, t) {
+          const n = t && t.event_id ? t.event_id : f();
+          return (
+            e.type || (this._lastEventId = n),
+            this._withClient((r, o) => {
+              r.captureEvent(e, { ...t, event_id: n }, o);
+            }),
+            n
+          );
+        }
+
+        lastEventId() {
+          return this._lastEventId;
+        }
+
+        addBreadcrumb(e, t) {
+          const { scope: n, client: r } = this.getStackTop();
+          if (!r) return;
+          const { beforeBreadcrumb: o = null, maxBreadcrumbs: i = N } = (r.getOptions && r.getOptions()) || {};
+          if (i <= 0) return;
+          const a = { timestamp: (0, v.yW)(), ...e };
+          const s = o ? y(() => o(a, t)) : a;
+          s !== null && (r.emit && r.emit('beforeAddBreadcrumb', s, t), n.addBreadcrumb(s, i));
+        }
+
+        setUser(e) {
+          this.getScope().setUser(e);
+        }
+
+        setTags(e) {
+          this.getScope().setTags(e);
+        }
+
+        setExtras(e) {
+          this.getScope().setExtras(e);
+        }
+
+        setTag(e, t) {
+          this.getScope().setTag(e, t);
+        }
+
+        setExtra(e, t) {
+          this.getScope().setExtra(e, t);
+        }
+
+        setContext(e, t) {
+          this.getScope().setContext(e, t);
+        }
+
+        configureScope(e) {
+          const { scope: t, client: n } = this.getStackTop();
+          n && e(t);
+        }
+
+        run(e) {
+          const t = I(this);
+          try {
+            e(this);
+          } finally {
+            I(t);
+          }
+        }
+
+        getIntegration(e) {
+          const t = this.getClient();
+          if (!t) return null;
+          try {
+            return t.getIntegration(e);
+          } catch (t) {
+            return (
+              (typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__) &&
+                b.warn(`Cannot retrieve integration ${e.id} from the current Hub`),
+              null
+            );
+          }
+        }
+
+        startTransaction(e, t) {
+          return this._callExtensionMethod('startTransaction', e, t);
+        }
+
+        traceHeaders() {
+          return this._callExtensionMethod('traceHeaders');
+        }
+
+        captureSession(e = !1) {
+          if (e) return this.endSession();
+          this._sendSessionUpdate();
+        }
+
+        endSession() {
+          const e = this.getStackTop().scope;
+          const t = e.getSession();
+          t &&
+            (function (e, t) {
+              let n = {};
+              e.status === 'ok' && (n = { status: 'exited' }), L(e, n);
+            })(t),
+            this._sendSessionUpdate(),
+            e.setSession();
+        }
+
+        startSession(e) {
+          const { scope: t, client: n } = this.getStackTop();
+          const { release: r, environment: o = _ } = (n && n.getOptions()) || {};
+          const { userAgent: i } = p.n2.navigator || {};
+          const a = (function (e) {
+            const t = (0, v.ph)();
+            const n = {
+              sid: f(),
+              init: !0,
+              timestamp: t,
+              started: t,
+              duration: 0,
+              status: 'ok',
+              errors: 0,
+              ignoreDuration: !1,
+              toJSON: () =>
+                (function (e) {
+                  return j({
+                    sid: `${e.sid}`,
+                    init: e.init,
+                    started: new Date(1e3 * e.started).toISOString(),
+                    timestamp: new Date(1e3 * e.timestamp).toISOString(),
+                    status: e.status,
+                    errors: e.errors,
+                    did: typeof e.did === 'number' || typeof e.did === 'string' ? `${e.did}` : void 0,
+                    duration: e.duration,
+                    attrs: {
+                      release: e.release,
+                      environment: e.environment,
+                      ip_address: e.ipAddress,
+                      user_agent: e.userAgent,
+                    },
+                  });
+                })(n),
+            };
+            return e && L(n, e), n;
+          })({ release: r, environment: o, user: t.getUser(), ...(i && { userAgent: i }), ...e });
+          const s = t.getSession && t.getSession();
+          return s && s.status === 'ok' && L(s, { status: 'exited' }), this.endSession(), t.setSession(a), a;
+        }
+
+        shouldSendDefaultPii() {
+          const e = this.getClient();
+          const t = e && e.getOptions();
+          return Boolean(t && t.sendDefaultPii);
+        }
+
+        _sendSessionUpdate() {
+          const { scope: e, client: t } = this.getStackTop();
+          if (!e) return;
+          const n = e.getSession();
+          n && t && t.captureSession && t.captureSession(n);
+        }
+
+        _withClient(e) {
+          const { scope: t, client: n } = this.getStackTop();
+          n && e(n, t);
+        }
+
+        _callExtensionMethod(e, ...t) {
+          const n = F().__SENTRY__;
+          if (n && n.extensions && typeof n.extensions[e] === 'function') return n.extensions[e].apply(this, t);
+          (typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__) &&
+            b.warn(`Extension method ${e} couldn't be found, doing nothing.`);
+        }
+      }
+      function F() {
+        return (p.n2.__SENTRY__ = p.n2.__SENTRY__ || { extensions: {}, hub: void 0 }), p.n2;
+      }
+      function I(e) {
+        const t = F();
+        const n = A(t);
+        return R(t, e), n;
+      }
+      function D(e) {
+        return !!(e && e.__SENTRY__ && e.__SENTRY__.hub);
+      }
+      function A(e) {
+        return (0, p.YO)('hub', () => new T(), e);
+      }
+      function R(e, t) {
+        return !!e && (((e.__SENTRY__ = e.__SENTRY__ || {}).hub = t), !0);
+      }
+      const B = function (e) {
+        const t = arguments.length > 1 && void 0 !== arguments[1] && arguments[1];
+        if ((e = e.replace(/[^0-9+*#]+/g, '').trim())[0] === '0') {
+          if (e.length >= 6) {
+            const n = [e.slice(0, 3), e.slice(3, 6), e.slice(6)].join(' ');
+            return t ? n.trim() : n;
+          }
+          if (e.length >= 3) {
+            const r = [e.slice(0, 3), e.slice(3)].join(' ');
+            return t ? r.trim() : r;
+          }
+        } else {
+          if (e.length >= 5) {
+            const o = [e.slice(0, 2), e.slice(2, 5), e.slice(5)].join(' ');
+            return t ? o.trim() : o;
+          }
+          if (e.length >= 2) {
+            const i = [e.slice(0, 2), e.slice(2)].join(' ');
+            return t ? i.trim() : i;
+          }
+        }
+        return t ? e.trim() : e;
+      };
+      const M = function (e) {
+        let t;
+        let n;
+        let r;
+        let o;
+        const i = e.preferred;
+        const a = void 0 === i ? void 0 : i;
+        const s = e.type;
+        const c = void 0 === s ? 'profile' : s;
+        const u = e.fields;
+        return c === 'collect'
+          ? a ||
+              (u == null ? void 0 : u.phone) ||
+              ((r = document) === null ||
+              void 0 === r ||
+              (r = r.getElementById('client-phone')) === null ||
+              void 0 === r
+                ? void 0
+                : r.value) ||
+              ((o = window.vtexjs.checkout.orderForm) === null ||
+              void 0 === o ||
+              (o = o.clientProfileData) === null ||
+              void 0 === o
+                ? void 0
+                : o.phone) ||
+              ''
+          : a ||
+              ((t = window.vtexjs.checkout.orderForm) === null ||
+              void 0 === t ||
+              (t = t.clientProfileData) === null ||
+              void 0 === t
+                ? void 0
+                : t.phone) ||
+              ((n = document) === null ||
+              void 0 === n ||
+              (n = n.getElementById('client-phone')) === null ||
+              void 0 === n
+                ? void 0
+                : n.value) ||
+              '';
+      };
+      const q = function (e) {
+        if (!e) return '';
+        let t = e.replace(/\s/g, '');
+        return t.length === 9 && t[0] !== '0' && (t = '0'.concat(t)), t;
+      };
+      const G = function (e) {
+        let t;
+        console.error('ERROR', e),
+          (t = e),
+          (function () {
+            const e = F();
+            return (
+              (D(e) && !A(e).isOlderThan(4)) || R(e, new T()),
+              (0, w.KV)()
+                ? (function (e) {
+                    try {
+                      const t = F().__SENTRY__;
+                      const n = t && t.extensions && t.extensions.domain && t.extensions.domain.active;
+                      if (!n) return A(e);
+                      if (!D(n) || A(n).isOlderThan(4)) {
+                        const t = A(e).getStackTop();
+                        R(n, new T(t.client, P.clone(t.scope)));
+                      }
+                      return A(n);
+                    } catch (t) {
+                      return A(e);
+                    }
+                  })(e)
+                : A(e)
+            );
+          })().captureException(t, { captureContext: undefined });
+      };
+      const V = function (e) {
+        let t;
+        const n = e.cookie;
+        const r = e.cache;
+        const o = e.json;
+        const i = new Headers();
+        return (
+          n && i.append('Cookie', (t = document) === null || void 0 === t ? void 0 : t.cookie),
+          r && i.append('Cache-Control', 'no-cache'),
+          o && i.append('Content-type', 'application/json'),
+          i
+        );
+      };
+      const U = function (e) {
+        return (function (e) {
+          return !!e && ((e = e.replace(/\s/g, ''))[0] === '0' ? e.match(/[0-9\s]{10}/) : e.match(/[0-9\s]{9,}/));
+        })(e);
+      };
+      const Y = function (e) {
+        let t;
+        let n;
+        const r = ['938942995'];
+        const o = ['24833302'];
+        const i = [];
+        let a = !1;
+        let s = !1;
+        let c = !1;
+        let u = 0;
+        return (
+          e.forEach((e) => {
+            const t = e.productCategoryIds.split('/');
+            i.push(t),
+              t.forEach((e) => {
+                e && (r.includes(e) ? (a = !0) : o.includes(e) && (s = !0));
+              }),
+              e.modalType === 'FURNITURE' && ((c = !0), (u += 1));
+          }),
+          (n = u === e.length),
+          (t = e.length > 1 && c && !n),
+          { hasFurniture: c, hasSimCards: s, hasTVs: a, hasFurnitureMixed: t, hasFurnitureOnly: n, categories: i }
+        );
+      };
+      const W = function () {
+        $('.shimmer').removeClass('shimmer');
+      };
+      const Z = function (e) {
+        const t = e.focus;
+        const n = void 0 !== t && t;
+        $('.bash--textfield-businessName')
+          .removeClass('optional')
+          .slideDown(() => {
+            let e;
+            $('#bash--input-businessName').attr('required', 'required'),
+              !$('#bash--input-businessName').val() &&
+                n &&
+                ((e = $('#bash--input-businessName')) === null || void 0 === e || e.focus());
+          });
+      };
+      const J = function () {
+        $('.bash--textfield-businessName').addClass('optional').slideUp(),
+          $('#bash--input-businessName').removeAttr('required');
+      };
+      const H = function () {
+        let e;
+        const t = Array.from($('form.form-step.box-edit > :invalid, .error'));
+        t.sort((e, t) => e.getBoundingClientRect().top - t.getBoundingClientRect().top),
+          t == null || (e = t[0]) === null || void 0 === e || e.scrollIntoView({ block: 'center', behavior: 'smooth' });
+      };
+      function K(e, t) {
+        (t == null || t > e.length) && (t = e.length);
+        for (var n = 0, r = new Array(t); n < t; n++) r[n] = e[n];
+        return r;
+      }
+      const z = function (e) {
+        let t;
+        let n;
+        const r =
+          ((n = 2),
+          (function (e) {
+            if (Array.isArray(e)) return e;
+          })((t = e)) ||
+            (function (e, t) {
+              let n = e == null ? null : (typeof Symbol !== 'undefined' && e[Symbol.iterator]) || e['@@iterator'];
+              if (n != null) {
+                let r;
+                let o;
+                let i;
+                let a;
+                const s = [];
+                let c = !0;
+                let u = !1;
+                try {
+                  if (((i = (n = n.call(e)).next), t === 0)) {
+                    if (Object(n) !== n) return;
+                    c = !1;
+                  } else for (; !(c = (r = i.call(n)).done) && (s.push(r.value), s.length !== t); c = !0);
+                } catch (e) {
+                  (u = !0), (o = e);
+                } finally {
+                  try {
+                    if (!c && n.return != null && ((a = n.return()), Object(a) !== a)) return;
+                  } finally {
+                    if (u) throw o;
+                  }
+                }
+                return s;
+              }
+            })(t, n) ||
+            (function (e, t) {
+              if (e) {
+                if (typeof e === 'string') return K(e, t);
+                let n = Object.prototype.toString.call(e).slice(8, -1);
+                return (
+                  n === 'Object' && e.constructor && (n = e.constructor.name),
+                  n === 'Map' || n === 'Set'
+                    ? Array.from(e)
+                    : n === 'Arguments' || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)
+                    ? K(e, t)
+                    : void 0
+                );
+              }
+            })(t, n) ||
+            (function () {
+              throw new TypeError(
+                'Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.'
+              );
+            })());
+        const o = r[0];
+        const i = r[1];
+        return o >= 16.344 && o <= 32.8301 && i >= -34.8191 && i <= -22.1277;
+      };
+      const Q = function (e) {
+        const t = e.name;
+        const n = e.options;
+        return '\n  \n  <div class="bash--radio-options">\n  '.concat(
+          (void 0 === n ? [] : n)
+            .map((e) => {
+              const n = e.value;
+              const r = e.label;
+              const o = e.checked;
+              const i = void 0 !== o && o;
+              const a = e.disabled;
+              const s = void 0 !== a && a;
+              return '\n      <label class="bash--radio-option" id="radio-label-'
+                .concat(t, '-')
+                .concat(n, '">\n        <input type="radio" \n          ')
+                .concat(i ? "checked='checked'" : '', ' \n          ')
+                .concat(s ? "disabled='disabled'" : '', ' \n          value="')
+                .concat(n != null ? n : '', '" \n          name="')
+                .concat(t, '" \n          id="radio-')
+                .concat(t, '-')
+                .concat(n, '"\n        />\n          <span class="radio-icon"></span> \n          ')
+                .concat(r ? '<span class="radio-label">'.concat(r, '</span>') : '', '\n      </label>\n    ');
+            })
+            .join(''),
+          '\n   \n  </div>\n  '
+        );
+      };
+      const X = function (e, t) {
+        return (
+          JSON.stringify({
+            street: (e == null ? void 0 : e.street) || '',
+            neighborhood: (e == null ? void 0 : e.neighborhood) || '',
+            city: (e == null ? void 0 : e.city) || '',
+            postalCode: (e == null ? void 0 : e.postalCode) || '',
+          }) ===
+          JSON.stringify({
+            street: (t == null ? void 0 : t.street) || '',
+            neighborhood: (t == null ? void 0 : t.neighborhood) || '',
+            city: (t == null ? void 0 : t.city) || '',
+            postalCode: (t == null ? void 0 : t.postalCode) || '',
+          })
+        );
+      };
+      const ee = function (e) {
+        let t;
+        if (!e) return '';
+        let n;
+        const r = e.businessName;
+        const o = e.number;
+        const i = e.street;
+        const a = e.neighborhood;
+        const s = e.postalCode;
+        const c = e.city;
+        const u = e.receiverName;
+        const l = e.addressName;
+        const d = e.complement;
+        const h = e.receiverPhone;
+        const p = [
+          ''
+            .concat(r ? ''.concat(r, ', ') : '', ' ')
+            .concat(o ? ''.concat(o.trim(), ' ') : '')
+            .concat(i),
+          a != null ? a : c,
+          s,
+        ]
+          .join(', ')
+          .trim();
+        const f = [u, ((n = q(h || d)), [n.slice(0, 3), n.slice(3, 6), n.slice(6)].join(' '))].join(' - ');
+        const v =
+          (t = window) === null ||
+          void 0 === t ||
+          (t = t.vtexjs) === null ||
+          void 0 === t ||
+          (t = t.checkout) === null ||
+          void 0 === t ||
+          (t = t.orderForm) === null ||
+          void 0 === t ||
+          (t = t.shippingData) === null ||
+          void 0 === t
+            ? void 0
+            : t.address;
+        const m = encodeURIComponent(JSON.stringify(e));
+        return '\n<label id="address-'
+          .concat(l, '" class="bash--address-listing" data-address="')
+          .concat(m, '">\n  <div class="address-radio">\n  ')
+          .concat(
+            Q({ name: 'selected-address', options: [{ checked: X(e, v), value: l }] }),
+            '\n  </div>\n  <div class="address-text">\n    <div>'
+          )
+          .concat(p, '</div>    \n    <div>')
+          .concat(
+            f,
+            '</div>  \n  </div>\n  <div class="address-edit">\n    <a href="#" data-view="address-edit" data-content="address-'
+          )
+          .concat(l, '">\n      Edit\n    </a>\n  </div>\n</label>\n');
+      };
+      function te(e) {
+        return (
+          (te =
+            typeof Symbol === 'function' && typeof Symbol.iterator === 'symbol'
+              ? function (e) {
+                  return typeof e;
+                }
+              : function (e) {
+                  return e && typeof Symbol === 'function' && e.constructor === Symbol && e !== Symbol.prototype
+                    ? 'symbol'
+                    : typeof e;
+                }),
+          te(e)
+        );
+      }
+      function ne(e, t) {
+        for (let n = 0; n < t.length; n++) {
+          const r = t[n];
+          (r.enumerable = r.enumerable || !1),
+            (r.configurable = !0),
+            'value' in r && (r.writable = !0),
+            Object.defineProperty(
+              e,
+              (void 0,
+              (o = (function (e, t) {
+                if (te(e) !== 'object' || e === null) return e;
+                const n = e[Symbol.toPrimitive];
+                if (void 0 !== n) {
+                  const r = n.call(e, t);
+                  if (te(r) !== 'object') return r;
+                  throw new TypeError('@@toPrimitive must return a primitive value.');
+                }
+                return String(e);
+              })(r.key, 'string')),
+              te(o) === 'symbol' ? o : String(o)),
+              r
+            );
+        }
+        let o;
+      }
+      function re(e) {
+        return (
+          (re =
+            typeof Symbol === 'function' && typeof Symbol.iterator === 'symbol'
+              ? function (e) {
+                  return typeof e;
+                }
+              : function (e) {
+                  return e && typeof Symbol === 'function' && e.constructor === Symbol && e !== Symbol.prototype
+                    ? 'symbol'
+                    : typeof e;
+                }),
+          re(e)
+        );
+      }
+      function oe(e, t) {
+        const n = Object.keys(e);
+        if (Object.getOwnPropertySymbols) {
+          let r = Object.getOwnPropertySymbols(e);
+          t && (r = r.filter((t) => Object.getOwnPropertyDescriptor(e, t).enumerable)), n.push.apply(n, r);
+        }
+        return n;
+      }
+      function ie(e) {
+        for (let t = 1; t < arguments.length; t++) {
+          var n = arguments[t] != null ? arguments[t] : {};
+          t % 2
+            ? oe(Object(n), !0).forEach((t) => {
+                ae(e, t, n[t]);
+              })
+            : Object.getOwnPropertyDescriptors
+            ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(n))
+            : oe(Object(n)).forEach((t) => {
+                Object.defineProperty(e, t, Object.getOwnPropertyDescriptor(n, t));
+              });
+        }
+        return e;
+      }
+      function ae(e, t, n) {
+        return (
+          (t = (function (e) {
+            const t = (function (e, t) {
+              if (re(e) !== 'object' || e === null) return e;
+              const n = e[Symbol.toPrimitive];
+              if (void 0 !== n) {
+                const r = n.call(e, t);
+                if (re(r) !== 'object') return r;
+                throw new TypeError('@@toPrimitive must return a primitive value.');
+              }
+              return String(e);
+            })(e, 'string');
+            return re(t) === 'symbol' ? t : String(t);
+          })(t)) in e
+            ? Object.defineProperty(e, t, { value: n, enumerable: !0, configurable: !0, writable: !0 })
+            : (e[t] = n),
+          e
+        );
+      }
+      function se(e, t) {
+        (t == null || t > e.length) && (t = e.length);
+        for (var n = 0, r = new Array(t); n < t; n++) r[n] = e[n];
+        return r;
+      }
+      function ce() {
+        ce = function () {
+          return e;
+        };
+        var e = {};
+        const t = Object.prototype;
+        const n = t.hasOwnProperty;
+        const r =
+          Object.defineProperty ||
+          function (e, t, n) {
+            e[t] = n.value;
+          };
+        const o = typeof Symbol === 'function' ? Symbol : {};
+        const i = o.iterator || '@@iterator';
+        const a = o.asyncIterator || '@@asyncIterator';
+        const s = o.toStringTag || '@@toStringTag';
+        function c(e, t, n) {
+          return Object.defineProperty(e, t, { value: n, enumerable: !0, configurable: !0, writable: !0 }), e[t];
+        }
+        try {
+          c({}, '');
+        } catch (e) {
+          c = function (e, t, n) {
+            return (e[t] = n);
+          };
+        }
+        function u(e, t, n, o) {
+          const i = t && t.prototype instanceof h ? t : h;
+          const a = Object.create(i.prototype);
+          const s = new E(o || []);
+          return r(a, '_invoke', { value: _(e, n, s) }), a;
+        }
+        function l(e, t, n) {
+          try {
+            return { type: 'normal', arg: e.call(t, n) };
+          } catch (e) {
+            return { type: 'throw', arg: e };
+          }
+        }
+        e.wrap = u;
+        const d = {};
+        function h() {}
+        function p() {}
+        function f() {}
+        let v = {};
+        c(v, i, function () {
+          return this;
+        });
+        const m = Object.getPrototypeOf;
+        const y = m && m(m(O([])));
+        y && y !== t && n.call(y, i) && (v = y);
+        const g = (f.prototype = h.prototype = Object.create(v));
+        function b(e) {
+          ['next', 'throw', 'return'].forEach((t) => {
+            c(e, t, function (e) {
+              return this._invoke(t, e);
+            });
+          });
+        }
+        function w(e, t) {
+          function o(r, i, a, s) {
+            const c = l(e[r], e, i);
+            if (c.type !== 'throw') {
+              const u = c.arg;
+              const d = u.value;
+              return d && re(d) == 'object' && n.call(d, '__await')
+                ? t.resolve(d.__await).then(
+                    (e) => {
+                      o('next', e, a, s);
+                    },
+                    (e) => {
+                      o('throw', e, a, s);
+                    }
+                  )
+                : t.resolve(d).then(
+                    (e) => {
+                      (u.value = e), a(u);
+                    },
+                    (e) => o('throw', e, a, s)
+                  );
+            }
+            s(c.arg);
+          }
+          let i;
+          r(this, '_invoke', {
+            value(e, n) {
+              function r() {
+                return new t((t, r) => {
+                  o(e, n, t, r);
+                });
+              }
+              return (i = i ? i.then(r, r) : r());
+            },
+          });
+        }
+        function _(e, t, n) {
+          let r = 'suspendedStart';
+          return function (o, i) {
+            if (r === 'executing') throw new Error('Generator is already running');
+            if (r === 'completed') {
+              if (o === 'throw') throw i;
+              return { value: void 0, done: !0 };
+            }
+            for (n.method = o, n.arg = i; ; ) {
+              const a = n.delegate;
+              if (a) {
+                const s = x(a, n);
+                if (s) {
+                  if (s === d) continue;
+                  return s;
+                }
+              }
+              if (n.method === 'next') n.sent = n._sent = n.arg;
+              else if (n.method === 'throw') {
+                if (r === 'suspendedStart') throw ((r = 'completed'), n.arg);
+                n.dispatchException(n.arg);
+              } else n.method === 'return' && n.abrupt('return', n.arg);
+              r = 'executing';
+              const c = l(e, t, n);
+              if (c.type === 'normal') {
+                if (((r = n.done ? 'completed' : 'suspendedYield'), c.arg === d)) continue;
+                return { value: c.arg, done: n.done };
+              }
+              c.type === 'throw' && ((r = 'completed'), (n.method = 'throw'), (n.arg = c.arg));
+            }
+          };
+        }
+        function x(e, t) {
+          const n = t.method;
+          const r = e.iterator[n];
+          if (void 0 === r)
+            return (
+              (t.delegate = null),
+              (n === 'throw' &&
+                e.iterator.return &&
+                ((t.method = 'return'), (t.arg = void 0), x(e, t), t.method === 'throw')) ||
+                (n !== 'return' &&
+                  ((t.method = 'throw'), (t.arg = new TypeError(`The iterator does not provide a '${n}' method`)))),
+              d
+            );
+          const o = l(r, e.iterator, t.arg);
+          if (o.type === 'throw') return (t.method = 'throw'), (t.arg = o.arg), (t.delegate = null), d;
+          const i = o.arg;
+          return i
+            ? i.done
+              ? ((t[e.resultName] = i.value),
+                (t.next = e.nextLoc),
+                t.method !== 'return' && ((t.method = 'next'), (t.arg = void 0)),
+                (t.delegate = null),
+                d)
+              : i
+            : ((t.method = 'throw'),
+              (t.arg = new TypeError('iterator result is not an object')),
+              (t.delegate = null),
+              d);
+        }
+        function k(e) {
+          const t = { tryLoc: e[0] };
+          1 in e && (t.catchLoc = e[1]),
+            2 in e && ((t.finallyLoc = e[2]), (t.afterLoc = e[3])),
+            this.tryEntries.push(t);
+        }
+        function S(e) {
+          const t = e.completion || {};
+          (t.type = 'normal'), delete t.arg, (e.completion = t);
+        }
+        function E(e) {
+          (this.tryEntries = [{ tryLoc: 'root' }]), e.forEach(k, this), this.reset(!0);
+        }
+        function O(e) {
+          if (e || e === '') {
+            const t = e[i];
+            if (t) return t.call(e);
+            if (typeof e.next === 'function') return e;
+            if (!isNaN(e.length)) {
+              let r = -1;
+              const o = function t() {
+                for (; ++r < e.length; ) if (n.call(e, r)) return (t.value = e[r]), (t.done = !1), t;
+                return (t.value = void 0), (t.done = !0), t;
+              };
+              return (o.next = o);
+            }
+          }
+          throw new TypeError(`${re(e)} is not iterable`);
+        }
+        return (
+          (p.prototype = f),
+          r(g, 'constructor', { value: f, configurable: !0 }),
+          r(f, 'constructor', { value: p, configurable: !0 }),
+          (p.displayName = c(f, s, 'GeneratorFunction')),
+          (e.isGeneratorFunction = function (e) {
+            const t = typeof e === 'function' && e.constructor;
+            return !!t && (t === p || (t.displayName || t.name) === 'GeneratorFunction');
+          }),
+          (e.mark = function (e) {
+            return (
+              Object.setPrototypeOf ? Object.setPrototypeOf(e, f) : ((e.__proto__ = f), c(e, s, 'GeneratorFunction')),
+              (e.prototype = Object.create(g)),
+              e
+            );
+          }),
+          (e.awrap = function (e) {
+            return { __await: e };
+          }),
+          b(w.prototype),
+          c(w.prototype, a, function () {
+            return this;
+          }),
+          (e.AsyncIterator = w),
+          (e.async = function (t, n, r, o, i) {
+            void 0 === i && (i = Promise);
+            const a = new w(u(t, n, r, o), i);
+            return e.isGeneratorFunction(n) ? a : a.next().then((e) => (e.done ? e.value : a.next()));
+          }),
+          b(g),
+          c(g, s, 'Generator'),
+          c(g, i, function () {
+            return this;
+          }),
+          c(g, 'toString', () => '[object Generator]'),
+          (e.keys = function (e) {
+            const t = Object(e);
+            const n = [];
+            for (const r in t) n.push(r);
+            return (
+              n.reverse(),
+              function e() {
+                for (; n.length; ) {
+                  const r = n.pop();
+                  if (r in t) return (e.value = r), (e.done = !1), e;
+                }
+                return (e.done = !0), e;
+              }
+            );
+          }),
+          (e.values = O),
+          (E.prototype = {
+            constructor: E,
+            reset(e) {
+              if (
+                ((this.prev = 0),
+                (this.next = 0),
+                (this.sent = this._sent = void 0),
+                (this.done = !1),
+                (this.delegate = null),
+                (this.method = 'next'),
+                (this.arg = void 0),
+                this.tryEntries.forEach(S),
+                !e)
+              )
+                for (const t in this)
+                  t.charAt(0) === 't' && n.call(this, t) && !isNaN(+t.slice(1)) && (this[t] = void 0);
+            },
+            stop() {
+              this.done = !0;
+              const e = this.tryEntries[0].completion;
+              if (e.type === 'throw') throw e.arg;
+              return this.rval;
+            },
+            dispatchException(e) {
+              if (this.done) throw e;
+              const t = this;
+              function r(n, r) {
+                return (a.type = 'throw'), (a.arg = e), (t.next = n), r && ((t.method = 'next'), (t.arg = void 0)), !!r;
+              }
+              for (let o = this.tryEntries.length - 1; o >= 0; --o) {
+                const i = this.tryEntries[o];
+                var a = i.completion;
+                if (i.tryLoc === 'root') return r('end');
+                if (i.tryLoc <= this.prev) {
+                  const s = n.call(i, 'catchLoc');
+                  const c = n.call(i, 'finallyLoc');
+                  if (s && c) {
+                    if (this.prev < i.catchLoc) return r(i.catchLoc, !0);
+                    if (this.prev < i.finallyLoc) return r(i.finallyLoc);
+                  } else if (s) {
+                    if (this.prev < i.catchLoc) return r(i.catchLoc, !0);
+                  } else {
+                    if (!c) throw new Error('try statement without catch or finally');
+                    if (this.prev < i.finallyLoc) return r(i.finallyLoc);
+                  }
+                }
+              }
+            },
+            abrupt(e, t) {
+              for (let r = this.tryEntries.length - 1; r >= 0; --r) {
+                const o = this.tryEntries[r];
+                if (o.tryLoc <= this.prev && n.call(o, 'finallyLoc') && this.prev < o.finallyLoc) {
+                  var i = o;
+                  break;
+                }
+              }
+              i && (e === 'break' || e === 'continue') && i.tryLoc <= t && t <= i.finallyLoc && (i = null);
+              const a = i ? i.completion : {};
+              return (
+                (a.type = e),
+                (a.arg = t),
+                i ? ((this.method = 'next'), (this.next = i.finallyLoc), d) : this.complete(a)
+              );
+            },
+            complete(e, t) {
+              if (e.type === 'throw') throw e.arg;
+              return (
+                e.type === 'break' || e.type === 'continue'
+                  ? (this.next = e.arg)
+                  : e.type === 'return'
+                  ? ((this.rval = this.arg = e.arg), (this.method = 'return'), (this.next = 'end'))
+                  : e.type === 'normal' && t && (this.next = t),
+                d
+              );
+            },
+            finish(e) {
+              for (let t = this.tryEntries.length - 1; t >= 0; --t) {
+                const n = this.tryEntries[t];
+                if (n.finallyLoc === e) return this.complete(n.completion, n.afterLoc), S(n), d;
+              }
+            },
+            catch(e) {
+              for (let t = this.tryEntries.length - 1; t >= 0; --t) {
+                const n = this.tryEntries[t];
+                if (n.tryLoc === e) {
+                  const r = n.completion;
+                  if (r.type === 'throw') {
+                    var o = r.arg;
+                    S(n);
+                  }
+                  return o;
+                }
+              }
+              throw new Error('illegal catch attempt');
+            },
+            delegateYield(e, t, n) {
+              return (
+                (this.delegate = { iterator: O(e), resultName: t, nextLoc: n }),
+                this.method === 'next' && (this.arg = void 0),
+                d
+              );
+            },
+          }),
+          e
+        );
+      }
+      function ue(e, t, n, r, o, i, a) {
+        try {
+          var s = e[i](a);
+          var c = s.value;
+        } catch (e) {
+          return void n(e);
+        }
+        s.done ? t(c) : Promise.resolve(c).then(r, o);
+      }
+      function le(e) {
+        return function () {
+          const t = this;
+          const n = arguments;
+          return new Promise((r, o) => {
+            const i = e.apply(t, n);
+            function a(e) {
+              ue(i, r, o, a, s, 'next', e);
+            }
+            function s(e) {
+              ue(i, r, o, a, s, 'throw', e);
+            }
+            a(void 0);
+          });
+        };
+      }
+      const de = new ((function () {
+        function e() {
+          const t = this;
+          !(function (e, t) {
+            if (!(e instanceof t)) throw new TypeError('Cannot call a class as a function');
+          })(this, e),
+            (this.indexedDB =
+              window.indexedDB ||
+              window.webkitIndexedDB ||
+              window.mozIndexedDB ||
+              window.msIndexedDB ||
+              window.shimIndexedDB),
+            (this.checkoutDB = indexedDB.open('checkoutDB', 1.2)),
+            (this.checkoutDB.onerror = function (e) {
+              throw (console.error('CheckoutDB Error', { event: e }), new Error('Could not load checkoutDB'));
+            }),
+            (this.checkoutDB.onupgradeneeded = function () {
+              const e = t.checkoutDB.result.createObjectStore('addresses', { keyPath: 'addressName' });
+              e.createIndex('address_street', ['street'], { unique: !1 }),
+                e.createIndex('address_addressName', ['addressName'], { unique: !0 }),
+                e.createIndex('address_street_suburb_city_postal', ['street', 'neighborhood', 'city', 'postalCode'], {
+                  unique: !0,
+                });
+            }),
+            (this.checkoutDB.onsuccess = function () {
+              const e = t.checkoutDB.result.transaction('addresses', 'readwrite');
+              (t.addresses = e.objectStore('addresses')), (e.oncomplete = function () {});
+            });
+        }
+        let t;
+        let n;
+        return (
+          (t = e),
+          (n = [
+            {
+              key: 'store',
+              value() {
+                return this.checkoutDB.result.transaction('addresses', 'readwrite').objectStore('addresses');
+              },
+            },
+            {
+              key: 'loadAddresses',
+              value(e) {
+                const t = this;
+                const n = e.map((e) => t.addOrUpdateAddress(e));
+                return Promise.all(n).then((e) => e);
+              },
+            },
+            {
+              key: 'addOrUpdateAddress',
+              value(e) {
+                const t = this;
+                return new Promise((n, r) => {
+                  const o = t.store().put(e);
+                  (o.onsuccess = function () {
+                    n({ success: !0, addressId: o.result });
+                  }),
+                    (o.onerror = function (e) {
+                      let t;
+                      r(
+                        new Error({
+                          sucess: !1,
+                          error: e == null || (t = e.target) === null || void 0 === t ? void 0 : t.error,
+                        })
+                      );
+                    });
+                });
+              },
+            },
+            {
+              key: 'getAddresses',
+              value() {
+                const e = this;
+                return new Promise((t) => {
+                  const n = e.store().getAll();
+                  (n.onsuccess = function () {
+                    return t(n.result);
+                  }),
+                    (n.onerror = function () {
+                      console.error('Something wrong with getAddresses ? ...'), t([]);
+                    });
+                });
+              },
+            },
+            {
+              key: 'getAddress',
+              value(e) {
+                const t = this;
+                return new Promise((n) => {
+                  const r = t.store().get(e);
+                  (r.onsuccess = function () {
+                    return n(r.result);
+                  }),
+                    (r.onerror = function () {
+                      console.error('Something wrong with getAddress ? ...'), n([]);
+                    });
+                });
+              },
+            },
+            {
+              key: 'deleteAddress',
+              value(e) {
+                const t = this.addresses.delete(e);
+                t.onsuccess = function () {
+                  return t.result;
+                };
+              },
+            },
+            {
+              key: 'clearData',
+              value() {
+                const e = this;
+                return new Promise((t) => {
+                  const n = e.store().clear();
+                  (n.onsuccess = function () {
+                    return t(n.result);
+                  }),
+                    (n.onerror = function () {
+                      console.error('Something wrong with clearData ? ...'), t([]);
+                    });
+                });
+              },
+            },
+          ]) && ne(t.prototype, n),
+          Object.defineProperty(t, 'prototype', { writable: !1 }),
+          e
+        );
+      })())();
+      const he = (function () {
+        const e = le(
+          ce().mark(function e() {
+            let t;
+            let n;
+            let r;
+            let o;
+            let i;
+            let a;
+            let s;
+            let c;
+            return ce().wrap((e) => {
+              for (;;)
+                switch ((e.prev = e.next)) {
+                  case 0:
+                    return (e.next = 2), de.getAddresses();
+                  case 2:
+                    if (!((n = e.sent).length > 0)) {
+                      e.next = 5;
+                      break;
+                    }
+                    return e.abrupt('return', { data: n });
+                  case 5:
+                    return (
+                      (r =
+                        (t = window) === null ||
+                        void 0 === t ||
+                        (t = t.vtexjs) === null ||
+                        void 0 === t ||
+                        (t = t.checkout) === null ||
+                        void 0 === t ||
+                        (t = t.orderForm) === null ||
+                        void 0 === t
+                          ? void 0
+                          : t.clientProfileData),
+                      (o = r.email),
+                      (i = [
+                        'id',
+                        'addressType',
+                        'addressQuery',
+                        'addressName',
+                        'reference',
+                        'number',
+                        'geolocation',
+                        'receiverName',
+                        'receiverPhone',
+                        'complement',
+                        'street',
+                        'businessName',
+                        'companyBuilding',
+                        'neighborhood',
+                        'city',
+                        'postalCode',
+                        'state',
+                        'country',
+                        'tvID',
+                        'geoCoordinate',
+                      ].join(',')),
+                      (a = V({ cookie: !0, cache: !0, json: !1 })),
+                      (s = { headers: a, credentials: 'include' }),
+                      (c = Date.now()),
+                      e.abrupt(
+                        'return',
+                        fetch(
+                          ''
+                            .concat(h, 'masterdata/addresses?t=')
+                            .concat(c, '&_fields=')
+                            .concat(i, '&_where=')
+                            .concat(encodeURIComponent('userIdQuery='.concat(o))),
+                          s
+                        )
+                          .then((e) => e.json())
+                          .then(
+                            (function () {
+                              const e = le(
+                                ce().mark(function e(t) {
+                                  return ce().wrap((e) => {
+                                    for (;;)
+                                      switch ((e.prev = e.next)) {
+                                        case 0:
+                                          return t.data && de.loadAddresses(t.data), e.abrupt('return', t);
+                                        case 2:
+                                        case 'end':
+                                          return e.stop();
+                                      }
+                                  }, e);
+                                })
+                              );
+                              return function (t) {
+                                return e.apply(this, arguments);
+                              };
+                            })()
+                          )
+                          .catch((e) => G('GET_ADDRESSES_ERROR: '.concat(e == null ? void 0 : e.message)))
+                      )
+                    );
+                  case 11:
+                  case 'end':
+                    return e.stop();
+                }
+            }, e);
+          })
+        );
+        return function () {
+          return e.apply(this, arguments);
+        };
+      })();
+      const pe = (function () {
+        const e = le(
+          ce().mark(function e(t, n) {
+            let r;
+            let o;
+            let i;
+            let a;
+            let s;
+            return ce().wrap((e) => {
+              for (;;)
+                switch ((e.prev = e.next)) {
+                  case 0:
+                    return (
+                      (r = {}),
+                      (o = V({ cookie: !0, cache: !0, json: !1 })),
+                      (i = { headers: o, credentials: 'include' }),
+                      (e.next = 5),
+                      fetch(
+                        ''
+                          .concat(h, 'masterdata/addresses/')
+                          .concat(n, '&_where=addressName=')
+                          .concat(t, '&timestamp=')
+                          .concat(Date.now()),
+                        i
+                      )
+                        .then((e) => e.json())
+                        .catch((e) => G('GET_ADDRESS_ERROR: '.concat(e == null ? void 0 : e.message)))
+                    );
+                  case 5:
+                    return (
+                      (a = e.sent) &&
+                        !a.error &&
+                        a.data &&
+                        a.data.length > 0 &&
+                        ((c = a.data),
+                        (u = 1),
+                        (s =
+                          (function (e) {
+                            if (Array.isArray(e)) return e;
+                          })(c) ||
+                          (function (e, t) {
+                            let n =
+                              e == null
+                                ? null
+                                : (typeof Symbol !== 'undefined' && e[Symbol.iterator]) || e['@@iterator'];
+                            if (n != null) {
+                              let r;
+                              let o;
+                              let i;
+                              let a;
+                              const s = [];
+                              let c = !0;
+                              let u = !1;
+                              try {
+                                if (((i = (n = n.call(e)).next), t === 0)) {
+                                  if (Object(n) !== n) return;
+                                  c = !1;
+                                } else for (; !(c = (r = i.call(n)).done) && (s.push(r.value), s.length !== t); c = !0);
+                              } catch (e) {
+                                (u = !0), (o = e);
+                              } finally {
+                                try {
+                                  if (!c && n.return != null && ((a = n.return()), Object(a) !== a)) return;
+                                } finally {
+                                  if (u) throw o;
+                                }
+                              }
+                              return s;
+                            }
+                          })(c, u) ||
+                          (function (e, t) {
+                            if (e) {
+                              if (typeof e === 'string') return se(e, t);
+                              let n = Object.prototype.toString.call(e).slice(8, -1);
+                              return (
+                                n === 'Object' && e.constructor && (n = e.constructor.name),
+                                n === 'Map' || n === 'Set'
+                                  ? Array.from(e)
+                                  : n === 'Arguments' || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)
+                                  ? se(e, t)
+                                  : void 0
+                              );
+                            }
+                          })(c, u) ||
+                          (function () {
+                            throw new TypeError(
+                              'Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.'
+                            );
+                          })()),
+                        (r = s[0])),
+                      e.abrupt('return', r)
+                    );
+                  case 8:
+                  case 'end':
+                    return e.stop();
+                }
+              let c;
+              let u;
+            }, e);
+          })
+        );
+        return function (t, n) {
+          return e.apply(this, arguments);
+        };
+      })();
+      const fe = (function () {
+        const e = le(
+          ce().mark(function e(t) {
+            let n;
+            let r;
+            let o;
+            let i;
+            let a;
+            let s;
+            return ce().wrap((e) => {
+              for (;;)
+                switch ((e.prev = e.next)) {
+                  case 0:
+                    if (((r = window.vtexjs.checkout.orderForm.clientProfileData.email), t)) {
+                      e.next = 3;
+                      break;
+                    }
+                    return e.abrupt('return', Promise.reject(new Error('No address provided.')));
+                  case 3:
+                    if (!t.addressName) {
+                      e.next = 9;
+                      break;
+                    }
+                    return (e.next = 6), pe(t.addressName, '?_fields=id');
+                  case 6:
+                    (e.t0 = e.sent), (e.next = 10);
+                    break;
+                  case 9:
+                    e.t0 = {};
+                  case 10:
+                    return (
+                      (o = e.t0),
+                      (n =
+                        o != null && o.id
+                          ? ''.concat(h, 'masterdata/address/').concat(o.id)
+                          : ''.concat(h, 'masterdata/addresses')),
+                      (i = ie({ userId: r }, t)),
+                      o.id || (i.addressName = t.addressId || 'address-'.concat(Date.now())),
+                      (a = V({ cookie: !0, cache: !0, json: !0 })),
+                      (s = { method: 'PATCH', headers: a, body: JSON.stringify(i), credentials: 'include' }),
+                      (e.next = 18),
+                      fetch(n, s)
+                        .then((e) => (e.status !== 204 ? e.json() : e))
+                        .then((e) => e)
+                        .catch((e) => G('SAVE_ADDRESS_ERROR: '.concat(e == null ? void 0 : e.message)))
+                    );
+                  case 18:
+                  case 'end':
+                    return e.stop();
+                }
+            }, e);
+          })
+        );
+        return function (t) {
+          return e.apply(this, arguments);
+        };
+      })();
+      const ve = function (e) {
+        let t = $('#address-'.concat(e.addressName));
+        t.length ? (t.after(ee(e)), t.remove(), (t = null)) : $('#bash-address-list').append(ee(e)),
+          $('input[type="radio"][name="selected-address"]:checked').attr('checked', !1),
+          $('input[type="radio"][name="selected-address"][value="'.concat(e.addressName, '"]')).attr('checked', !0);
+      };
+      const me = (function () {
+        const e = le(
+          ce().mark(function e(t) {
+            let n;
+            return ce().wrap((e) => {
+              for (;;)
+                switch ((e.prev = e.next)) {
+                  case 0:
+                    t.addressName ||
+                      ((n = t.street
+                        .replace(/[^a-zA-Z0-9]/g, ' ')
+                        .trim()
+                        .replace(/\s/g, '-')
+                        .toLowerCase()),
+                      (t.addressName = ''.concat(Date.now(), '-').concat(n).substring(0, 50))),
+                      t.addressId || (t.addressId = t.addressName),
+                      de.addOrUpdateAddress(t).then(() => ve(t)),
+                      fe(t);
+                  case 4:
+                  case 'end':
+                    return e.stop();
+                }
+            }, e);
+          })
+        );
+        return function (t) {
+          return e.apply(this, arguments);
+        };
+      })();
+      const ye = (function () {
+        const e = le(
+          ce().mark(function e(t) {
+            return ce().wrap((e) => {
+              for (;;)
+                switch ((e.prev = e.next)) {
+                  case 0:
+                    return e.abrupt('return', de.getAddress(t));
+                  case 1:
+                  case 'end':
+                    return e.stop();
+                }
+            }, e);
+          })
+        );
+        return function (t) {
+          return e.apply(this, arguments);
+        };
+      })();
+      const ge = (function () {
+        const e = le(
+          ce().mark(function e() {
+            return ce().wrap((e) => {
+              for (;;)
+                switch ((e.prev = e.next)) {
+                  case 0:
+                    return e.abrupt('return', de.clearData());
+                  case 1:
+                  case 'end':
+                    return e.stop();
+                }
+            }, e);
+          })
+        );
+        return function () {
+          return e.apply(this, arguments);
+        };
+      })();
+      const be = (function () {
+        const e = le(
+          ce().mark(function e(t, n) {
+            let r;
+            let o;
+            let i;
+            let a;
+            let s;
+            const c = arguments;
+            return ce().wrap((e) => {
+              for (;;)
+                switch ((e.prev = e.next)) {
+                  case 0:
+                    return (
+                      (r = c.length > 2 && void 0 !== c[2] && c[2]),
+                      (o = window.vtexjs.checkout.orderForm.orderFormId),
+                      (i = '/api/checkout/pub/orderForm/'.concat(o, '/customData/').concat(t)),
+                      (a = JSON.stringify(ie(ie({}, n), r && { sameAddress: new Boolean(n.sameAddress) }))),
+                      (s = { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: a }),
+                      e.abrupt('return', fetch(i, s))
+                    );
+                  case 6:
+                  case 'end':
+                    return e.stop();
+                }
+            }, e);
+          })
+        );
+        return function (t, n) {
+          return e.apply(this, arguments);
+        };
+      })();
+      const we = function (e) {
+        let t;
+        const n =
+          (t = window) === null ||
+          void 0 === t ||
+          (t = t.vtexjs) === null ||
+          void 0 === t ||
+          (t = t.checkout) === null ||
+          void 0 === t ||
+          (t = t.orderForm) === null ||
+          void 0 === t
+            ? void 0
+            : t.customData;
+        let r = {};
+        return (
+          n &&
+            n.customApps &&
+            n.customApps.length > 0 &&
+            n.customApps.forEach((t) => {
+              t.id === e && (r = t.fields);
+            }),
+          r
+        );
+      };
+      const _e = function (e) {
+        let t;
+        let n;
+        const r = e.text;
+        const o = e.fields;
+        if (!o.itemIndex) return '';
+        const i =
+          (t = window.vtexjs.checkout) === null || void 0 === t || (t = t.orderForm.items) === null || void 0 === t
+            ? void 0
+            : t[o.itemIndex];
+        if (!i) return '';
+        const a = i == null ? void 0 : i.imageUrl;
+        return ' \n<div id="bash-delivery-error" class="notification error" alt="'
+          .concat(
+            (n = o == null ? void 0 : o.skuName) !== null && void 0 !== n ? n : '',
+            '" >\n   \x3c!---<div class="icon"></div>---\x3e\n   '
+          )
+          .concat(
+            a ? '<img src="'.concat(a, '" style=" float: right; " />') : '',
+            '\n   <div class="notification-content">\n      <h3>Address error '
+          )
+          .concat(o != null && o.skuName ? '- '.concat(o == null ? void 0 : o.skuName) : '', '</h3>\n      <p>')
+          .concat(
+            r,
+            '</p>\n      <p>Check the postal code of your address, or \n      <a href="#" \n        class="remove-cart-item"\n        style="color: white; text-decoration: underline"\n        data-index="'
+          )
+          .concat(o.itemIndex, '">remove this item from your cart</a>.\n      </p>\n   </div>  \n</div>  \n');
+      };
+      const xe = ['receiverName', 'street', 'neighborhood', 'state', 'city', 'country', 'postalCode', 'receiverPhone'];
+      const ke = [
+        'idOrPassport',
+        'sameAddress',
+        'fullName',
+        'streetAddress',
+        'suburb',
+        'city',
+        'postalCode',
+        'province',
+      ];
+      const Se = ['tvID'];
+      const Ee = ['residential', 'inStore', 'commercial', 'giftRegistry', 'pickup', 'search'];
+      function Oe(e) {
+        return (
+          (Oe =
+            typeof Symbol === 'function' && typeof Symbol.iterator === 'symbol'
+              ? function (e) {
+                  return typeof e;
+                }
+              : function (e) {
+                  return e && typeof Symbol === 'function' && e.constructor === Symbol && e !== Symbol.prototype
+                    ? 'symbol'
+                    : typeof e;
+                }),
+          Oe(e)
+        );
+      }
+      function je(e) {
+        return (
+          (function (e) {
+            if (Array.isArray(e)) return Pe(e);
+          })(e) ||
+          (function (e) {
+            if ((typeof Symbol !== 'undefined' && e[Symbol.iterator] != null) || e['@@iterator'] != null)
+              return Array.from(e);
+          })(e) ||
+          Le(e) ||
+          (function () {
+            throw new TypeError(
+              'Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.'
+            );
+          })()
+        );
+      }
+      function Ce() {
+        Ce = function () {
+          return e;
+        };
+        var e = {};
+        const t = Object.prototype;
+        const n = t.hasOwnProperty;
+        const r =
+          Object.defineProperty ||
+          function (e, t, n) {
+            e[t] = n.value;
+          };
+        const o = typeof Symbol === 'function' ? Symbol : {};
+        const i = o.iterator || '@@iterator';
+        const a = o.asyncIterator || '@@asyncIterator';
+        const s = o.toStringTag || '@@toStringTag';
+        function c(e, t, n) {
+          return Object.defineProperty(e, t, { value: n, enumerable: !0, configurable: !0, writable: !0 }), e[t];
+        }
+        try {
+          c({}, '');
+        } catch (e) {
+          c = function (e, t, n) {
+            return (e[t] = n);
+          };
+        }
+        function u(e, t, n, o) {
+          const i = t && t.prototype instanceof h ? t : h;
+          const a = Object.create(i.prototype);
+          const s = new E(o || []);
+          return r(a, '_invoke', { value: _(e, n, s) }), a;
+        }
+        function l(e, t, n) {
+          try {
+            return { type: 'normal', arg: e.call(t, n) };
+          } catch (e) {
+            return { type: 'throw', arg: e };
+          }
+        }
+        e.wrap = u;
+        const d = {};
+        function h() {}
+        function p() {}
+        function f() {}
+        let v = {};
+        c(v, i, function () {
+          return this;
+        });
+        const m = Object.getPrototypeOf;
+        const y = m && m(m(O([])));
+        y && y !== t && n.call(y, i) && (v = y);
+        const g = (f.prototype = h.prototype = Object.create(v));
+        function b(e) {
+          ['next', 'throw', 'return'].forEach((t) => {
+            c(e, t, function (e) {
+              return this._invoke(t, e);
+            });
+          });
+        }
+        function w(e, t) {
+          function o(r, i, a, s) {
+            const c = l(e[r], e, i);
+            if (c.type !== 'throw') {
+              const u = c.arg;
+              const d = u.value;
+              return d && Oe(d) == 'object' && n.call(d, '__await')
+                ? t.resolve(d.__await).then(
+                    (e) => {
+                      o('next', e, a, s);
+                    },
+                    (e) => {
+                      o('throw', e, a, s);
+                    }
+                  )
+                : t.resolve(d).then(
+                    (e) => {
+                      (u.value = e), a(u);
+                    },
+                    (e) => o('throw', e, a, s)
+                  );
+            }
+            s(c.arg);
+          }
+          let i;
+          r(this, '_invoke', {
+            value(e, n) {
+              function r() {
+                return new t((t, r) => {
+                  o(e, n, t, r);
+                });
+              }
+              return (i = i ? i.then(r, r) : r());
+            },
+          });
+        }
+        function _(e, t, n) {
+          let r = 'suspendedStart';
+          return function (o, i) {
+            if (r === 'executing') throw new Error('Generator is already running');
+            if (r === 'completed') {
+              if (o === 'throw') throw i;
+              return { value: void 0, done: !0 };
+            }
+            for (n.method = o, n.arg = i; ; ) {
+              const a = n.delegate;
+              if (a) {
+                const s = x(a, n);
+                if (s) {
+                  if (s === d) continue;
+                  return s;
+                }
+              }
+              if (n.method === 'next') n.sent = n._sent = n.arg;
+              else if (n.method === 'throw') {
+                if (r === 'suspendedStart') throw ((r = 'completed'), n.arg);
+                n.dispatchException(n.arg);
+              } else n.method === 'return' && n.abrupt('return', n.arg);
+              r = 'executing';
+              const c = l(e, t, n);
+              if (c.type === 'normal') {
+                if (((r = n.done ? 'completed' : 'suspendedYield'), c.arg === d)) continue;
+                return { value: c.arg, done: n.done };
+              }
+              c.type === 'throw' && ((r = 'completed'), (n.method = 'throw'), (n.arg = c.arg));
+            }
+          };
+        }
+        function x(e, t) {
+          const n = t.method;
+          const r = e.iterator[n];
+          if (void 0 === r)
+            return (
+              (t.delegate = null),
+              (n === 'throw' &&
+                e.iterator.return &&
+                ((t.method = 'return'), (t.arg = void 0), x(e, t), t.method === 'throw')) ||
+                (n !== 'return' &&
+                  ((t.method = 'throw'), (t.arg = new TypeError(`The iterator does not provide a '${n}' method`)))),
+              d
+            );
+          const o = l(r, e.iterator, t.arg);
+          if (o.type === 'throw') return (t.method = 'throw'), (t.arg = o.arg), (t.delegate = null), d;
+          const i = o.arg;
+          return i
+            ? i.done
+              ? ((t[e.resultName] = i.value),
+                (t.next = e.nextLoc),
+                t.method !== 'return' && ((t.method = 'next'), (t.arg = void 0)),
+                (t.delegate = null),
+                d)
+              : i
+            : ((t.method = 'throw'),
+              (t.arg = new TypeError('iterator result is not an object')),
+              (t.delegate = null),
+              d);
+        }
+        function k(e) {
+          const t = { tryLoc: e[0] };
+          1 in e && (t.catchLoc = e[1]),
+            2 in e && ((t.finallyLoc = e[2]), (t.afterLoc = e[3])),
+            this.tryEntries.push(t);
+        }
+        function S(e) {
+          const t = e.completion || {};
+          (t.type = 'normal'), delete t.arg, (e.completion = t);
+        }
+        function E(e) {
+          (this.tryEntries = [{ tryLoc: 'root' }]), e.forEach(k, this), this.reset(!0);
+        }
+        function O(e) {
+          if (e || e === '') {
+            const t = e[i];
+            if (t) return t.call(e);
+            if (typeof e.next === 'function') return e;
+            if (!isNaN(e.length)) {
+              let r = -1;
+              const o = function t() {
+                for (; ++r < e.length; ) if (n.call(e, r)) return (t.value = e[r]), (t.done = !1), t;
+                return (t.value = void 0), (t.done = !0), t;
+              };
+              return (o.next = o);
+            }
+          }
+          throw new TypeError(`${Oe(e)} is not iterable`);
+        }
+        return (
+          (p.prototype = f),
+          r(g, 'constructor', { value: f, configurable: !0 }),
+          r(f, 'constructor', { value: p, configurable: !0 }),
+          (p.displayName = c(f, s, 'GeneratorFunction')),
+          (e.isGeneratorFunction = function (e) {
+            const t = typeof e === 'function' && e.constructor;
+            return !!t && (t === p || (t.displayName || t.name) === 'GeneratorFunction');
+          }),
+          (e.mark = function (e) {
+            return (
+              Object.setPrototypeOf ? Object.setPrototypeOf(e, f) : ((e.__proto__ = f), c(e, s, 'GeneratorFunction')),
+              (e.prototype = Object.create(g)),
+              e
+            );
+          }),
+          (e.awrap = function (e) {
+            return { __await: e };
+          }),
+          b(w.prototype),
+          c(w.prototype, a, function () {
+            return this;
+          }),
+          (e.AsyncIterator = w),
+          (e.async = function (t, n, r, o, i) {
+            void 0 === i && (i = Promise);
+            const a = new w(u(t, n, r, o), i);
+            return e.isGeneratorFunction(n) ? a : a.next().then((e) => (e.done ? e.value : a.next()));
+          }),
+          b(g),
+          c(g, s, 'Generator'),
+          c(g, i, function () {
+            return this;
+          }),
+          c(g, 'toString', () => '[object Generator]'),
+          (e.keys = function (e) {
+            const t = Object(e);
+            const n = [];
+            for (const r in t) n.push(r);
+            return (
+              n.reverse(),
+              function e() {
+                for (; n.length; ) {
+                  const r = n.pop();
+                  if (r in t) return (e.value = r), (e.done = !1), e;
+                }
+                return (e.done = !0), e;
+              }
+            );
+          }),
+          (e.values = O),
+          (E.prototype = {
+            constructor: E,
+            reset(e) {
+              if (
+                ((this.prev = 0),
+                (this.next = 0),
+                (this.sent = this._sent = void 0),
+                (this.done = !1),
+                (this.delegate = null),
+                (this.method = 'next'),
+                (this.arg = void 0),
+                this.tryEntries.forEach(S),
+                !e)
+              )
+                for (const t in this)
+                  t.charAt(0) === 't' && n.call(this, t) && !isNaN(+t.slice(1)) && (this[t] = void 0);
+            },
+            stop() {
+              this.done = !0;
+              const e = this.tryEntries[0].completion;
+              if (e.type === 'throw') throw e.arg;
+              return this.rval;
+            },
+            dispatchException(e) {
+              if (this.done) throw e;
+              const t = this;
+              function r(n, r) {
+                return (a.type = 'throw'), (a.arg = e), (t.next = n), r && ((t.method = 'next'), (t.arg = void 0)), !!r;
+              }
+              for (let o = this.tryEntries.length - 1; o >= 0; --o) {
+                const i = this.tryEntries[o];
+                var a = i.completion;
+                if (i.tryLoc === 'root') return r('end');
+                if (i.tryLoc <= this.prev) {
+                  const s = n.call(i, 'catchLoc');
+                  const c = n.call(i, 'finallyLoc');
+                  if (s && c) {
+                    if (this.prev < i.catchLoc) return r(i.catchLoc, !0);
+                    if (this.prev < i.finallyLoc) return r(i.finallyLoc);
+                  } else if (s) {
+                    if (this.prev < i.catchLoc) return r(i.catchLoc, !0);
+                  } else {
+                    if (!c) throw new Error('try statement without catch or finally');
+                    if (this.prev < i.finallyLoc) return r(i.finallyLoc);
+                  }
+                }
+              }
+            },
+            abrupt(e, t) {
+              for (let r = this.tryEntries.length - 1; r >= 0; --r) {
+                const o = this.tryEntries[r];
+                if (o.tryLoc <= this.prev && n.call(o, 'finallyLoc') && this.prev < o.finallyLoc) {
+                  var i = o;
+                  break;
+                }
+              }
+              i && (e === 'break' || e === 'continue') && i.tryLoc <= t && t <= i.finallyLoc && (i = null);
+              const a = i ? i.completion : {};
+              return (
+                (a.type = e),
+                (a.arg = t),
+                i ? ((this.method = 'next'), (this.next = i.finallyLoc), d) : this.complete(a)
+              );
+            },
+            complete(e, t) {
+              if (e.type === 'throw') throw e.arg;
+              return (
+                e.type === 'break' || e.type === 'continue'
+                  ? (this.next = e.arg)
+                  : e.type === 'return'
+                  ? ((this.rval = this.arg = e.arg), (this.method = 'return'), (this.next = 'end'))
+                  : e.type === 'normal' && t && (this.next = t),
+                d
+              );
+            },
+            finish(e) {
+              for (let t = this.tryEntries.length - 1; t >= 0; --t) {
+                const n = this.tryEntries[t];
+                if (n.finallyLoc === e) return this.complete(n.completion, n.afterLoc), S(n), d;
+              }
+            },
+            catch(e) {
+              for (let t = this.tryEntries.length - 1; t >= 0; --t) {
+                const n = this.tryEntries[t];
+                if (n.tryLoc === e) {
+                  const r = n.completion;
+                  if (r.type === 'throw') {
+                    var o = r.arg;
+                    S(n);
+                  }
+                  return o;
+                }
+              }
+              throw new Error('illegal catch attempt');
+            },
+            delegateYield(e, t, n) {
+              return (
+                (this.delegate = { iterator: O(e), resultName: t, nextLoc: n }),
+                this.method === 'next' && (this.arg = void 0),
+                d
+              );
+            },
+          }),
+          e
+        );
+      }
+      function $e(e, t, n, r, o, i, a) {
+        try {
+          var s = e[i](a);
+          var c = s.value;
+        } catch (e) {
+          return void n(e);
+        }
+        s.done ? t(c) : Promise.resolve(c).then(r, o);
+      }
+      function Le(e, t) {
+        if (e) {
+          if (typeof e === 'string') return Pe(e, t);
+          let n = Object.prototype.toString.call(e).slice(8, -1);
+          return (
+            n === 'Object' && e.constructor && (n = e.constructor.name),
+            n === 'Map' || n === 'Set'
+              ? Array.from(e)
+              : n === 'Arguments' || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)
+              ? Pe(e, t)
+              : void 0
+          );
+        }
+      }
+      function Pe(e, t) {
+        (t == null || t > e.length) && (t = e.length);
+        for (var n = 0, r = new Array(t); n < t; n++) r[n] = e[n];
+        return r;
+      }
+      function Ne(e, t) {
+        const n = Object.keys(e);
+        if (Object.getOwnPropertySymbols) {
+          let r = Object.getOwnPropertySymbols(e);
+          t && (r = r.filter((t) => Object.getOwnPropertyDescriptor(e, t).enumerable)), n.push.apply(n, r);
+        }
+        return n;
+      }
+      function Te(e, t, n) {
+        return (
+          (t = (function (e) {
+            const t = (function (e, t) {
+              if (Oe(e) !== 'object' || e === null) return e;
+              const n = e[Symbol.toPrimitive];
+              if (void 0 !== n) {
+                const r = n.call(e, t);
+                if (Oe(r) !== 'object') return r;
+                throw new TypeError('@@toPrimitive must return a primitive value.');
+              }
+              return String(e);
+            })(e, 'string');
+            return Oe(t) === 'symbol' ? t : String(t);
+          })(t)) in e
+            ? Object.defineProperty(e, t, { value: n, enumerable: !0, configurable: !0, writable: !0 })
+            : (e[t] = n),
+          e
+        );
+      }
+      const Fe = function () {
+        let e;
+        (e = document.querySelector('.bash--delivery-container')) === null ||
+          void 0 === e ||
+          e.classList.add('shimmer');
+      };
+      const Ie = function () {
+        let e;
+        let t;
+        (e = document.querySelector('.delivery-group-content')) === null ||
+          void 0 === e ||
+          (e = e.classList) === null ||
+          void 0 === e ||
+          e.add('shimmer'),
+          (t = document.querySelector('.vtex-omnishipping-1-x-ask')) === null ||
+            void 0 === t ||
+            (t = t.classList) === null ||
+            void 0 === t ||
+            t.add('shimmer');
+      };
+      const De = function (e) {
+        switch (e) {
+          case 'Select':
+            return '';
+          case 'Western Cape':
+            return 'WC';
+          case 'Easter Cape':
+            return 'EC';
+          case 'Gauteng':
+            return 'GP';
+          case 'KwaZulu-Natal':
+          case 'KwaZulu Natal':
+            return 'KZN';
+          case 'Northern Cape':
+            return 'NC';
+          case 'Limpopo':
+            return 'LP';
+          case 'Mpumalanga':
+            return 'MP';
+          case 'North West':
+            return 'NW';
+          case 'Freestate':
+          case 'Free State':
+            return 'FS';
+          default:
+            return e;
+        }
+      };
+      const Ae = function (e) {
+        let t;
+        let n;
+        let r;
+        let o;
+        const i = e.preferred;
+        const a = void 0 === i ? void 0 : i;
+        const s = e.type;
+        const c = void 0 === s ? 'delivery' : s;
+        const u =
+          (t = window) === null ||
+          void 0 === t ||
+          (t = t.vtexjs) === null ||
+          void 0 === t ||
+          (t = t.checkout) === null ||
+          void 0 === t ||
+          (t = t.orderForm) === null ||
+          void 0 === t ||
+          (t = t.clientProfileData) === null ||
+          void 0 === t
+            ? void 0
+            : t.firstName;
+        const l =
+          (n = window) === null ||
+          void 0 === n ||
+          (n = n.vtexjs) === null ||
+          void 0 === n ||
+          (n = n.checkout) === null ||
+          void 0 === n ||
+          (n = n.orderForm) === null ||
+          void 0 === n ||
+          (n = n.clientProfileData) === null ||
+          void 0 === n
+            ? void 0
+            : n.lastName;
+        const d =
+          (r = window) === null ||
+          void 0 === r ||
+          (r = r.vtexjs) === null ||
+          void 0 === r ||
+          (r = r.checkout) === null ||
+          void 0 === r ||
+          (r = r.orderForm) === null ||
+          void 0 === r ||
+          (r = r.shippingData) === null ||
+          void 0 === r ||
+          (r = r.address) === null ||
+          void 0 === r
+            ? void 0
+            : r.receiverName;
+        const h = ''
+          .concat(u != null ? u : '', ' ')
+          .concat(l != null ? l : '')
+          .trim();
+        return c === 'collect'
+          ? a || d || h || ''
+          : a ||
+              ((o = document.getElementById('client-first-name')) === null || void 0 === o ? void 0 : o.value) ||
+              h ||
+              '';
+      };
+      const Re = function (e) {
+        let t;
+        let n;
+        let r;
+        let o;
+        let i;
+        const a = e.number;
+        const s = e.street;
+        const u = e.addressType;
+        const l = e.businessName;
+        const d = e.companyBuilding;
+        const h = e.neighborhood;
+        const p = e.postalCode;
+        const f = e.state;
+        const v = e.city;
+        const m = e.receiverName;
+        const y = e.receiverPhone;
+        const g = e.complement;
+        const b = e.id;
+        const w = e.addressId;
+        const _ = e.addressName;
+        const x = e.geoCoordinate;
+        (t = document.getElementById('bash--address-form')) === null || void 0 === t || t.reset(), J();
+        try {
+          const k =
+            ((o = JSON.parse(JSON.stringify(x))),
+            (i = 2),
+            (function (e) {
+              if (Array.isArray(e)) return e;
+            })(o) ||
+              (function (e, t) {
+                let n = e == null ? null : (typeof Symbol !== 'undefined' && e[Symbol.iterator]) || e['@@iterator'];
+                if (n != null) {
+                  let r;
+                  let o;
+                  let i;
+                  let a;
+                  const s = [];
+                  let c = !0;
+                  let u = !1;
+                  try {
+                    if (((i = (n = n.call(e)).next), t === 0)) {
+                      if (Object(n) !== n) return;
+                      c = !1;
+                    } else for (; !(c = (r = i.call(n)).done) && (s.push(r.value), s.length !== t); c = !0);
+                  } catch (e) {
+                    (u = !0), (o = e);
+                  } finally {
+                    try {
+                      if (!c && n.return != null && ((a = n.return()), Object(a) !== a)) return;
+                    } finally {
+                      if (u) throw o;
+                    }
+                  }
+                  return s;
+                }
+              })(o, i) ||
+              Le(o, i) ||
+              (function () {
+                throw new TypeError(
+                  'Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.'
+                );
+              })());
+          (r = k[0]), (n = k[1]), z([r, n]) || (z[r] ? (n = r = n) : ((r = 0), (n = 0)));
+        } catch (t) {
+          console.warn('Could not parse geo coords', { address: e, geoCoordinate: x });
+        }
+        m && (document.getElementById('bash--input-receiverName').value = m != null ? m : ''),
+          g && (document.getElementById('bash--input-complement').value = g != null ? g : ''),
+          (b || w) && (document.getElementById('bash--input-addressId').value = b || w),
+          _ && (document.getElementById('bash--input-addressName').value = _);
+        const S = ''
+          .concat(a ? ''.concat(a, ' ') : '')
+          .concat(s)
+          .replace(', '.concat(d), '');
+        u === 'commercial' && ($('#radio-addressType-business').click(), Z({ focus: !1 })),
+          l && (document.getElementById('bash--input-businessName').value = l),
+          (document.getElementById('bash--input-number').value = ''),
+          (document.getElementById('bash--input-street').value = S || ''),
+          (document.getElementById('bash--input-companyBuilding').value = d || ''),
+          (document.getElementById('bash--input-neighborhood').value = h || ''),
+          (document.getElementById('bash--input-city').value = v || ''),
+          (document.getElementById('bash--input-postalCode').value = p || ''),
+          (document.getElementById('bash--input-state').value = De(f)),
+          (document.getElementById('bash--input-lat').value = n || ''),
+          (document.getElementById('bash--input-lng').value = r || '');
+        const E = we(c);
+        m && (document.getElementById('bash--input-receiverName').value = m != null ? m : ''),
+          g && (document.getElementById('bash--input-complement').value = g != null ? g : ''),
+          (document.getElementById('bash--input-receiverPhone').value = M({
+            preferred: y,
+            type: 'delivery',
+            fields: E,
+          })),
+          $(':invalid').trigger('change');
+      };
+      const Be = function (e) {
+        setTimeout(() => {
+          let t;
+          const n = document.querySelectorAll('.pac-container');
+          const r = document.querySelectorAll(".pac-container[style*='display: none']");
+          (n == null ? void 0 : n.length) === (r == null ? void 0 : r.length) &&
+          ((t = e.target) === null || void 0 === t || (t = t.value) === null || void 0 === t ? void 0 : t.length) > 3
+            ? $('#address-search-field-container:not(.no-results)').addClass('no-results')
+            : $('#address-search-field-container.no-results').removeClass('no-results');
+        }, 250);
+      };
+      const Me = function () {
+        if (window.google) {
+          const e = document.getElementById('bash--input-address-search');
+          if (e) {
+            const t = new window.google.maps.places.Autocomplete(e, { componentRestrictions: { country: 'ZA' } });
+            window.google.maps.event.addListener(t, 'place_changed', () => {
+              const n = t.getPlace();
+              !(function (e) {
+                let t;
+                const n = e.street;
+                const r = e.neighborhood;
+                const o = e.postalCode;
+                const i = e.state;
+                const a = e.city;
+                const s = e.lat;
+                const c = e.lng;
+                (t = document.getElementById('bash--address-form')) === null || void 0 === t || t.reset(),
+                  (document.getElementById('bash--input-addressId').value = ''),
+                  (document.getElementById('bash--input-addressName').value = ''),
+                  (document.getElementById('bash--input-number').value = '  '),
+                  (document.getElementById('bash--input-street').value = n != null ? n : ''),
+                  (document.getElementById('bash--input-neighborhood').value = r != null ? r : ''),
+                  (document.getElementById('bash--input-city').value = a != null ? a : ''),
+                  (document.getElementById('bash--input-postalCode').value = o != null ? o : ''),
+                  (document.getElementById('bash--input-state').value = De(i)),
+                  (document.getElementById('bash--input-lat').value = s || ''),
+                  (document.getElementById('bash--input-lng').value = c || ''),
+                  $(':invalid').trigger('change');
+              })(
+                (function (e, t) {
+                  let n;
+                  let r;
+                  let o;
+                  let i;
+                  let a;
+                  let s;
+                  if (!e || e.length < 1) return {};
+                  const c =
+                    (n = e.find((e) => e.types.includes('street_number'))) === null || void 0 === n
+                      ? void 0
+                      : n.long_name;
+                  const u =
+                    (r = e.find((e) => e.types.includes('route'))) === null || void 0 === r ? void 0 : r.long_name;
+                  const l =
+                    (o = e.find((e) => e.types.includes('sublocality'))) === null || void 0 === o
+                      ? void 0
+                      : o.long_name;
+                  const d =
+                    (i = e.find((e) => e.types.includes('locality'))) === null || void 0 === i ? void 0 : i.long_name;
+                  const h =
+                    (a = e.find((e) => e.types.includes('postal_code'))) === null || void 0 === a
+                      ? void 0
+                      : a.long_name;
+                  const p =
+                    (s = e.find((e) => e.types.includes('administrative_area_level_1'))) === null || void 0 === s
+                      ? void 0
+                      : s.long_name;
+                  const f = { lat: '', lng: '' };
+                  return (
+                    t && ((f.lat = t.location.lat()), (f.lng = t.location.lng())),
+                    (function (e) {
+                      for (let t = 1; t < arguments.length; t++) {
+                        var n = arguments[t] != null ? arguments[t] : {};
+                        t % 2
+                          ? Ne(Object(n), !0).forEach((t) => {
+                              Te(e, t, n[t]);
+                            })
+                          : Object.getOwnPropertyDescriptors
+                          ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(n))
+                          : Ne(Object(n)).forEach((t) => {
+                              Object.defineProperty(e, t, Object.getOwnPropertyDescriptor(n, t));
+                            });
+                      }
+                      return e;
+                    })(
+                      {
+                        street: ''
+                          .concat(c != null ? c : '', ' ')
+                          .concat(u != null ? u : '')
+                          .trim(),
+                        neighborhood: l,
+                        city: d,
+                        postalCode: h,
+                        state: p,
+                      },
+                      f
+                    )
+                  );
+                })(n.address_components, n.geometry)
+              ),
+                window.postMessage({ action: 'setDeliveryView', view: 'address-form' }),
+                (e.value = '');
+            }),
+              e == null || e.addEventListener('keyup', Be);
+          }
+        }
+      };
+      const qe = function (e, t) {
+        const n = arguments.length > 2 && void 0 !== arguments[2] ? arguments[2] : '';
+        const r = arguments.length > 3 && void 0 !== arguments[3] && arguments[3];
+        if (e) {
+          for (let o = 0; o < t.length; o++) {
+            const i = 'bash--input-'.concat(n).concat(t[o]);
+            !document.getElementById(i) ||
+              (!e[t[o]] && !r) ||
+              (document.getElementById(i).value && !r) ||
+              (document.getElementById(i).value = e[t[o]]);
+          }
+          $(':invalid').trigger('change');
+        }
+      };
+      const Ge = function () {
+        let e;
+        const t = window.vtexjs.checkout.orderForm.shippingData.address;
+        if (
+          ((e = document.getElementById('bash--input-rica_streetAddress')) === null || void 0 === e || !e.value) &&
+          t
+        ) {
+          (t.fullName = Ae({ type: 'delivery' })),
+            (t.streetAddress = t.street),
+            (t.suburb = t.neighborhood),
+            (t.province = t.state),
+            qe(t, ke, 'rica_');
+          const n = we(u);
+          n.streetAddress && qe(n, ke, 'rica_', !0);
+        }
+      };
+      const Ve = (function () {
+        let e;
+        const t =
+          ((e = Ce().mark(function e() {
+            let t;
+            return Ce().wrap((e) => {
+              for (;;)
+                switch ((e.prev = e.next)) {
+                  case 0:
+                    (t = we(l)), qe(t, Se, 'tv');
+                  case 2:
+                  case 'end':
+                    return e.stop();
+                }
+            }, e);
+          })),
+          function () {
+            const t = this;
+            const n = arguments;
+            return new Promise((r, o) => {
+              const i = e.apply(t, n);
+              function a(e) {
+                $e(i, r, o, a, s, 'next', e);
+              }
+              function s(e) {
+                $e(i, r, o, a, s, 'throw', e);
+              }
+              a(void 0);
+            });
+          });
+        return function () {
+          return t.apply(this, arguments);
+        };
+      })();
+      const Ue = function (e) {
+        const t = !(arguments.length > 1 && void 0 !== arguments[1]) || arguments[1];
+        const n = window.vtexjs.checkout.orderForm.items;
+        const r = Y(n);
+        const o = r.hasTVs;
+        const i = r.hasSimCards;
+        let a = xe;
+        const s = [];
+        o && t && (a = [].concat(je(a), je(Se))), i && t && (a = [].concat(je(a), je(ke)));
+        for (let c = 0; c < a.length; c++) e[a[c]] || s.push(a[c]);
+        return (
+          !a.includes('receiverPhone') ||
+            s.includes('receiverPhone') ||
+            U(e.receiverPhone) ||
+            (s.push('receiverPhone'),
+            $('#bash--input-receiverPhone').addClass('invalid'),
+            $('#bash--label-receiverPhone').focus()),
+          { isValid: !s.length, invalidFields: s }
+        );
+      };
+      const Ye = function () {
+        const e = window.vtexjs.checkout.orderForm.items;
+        const t = Y(e);
+        const n = t.hasTVs;
+        const r = t.hasSimCards;
+        const o = t.hasFurnitureMixed;
+        const i = '#shipping-data';
+        n ? $(''.concat(i, ':not(.has-tv)')).addClass('has-tv') : $(''.concat(i, '.has-tv')).removeClass('has-tv'),
+          r
+            ? $(''.concat(i, ':not(.has-rica)')).addClass('has-rica')
+            : $(''.concat(i, '.has-rica')).removeClass('has-rica'),
+          o
+            ? $(''.concat(i, ':not(.has-furniture-mixed)')).addClass('has-furniture-mixed')
+            : $(''.concat(i, '.has-furniture-mixed')).removeClass('has-furniture-mixed');
+      };
+      const We = function () {
+        const e = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : [];
+        if (!($('#bash-delivery-error-container').length < 1)) {
+          const t = e.length > 0 ? e.map((e) => _e(e)) : '';
+          $('#bash-delivery-error-container').html(t),
+            e.length > 0 &&
+              $('html, body').animate({ scrollTop: $('#bash-delivery-error-container').offset().top }, 400);
+        }
+      };
+      const Ze = function () {
+        $('.alert-container').addClass('show'), $('.alert-container').slideDown();
+        const e = $('[data-view="address-form"]').length > 0 ? 'Address added' : 'Address updated';
+        $('#bash-alert-container').html("<div class='alert-container'>\n      <p>".concat(e, '</p>\n    </div>\n  ')),
+          setTimeout(() => {
+            $('.alert-container').slideUp();
+          }, 5e3);
+      };
+      const Je = function (e) {
+        const t = e.eventCategory;
+        const n = void 0 === t ? 'Checkout_UserErrors' : t;
+        const r = e.action;
+        const o = void 0 === r ? '' : r;
+        const i = e.label;
+        const a = void 0 === i ? '' : i;
+        const s = e.description;
+        const c = void 0 === s ? '' : s;
+        const u = e.value;
+        const l = void 0 === u ? void 0 : u;
+        const d = function () {
+          window.dataLayer.push({
+            event: 'gaEvent',
+            eventCategory: n,
+            eventLabel: a,
+            eventAction: o,
+            eventValue: l,
+            eventDescription: c,
+          });
+        };
+        if (!window.dataLayer) return $(window).off('gtm.load'), void $(window).on('gtm.load', d);
+        d();
+      };
+      function He(e) {
+        return (
+          (He =
+            typeof Symbol === 'function' && typeof Symbol.iterator === 'symbol'
+              ? function (e) {
+                  return typeof e;
+                }
+              : function (e) {
+                  return e && typeof Symbol === 'function' && e.constructor === Symbol && e !== Symbol.prototype
+                    ? 'symbol'
+                    : typeof e;
+                }),
+          He(e)
+        );
+      }
+      function Ke(e, t) {
+        const n = Object.keys(e);
+        if (Object.getOwnPropertySymbols) {
+          let r = Object.getOwnPropertySymbols(e);
+          t && (r = r.filter((t) => Object.getOwnPropertyDescriptor(e, t).enumerable)), n.push.apply(n, r);
+        }
+        return n;
+      }
+      function ze(e) {
+        for (let t = 1; t < arguments.length; t++) {
+          var n = arguments[t] != null ? arguments[t] : {};
+          t % 2
+            ? Ke(Object(n), !0).forEach((t) => {
+                Qe(e, t, n[t]);
+              })
+            : Object.getOwnPropertyDescriptors
+            ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(n))
+            : Ke(Object(n)).forEach((t) => {
+                Object.defineProperty(e, t, Object.getOwnPropertyDescriptor(n, t));
+              });
+        }
+        return e;
+      }
+      function Qe(e, t, n) {
+        return (
+          (t = (function (e) {
+            const t = (function (e, t) {
+              if (He(e) !== 'object' || e === null) return e;
+              const n = e[Symbol.toPrimitive];
+              if (void 0 !== n) {
+                const r = n.call(e, t);
+                if (He(r) !== 'object') return r;
+                throw new TypeError('@@toPrimitive must return a primitive value.');
+              }
+              return String(e);
+            })(e, 'string');
+            return He(t) === 'symbol' ? t : String(t);
+          })(t)) in e
+            ? Object.defineProperty(e, t, { value: n, enumerable: !0, configurable: !0, writable: !0 })
+            : (e[t] = n),
+          e
+        );
+      }
+      let Xe;
+      let et;
+      let tt;
+      let nt;
+      let rt;
+      let ot;
+      const it =
+        ((Xe = { inCollect: !1, pickupSelected: !1, validForm: !1, runningObserver: !1, collectReset: !1 }),
+        (et = function () {
+          $('#change-pickup-button').length &&
+            ($(
+              '<button class="vtex-omnishipping-1-x-pickupPointSeeMore button-see-pickup-point btn btn-link" id="tfg-pickup-see-more-button" type="button">Collect Point Details</button>'
+            ).appendTo('.vtex-omnishipping-1-x-PickupPoint'),
+            $(
+              '<button class="vtex-change-pickup button-change-pickup-point" id="tfg-pickup-button" type="button">Change</button>'
+            ).appendTo('.vtex-omnishipping-1-x-PickupPoint'),
+            $('#change-pickup-button').remove(),
+            $('#details-pickup-button').remove()),
+            $('.vtex-omnishipping-1-x-ask').length &&
+              ($('.vtex-omnishipping-1-x-ask').empty(),
+              $(
+                '<div class="pickup-map-container" id="tfg-pickup-container">\n          <div class="pickup-map-icon">\n            <svg class="icon-map" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">\n              <rect width="48" height="48" rx="24" fill="#2424E4"/>\n              <path d="M24.2147 11C21.5065 11.0031 18.9102 12.0802 16.9952 13.9952C15.0802 15.9102 14.0031 18.5065 14 21.2147C14 29.9552 23.2861 36.5599 23.6807 36.8385C23.8389 36.9438 24.0247 37 24.2147 37C24.4047 37 24.5905 36.9438 24.7486 36.8385C25.1433 36.5599 34.4294 29.9552 34.4294 21.2147C34.4263 18.5065 33.3491 15.9102 31.4342 13.9952C29.5192 12.0802 26.9228 11.0031 24.2147 11ZM24.2147 17.5003C24.9493 17.5003 25.6675 17.7181 26.2783 18.1262C26.8891 18.5344 27.3652 19.1145 27.6464 19.7932C27.9275 20.472 28.0011 21.2188 27.8577 21.9393C27.7144 22.6599 27.3607 23.3217 26.8412 23.8412C26.3217 24.3607 25.6599 24.7144 24.9393 24.8577C24.2188 25.0011 23.472 24.9275 22.7932 24.6464C22.1145 24.3652 21.5344 23.8891 21.1262 23.2783C20.7181 22.6675 20.5003 21.9493 20.5003 21.2147C20.5003 20.2296 20.8916 19.2848 21.5882 18.5882C22.2848 17.8916 23.2296 17.5003 24.2147 17.5003Z" fill="#FCFCFC"/>\n            </svg>\n            Find nearby collect points\n            <div class="pickup-map-text">\n              Search for addresses that you frequently use and we’ll locate stores nearby.\n            </div>\n          </div>\n          <button class="pickup-map-geolocation" id="find-pickups-button-new" type="button">\n            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="16" viewBox="0 0 15 16" fill="none">\n              <path d="M1.12954 2.34666L5.24985 14.2506C5.42563 14.7639 6.15688 14.7498 6.3186 14.2295L7.97798 8.84354C8.00302 8.75549 8.05054 8.67548 8.11588 8.61138C8.18122 8.54727 8.26213 8.50127 8.35063 8.47791L13.7295 6.81854C14.2499 6.65682 14.2639 5.92557 13.7506 5.74979L1.84672 1.62948C1.74671 1.59433 1.6388 1.58815 1.53542 1.61167C1.43205 1.63519 1.33743 1.68745 1.26247 1.76241C1.18751 1.83737 1.13525 1.93199 1.11173 2.03536C1.08822 2.13873 1.09439 2.24665 1.12954 2.34666V2.34666Z" stroke="#2424E4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>\n            </svg>\n            Use my current location\n          </button>\n          <button class="pickup-map-manual" id="find-pickups-manually-search">\n            Manually search for an address\n          </button>\n        </div>'
+              ).appendTo('.vtex-omnishipping-1-x-ask')),
+            $('#pkpmodal-close')
+              .unbind()
+              .click(() => {
+                $('#tfg-pickup-map').remove();
+              });
+          const e = function (e) {
+            $(
+              '<div class="tfg-pickup-map" id="tfg-pickup-map"><div class="tfg-pickup-map-content"></div></div>'
+            ).appendTo($('body')),
+              $('body').css('position', 'fixed'),
+              $('body').css('width', '100%');
+            const t = document.createElement('iframe');
+            (t.src = 'https://pickup-map.bashconnect.com/'),
+              (t.width = '100%'),
+              (t.height = '100%'),
+              (t.id = 'map'),
+              (t.allow = 'geolocation'),
+              $(t).appendTo('.tfg-pickup-map-content'),
+              window.Penpal.connectToChild({
+                iframe: t,
+                methods: {
+                  sendAttachment(e) {
+                    Ie(),
+                      window.vtexjs.checkout.sendAttachment('shippingData', e),
+                      $('#tfg-pickup-map').remove(),
+                      $('body').css('overflow', 'auto'),
+                      $('body').css('width', 'auto'),
+                      $('body').css('position', 'relative');
+                  },
+                  getCheckoutJS() {
+                    return window.vtexjs.checkout.orderForm;
+                  },
+                  getSpecialFields() {
+                    return Y(window.vtexjs.checkout.orderForm.items);
+                  },
+                  remove() {
+                    $('#tfg-pickup-map').remove(),
+                      $('body').css('overflow', 'auto'),
+                      $('body').css('width', 'auto'),
+                      $('body').css('position', 'relative');
+                  },
+                  getState() {
+                    return e;
+                  },
+                },
+              }),
+              $('#tfg-pickup-map').click((e) => {
+                e.stopPropagation(),
+                  $('#tfg-pickup-map').remove(),
+                  $('body').css('overflow', 'auto'),
+                  $('body').css('width', 'auto'),
+                  $('body').css('position', 'relative');
+              });
+          };
+          $('#tfg-pickup-button')
+            .unbind()
+            .click(() => e('none')),
+            $('#tfg-pickup-see-more-button')
+              .unbind()
+              .click(() => e(c)),
+            $('#find-pickups-button-new')
+              .unbind()
+              .click(() => e('geolocate')),
+            $('#find-pickups-manually-search')
+              .unbind()
+              .click(() => e('manual'));
+        }),
+        (tt = function () {
+          $('span.help.error').remove(),
+            (Xe.validForm = !0),
+            ['pickup-receiver', 'custom-pickup-complement'].forEach((e) => {
+              let t;
+              let n = !0;
+              switch (e) {
+                case 'pickup-receiver':
+                  (n = !($('#'.concat(e)).length > 0 && !$('#'.concat(e)).attr('disabled') && !$('#'.concat(e)).val())),
+                    (t = '.shp-pickup-receiver');
+                  break;
+                case 'custom-pickup-complement':
+                  (n = U($('#'.concat(e)).val())), (t = '#box-pickup-complement');
+              }
+              n
+                ? $(t).removeClass('error')
+                : ($(t).addClass('error'),
+                  $(t).append('<span class="help error">This field is required.</span>'),
+                  $(''.concat(t, ' span.error')).show(),
+                  H(),
+                  (Xe.validForm = !1),
+                  window.postMessage(
+                    { type: 'COLLECTION_VALIDATION_ERROR', message: ''.concat(e, ' is invalid') },
+                    '*'
+                  ));
+            });
+        }),
+        (nt = function () {
+          if ((tt(), Xe.validForm)) {
+            let e = $('#custom-pickup-complement').val().replace(/\s/g, '');
+            e.length === 9 && e[0] !== '0' && (e = '0'.concat(e)),
+              localStorage.setItem('saving-shipping-collect', !0),
+              $('#btn-go-to-payment').trigger('click');
+            try {
+              window.vtexjs.checkout
+                .getOrderForm()
+                .then((t) => {
+                  const n = t.shippingData.address;
+                  return (
+                    be(d, { phone: e }).then(() => {
+                      let t;
+                      let r;
+                      (t = n.receiverName),
+                        (r = e),
+                        t &&
+                          r &&
+                          ($('.vtex-omnishipping-1-x-SummaryItemAddress .collect-receiver').length
+                            ? $('.collect-receiver').html(''.concat(t, ' - ').concat(r, ' '))
+                            : $('.vtex-omnishipping-1-x-SummaryItemAddress').append(
+                                '<p class="collect-receiver">\n      '.concat(t, ' - ').concat(r, '\n      </p>')
+                              ));
+                    }),
+                    window.vtexjs.checkout.calculateShipping(n)
+                  );
+                })
+                .done(() => {
+                  localStorage.removeItem('saving-shipping-collect');
+                });
+            } catch (e) {
+              console.error('VTEX_ORDERFORM_ERROR: Could not load at CollectController', e),
+                Je({
+                  eventCategory: 'Checkout_SystemError',
+                  action: 'OrderFormFailed',
+                  label: 'Could not getOrderForm() from vtex',
+                  description: 'Could not load orderForm for Collect.',
+                });
+            }
+          }
+        }),
+        (rt = function () {
+          let n;
+          let i;
+          const a = $('#postalCode-finished-loading').length > 0;
+          $('#shipping-option-pickup-in-point').one('click', () => {
+            Xe.collectReset = !0;
+          }),
+            (function () {
+              let e;
+              let t;
+              if (!($('#pickup-receiver').length < 1)) {
+                const n = Ae({
+                  preferred:
+                    (e = window) === null ||
+                    void 0 === e ||
+                    (e = e.vtexjs) === null ||
+                    void 0 === e ||
+                    (e = e.checkout) === null ||
+                    void 0 === e ||
+                    (e = e.orderForm) === null ||
+                    void 0 === e ||
+                    (e = e.shippingData) === null ||
+                    void 0 === e ||
+                    (e = e.address) === null ||
+                    void 0 === e
+                      ? void 0
+                      : e.receiverName,
+                  type: 'collect',
+                }).trim();
+                n.length > 0 &&
+                  ((t = $('#pickup-receiver')) === null || void 0 === t || (t = t.val()) === null || void 0 === t
+                    ? void 0
+                    : t.trim()) === '' &&
+                  $('#pickup-receiver').val(n);
+              }
+            })(),
+            window.location.hash === t && a
+              ? ((Xe.inCollect = $('#shipping-option-pickup-in-point').hasClass('shp-method-option-active')),
+                (Xe.pickupSelected = $('div.ask-for-geolocation').length === 0),
+                Xe.inCollect &&
+                  ((($('#tfg-pickup-button').length || $('#tfg-pickup-see-more-button').length) &&
+                    ($('#find-pickups-manually-search').length || $('#find-pickups-button-new').length)) ||
+                    et(),
+                  W(),
+                  Xe.pickupSelected && !Xe.collectReset
+                    ? ($('button.shp-pickup-receiver__btn').trigger('click'),
+                      $('div.shp-pickup-receiver').addClass('show'),
+                      $('p#box-pickup-complement').addClass('show'),
+                      (n = we(c)),
+                      (i = M({ type: 'collect', fields: n })),
+                      $('#custom-pickup-complement').length === 0 && $('.btn-go-to-payment-wrapper').before(e),
+                      i && $('#custom-pickup-complement').val(i).css('border', 0),
+                      (function () {
+                        if ($('#custom-go-to-payment').length <= 0) {
+                          const e = $('#btn-go-to-payment');
+                          const t = e.clone(!1);
+                          $(e).hide(),
+                            $(t).data('bind', ''),
+                            $(t).removeAttr('id').attr('id', 'custom-go-to-payment'),
+                            $(t).removeAttr('data-bind'),
+                            $(t).css('display', 'block'),
+                            $('p.btn-go-to-payment-wrapper').append(t),
+                            $(t).on('click', nt);
+                        }
+                      })())
+                    : ($('div.shp-pickup-receiver').removeClass('show'),
+                      $('p#box-pickup-complement').removeClass('show')),
+                  Xe.collectReset &&
+                    ((function () {
+                      $('.delivery-group-content').empty(),
+                        $('.btn-go-to-payment-wrapper').empty(),
+                        $(
+                          '<div><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm0,19a8,8,0,1,1,8-8A8,8,0,0,1,12,20Z" opacity=".25" stroke="#FCFCFC" fill="#FCFCFC"/><path d="M12,4a8,8,0,0,1,7.89,6.7A1.53,1.53,0,0,0,21.38,12h0a1.5,1.5,0,0,0,1.48-1.75,11,11,0,0,0-21.72,0A1.5,1.5,0,0,0,2.62,12h0a1.53,1.53,0,0,0,1.49-1.3A8,8,0,0,1,12,4Z" stroke="#000" fill="#000"><animateTransform attributeName="transform" type="rotate" dur="0.75s" values="0 12 12;360 12 12" repeatCount="indefinite"/></path></svg><div>'
+                        )
+                          .css({
+                            display: 'flex',
+                            'justify-content': 'center',
+                            'align-items': 'center',
+                            'min-height': '100px',
+                          })
+                          .appendTo('.delivery-group-content');
+                      const e = window.vtexjs.checkout.orderForm.shippingData;
+                      const t = ze(
+                        ze({}, e),
+                        {},
+                        {
+                          address: null,
+                          availableAddresses: e.availableAddresses,
+                          selectedAddresses: e.selectedAddresses.filter((e) => e.addressType !== 'search'),
+                          logisticsInfo: e.logisticsInfo,
+                        }
+                      );
+                      window.vtexjs.checkout.sendAttachment('shippingData', t), Ie(), et();
+                    })(),
+                    (Xe.collectReset = !1)),
+                  $('p.vtex-omnishipping-1-x-shippingSectionTitle').text('Collect options'),
+                  $('#change-pickup-button').text('Available pickup points'),
+                  $('h2.vtex-omnishipping-1-x-geolocationTitle.ask-for-geolocation-title').text(
+                    'Find nearby Click & Collect points'
+                  ),
+                  $('h3.vtex-omnishipping-1-x-subtitle.ask-for-geolocation-subtitle').text(
+                    "Search for addresses that you frequently use and we'll locate stores nearby."
+                  ),
+                  Xe.pickupSelected && $('label.shp-pickup-receiver__label').text("Recipient's name")),
+                localStorage.getItem('shipping-incomplete-values') &&
+                  ($('#custom-go-to-payment').trigger('click'), localStorage.removeItem('shipping-incomplete-values')))
+              : ($('#box-pickup-complement').remove(),
+                window.location.hash === r &&
+                  setTimeout(() => {
+                    let e;
+                    const n =
+                      (e = window.vtexjs.checkout.orderForm) === null ||
+                      void 0 === e ||
+                      (e = e.shippingData) === null ||
+                      void 0 === e
+                        ? void 0
+                        : e.address;
+                    if (!localStorage.getItem('saving-shipping-collect')) {
+                      const r = we(d).phone;
+                      !n ||
+                        n.addressType !== o ||
+                        (n.receiverName && r) ||
+                        ((window.location.hash = t),
+                        localStorage.setItem('shipping-incomplete-values', !0),
+                        Je({
+                          action: 'stepRedirect',
+                          label: 'redirectPaymentToShipping',
+                          description:
+                            'User redirect to shipping because Collection is missing receiverName or phone number.',
+                        }));
+                    }
+                  }, 1e3)),
+            ot();
+        }),
+        (ot = function () {
+          if (!Xe.runningObserver) {
+            const e = document.querySelector('.shipping-container .box-step');
+            const t = new MutationObserver(() => {
+              (Xe.runningObserver = !0), rt();
+            });
+            e && t.observe(e, { attributes: !1, childList: !0, characterData: !1 });
+          }
+        }),
+        $(document).ready(() => {
+          rt();
+        }),
+        $(window).on('hashchange orderFormUpdated.vtex', () => {
+          rt();
+        }),
+        { state: Xe, init() {} });
+      const at = function (e) {
+        const t = e.label;
+        const n = e.name;
+        const r = e.value;
+        const o = void 0 === r ? '' : r;
+        const i = e.required;
+        const a = void 0 === i || i;
+        const s = e.type;
+        const c = void 0 === s ? 'text' : s;
+        const u = e.placeholder;
+        const l = e.autoComplete;
+        const d = void 0 === l ? 'on' : l;
+        const h = e.maxLength;
+        const p = e.minlength;
+        const f = e.disabled;
+        const v = void 0 !== f && f;
+        const m = e.options;
+        const y = e.checked;
+        const g = e.error;
+        const b = void 0 === g ? 'This field is required.' : g;
+        const w = e.containerClasses;
+        const _ = void 0 === w ? '' : w;
+        const x = n.replace(/\s/g, '-');
+        const k = '<label id="bash--label-'.concat(x, '" for="bash--input-').concat(x, '">').concat(t, '</label>');
+        return '\n<p class="input bash--'
+          .concat(c, 'field-')
+          .concat(n.replace(/\s/g, '-'), ' bash--')
+          .concat(c, ' ')
+          .concat(a ? 'required' : 'optional', ' ')
+          .concat(_, '">\n  ')
+          .concat(t && c !== 'checkbox' ? k : '', '\n  ')
+          .concat(
+            (function () {
+              switch (c) {
+                case 'radio':
+                  return Q({ name: n, options: m });
+                case 'dropdown':
+                  return (function (e) {
+                    const t = e.name;
+                    const n = e.disabled;
+                    const r = void 0 !== n && n;
+                    const o = e.options;
+                    const i = e.required;
+                    const a = o.find((e) => !0 === e.selected);
+                    return '\n  <select \n    name="'
+                      .concat(t, '" \n    ')
+                      .concat(i ? ' required ' : '', ' \n    ')
+                      .concat(r ? ' disabled ' : '', ' \n    id="bash--input-')
+                      .concat(t, '" \n    class="input-large" \n  >\n  ')
+                      .concat(
+                        o
+                          .map((e, t) => {
+                            const n = e.value;
+                            const r = e.label;
+                            const o = e.selected;
+                            return '\n    <option \n    '
+                              .concat(t === 0 ? ' disabled ' : '', '\n    ')
+                              .concat(t !== 0 || a ? '' : ' selected ', '\n    ')
+                              .concat(o ? ' selected ' : '', '\n      value="')
+                              .concat(n, '" \n    >')
+                              .concat(r, '</option>\n    ');
+                          })
+                          .join(''),
+                        '\n  </select>\n  '
+                      );
+                  })({ name: n, disabled: v, options: m, required: a });
+                case 'note':
+                  return (function (e) {
+                    const t = e.value;
+                    const n = e.name;
+                    return '\n  <div class="bash--note-field '.concat(n, '">\n  ').concat(t, '\n  </div>\n  ');
+                  })({ name: n, value: o });
+                case 'checkbox':
+                  return (function (e) {
+                    const t = e.name;
+                    const n = e.label;
+                    const r = e.checked;
+                    const o = e.value;
+                    return '\n    <label class="tfg-checkbox-label">\n       <input \n        type=\'checkbox\' \n        name="'
+                      .concat(t, '" \n        id="bash--input-')
+                      .concat(t, '"\n        ')
+                      .concat(r ? "checked='checked'" : '', '\n        value=')
+                      .concat(o != null ? o : '', '\n      />\n      <span>')
+                      .concat(n, '</span>\n    </label>\n  ');
+                  })({ name: n, label: t, checked: y });
+                default:
+                  return (function (e) {
+                    const t = e.name;
+                    const n = e.value;
+                    const r = void 0 === n ? '' : n;
+                    const o = e.required;
+                    const i = void 0 === o || o;
+                    const a = e.type;
+                    const s = void 0 === a ? 'text' : a;
+                    const c = e.placeholder;
+                    const u = e.autoComplete;
+                    const l = void 0 === u ? 'on' : u;
+                    const d = e.minLength;
+                    const h = void 0 === d ? 0 : d;
+                    const p = e.maxLength;
+                    const f = void 0 === p ? 0 : p;
+                    const v = t.replace(/\s/g, '-');
+                    return '\n  <input \n    '
+                      .concat(i ? ' required ' : '', '\n    autocomplete="')
+                      .concat(l, '" \n    id="bash--input-')
+                      .concat(v, '" \n    type="')
+                      .concat(s, '" \n    name="')
+                      .concat(t, '" \n    ')
+                      .concat(h > 0 ? 'minlength="'.concat(h, '"') : '', '\n    ')
+                      .concat(f > 0 ? 'maxlength="'.concat(f, '"') : '', '\n    placeholder="')
+                      .concat(c != null ? c : '', '" \n    class="input-xlarge" \n    value="')
+                      .concat(r, '" \n  />\n');
+                  })({
+                    name: n,
+                    value: o,
+                    required: a,
+                    type: c,
+                    placeholder: u,
+                    autoComplete: d,
+                    maxLength: h,
+                    minLength: p,
+                  });
+              }
+            })(),
+            '\n  <span class="bash--field-error">'
+          )
+          .concat(b, '</span>\n</p>  \n');
+      };
+      const st = function (e) {
+        let t;
+        const n = e.hasFurn;
+        const r = e.hasFurnOnly;
+        const o = e.hasFurnMixed;
+        return '\n  <div class="bash--delivery-container '
+          .concat(
+            n && 'has-furniture',
+            '"\n   id="bash--delivery-container" data-view="select-address">\n    <div id="bash--shipping-messages">\n      '
+          )
+          .concat('<div id="bash-alert-container"></div>', '\n      ')
+          .concat(
+            '\n  <div id="tfg-custom-tvrica-msg" class="tfg-custom-msg">\n    <p class="tfg-custom-icon"></p>\n    <p class="tfg-custom-text">\n      You can\'t collect this order in store because your cart contains items \n      which require either RICA or TV License validation.\n    </p>\n  </div>\n',
+            '\n      '
+          )
+          .concat('', '\n      ')
+          .concat(
+            ' \n \n<div id="bash-delivery-error-container"   >\n</div>',
+            '\n    </div>\n   <form id="bash--delivery-form" name="bash--delivery-form" method="post">\n\n    <section class="bash--delivery-view" data-section="select-address">\n    <div class="bash--heading">\n        <h2>Delivery address</h2>\n        <a href="#" data-view="address-search">Add address</a>\n      </div>\n      '
+          )
+          .concat(
+            (he()
+              .then((e) => {
+                const t = e.data;
+                const n = t.map((e) => ee(e));
+                document.getElementById('bash-address-list') &&
+                  (document.getElementById('bash-address-list').innerHTML = n.join('')),
+                  $('#back-button-select-address').hasClass('inactive') && $('#back-button-select-address').show(),
+                  W(),
+                  t.length < 1 &&
+                    (window.postMessage({ action: 'setDeliveryView', view: 'address-search' }),
+                    $('#bash--input-address-search').focus(),
+                    $('#back-button-select-address').hide(),
+                    $('#back-button-select-address').addClass('inactive'));
+              })
+              .catch((e) => {
+                throw (console.error('ERROR getAddresses', e), new Error('Error getAddresses', e.message));
+              }),
+            '\n <div class="bash--addresses shimmer" id="bash-address-list">\n    Loading addresses...\n  </div>\n  '),
+            '\n    </section>\n\n    <section id="bash-delivery-options" class="shipping-method bash--delivery-view" data-section="select-address">\n      <hr>\n      <div class="bash--heading sub-heading">\n        <h3>Delivery method</h3>\n        '
+          )
+          .concat('', '\n      </div>\n      ')
+          .concat(
+            (function (e) {
+              const t = e.hasFurnOnly;
+              let n = 'Delivery within 3 - 5 working days';
+              return (
+                e.hasFurnitureMixed && (n = 'Delivery within 3 - 10 working days'),
+                t && (n = 'Delivery within 5 - 10 working days'),
+                $('.shp-summary-package-time > span').html(n),
+                '\n  <label class="bash--delivery-option-display" >\n  '
+                  .concat(
+                    Q({ name: 'delivery-option', options: [{ checked: !0, value: !0 }] }),
+                    '\n   \n   <div id="bash--delivery-option-text" class="bash--delivery-option-text">\n      <span class="normal-delivery">\n        '
+                  )
+                  .concat(
+                    n,
+                    '\n      </span>\n   </div>\n\n  <div id="bash--delivery-fee" class="bash--delivery-fee">\n    R50\n  </div>\n</label>\n\n'
+                  )
+                  .concat('', '\n  ')
+              );
+            })({ hasFurnOnly: r, hasFurnitureMixed: o }),
+            '\n      <button \n        class="submit btn-go-to-payment btn btn-large btn-success"\n        id="btn-save-delivery" \n        type="submit">\n          Go to payment\n      </button>\n    </section>\n   </form>\n\n    <section class="bash--delivery-view" data-section="address-search">\n      <div class="bash--heading">\n        <h3>Add a new delivery address</h3>\n        <a href=\'#\' data-view=\'select-address\' id=\'back-button-select-address\'>&lt; Back</a>\n      </div>\n      <div class="address-search-field-container" id="address-search-field-container">\n          '
+          )
+          .concat(
+            (function () {
+              setTimeout(() => {
+                Me();
+              }, 500);
+              const e = at({ name: 'address-search', placeholder: 'Start typing an address...', autoComplete: 'off' });
+              return '\n  \n  '.concat(
+                e,
+                '\n    <div id="no-address-search-results-notification" class="notification info" >\n      <span class="icon"></span>\n      <div class="notification-content">\n      We could not find your address. \n        <a class="no-results-drop-down" href="" data-view="address-form" id="no-address-search-results">\n          Please click here to enter it manually.\n        </a>\n    </div>\n  '
+              );
+            })(),
+            ' \n      </div>\n      <p style="font-size: 12px; margin: 16px 0" id="type-your-address-above">\n        Type your address above or \n        <a \n          href="" id="link-manual-address-entry"\n          data-view="address-form"\n          onClick="document.getElementById(\'bash--input-street\').focus()"\n          style="text-decoration: underline" \n        >enter it manually</a>.\n      </p>\n    </section>\n    \n    <section class="bash--delivery-view" data-section="address-form">\n       <div class="bash--heading">\n        <h3>Delivery address</h3>\n        <a href="#" class="back-button--search" data-view="address-search">&lt; Back</a>\n        <a href="#" class="back-button--select" data-view="select-address">&lt; Back</a>\n      </div>\n      '
+          )
+          .concat(
+            ((t = [
+              { name: 'addressId', type: 'hidden', value: '', required: !1 },
+              { name: 'addressName', type: 'hidden', value: '', required: !1, maxLength: 50 },
+              { name: 'lat', required: !1, type: 'hidden', value: '' },
+              { name: 'lng', required: !1, type: 'hidden', value: '' },
+              { name: 'street', label: 'Street address', required: !0, value: '' },
+              {
+                name: 'addressType',
+                label: 'Address type',
+                required: !0,
+                type: 'radio',
+                options: [
+                  { value: 'residential', label: 'Residential', checked: !0 },
+                  { value: 'business', label: 'Business' },
+                ],
+              },
+              { name: 'number', required: !1, value: '', type: 'hidden' },
+              { name: 'businessName', label: 'Business name', required: !1, value: '', maxLength: 100 },
+              {
+                name: 'companyBuilding',
+                label: 'Building/Complex and number',
+                required: !1,
+                value: '',
+                maxLength: 100,
+              },
+              { name: 'neighborhood', label: 'Suburb', value: '', maxLength: 750 },
+              { name: 'city', label: 'City', required: !0, value: '', maxLength: 750 },
+              { name: 'postalCode', label: 'Postal code', value: '', type: 'tel', minlength: 4, maxLength: 4 },
+              {
+                type: 'note',
+                required: !1,
+                name: 'suburb-postal-reminder',
+                value: 'Make sure to specify the correct Suburb and Postal code so we can easily find your address.',
+              },
+              {
+                name: 'state',
+                label: 'Province',
+                type: 'dropdown',
+                options: [
+                  { value: '', label: 'Select' },
+                  { value: 'EC', label: 'Eastern Cape' },
+                  { value: 'FS', label: 'Free State' },
+                  { value: 'GP', label: 'Gauteng' },
+                  { value: 'KZN', label: 'KwaZulu-Natal' },
+                  { value: 'LP', label: 'Limpopo' },
+                  { value: 'MP', label: 'Mpumalanga' },
+                  { value: 'NC', label: 'Northern Cape' },
+                  { value: 'NW', label: 'North West' },
+                  { value: 'WC', label: 'Western Cape' },
+                ],
+              },
+              { type: 'note', required: !1, name: 'country-display', label: 'Country', value: 'South Africa' },
+              { type: 'hidden', required: !0, name: 'country', value: 'ZAF' },
+              { name: 'receiverName', label: 'Recipient’s name', required: !0, value: Ae({ type: 'delivery' }) },
+              {
+                name: 'complement',
+                required: !1,
+                type: 'hidden',
+                helperText: 'We send shipping updates to this number.',
+                value: '',
+              },
+              {
+                name: 'receiverPhone',
+                label: 'Recipient’s mobile number',
+                required: !0,
+                type: 'tel',
+                helperText: 'We send shipping updates to this number.',
+                minlength: 9,
+                error: 'Please enter a valid phone number',
+                containerClasses: 'custom-field-complement',
+              },
+            ]
+              .map((e) => at(e))
+              .join('')),
+            '\n  <form id="bash--address-form" method="post">\n    '.concat(
+              t,
+              '\n\n    <button \n      class="submit btn-go-to-payment btn btn-large btn-success"\n      id="btn-save-address" \n      type="submit">\n      Save address\n    </button>\n  </form>\n  \n  '
+            )),
+            '\n    </section>\n    \n  </div>'
+          );
+      };
+      const ct = function (e) {
+        let t;
+        let n;
+        let r;
+        let o;
+        const i = e.hasTV;
+        const a = e.hasSim;
+        const s =
+          '\n    <div id="tv-license-form">\n      <hr>\n      <div class="bash--heading sub-heading heading-with-description">\n        <h3>TV license information needed</h3>\n        <p class="tfg-custom-subtitle">Please provide your ID number to validate your TV Licence.</p>\n      </div>\n      '.concat(
+            '\n    '.concat(at({ name: 'tv_tvID', label: 'SA ID number', required: !0, value: '' }), '\n  '),
+            '\n    </div>\n  '
+          );
+        const c =
+          '\n    <div id="rica-form">\n      <hr>\n      <div class="bash--heading sub-heading heading-with-description">\n        <h3>Rica information required</h3>\n        <p class="tfg-custom-subtitle">\n          To RICA your SIM card, provide your SA ID (or foreign passport) number and your address as\n          it appears on a valid proof of residence.\n        </p> \n      </div>\n        '.concat(
+            ((t = window.vtexjs.checkout.orderForm.shippingData.selectedAddress),
+            (n = [
+              {
+                name: 'rica_fullName',
+                label: 'Full name and surname',
+                required: !0,
+                value: Ae({ type: 'delivery' }) || '',
+              },
+              {
+                name: 'rica_streetAddress',
+                label: 'Street address',
+                required: !0,
+                value: (t == null ? void 0 : t.street) || '',
+              },
+              { name: 'rica_suburb', label: 'Suburb', value: (t == null ? void 0 : t.neighborhood) || '' },
+              { name: 'rica_city', label: 'City', required: !0, value: (t == null ? void 0 : t.city) || '' },
+              {
+                name: 'rica_postalCode',
+                label: 'Postal code',
+                value: (t == null ? void 0 : t.postalCode) || '',
+                type: 'tel',
+                minlength: 4,
+                maxLength: 4,
+              },
+              {
+                name: 'rica_province',
+                label: 'Province',
+                type: 'dropdown',
+                options: [
+                  { value: '', label: 'Select', disabled: !0 },
+                  { value: 'EC', label: 'Eastern Cape' },
+                  { value: 'FS', label: 'Free State' },
+                  { value: 'GP', label: 'Gauteng' },
+                  { value: 'KZN', label: 'KwaZulu-Natal' },
+                  { value: 'LP', label: 'Limpopo' },
+                  { value: 'MP', label: 'Mpumalanga' },
+                  { value: 'NC', label: 'Northern Cape' },
+                  { value: 'NW', label: 'North West' },
+                  { value: 'WC', label: 'Western Cape' },
+                ],
+              },
+              { type: 'note', required: !1, name: 'rica-country-display', label: 'Country', value: 'South Africa' },
+              { type: 'hidden', required: !0, name: 'country', value: 'ZAF' },
+            ]),
+            (r = [
+              { name: 'rica_idOrPassport', label: 'ID or Passport number', required: !0, value: '' },
+              {
+                name: 'rica_sameAddress',
+                label: 'Residential address the same as delivery address',
+                type: 'checkbox',
+                checked: !0,
+                required: !1,
+              },
+            ]
+              .map((e) => at(e))
+              .join('')),
+            (o = n.map((e) => at(e)).join('')),
+            '\n    '.concat(r, '\n    <div class="rica-conditional-fields hide">\n    ').concat(o, '\n    </div>\n  ')),
+            '\n    </div>\n    '
+          );
+        return '\n  <section class="bash--extra-fields bash--delivery-view" data-section="select-address">\n    '
+          .concat(i ? s : '', '\n    ')
+          .concat(a ? c : '', '\n  </section>');
+      };
+      const ut = function (e) {
+        const t = e.businessName;
+        const n = e.receiverPhone;
+        be('deliver', { jsonString: JSON.stringify({ businessName: t || '', receiverPhone: n || '' }) });
+      };
+      const lt = function (e) {
+        let t;
+        const n = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : { validateExtraFields: !0 };
+        console.info('### setAddress ###', { address: e });
+        const r = n.validateExtraFields;
+        const o = window.vtexjs.checkout.orderForm.items;
+        const c = Y(o);
+        const u = c.hasTVs;
+        const l = c.hasSimCards;
+        u && qe(e, Se, 'tv_'), l && Ge();
+        let d;
+        const h = Ue(e, r);
+        const p = h.isValid;
+        const f = h.invalidFields;
+        if (!p)
+          return (
+            console.error({ invalidFields: f }),
+            Re(e),
+            $('#bash--address-form').addClass('show-form-errors'),
+            r && ((d = $('#bash--delivery-form')) === null || void 0 === d || d.addClass('show-form-errors')),
+            $('#bash--input-'.concat(f[0])).focus(),
+            xe.includes(f[0]) && window.postMessage({ action: 'setDeliveryView', view: 'address-edit' }),
+            { success: !1, error: 'Invalid address details.' }
+          );
+        e.addressType === a && (e.addressType = s),
+          Ee.includes(e.addressType) || (e.addressType = i),
+          e.number && ((e.street = ''.concat(e.number, ' ').concat(e.street)), (e.number = '')),
+          (e.country = 'ZAF');
+        const v =
+          (t = window) === null ||
+          void 0 === t ||
+          (t = t.vtexjs) === null ||
+          void 0 === t ||
+          (t = t.checkout) === null ||
+          void 0 === t
+            ? void 0
+            : t.orderForm;
+        const m = v.shippingData;
+        return (
+          (m.address = e),
+          (m.selectedAddresses = [e]),
+          e.complement && ((e.receiverPhone = e.complement), (m.address.complement = ''), (e.complement = '')),
+          e.companyBuilding &&
+            !m.address.street.includes(', '.concat(e.companyBuilding)) &&
+            (m.address.street = ''.concat(e.street, ', ').concat(e.companyBuilding)),
+          (m.selectedAddresses[0] = m.address),
+          Fe(),
+          window.vtexjs.checkout
+            .sendAttachment('shippingData', m)
+            .then((t) => {
+              const n = t.messages.filter((e) => e.status === 'error');
+              if (n.length > 0)
+                return (
+                  We(n),
+                  window.postMessage({ action: 'setDeliveryView', view: 'address-form' }),
+                  { success: !1, errors: n }
+                );
+              e.addressName && ve(e), console.info('### Update customData ###', { address: e });
+              try {
+                ut({ businessName: e.businessName, receiverPhone: e.receiverPhone });
+              } catch (e) {
+                Je({
+                  eventCategory: 'Checkout_SystemError',
+                  action: 'OrderFormFailed',
+                  label: 'Could not update businessName and/or receiverPhone ',
+                  description: 'Could not update businessName and/or receiverPhone.',
+                });
+              }
+              return { success: !0 };
+            })
+            .done(() => W())
+        );
+      };
+      function dt(e) {
+        return (
+          (dt =
+            typeof Symbol === 'function' && typeof Symbol.iterator === 'symbol'
+              ? function (e) {
+                  return typeof e;
+                }
+              : function (e) {
+                  return e && typeof Symbol === 'function' && e.constructor === Symbol && e !== Symbol.prototype
+                    ? 'symbol'
+                    : typeof e;
+                }),
+          dt(e)
+        );
+      }
+      function ht() {
+        ht = function () {
+          return e;
+        };
+        var e = {};
+        const t = Object.prototype;
+        const n = t.hasOwnProperty;
+        const r =
+          Object.defineProperty ||
+          function (e, t, n) {
+            e[t] = n.value;
+          };
+        const o = typeof Symbol === 'function' ? Symbol : {};
+        const i = o.iterator || '@@iterator';
+        const a = o.asyncIterator || '@@asyncIterator';
+        const s = o.toStringTag || '@@toStringTag';
+        function c(e, t, n) {
+          return Object.defineProperty(e, t, { value: n, enumerable: !0, configurable: !0, writable: !0 }), e[t];
+        }
+        try {
+          c({}, '');
+        } catch (e) {
+          c = function (e, t, n) {
+            return (e[t] = n);
+          };
+        }
+        function u(e, t, n, o) {
+          const i = t && t.prototype instanceof h ? t : h;
+          const a = Object.create(i.prototype);
+          const s = new E(o || []);
+          return r(a, '_invoke', { value: _(e, n, s) }), a;
+        }
+        function l(e, t, n) {
+          try {
+            return { type: 'normal', arg: e.call(t, n) };
+          } catch (e) {
+            return { type: 'throw', arg: e };
+          }
+        }
+        e.wrap = u;
+        const d = {};
+        function h() {}
+        function p() {}
+        function f() {}
+        let v = {};
+        c(v, i, function () {
+          return this;
+        });
+        const m = Object.getPrototypeOf;
+        const y = m && m(m(O([])));
+        y && y !== t && n.call(y, i) && (v = y);
+        const g = (f.prototype = h.prototype = Object.create(v));
+        function b(e) {
+          ['next', 'throw', 'return'].forEach((t) => {
+            c(e, t, function (e) {
+              return this._invoke(t, e);
+            });
+          });
+        }
+        function w(e, t) {
+          function o(r, i, a, s) {
+            const c = l(e[r], e, i);
+            if (c.type !== 'throw') {
+              const u = c.arg;
+              const d = u.value;
+              return d && dt(d) == 'object' && n.call(d, '__await')
+                ? t.resolve(d.__await).then(
+                    (e) => {
+                      o('next', e, a, s);
+                    },
+                    (e) => {
+                      o('throw', e, a, s);
+                    }
+                  )
+                : t.resolve(d).then(
+                    (e) => {
+                      (u.value = e), a(u);
+                    },
+                    (e) => o('throw', e, a, s)
+                  );
+            }
+            s(c.arg);
+          }
+          let i;
+          r(this, '_invoke', {
+            value(e, n) {
+              function r() {
+                return new t((t, r) => {
+                  o(e, n, t, r);
+                });
+              }
+              return (i = i ? i.then(r, r) : r());
+            },
+          });
+        }
+        function _(e, t, n) {
+          let r = 'suspendedStart';
+          return function (o, i) {
+            if (r === 'executing') throw new Error('Generator is already running');
+            if (r === 'completed') {
+              if (o === 'throw') throw i;
+              return { value: void 0, done: !0 };
+            }
+            for (n.method = o, n.arg = i; ; ) {
+              const a = n.delegate;
+              if (a) {
+                const s = x(a, n);
+                if (s) {
+                  if (s === d) continue;
+                  return s;
+                }
+              }
+              if (n.method === 'next') n.sent = n._sent = n.arg;
+              else if (n.method === 'throw') {
+                if (r === 'suspendedStart') throw ((r = 'completed'), n.arg);
+                n.dispatchException(n.arg);
+              } else n.method === 'return' && n.abrupt('return', n.arg);
+              r = 'executing';
+              const c = l(e, t, n);
+              if (c.type === 'normal') {
+                if (((r = n.done ? 'completed' : 'suspendedYield'), c.arg === d)) continue;
+                return { value: c.arg, done: n.done };
+              }
+              c.type === 'throw' && ((r = 'completed'), (n.method = 'throw'), (n.arg = c.arg));
+            }
+          };
+        }
+        function x(e, t) {
+          const n = t.method;
+          const r = e.iterator[n];
+          if (void 0 === r)
+            return (
+              (t.delegate = null),
+              (n === 'throw' &&
+                e.iterator.return &&
+                ((t.method = 'return'), (t.arg = void 0), x(e, t), t.method === 'throw')) ||
+                (n !== 'return' &&
+                  ((t.method = 'throw'), (t.arg = new TypeError(`The iterator does not provide a '${n}' method`)))),
+              d
+            );
+          const o = l(r, e.iterator, t.arg);
+          if (o.type === 'throw') return (t.method = 'throw'), (t.arg = o.arg), (t.delegate = null), d;
+          const i = o.arg;
+          return i
+            ? i.done
+              ? ((t[e.resultName] = i.value),
+                (t.next = e.nextLoc),
+                t.method !== 'return' && ((t.method = 'next'), (t.arg = void 0)),
+                (t.delegate = null),
+                d)
+              : i
+            : ((t.method = 'throw'),
+              (t.arg = new TypeError('iterator result is not an object')),
+              (t.delegate = null),
+              d);
+        }
+        function k(e) {
+          const t = { tryLoc: e[0] };
+          1 in e && (t.catchLoc = e[1]),
+            2 in e && ((t.finallyLoc = e[2]), (t.afterLoc = e[3])),
+            this.tryEntries.push(t);
+        }
+        function S(e) {
+          const t = e.completion || {};
+          (t.type = 'normal'), delete t.arg, (e.completion = t);
+        }
+        function E(e) {
+          (this.tryEntries = [{ tryLoc: 'root' }]), e.forEach(k, this), this.reset(!0);
+        }
+        function O(e) {
+          if (e || e === '') {
+            const t = e[i];
+            if (t) return t.call(e);
+            if (typeof e.next === 'function') return e;
+            if (!isNaN(e.length)) {
+              let r = -1;
+              const o = function t() {
+                for (; ++r < e.length; ) if (n.call(e, r)) return (t.value = e[r]), (t.done = !1), t;
+                return (t.value = void 0), (t.done = !0), t;
+              };
+              return (o.next = o);
+            }
+          }
+          throw new TypeError(`${dt(e)} is not iterable`);
+        }
+        return (
+          (p.prototype = f),
+          r(g, 'constructor', { value: f, configurable: !0 }),
+          r(f, 'constructor', { value: p, configurable: !0 }),
+          (p.displayName = c(f, s, 'GeneratorFunction')),
+          (e.isGeneratorFunction = function (e) {
+            const t = typeof e === 'function' && e.constructor;
+            return !!t && (t === p || (t.displayName || t.name) === 'GeneratorFunction');
+          }),
+          (e.mark = function (e) {
+            return (
+              Object.setPrototypeOf ? Object.setPrototypeOf(e, f) : ((e.__proto__ = f), c(e, s, 'GeneratorFunction')),
+              (e.prototype = Object.create(g)),
+              e
+            );
+          }),
+          (e.awrap = function (e) {
+            return { __await: e };
+          }),
+          b(w.prototype),
+          c(w.prototype, a, function () {
+            return this;
+          }),
+          (e.AsyncIterator = w),
+          (e.async = function (t, n, r, o, i) {
+            void 0 === i && (i = Promise);
+            const a = new w(u(t, n, r, o), i);
+            return e.isGeneratorFunction(n) ? a : a.next().then((e) => (e.done ? e.value : a.next()));
+          }),
+          b(g),
+          c(g, s, 'Generator'),
+          c(g, i, function () {
+            return this;
+          }),
+          c(g, 'toString', () => '[object Generator]'),
+          (e.keys = function (e) {
+            const t = Object(e);
+            const n = [];
+            for (const r in t) n.push(r);
+            return (
+              n.reverse(),
+              function e() {
+                for (; n.length; ) {
+                  const r = n.pop();
+                  if (r in t) return (e.value = r), (e.done = !1), e;
+                }
+                return (e.done = !0), e;
+              }
+            );
+          }),
+          (e.values = O),
+          (E.prototype = {
+            constructor: E,
+            reset(e) {
+              if (
+                ((this.prev = 0),
+                (this.next = 0),
+                (this.sent = this._sent = void 0),
+                (this.done = !1),
+                (this.delegate = null),
+                (this.method = 'next'),
+                (this.arg = void 0),
+                this.tryEntries.forEach(S),
+                !e)
+              )
+                for (const t in this)
+                  t.charAt(0) === 't' && n.call(this, t) && !isNaN(+t.slice(1)) && (this[t] = void 0);
+            },
+            stop() {
+              this.done = !0;
+              const e = this.tryEntries[0].completion;
+              if (e.type === 'throw') throw e.arg;
+              return this.rval;
+            },
+            dispatchException(e) {
+              if (this.done) throw e;
+              const t = this;
+              function r(n, r) {
+                return (a.type = 'throw'), (a.arg = e), (t.next = n), r && ((t.method = 'next'), (t.arg = void 0)), !!r;
+              }
+              for (let o = this.tryEntries.length - 1; o >= 0; --o) {
+                const i = this.tryEntries[o];
+                var a = i.completion;
+                if (i.tryLoc === 'root') return r('end');
+                if (i.tryLoc <= this.prev) {
+                  const s = n.call(i, 'catchLoc');
+                  const c = n.call(i, 'finallyLoc');
+                  if (s && c) {
+                    if (this.prev < i.catchLoc) return r(i.catchLoc, !0);
+                    if (this.prev < i.finallyLoc) return r(i.finallyLoc);
+                  } else if (s) {
+                    if (this.prev < i.catchLoc) return r(i.catchLoc, !0);
+                  } else {
+                    if (!c) throw new Error('try statement without catch or finally');
+                    if (this.prev < i.finallyLoc) return r(i.finallyLoc);
+                  }
+                }
+              }
+            },
+            abrupt(e, t) {
+              for (let r = this.tryEntries.length - 1; r >= 0; --r) {
+                const o = this.tryEntries[r];
+                if (o.tryLoc <= this.prev && n.call(o, 'finallyLoc') && this.prev < o.finallyLoc) {
+                  var i = o;
+                  break;
+                }
+              }
+              i && (e === 'break' || e === 'continue') && i.tryLoc <= t && t <= i.finallyLoc && (i = null);
+              const a = i ? i.completion : {};
+              return (
+                (a.type = e),
+                (a.arg = t),
+                i ? ((this.method = 'next'), (this.next = i.finallyLoc), d) : this.complete(a)
+              );
+            },
+            complete(e, t) {
+              if (e.type === 'throw') throw e.arg;
+              return (
+                e.type === 'break' || e.type === 'continue'
+                  ? (this.next = e.arg)
+                  : e.type === 'return'
+                  ? ((this.rval = this.arg = e.arg), (this.method = 'return'), (this.next = 'end'))
+                  : e.type === 'normal' && t && (this.next = t),
+                d
+              );
+            },
+            finish(e) {
+              for (let t = this.tryEntries.length - 1; t >= 0; --t) {
+                const n = this.tryEntries[t];
+                if (n.finallyLoc === e) return this.complete(n.completion, n.afterLoc), S(n), d;
+              }
+            },
+            catch(e) {
+              for (let t = this.tryEntries.length - 1; t >= 0; --t) {
+                const n = this.tryEntries[t];
+                if (n.tryLoc === e) {
+                  const r = n.completion;
+                  if (r.type === 'throw') {
+                    var o = r.arg;
+                    S(n);
+                  }
+                  return o;
+                }
+              }
+              throw new Error('illegal catch attempt');
+            },
+            delegateYield(e, t, n) {
+              return (
+                (this.delegate = { iterator: O(e), resultName: t, nextLoc: n }),
+                this.method === 'next' && (this.arg = void 0),
+                d
+              );
+            },
+          }),
+          e
+        );
+      }
+      function pt(e, t) {
+        const n = Object.keys(e);
+        if (Object.getOwnPropertySymbols) {
+          let r = Object.getOwnPropertySymbols(e);
+          t && (r = r.filter((t) => Object.getOwnPropertyDescriptor(e, t).enumerable)), n.push.apply(n, r);
+        }
+        return n;
+      }
+      function ft(e) {
+        for (let t = 1; t < arguments.length; t++) {
+          var n = arguments[t] != null ? arguments[t] : {};
+          t % 2
+            ? pt(Object(n), !0).forEach((t) => {
+                vt(e, t, n[t]);
+              })
+            : Object.getOwnPropertyDescriptors
+            ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(n))
+            : pt(Object(n)).forEach((t) => {
+                Object.defineProperty(e, t, Object.getOwnPropertyDescriptor(n, t));
+              });
+        }
+        return e;
+      }
+      function vt(e, t, n) {
+        return (
+          (t = (function (e) {
+            const t = (function (e, t) {
+              if (dt(e) !== 'object' || e === null) return e;
+              const n = e[Symbol.toPrimitive];
+              if (void 0 !== n) {
+                const r = n.call(e, t);
+                if (dt(r) !== 'object') return r;
+                throw new TypeError('@@toPrimitive must return a primitive value.');
+              }
+              return String(e);
+            })(e, 'string');
+            return dt(t) === 'symbol' ? t : String(t);
+          })(t)) in e
+            ? Object.defineProperty(e, t, { value: n, enumerable: !0, configurable: !0, writable: !0 })
+            : (e[t] = n),
+          e
+        );
+      }
+      function mt(e, t, n, r, o, i, a) {
+        try {
+          var s = e[i](a);
+          var c = s.value;
+        } catch (e) {
+          return void n(e);
+        }
+        s.done ? t(c) : Promise.resolve(c).then(r, o);
+      }
+      const yt = (function () {
+        let e;
+        const t =
+          ((e = ht().mark(function e(t) {
+            let n;
+            let r;
+            let o;
+            let i;
+            let a;
+            let s;
+            let c;
+            let u;
+            let l;
+            let d;
+            let h;
+            let p;
+            let f;
+            return ht().wrap((e) => {
+              for (;;)
+                switch ((e.prev = e.next)) {
+                  case 0:
+                    return (
+                      t.preventDefault(),
+                      $('select').change(),
+                      (n = document.forms['bash--address-form']),
+                      (r = $('#bash--input-addressName').val()),
+                      (e.next = 6),
+                      ye(r)
+                    );
+                  case 6:
+                    for (
+                      o = e.sent,
+                        i = [
+                          'addressId',
+                          'addressName',
+                          'addressType',
+                          'receiverName',
+                          'receiverPhone',
+                          'postalCode',
+                          'city',
+                          'state',
+                          'country',
+                          'businessName',
+                          'street',
+                          'neighborhood',
+                          'complement',
+                          'companyBuilding',
+                          'lat',
+                          'lng',
+                        ],
+                        a = ft(
+                          ft({ isDisposable: !1, reference: null, geoCoordinates: [], country: 'ZAF' }, o),
+                          {},
+                          { number: '', complement: '' }
+                        ),
+                        s = 0;
+                      s < i.length;
+                      s++
+                    )
+                      a[i[s]] = ((c = n[i[s]]) === null || void 0 === c ? void 0 : c.value) || null;
+                    if (
+                      ((a.addressName = a.addressName || a.addressId),
+                      (a.addressId = a.addressId || a.addressName),
+                      (u = [parseFloat(a.lng) || '', parseFloat(a.lat) || '']),
+                      (a.geoCoordinate = u),
+                      (a.geoCoordinates = u),
+                      (l = a),
+                      (d = Ue(a, !1)),
+                      (h = d.isValid),
+                      (p = d.invalidFields),
+                      h)
+                    ) {
+                      e.next = 24;
+                      break;
+                    }
+                    return (
+                      console.error({ invalidFields: p }),
+                      $('#bash--address-form').addClass('show-form-errors'),
+                      $('#bash--input-'.concat(p[0])).focus(),
+                      xe.includes(p[0]) && window.postMessage({ action: 'setDeliveryView', view: 'address-form' }),
+                      window.postMessage(
+                        {
+                          type: 'ADDRESS_VALIDATION_ERROR',
+                          message: 'Address validation error. See invalidFields.',
+                          invalidFields: p,
+                        },
+                        '*'
+                      ),
+                      e.abrupt('return')
+                    );
+                  case 24:
+                    return (e.next = 26), lt(l, { validateExtraFields: !1 });
+                  case 26:
+                    if ((f = e.sent).success) {
+                      e.next = 31;
+                      break;
+                    }
+                    return console.error('Set address error', { setAddressResponse: f }), e.abrupt('return');
+                  case 31:
+                    return (e.next = 33), me(a);
+                  case 33:
+                    window.postMessage({ action: 'setDeliveryView', view: 'select-address' }),
+                      setTimeout(() => {
+                        $('.bash--extra-fields').length > 0
+                          ? document.querySelector('.bash--extra-fields').scrollIntoView({ behavior: 'smooth' })
+                          : document.getElementById('bash-delivery-options').scrollIntoView({ behavior: 'smooth' });
+                      }, 500),
+                      Ze();
+                  case 36:
+                  case 'end':
+                    return e.stop();
+                }
+            }, e);
+          })),
+          function () {
+            const t = this;
+            const n = arguments;
+            return new Promise((r, o) => {
+              const i = e.apply(t, n);
+              function a(e) {
+                mt(i, r, o, a, s, 'next', e);
+              }
+              function s(e) {
+                mt(i, r, o, a, s, 'throw', e);
+              }
+              a(void 0);
+            });
+          });
+        return function (e) {
+          return t.apply(this, arguments);
+        };
+      })();
+      function gt(e) {
+        return (
+          (gt =
+            typeof Symbol === 'function' && typeof Symbol.iterator === 'symbol'
+              ? function (e) {
+                  return typeof e;
+                }
+              : function (e) {
+                  return e && typeof Symbol === 'function' && e.constructor === Symbol && e !== Symbol.prototype
+                    ? 'symbol'
+                    : typeof e;
+                }),
+          gt(e)
+        );
+      }
+      function bt() {
+        bt = function () {
+          return e;
+        };
+        var e = {};
+        const t = Object.prototype;
+        const n = t.hasOwnProperty;
+        const r =
+          Object.defineProperty ||
+          function (e, t, n) {
+            e[t] = n.value;
+          };
+        const o = typeof Symbol === 'function' ? Symbol : {};
+        const i = o.iterator || '@@iterator';
+        const a = o.asyncIterator || '@@asyncIterator';
+        const s = o.toStringTag || '@@toStringTag';
+        function c(e, t, n) {
+          return Object.defineProperty(e, t, { value: n, enumerable: !0, configurable: !0, writable: !0 }), e[t];
+        }
+        try {
+          c({}, '');
+        } catch (e) {
+          c = function (e, t, n) {
+            return (e[t] = n);
+          };
+        }
+        function u(e, t, n, o) {
+          const i = t && t.prototype instanceof h ? t : h;
+          const a = Object.create(i.prototype);
+          const s = new E(o || []);
+          return r(a, '_invoke', { value: _(e, n, s) }), a;
+        }
+        function l(e, t, n) {
+          try {
+            return { type: 'normal', arg: e.call(t, n) };
+          } catch (e) {
+            return { type: 'throw', arg: e };
+          }
+        }
+        e.wrap = u;
+        const d = {};
+        function h() {}
+        function p() {}
+        function f() {}
+        let v = {};
+        c(v, i, function () {
+          return this;
+        });
+        const m = Object.getPrototypeOf;
+        const y = m && m(m(O([])));
+        y && y !== t && n.call(y, i) && (v = y);
+        const g = (f.prototype = h.prototype = Object.create(v));
+        function b(e) {
+          ['next', 'throw', 'return'].forEach((t) => {
+            c(e, t, function (e) {
+              return this._invoke(t, e);
+            });
+          });
+        }
+        function w(e, t) {
+          function o(r, i, a, s) {
+            const c = l(e[r], e, i);
+            if (c.type !== 'throw') {
+              const u = c.arg;
+              const d = u.value;
+              return d && gt(d) == 'object' && n.call(d, '__await')
+                ? t.resolve(d.__await).then(
+                    (e) => {
+                      o('next', e, a, s);
+                    },
+                    (e) => {
+                      o('throw', e, a, s);
+                    }
+                  )
+                : t.resolve(d).then(
+                    (e) => {
+                      (u.value = e), a(u);
+                    },
+                    (e) => o('throw', e, a, s)
+                  );
+            }
+            s(c.arg);
+          }
+          let i;
+          r(this, '_invoke', {
+            value(e, n) {
+              function r() {
+                return new t((t, r) => {
+                  o(e, n, t, r);
+                });
+              }
+              return (i = i ? i.then(r, r) : r());
+            },
+          });
+        }
+        function _(e, t, n) {
+          let r = 'suspendedStart';
+          return function (o, i) {
+            if (r === 'executing') throw new Error('Generator is already running');
+            if (r === 'completed') {
+              if (o === 'throw') throw i;
+              return { value: void 0, done: !0 };
+            }
+            for (n.method = o, n.arg = i; ; ) {
+              const a = n.delegate;
+              if (a) {
+                const s = x(a, n);
+                if (s) {
+                  if (s === d) continue;
+                  return s;
+                }
+              }
+              if (n.method === 'next') n.sent = n._sent = n.arg;
+              else if (n.method === 'throw') {
+                if (r === 'suspendedStart') throw ((r = 'completed'), n.arg);
+                n.dispatchException(n.arg);
+              } else n.method === 'return' && n.abrupt('return', n.arg);
+              r = 'executing';
+              const c = l(e, t, n);
+              if (c.type === 'normal') {
+                if (((r = n.done ? 'completed' : 'suspendedYield'), c.arg === d)) continue;
+                return { value: c.arg, done: n.done };
+              }
+              c.type === 'throw' && ((r = 'completed'), (n.method = 'throw'), (n.arg = c.arg));
+            }
+          };
+        }
+        function x(e, t) {
+          const n = t.method;
+          const r = e.iterator[n];
+          if (void 0 === r)
+            return (
+              (t.delegate = null),
+              (n === 'throw' &&
+                e.iterator.return &&
+                ((t.method = 'return'), (t.arg = void 0), x(e, t), t.method === 'throw')) ||
+                (n !== 'return' &&
+                  ((t.method = 'throw'), (t.arg = new TypeError(`The iterator does not provide a '${n}' method`)))),
+              d
+            );
+          const o = l(r, e.iterator, t.arg);
+          if (o.type === 'throw') return (t.method = 'throw'), (t.arg = o.arg), (t.delegate = null), d;
+          const i = o.arg;
+          return i
+            ? i.done
+              ? ((t[e.resultName] = i.value),
+                (t.next = e.nextLoc),
+                t.method !== 'return' && ((t.method = 'next'), (t.arg = void 0)),
+                (t.delegate = null),
+                d)
+              : i
+            : ((t.method = 'throw'),
+              (t.arg = new TypeError('iterator result is not an object')),
+              (t.delegate = null),
+              d);
+        }
+        function k(e) {
+          const t = { tryLoc: e[0] };
+          1 in e && (t.catchLoc = e[1]),
+            2 in e && ((t.finallyLoc = e[2]), (t.afterLoc = e[3])),
+            this.tryEntries.push(t);
+        }
+        function S(e) {
+          const t = e.completion || {};
+          (t.type = 'normal'), delete t.arg, (e.completion = t);
+        }
+        function E(e) {
+          (this.tryEntries = [{ tryLoc: 'root' }]), e.forEach(k, this), this.reset(!0);
+        }
+        function O(e) {
+          if (e || e === '') {
+            const t = e[i];
+            if (t) return t.call(e);
+            if (typeof e.next === 'function') return e;
+            if (!isNaN(e.length)) {
+              let r = -1;
+              const o = function t() {
+                for (; ++r < e.length; ) if (n.call(e, r)) return (t.value = e[r]), (t.done = !1), t;
+                return (t.value = void 0), (t.done = !0), t;
+              };
+              return (o.next = o);
+            }
+          }
+          throw new TypeError(`${gt(e)} is not iterable`);
+        }
+        return (
+          (p.prototype = f),
+          r(g, 'constructor', { value: f, configurable: !0 }),
+          r(f, 'constructor', { value: p, configurable: !0 }),
+          (p.displayName = c(f, s, 'GeneratorFunction')),
+          (e.isGeneratorFunction = function (e) {
+            const t = typeof e === 'function' && e.constructor;
+            return !!t && (t === p || (t.displayName || t.name) === 'GeneratorFunction');
+          }),
+          (e.mark = function (e) {
+            return (
+              Object.setPrototypeOf ? Object.setPrototypeOf(e, f) : ((e.__proto__ = f), c(e, s, 'GeneratorFunction')),
+              (e.prototype = Object.create(g)),
+              e
+            );
+          }),
+          (e.awrap = function (e) {
+            return { __await: e };
+          }),
+          b(w.prototype),
+          c(w.prototype, a, function () {
+            return this;
+          }),
+          (e.AsyncIterator = w),
+          (e.async = function (t, n, r, o, i) {
+            void 0 === i && (i = Promise);
+            const a = new w(u(t, n, r, o), i);
+            return e.isGeneratorFunction(n) ? a : a.next().then((e) => (e.done ? e.value : a.next()));
+          }),
+          b(g),
+          c(g, s, 'Generator'),
+          c(g, i, function () {
+            return this;
+          }),
+          c(g, 'toString', () => '[object Generator]'),
+          (e.keys = function (e) {
+            const t = Object(e);
+            const n = [];
+            for (const r in t) n.push(r);
+            return (
+              n.reverse(),
+              function e() {
+                for (; n.length; ) {
+                  const r = n.pop();
+                  if (r in t) return (e.value = r), (e.done = !1), e;
+                }
+                return (e.done = !0), e;
+              }
+            );
+          }),
+          (e.values = O),
+          (E.prototype = {
+            constructor: E,
+            reset(e) {
+              if (
+                ((this.prev = 0),
+                (this.next = 0),
+                (this.sent = this._sent = void 0),
+                (this.done = !1),
+                (this.delegate = null),
+                (this.method = 'next'),
+                (this.arg = void 0),
+                this.tryEntries.forEach(S),
+                !e)
+              )
+                for (const t in this)
+                  t.charAt(0) === 't' && n.call(this, t) && !isNaN(+t.slice(1)) && (this[t] = void 0);
+            },
+            stop() {
+              this.done = !0;
+              const e = this.tryEntries[0].completion;
+              if (e.type === 'throw') throw e.arg;
+              return this.rval;
+            },
+            dispatchException(e) {
+              if (this.done) throw e;
+              const t = this;
+              function r(n, r) {
+                return (a.type = 'throw'), (a.arg = e), (t.next = n), r && ((t.method = 'next'), (t.arg = void 0)), !!r;
+              }
+              for (let o = this.tryEntries.length - 1; o >= 0; --o) {
+                const i = this.tryEntries[o];
+                var a = i.completion;
+                if (i.tryLoc === 'root') return r('end');
+                if (i.tryLoc <= this.prev) {
+                  const s = n.call(i, 'catchLoc');
+                  const c = n.call(i, 'finallyLoc');
+                  if (s && c) {
+                    if (this.prev < i.catchLoc) return r(i.catchLoc, !0);
+                    if (this.prev < i.finallyLoc) return r(i.finallyLoc);
+                  } else if (s) {
+                    if (this.prev < i.catchLoc) return r(i.catchLoc, !0);
+                  } else {
+                    if (!c) throw new Error('try statement without catch or finally');
+                    if (this.prev < i.finallyLoc) return r(i.finallyLoc);
+                  }
+                }
+              }
+            },
+            abrupt(e, t) {
+              for (let r = this.tryEntries.length - 1; r >= 0; --r) {
+                const o = this.tryEntries[r];
+                if (o.tryLoc <= this.prev && n.call(o, 'finallyLoc') && this.prev < o.finallyLoc) {
+                  var i = o;
+                  break;
+                }
+              }
+              i && (e === 'break' || e === 'continue') && i.tryLoc <= t && t <= i.finallyLoc && (i = null);
+              const a = i ? i.completion : {};
+              return (
+                (a.type = e),
+                (a.arg = t),
+                i ? ((this.method = 'next'), (this.next = i.finallyLoc), d) : this.complete(a)
+              );
+            },
+            complete(e, t) {
+              if (e.type === 'throw') throw e.arg;
+              return (
+                e.type === 'break' || e.type === 'continue'
+                  ? (this.next = e.arg)
+                  : e.type === 'return'
+                  ? ((this.rval = this.arg = e.arg), (this.method = 'return'), (this.next = 'end'))
+                  : e.type === 'normal' && t && (this.next = t),
+                d
+              );
+            },
+            finish(e) {
+              for (let t = this.tryEntries.length - 1; t >= 0; --t) {
+                const n = this.tryEntries[t];
+                if (n.finallyLoc === e) return this.complete(n.completion, n.afterLoc), S(n), d;
+              }
+            },
+            catch(e) {
+              for (let t = this.tryEntries.length - 1; t >= 0; --t) {
+                const n = this.tryEntries[t];
+                if (n.tryLoc === e) {
+                  const r = n.completion;
+                  if (r.type === 'throw') {
+                    var o = r.arg;
+                    S(n);
+                  }
+                  return o;
+                }
+              }
+              throw new Error('illegal catch attempt');
+            },
+            delegateYield(e, t, n) {
+              return (
+                (this.delegate = { iterator: O(e), resultName: t, nextLoc: n }),
+                this.method === 'next' && (this.arg = void 0),
+                d
+              );
+            },
+          }),
+          e
+        );
+      }
+      function wt(e, t) {
+        const n = Object.keys(e);
+        if (Object.getOwnPropertySymbols) {
+          let r = Object.getOwnPropertySymbols(e);
+          t && (r = r.filter((t) => Object.getOwnPropertyDescriptor(e, t).enumerable)), n.push.apply(n, r);
+        }
+        return n;
+      }
+      function _t(e) {
+        for (let t = 1; t < arguments.length; t++) {
+          var n = arguments[t] != null ? arguments[t] : {};
+          t % 2
+            ? wt(Object(n), !0).forEach((t) => {
+                xt(e, t, n[t]);
+              })
+            : Object.getOwnPropertyDescriptors
+            ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(n))
+            : wt(Object(n)).forEach((t) => {
+                Object.defineProperty(e, t, Object.getOwnPropertyDescriptor(n, t));
+              });
+        }
+        return e;
+      }
+      function xt(e, t, n) {
+        return (
+          (t = (function (e) {
+            const t = (function (e, t) {
+              if (gt(e) !== 'object' || e === null) return e;
+              const n = e[Symbol.toPrimitive];
+              if (void 0 !== n) {
+                const r = n.call(e, t);
+                if (gt(r) !== 'object') return r;
+                throw new TypeError('@@toPrimitive must return a primitive value.');
+              }
+              return String(e);
+            })(e, 'string');
+            return gt(t) === 'symbol' ? t : String(t);
+          })(t)) in e
+            ? Object.defineProperty(e, t, { value: n, enumerable: !0, configurable: !0, writable: !0 })
+            : (e[t] = n),
+          e
+        );
+      }
+      function kt(e, t, n, r, o, i, a) {
+        try {
+          var s = e[i](a);
+          var c = s.value;
+        } catch (e) {
+          return void n(e);
+        }
+        s.done ? t(c) : Promise.resolve(c).then(r, o);
+      }
+      const St = (function () {
+        let e;
+        const t =
+          ((e = bt().mark(function e(t) {
+            let n;
+            let o;
+            let i;
+            let a;
+            let s;
+            let c;
+            let d;
+            let h;
+            let p;
+            let f;
+            let v;
+            let m;
+            let y;
+            let g;
+            let b;
+            let w;
+            let _;
+            return bt().wrap((e) => {
+              for (;;)
+                switch ((e.prev = e.next)) {
+                  case 0:
+                    if (
+                      (t.preventDefault(),
+                      (n = window.vtexjs.checkout.orderForm.items),
+                      (o = window.vtexjs.checkout.orderForm.shippingData.address),
+                      (i = Y(n)),
+                      (a = i.hasTVs),
+                      (s = i.hasSimCards),
+                      $('select').change(),
+                      (c = {}),
+                      (d = "[name='selected-address']:checked"),
+                      !($(d).length < 1))
+                    ) {
+                      e.next = 10;
+                      break;
+                    }
+                    return (
+                      $('html, body').animate({ scrollTop: $('#bash--delivery-form').offset().top }, 400),
+                      e.abrupt('return')
+                    );
+                  case 10:
+                    return Fe(), (e.next = 13), ye($(d).val());
+                  case 13:
+                    return (h = e.sent), (c = _t(_t({}, o), h)), (e.next = 17), lt(c, { validateExtraFields: !1 });
+                  case 17:
+                    if (e.sent.success) {
+                      e.next = 23;
+                      break;
+                    }
+                    return console.error('Delivery Form - Address Validation error'), W(), e.abrupt('return');
+                  case 23:
+                    if (((p = {}), (f = {}), !s)) {
+                      e.next = 32;
+                      break;
+                    }
+                    for (v = ke, m = 0; m < v.length; m++)
+                      v[m] === 'sameAddress' && ((y = $('#bash--input-'.concat(v[m])).is(':checked')), (p[v[m]] = y)),
+                        (p[v[m]] = $('#bash--input-rica_'.concat(v[m])).val() || '');
+                    return (e.next = 30), be(u, p, !0);
+                  case 30:
+                    (g = e.sent), console.info({ ricaDataSent: g });
+                  case 32:
+                    if (!a) {
+                      e.next = 39;
+                      break;
+                    }
+                    for (b = Se, w = 0; w < b.length; w++)
+                      o[b[w]] || (c[b[w]] = $('#bash--input-tv_'.concat(b[w])).val()),
+                        (f[b[w]] = $('#bash--input-tv_'.concat(b[w])).val() || '');
+                    return (e.next = 37), be(l, f);
+                  case 37:
+                    (_ = e.sent), console.info({ tvDataSent: _ });
+                  case 39:
+                    return (e.next = 41), me(c);
+                  case 41:
+                    $('.bash--delivery-container').css('display', 'none'), (window.location.hash = r), W();
+                  case 44:
+                  case 'end':
+                    return e.stop();
+                }
+            }, e);
+          })),
+          function () {
+            const t = this;
+            const n = arguments;
+            return new Promise((r, o) => {
+              const i = e.apply(t, n);
+              function a(e) {
+                kt(i, r, o, a, s, 'next', e);
+              }
+              function s(e) {
+                kt(i, r, o, a, s, 'throw', e);
+              }
+              a(void 0);
+            });
+          });
+        return function (e) {
+          return t.apply(this, arguments);
+        };
+      })();
+      const Et = (function () {
+        const e = { view: 'list', hasFurn: !1, hasTVs: !1, hasSim: !1, hasFurnMixed: !1, hasFurnOnly: !1 };
+        const n = function () {
+          if (
+            (window.location.hash === t &&
+              $('.shipping-summary-info').length &&
+              $('.shipping-summary-info').text() === 'Waiting for more information' &&
+              ((window.location.hash = '#/profile'),
+              Je({
+                action: 'stepRedirect',
+                label: 'redirectShippingToProfile',
+                description: 'User redirect to profile - "Waiting for more information" error.',
+              })),
+            !$('#bash--delivery-container').length)
+          ) {
+            if (window.vtexjs.checkout.orderForm) {
+              let n;
+              const r = (n = window.vtexjs.checkout.orderForm) === null || void 0 === n ? void 0 : n.items;
+              const o = Y(r);
+              const i = o.hasFurniture;
+              const a = o.hasTVs;
+              const s = o.hasSimCards;
+              const c = o.hasFurnitureMixed;
+              const u = o.hasFurnitureOnly;
+              (e.hasFurn = i), (e.hasTVs = a), (e.hasSim = s), (e.hasFurnOnly = u), (e.hasFurnMixed = c);
+            }
+            $('.shipping-data .box-step').append(st({ hasFurnOnly: e.hasFurnOnly, hasFurnMixed: e.hasFurnMixed })),
+              e.hasFurn
+                ? $('#shipping-data:not(.has-furniture)').addClass('has-furniture')
+                : $('#shipping-data.has-furniture').removeClass('has-furniture'),
+              (e.hasFurn || e.hasSim || e.hasTVs) &&
+                ($('#bash-delivery-options').before(ct({ hasSim: e.hasSim, hasTV: e.hasTVs })),
+                e.hasSim && Ge(),
+                e.hasTVs && Ve()),
+              $('select, input').on('invalid', function () {
+                const e = this;
+                $(e)[0].setCustomValidity(' '),
+                  $(e).parents('form').addClass('show-form-errors'),
+                  $(e).off('change keyUp'),
+                  $(e).on('change keyUp', () => {
+                    $(e)[0].setCustomValidity('');
+                  });
+              });
+          }
+        };
+        return (
+          $(window).unload(() => {
+            ge();
+          }),
+          $(document).ready(() => {
+            ge(),
+              window.location.hash === t
+                ? (n(),
+                  $('.bash--delivery-container.hide').removeClass('hide'),
+                  $('.bash--delivery-container').css('display', 'flex'))
+                : $('.bash--delivery-container:not(.hide)').length &&
+                  ($('.bash--delivery-container:not(.hide)').addClass('hide'),
+                  $('.bash--delivery-container').css('display', 'none'));
+          }),
+          $(window).on('hashchange', () => {
+            console.info('hashchange TO SHIPPING'),
+              window.location.hash === t
+                ? (setTimeout(() => {
+                    console.info('SCROLL TO SHIPPING'),
+                      document.getElementById('shipping-data').scrollIntoView({ behavior: 'smooth' });
+                  }, 500),
+                  n(),
+                  Ye(),
+                  $('.bash--delivery-container').css('display', 'flex'),
+                  $('.bash--delivery-container.hide').removeClass('hide'))
+                : $('.bash--delivery-container:not(.hide)').length &&
+                  ($('.bash--delivery-container:not(.hide)').addClass('hide'),
+                  $('.bash--delivery-container').css('display', 'none'));
+          }),
+          $(window).on('orderFormUpdated.vtex', () => {
+            let e;
+            let i;
+            const a = (e = window.vtexjs.checkout.orderForm) === null || void 0 === e ? void 0 : e.items;
+            const s =
+              (i = window.vtexjs.checkout.orderForm.shippingData) === null ||
+              void 0 === i ||
+              (i = i.address) === null ||
+              void 0 === i
+                ? void 0
+                : i.addressType;
+            const c = Y(a);
+            const d = c.hasTVs;
+            const h = c.hasSimCards;
+            const p = c.hasFurnitureMixed;
+            const f = window.vtexjs.checkout.orderForm.messages;
+            if (window.location.hash === t) {
+              const v = f.filter((e) => e.status === 'error');
+              v && We(v);
+            }
+            if (s === o) {
+              if (d || h || p)
+                return (
+                  window.location.hash !== t && (window.location.hash = t),
+                  void setTimeout(() => {
+                    let e;
+                    return (e = document.getElementById('shipping-option-delivery')) === null || void 0 === e
+                      ? void 0
+                      : e.click();
+                  }, 2e3)
+                );
+              $('#shipping-data:not(collection-active)').addClass('collection-active'),
+                $('.delivery-active').removeClass('delivery-active');
+            } else
+              n(),
+                $('#shipping-data:not(delivery-active)').addClass('delivery-active'),
+                $('.collection-active').removeClass('collection-active');
+            Ye(),
+              (function () {
+                if (window.vtexjs.checkout.orderForm.totalizers) {
+                  const e = (
+                    window.vtexjs.checkout.orderForm.totalizers.find((e) => e.id === 'Shipping') || { value: 5e3 }
+                  ).value;
+                  let t = 'Free';
+                  e > 0 && (t = 'R'.concat((e / 100).toFixed(2).replace('.00', ''))),
+                    $('#bash--delivery-fee').length > 0 &&
+                      (document.getElementById('bash--delivery-fee').innerHTML = t);
+                }
+              })(),
+              window.location.hash !== r ||
+                (function () {
+                  let e;
+                  const t = (e = window.vtexjs.checkout.orderForm) === null || void 0 === e ? void 0 : e.items;
+                  const n = Y(t);
+                  const r = n.hasTVs;
+                  const o = n.hasSimCards;
+                  let i = !0;
+                  if ((r && (we(l).tvID || (i = !1)), o)) {
+                    const a = we(u);
+                    (a.idOrPassport && a.streetAddress && a.postalCode) || (i = !1);
+                  }
+                  return i;
+                })() ||
+                (H(),
+                (window.location.hash = t),
+                Je({
+                  action: 'stepRedirect',
+                  label: 'redirectPaymentToShipping',
+                  description: 'User redirect to shipping because Extra Fields are invalid.',
+                }));
+          }),
+          $(document).on('click', 'a[data-view]', function (e) {
+            e.preventDefault();
+            const t = $(this).data('view');
+            const n = decodeURIComponent($(this).data('content'));
+            window.postMessage({ action: 'setDeliveryView', view: t, content: n });
+          }),
+          $(document).on('click', '#no-address-search-results', () => {
+            document.getElementById('bash--address-form').reset(),
+              document.getElementById('bash--input-street').focus();
+          }),
+          $(document).on('change', 'input[type="radio"][name="selected-address"]', function () {
+            const e = this;
+            const t = (function (e) {
+              try {
+                return JSON.parse(decodeURIComponent(e));
+              } catch (e) {}
+            })($(this).parents('.bash--address-listing').data('address'));
+            document.forms['bash--delivery-form'] &&
+              (document.forms['bash--delivery-form'].reset(),
+              $('#bash--input-lat').val(''),
+              $('#bash--input-lng').val(''),
+              document.forms['bash--delivery-form'].classList.remove('show-form-errors')),
+              t &&
+                ye(t.addressName)
+                  .then((n) => {
+                    lt(n || t, { validateExtraFields: !1 }),
+                      $('input[type="radio"][name="selected-address"]:checked').attr('checked', !1),
+                      $(e).attr('checked', !0);
+                  })
+                  .catch((e) => {
+                    console.error('Could not get address - address selection', e == null ? void 0 : e.message);
+                  });
+          }),
+          $(document).on('change', '#bash--input-rica_sameAddress', function () {
+            let e;
+            this.checked
+              ? $('.rica-conditional-fields').slideUp(() => Ge())
+              : ((e = $('#bash--input-rica_idOrPassport').val()),
+                qe(
+                  {
+                    idOrPassport: e != null ? e : '',
+                    fullName: '',
+                    streetAddress: '',
+                    suburb: '',
+                    city: '',
+                    postalCode: '',
+                    province: '',
+                  },
+                  ke,
+                  'rica_',
+                  !0
+                ),
+                $('.rica-conditional-fields').slideDown(() => $('#bash--input-rica_fullName').focus()));
+          }),
+          $(document).on('change', 'input[name="addressType"]', function () {
+            $(this).is(':checked') && ($(this).val() === 'business' ? Z({ focus: !0 }) : J());
+          }),
+          $(document).on('click', '#shipping-option-pickup-in-point, #shipping-option-delivery', function () {
+            $(this).attr('id') === 'shipping-option-pickup-in-point'
+              ? $('#bash--delivery-container').hide()
+              : $('#bash--delivery-container').show();
+          }),
+          $(document).on('submit', '#bash--address-form', yt),
+          $(document).on('submit', '#bash--delivery-form', St),
+          $(document).on('click', '.remove-cart-item', function (e) {
+            let t;
+            e.preventDefault(),
+              ((t = $(this).data('index')),
+              window.vtexjs.checkout.updateItems([{ index: ''.concat(t), quantity: 0 }]).done(() => {
+                W();
+              })).done(() => {
+                W();
+              });
+          }),
+          $(document).on('keyup click', '.invalid', function () {
+            $(this).removeClass('invalid');
+          }),
+          window.addEventListener('message', (e) => {
+            let t;
+            const n = e.data;
+            if (n && n.action)
+              switch (n.action) {
+                case 'setDeliveryView':
+                  if (
+                    ((t = document.querySelector('.bash--delivery-container')) === null ||
+                      void 0 === t ||
+                      t.setAttribute('data-view', n.view),
+                    (n.view === 'address-form' || n.view === 'address-edit') &&
+                      ((function (e) {
+                        const t = document.querySelector(e);
+                        if (t) {
+                          t.setAttribute('type', 'tel'), t.setAttribute('maxlength', 12), (t.value = B(t.value));
+                          const n = $(e);
+                          n.keyup((e) => {
+                            let t;
+                            const r = e.currentTarget.value.replace(/[^0-9+*#]+/g, '').trim();
+                            const o = e.keyCode === 8;
+                            (t = B(r, !o)),
+                              n.parent('.text').removeClass('error'),
+                              n.parent('.text').find('span.error').hide(),
+                              n.val(t);
+                          });
+                        }
+                      })('#bash--input-receiverPhone'),
+                      n.content))
+                  )
+                    try {
+                      const r = JSON.parse(decodeURIComponent($('#'.concat(n.content)).data('address')));
+                      Re(r);
+                    } catch (e) {
+                      console.warn('Could not parse address Json', n.content);
+                    }
+                  break;
+                case 'FB_LOG':
+                  break;
+                default:
+                  console.error('Unknown action', n.action);
+              }
+          }),
+          { state: e, init() {} }
+        );
+      })();
+      const Ot = Et;
+      const jt = (function () {
+        const e = {
+          showFurnitureForm: !1,
+          showTVIDForm: !1,
+          showRICAForm: !1,
+          showTVorRICAMsg: !1,
+          showMixedProductsMsg: !1,
+          runningObserver: !1,
+        };
+        const t = function () {
+          setTimeout(() => {
+            !(function () {
+              if (window.vtexjs.checkout.orderForm) {
+                const t = window.vtexjs.checkout.orderForm.items;
+                const n = Y(t);
+                const r = n.hasTVs;
+                const o = n.hasSimCards;
+                const i = n.hasFurnitureMixed;
+                (e.showTVIDForm = r),
+                  (e.showRICAForm = o),
+                  (e.showTVorRICAMsg = e.showTVIDForm || e.showRICAForm),
+                  (e.showMixedProductsMsg = i);
+              }
+            })(),
+              e.showFurnitureForm
+                ? $('div.subheader').css('display', 'none')
+                : $('div.subheader').css('display', 'block');
+          }, 500);
+        };
+        return (
+          $(document).ready(() => {
+            t();
+          }),
+          $(window).on('hashchange orderFormUpdated.vtex', () => {
+            t();
+          }),
+          $(document).on('click', '#shipping-data .btn-link.vtex-omnishipping-1-x-btnDelivery', () => {
+            t();
+          }),
+          {
+            state: e,
+            setView(e) {
+              let t;
+              (t = document) === null ||
+                void 0 === t ||
+                (t = t.body) === null ||
+                void 0 === t ||
+                t.setAttribute('data-delivery-view', e);
+            },
+            showCustomSections() {
+              let t;
+              const n = $('#tfg-custom-tvrica-msg').length > 0;
+              const r = $('#tfg-custom-mixed-msg').length > 0;
+              let o = !1;
+              (e.showTVorRICAMsg || e.showMixedProductsMsg) &&
+                ($('.vtex-omnishipping-1-x-deliveryChannelsWrapper.custom-disabled').length < 1 &&
+                  ($('#shipping-option-delivery').trigger('click'),
+                  $('.vtex-omnishipping-1-x-deliveryChannelsWrapper').addClass('custom-disabled')),
+                e.showTVorRICAMsg &&
+                  !n &&
+                  ($('.vtex-omnishipping-1-x-addressFormPart1').prepend(
+                    '\n  <div id="tfg-custom-tvrica-msg" class="tfg-custom-msg">\n    <p class="tfg-custom-icon"></p>\n    <p class="tfg-custom-text">\n      You can\'t collect this order in store because your cart contains items \n      which require either RICA or TV License validation.\n    </p>\n  </div>\n'
+                  ),
+                  (o = !0)),
+                e.showMixedProductsMsg && !r && ($('.vtex-omnishipping-1-x-addressFormPart1').prepend(''), (o = !0))),
+                o &&
+                  ((t = '.tfg-custom-step'),
+                  $(t).addClass('custom-step-border'),
+                  $(t).last().addClass('last-custom-step-border'));
+            },
+            init() {},
+          }
+        );
+      })();
+      const Ct = jt;
+      function $t(e) {
+        return (
+          ($t =
+            typeof Symbol === 'function' && typeof Symbol.iterator === 'symbol'
+              ? function (e) {
+                  return typeof e;
+                }
+              : function (e) {
+                  return e && typeof Symbol === 'function' && e.constructor === Symbol && e !== Symbol.prototype
+                    ? 'symbol'
+                    : typeof e;
+                }),
+          $t(e)
+        );
+      }
+      function Lt() {
+        Lt = function () {
+          return e;
+        };
+        var e = {};
+        const t = Object.prototype;
+        const n = t.hasOwnProperty;
+        const r =
+          Object.defineProperty ||
+          function (e, t, n) {
+            e[t] = n.value;
+          };
+        const o = typeof Symbol === 'function' ? Symbol : {};
+        const i = o.iterator || '@@iterator';
+        const a = o.asyncIterator || '@@asyncIterator';
+        const s = o.toStringTag || '@@toStringTag';
+        function c(e, t, n) {
+          return Object.defineProperty(e, t, { value: n, enumerable: !0, configurable: !0, writable: !0 }), e[t];
+        }
+        try {
+          c({}, '');
+        } catch (e) {
+          c = function (e, t, n) {
+            return (e[t] = n);
+          };
+        }
+        function u(e, t, n, o) {
+          const i = t && t.prototype instanceof h ? t : h;
+          const a = Object.create(i.prototype);
+          const s = new E(o || []);
+          return r(a, '_invoke', { value: _(e, n, s) }), a;
+        }
+        function l(e, t, n) {
+          try {
+            return { type: 'normal', arg: e.call(t, n) };
+          } catch (e) {
+            return { type: 'throw', arg: e };
+          }
+        }
+        e.wrap = u;
+        const d = {};
+        function h() {}
+        function p() {}
+        function f() {}
+        let v = {};
+        c(v, i, function () {
+          return this;
+        });
+        const m = Object.getPrototypeOf;
+        const y = m && m(m(O([])));
+        y && y !== t && n.call(y, i) && (v = y);
+        const g = (f.prototype = h.prototype = Object.create(v));
+        function b(e) {
+          ['next', 'throw', 'return'].forEach((t) => {
+            c(e, t, function (e) {
+              return this._invoke(t, e);
+            });
+          });
+        }
+        function w(e, t) {
+          function o(r, i, a, s) {
+            const c = l(e[r], e, i);
+            if (c.type !== 'throw') {
+              const u = c.arg;
+              const d = u.value;
+              return d && $t(d) == 'object' && n.call(d, '__await')
+                ? t.resolve(d.__await).then(
+                    (e) => {
+                      o('next', e, a, s);
+                    },
+                    (e) => {
+                      o('throw', e, a, s);
+                    }
+                  )
+                : t.resolve(d).then(
+                    (e) => {
+                      (u.value = e), a(u);
+                    },
+                    (e) => o('throw', e, a, s)
+                  );
+            }
+            s(c.arg);
+          }
+          let i;
+          r(this, '_invoke', {
+            value(e, n) {
+              function r() {
+                return new t((t, r) => {
+                  o(e, n, t, r);
+                });
+              }
+              return (i = i ? i.then(r, r) : r());
+            },
+          });
+        }
+        function _(e, t, n) {
+          let r = 'suspendedStart';
+          return function (o, i) {
+            if (r === 'executing') throw new Error('Generator is already running');
+            if (r === 'completed') {
+              if (o === 'throw') throw i;
+              return { value: void 0, done: !0 };
+            }
+            for (n.method = o, n.arg = i; ; ) {
+              const a = n.delegate;
+              if (a) {
+                const s = x(a, n);
+                if (s) {
+                  if (s === d) continue;
+                  return s;
+                }
+              }
+              if (n.method === 'next') n.sent = n._sent = n.arg;
+              else if (n.method === 'throw') {
+                if (r === 'suspendedStart') throw ((r = 'completed'), n.arg);
+                n.dispatchException(n.arg);
+              } else n.method === 'return' && n.abrupt('return', n.arg);
+              r = 'executing';
+              const c = l(e, t, n);
+              if (c.type === 'normal') {
+                if (((r = n.done ? 'completed' : 'suspendedYield'), c.arg === d)) continue;
+                return { value: c.arg, done: n.done };
+              }
+              c.type === 'throw' && ((r = 'completed'), (n.method = 'throw'), (n.arg = c.arg));
+            }
+          };
+        }
+        function x(e, t) {
+          const n = t.method;
+          const r = e.iterator[n];
+          if (void 0 === r)
+            return (
+              (t.delegate = null),
+              (n === 'throw' &&
+                e.iterator.return &&
+                ((t.method = 'return'), (t.arg = void 0), x(e, t), t.method === 'throw')) ||
+                (n !== 'return' &&
+                  ((t.method = 'throw'), (t.arg = new TypeError(`The iterator does not provide a '${n}' method`)))),
+              d
+            );
+          const o = l(r, e.iterator, t.arg);
+          if (o.type === 'throw') return (t.method = 'throw'), (t.arg = o.arg), (t.delegate = null), d;
+          const i = o.arg;
+          return i
+            ? i.done
+              ? ((t[e.resultName] = i.value),
+                (t.next = e.nextLoc),
+                t.method !== 'return' && ((t.method = 'next'), (t.arg = void 0)),
+                (t.delegate = null),
+                d)
+              : i
+            : ((t.method = 'throw'),
+              (t.arg = new TypeError('iterator result is not an object')),
+              (t.delegate = null),
+              d);
+        }
+        function k(e) {
+          const t = { tryLoc: e[0] };
+          1 in e && (t.catchLoc = e[1]),
+            2 in e && ((t.finallyLoc = e[2]), (t.afterLoc = e[3])),
+            this.tryEntries.push(t);
+        }
+        function S(e) {
+          const t = e.completion || {};
+          (t.type = 'normal'), delete t.arg, (e.completion = t);
+        }
+        function E(e) {
+          (this.tryEntries = [{ tryLoc: 'root' }]), e.forEach(k, this), this.reset(!0);
+        }
+        function O(e) {
+          if (e || e === '') {
+            const t = e[i];
+            if (t) return t.call(e);
+            if (typeof e.next === 'function') return e;
+            if (!isNaN(e.length)) {
+              let r = -1;
+              const o = function t() {
+                for (; ++r < e.length; ) if (n.call(e, r)) return (t.value = e[r]), (t.done = !1), t;
+                return (t.value = void 0), (t.done = !0), t;
+              };
+              return (o.next = o);
+            }
+          }
+          throw new TypeError(`${$t(e)} is not iterable`);
+        }
+        return (
+          (p.prototype = f),
+          r(g, 'constructor', { value: f, configurable: !0 }),
+          r(f, 'constructor', { value: p, configurable: !0 }),
+          (p.displayName = c(f, s, 'GeneratorFunction')),
+          (e.isGeneratorFunction = function (e) {
+            const t = typeof e === 'function' && e.constructor;
+            return !!t && (t === p || (t.displayName || t.name) === 'GeneratorFunction');
+          }),
+          (e.mark = function (e) {
+            return (
+              Object.setPrototypeOf ? Object.setPrototypeOf(e, f) : ((e.__proto__ = f), c(e, s, 'GeneratorFunction')),
+              (e.prototype = Object.create(g)),
+              e
+            );
+          }),
+          (e.awrap = function (e) {
+            return { __await: e };
+          }),
+          b(w.prototype),
+          c(w.prototype, a, function () {
+            return this;
+          }),
+          (e.AsyncIterator = w),
+          (e.async = function (t, n, r, o, i) {
+            void 0 === i && (i = Promise);
+            const a = new w(u(t, n, r, o), i);
+            return e.isGeneratorFunction(n) ? a : a.next().then((e) => (e.done ? e.value : a.next()));
+          }),
+          b(g),
+          c(g, s, 'Generator'),
+          c(g, i, function () {
+            return this;
+          }),
+          c(g, 'toString', () => '[object Generator]'),
+          (e.keys = function (e) {
+            const t = Object(e);
+            const n = [];
+            for (const r in t) n.push(r);
+            return (
+              n.reverse(),
+              function e() {
+                for (; n.length; ) {
+                  const r = n.pop();
+                  if (r in t) return (e.value = r), (e.done = !1), e;
+                }
+                return (e.done = !0), e;
+              }
+            );
+          }),
+          (e.values = O),
+          (E.prototype = {
+            constructor: E,
+            reset(e) {
+              if (
+                ((this.prev = 0),
+                (this.next = 0),
+                (this.sent = this._sent = void 0),
+                (this.done = !1),
+                (this.delegate = null),
+                (this.method = 'next'),
+                (this.arg = void 0),
+                this.tryEntries.forEach(S),
+                !e)
+              )
+                for (const t in this)
+                  t.charAt(0) === 't' && n.call(this, t) && !isNaN(+t.slice(1)) && (this[t] = void 0);
+            },
+            stop() {
+              this.done = !0;
+              const e = this.tryEntries[0].completion;
+              if (e.type === 'throw') throw e.arg;
+              return this.rval;
+            },
+            dispatchException(e) {
+              if (this.done) throw e;
+              const t = this;
+              function r(n, r) {
+                return (a.type = 'throw'), (a.arg = e), (t.next = n), r && ((t.method = 'next'), (t.arg = void 0)), !!r;
+              }
+              for (let o = this.tryEntries.length - 1; o >= 0; --o) {
+                const i = this.tryEntries[o];
+                var a = i.completion;
+                if (i.tryLoc === 'root') return r('end');
+                if (i.tryLoc <= this.prev) {
+                  const s = n.call(i, 'catchLoc');
+                  const c = n.call(i, 'finallyLoc');
+                  if (s && c) {
+                    if (this.prev < i.catchLoc) return r(i.catchLoc, !0);
+                    if (this.prev < i.finallyLoc) return r(i.finallyLoc);
+                  } else if (s) {
+                    if (this.prev < i.catchLoc) return r(i.catchLoc, !0);
+                  } else {
+                    if (!c) throw new Error('try statement without catch or finally');
+                    if (this.prev < i.finallyLoc) return r(i.finallyLoc);
+                  }
+                }
+              }
+            },
+            abrupt(e, t) {
+              for (let r = this.tryEntries.length - 1; r >= 0; --r) {
+                const o = this.tryEntries[r];
+                if (o.tryLoc <= this.prev && n.call(o, 'finallyLoc') && this.prev < o.finallyLoc) {
+                  var i = o;
+                  break;
+                }
+              }
+              i && (e === 'break' || e === 'continue') && i.tryLoc <= t && t <= i.finallyLoc && (i = null);
+              const a = i ? i.completion : {};
+              return (
+                (a.type = e),
+                (a.arg = t),
+                i ? ((this.method = 'next'), (this.next = i.finallyLoc), d) : this.complete(a)
+              );
+            },
+            complete(e, t) {
+              if (e.type === 'throw') throw e.arg;
+              return (
+                e.type === 'break' || e.type === 'continue'
+                  ? (this.next = e.arg)
+                  : e.type === 'return'
+                  ? ((this.rval = this.arg = e.arg), (this.method = 'return'), (this.next = 'end'))
+                  : e.type === 'normal' && t && (this.next = t),
+                d
+              );
+            },
+            finish(e) {
+              for (let t = this.tryEntries.length - 1; t >= 0; --t) {
+                const n = this.tryEntries[t];
+                if (n.finallyLoc === e) return this.complete(n.completion, n.afterLoc), S(n), d;
+              }
+            },
+            catch(e) {
+              for (let t = this.tryEntries.length - 1; t >= 0; --t) {
+                const n = this.tryEntries[t];
+                if (n.tryLoc === e) {
+                  const r = n.completion;
+                  if (r.type === 'throw') {
+                    var o = r.arg;
+                    S(n);
+                  }
+                  return o;
+                }
+              }
+              throw new Error('illegal catch attempt');
+            },
+            delegateYield(e, t, n) {
+              return (
+                (this.delegate = { iterator: O(e), resultName: t, nextLoc: n }),
+                this.method === 'next' && (this.arg = void 0),
+                d
+              );
+            },
+          }),
+          e
+        );
+      }
+      function Pt(e, t, n, r, o, i, a) {
+        try {
+          var s = e[i](a);
+          var c = s.value;
+        } catch (e) {
+          return void n(e);
+        }
+        s.done ? t(c) : Promise.resolve(c).then(r, o);
+      }
+      const Nt = document.createElement('script');
+      Nt.setAttribute('src', 'https://unpkg.com/penpal@^6/dist/penpal.min.js'), document.head.appendChild(Nt);
+      const Tt = (function () {
+        let e;
+        const t =
+          ((e = Lt().mark(function e() {
+            let t;
+            let n;
+            return Lt().wrap(
+              (e) => {
+                for (;;)
+                  switch ((e.prev = e.next)) {
+                    case 0:
+                      if (
+                        ((n =
+                          (t = window) === null ||
+                          void 0 === t ||
+                          (t = t.vtexjs) === null ||
+                          void 0 === t ||
+                          (t = t.checkout) === null ||
+                          void 0 === t
+                            ? void 0
+                            : t.orderForm),
+                        (e.prev = 1),
+                        n)
+                      ) {
+                        e.next = 6;
+                        break;
+                      }
+                      return (e.next = 5), window.vtexjs.checkout.getOrderForm();
+                    case 5:
+                      n = e.sent;
+                    case 6:
+                      n && (Ct.init(), it.init(), Ot.init()), (e.next = 16);
+                      break;
+                    case 9:
+                      (e.prev = 9),
+                        (e.t0 = e.catch(1)),
+                        console.error(
+                          'VTEX_ORDERFORM_ERROR: Could not load at custom-shipping-steps Entry Point',
+                          e.t0
+                        ),
+                        Je({
+                          eventCategory: 'Checkout_SystemError',
+                          action: 'OrderFormFailed',
+                          label: 'Could not getOrderForm() from vtex',
+                          description: 'Could not load orderForm on custom-shipping-steps Entry Point',
+                        }),
+                        Ct.init(),
+                        it.init(),
+                        Ot.init();
+                    case 16:
+                    case 'end':
+                      return e.stop();
+                  }
+              },
+              e,
+              null,
+              [[1, 9]]
+            );
+          })),
+          function () {
+            const t = this;
+            const n = arguments;
+            return new Promise((r, o) => {
+              const i = e.apply(t, n);
+              function a(e) {
+                Pt(i, r, o, a, s, 'next', e);
+              }
+              function s(e) {
+                Pt(i, r, o, a, s, 'throw', e);
+              }
+              a(void 0);
+            });
+          });
+        return function () {
+          return t.apply(this, arguments);
+        };
+      })();
+      document.addEventListener('DOMContentLoaded', Tt);
+    })();
+})();
