@@ -272,7 +272,7 @@ const DeliverController = (() => {
   });
 
   // Remove address error when user selects an address.
-  document.on('click', '.bash--radio-option', () => {
+  $(document).on('click', '.bash--radio-option', () => {
     $('#bash-delivery-error-container').html('');
   });
 
