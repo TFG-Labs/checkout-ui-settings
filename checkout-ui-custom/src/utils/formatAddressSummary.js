@@ -1,15 +1,22 @@
+// @ts-nocheck
 /*
 James Smith - 0211234567
 Bash.com, 1 Energy Lane, The Apex, 6th Floor
 Cape Town, WC, 7441
   */
 
+import DeliverySummaryCollectButton from '../partials/Deliver/DeliverySummaryCollectButton';
 import { AD_TYPE, DELIVER_APP, PICKUP_APP } from './const';
 import { formatPhoneNumber, prependZero } from './phoneFields';
 import { getOrderFormCustomData } from './services';
 
 const formatDeliverySummary = () => {
   if (document.getElementById('summary-delivery-recipient') !== null) return;
+
+  // Add Collect tab
+  if (!document.getElementById('injected-collect-button')) {
+    $('.shipping-summary-placeholder').prepend(DeliverySummaryCollectButton());
+  }
 
   const {
     shippingData: { selectedAddresses },
