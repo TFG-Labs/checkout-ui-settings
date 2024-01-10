@@ -198,3 +198,38 @@ the styles of this application are stored in the app [tfg-custom-checkout](https
 ## Contributing
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+#### How to Clear Your Address:
+
+Run the following in your console.
+
+```
+vtexjs.checkout.getOrderForm()
+  .then(function(orderForm) {
+    // Create an object with empty address fields
+    var emptyAddress = {
+      addressType: 'residential',
+      receiverName: '',
+      addressId: '',
+      postalCode: '0001',
+      city: '',
+      state: '',
+      country: 'ZAF',
+      street: '',
+      number: '',
+      neighborhood: '',
+      complement: '',
+      reference: '',
+      geoCoordinates: ['','']
+    };
+
+    // Update the shipping data
+    return vtexjs.checkout.sendAttachment('shippingData', { address: emptyAddress });
+  })
+  .done(function(orderForm) {
+    console.log('Address cleared:', orderForm.shippingData);
+  })
+  .fail(function(error) {
+    console.error('Error clearing the address:', error);
+  });
+```
