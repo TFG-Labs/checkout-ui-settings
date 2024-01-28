@@ -62,15 +62,7 @@ const getUrlApi = () => {
 
 const BASE_URL_API = getUrlApi();
 
-const FURNITURE_FEE_LINK = `
-<a 
-  href="${FURNITURE_FEES}"
-  class="furniture-fees-link" 
-  target="_blank"
->
-  Furniture delivery costs
-</a>
-`;
+const FURNITURE_FEE_LINK = '';
 
 const TV_CAT = '938942995';
 const SIM_CAT = '24833302';

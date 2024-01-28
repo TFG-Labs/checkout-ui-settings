@@ -162,6 +162,14 @@ const CollectController = (() => {
         $(`${parent} span.error`).show();
         scrollToInvalidField();
         state.validForm = false;
+
+        window.postMessage(
+          {
+            type: 'COLLECTION_VALIDATION_ERROR',
+            message: `${field} is invalid`,
+          },
+          '*'
+        );
       } else {
         $(parent).removeClass('error');
       }
@@ -172,18 +180,6 @@ const CollectController = (() => {
     $('span.help.error').remove();
     state.validForm = true;
     checkFields(['pickup-receiver', 'custom-pickup-complement']);
-  };
-
-  const updateCollectSummary = (name, number) => {
-    if (!name || !number) return;
-    if (!$('.vtex-omnishipping-1-x-SummaryItemAddress .collect-receiver').length) {
-      $('.vtex-omnishipping-1-x-SummaryItemAddress').append(`<p class="collect-receiver">
-      ${name} - ${number}
-      </p>`);
-      return;
-    }
-
-    $('.collect-receiver').html(`${name} - ${number} `);
   };
 
   const saveCollectFields = () => {
@@ -201,12 +197,10 @@ const CollectController = (() => {
       try {
         window.vtexjs.checkout
           .getOrderForm()
-          .then((orderForm) => {
+          .then(async (orderForm) => {
             const { address } = orderForm.shippingData;
 
-            sendOrderFormCustomData(PICKUP_APP, { phone: collectPhone }).then(() => {
-              updateCollectSummary(address.receiverName, collectPhone);
-            });
+            await sendOrderFormCustomData(PICKUP_APP, { phone: collectPhone });
 
             return window.vtexjs.checkout.calculateShipping(address);
           })
