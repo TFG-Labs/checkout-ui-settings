@@ -10,8 +10,8 @@
     "editor.formatOnPaste": true,
     "editor.formatOnSave": true,
     "editor.codeActionsOnSave": {
-        "source.organizeImports": true,
-        "source.fixAll": true
+        "source.organizeImports": "explicit",
+        "source.fixAll": "explicit"
     },
     "eslint.alwaysShowStatus": true,
     "emmet.triggerExpansionOnTab": true,
