@@ -2,7 +2,7 @@
 import { InputError } from '../partials';
 import { PickupPhoneField } from '../partials/AddressForm';
 import PickupContainer from '../partials/Collect/PickupContainer';
-import { getBestRecipient, setCollectButtonLabel, setPickupLoading } from '../partials/Deliver/utils';
+import { getBestRecipient, setPickupLoading } from '../partials/Deliver/utils';
 import { AD_TYPE, GEOLOCATE, MANUAL, NONE, PICKUP, PICKUP_APP, STEPS } from '../utils/const';
 import { clearLoaders, getSpecialCategories, isValidNumberBash, scrollToInvalidField } from '../utils/functions';
 import { getBestPhoneNumber } from '../utils/phoneFields';
@@ -274,7 +274,6 @@ const CollectController = (() => {
       state.inCollect = $('#shipping-option-pickup-in-point').hasClass('shp-method-option-active');
       state.pickupSelected = $('div.ask-for-geolocation').length === 0;
 
-      setCollectButtonLabel();
       prePopulateReceiverName();
 
       if (state.inCollect) {

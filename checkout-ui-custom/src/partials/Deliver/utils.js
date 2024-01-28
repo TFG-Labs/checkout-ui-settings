@@ -405,17 +405,4 @@ export const showAlertBox = (alertText = 'Address saved') => {
   }, 5000);
 };
 
-export const setCollectButtonLabel = () => {
-  const { totalizers } = window?.vtexjs?.checkout.orderForm;
-  const itemsValue = totalizers.find((x) => x.id === 'Items')?.value;
-  const discounts = totalizers.find((x) => x.id === 'Discounts')?.value || 0;
-
-  // Collection is free, or the order is over the free shipping threshold
-  const isFree = itemsValue + discounts > FREE_SHIPPING_THRESHOLD || COLLECT_FEE === 0;
-
-  $('#shipping-option-pickup-in-point')
-    .find('.shp-method-option-text')
-    .attr('data-fee', isFree && 'free');
-};
-
 export default mapGoogleAddress;
