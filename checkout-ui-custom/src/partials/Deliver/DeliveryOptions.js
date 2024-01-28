@@ -1,4 +1,6 @@
+// @ts-nocheck
 /* eslint-disable no-nested-ternary */
+import { DELIVERY_FEE } from '../../utils/const';
 import Radio from './Elements/Radio';
 import FurnitureDeliveryOptions from './FurnitureDelivery';
 
@@ -25,7 +27,7 @@ const DeliveryOptions = ({ hasFurnOnly, hasFurnitureMixed }) => {
    </div>
 
   <div id="bash--delivery-fee" class="bash--delivery-fee">
-    R60
+    R${DELIVERY_FEE / 100}
   </div>
 </label>
 
