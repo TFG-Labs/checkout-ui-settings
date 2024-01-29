@@ -1,11 +1,7 @@
 // @ts-nocheck
-/*
-James Smith - 0211234567
-Bash.com, 1 Energy Lane, The Apex, 6th Floor
-Cape Town, WC, 7441
-  */
 
-import DeliverySummaryCollectButton from '../partials/Deliver/DeliverySummaryCollectButton';
+// import DeliverySummaryCollectButton from '../partials/Deliver/DeliverySummaryCollectButton';
+import PuntCollect from '../partials/Deliver/PuntCollect';
 import { AD_TYPE, DELIVER_APP, PICKUP_APP } from './const';
 import { formatPhoneNumber, prependZero } from './phoneFields';
 import { getOrderFormCustomData } from './services';
@@ -14,8 +10,13 @@ const formatDeliverySummary = () => {
   if (document.getElementById('summary-delivery-recipient') !== null) return;
 
   // Add Collect tab
-  if (!document.getElementById('injected-collect-button')) {
-    $('.shipping-summary-placeholder').prepend(DeliverySummaryCollectButton());
+  // if (!document.getElementById('injected-collect-button')) {
+  //   $('.shipping-summary-placeholder').prepend(DeliverySummaryCollectButton());
+  // }
+
+  // Add Punt Collect text
+  if (!document.getElementById('punt-collect')) {
+    $('.delivery-active .shp-summary-group').append(PuntCollect());
   }
 
   const {
