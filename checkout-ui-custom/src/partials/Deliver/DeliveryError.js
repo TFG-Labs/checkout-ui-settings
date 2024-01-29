@@ -29,4 +29,12 @@ export const DeliveryError = ({ text, fields }) => {
 `;
 };
 
+export const NoAddressSelectedError = () => ` 
+<div id="bash-delivery-error" class="notification error"  >
+   <div class="notification-content">
+      <p>Select a delivery address.</p>
+   </div>  
+</div>  
+`;
+
 export default DeliveryErrorContainer;

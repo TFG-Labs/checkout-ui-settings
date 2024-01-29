@@ -270,11 +270,11 @@ const CollectController = (() => {
       state.collectReset = true;
     });
 
-    prePopulateReceiverName();
-
     if (window.location.hash === STEPS.SHIPPING && shippingLoaded) {
       state.inCollect = $('#shipping-option-pickup-in-point').hasClass('shp-method-option-active');
       state.pickupSelected = $('div.ask-for-geolocation').length === 0;
+
+      prePopulateReceiverName();
 
       if (state.inCollect) {
         if (

@@ -1,3 +1,4 @@
+// @ts-nocheck
 // Checkout steps
 const STEPS = {
   CART: '#/cart',
@@ -35,6 +36,11 @@ const DELIVER_APP = 'deliver';
 const FURNITURE_FEES =
   'http://image.tfgmedia.co.za/image/1/process/500x790?source=http://cdn.tfgmedia.co.za' +
   '/15/Marketing/HTMLPages/Furniture_Delivery_Fees_tab_image.jpg';
+
+// SHIPPING
+export const DELIVERY_FEE = window?.BASH_DELIVERY_FEE || 5000; // 6000 from 4 Feb 2024
+export const COLLECT_FEE = window?.BASH_COLLECT_FEE || 0; // 2500 from 4 Feb 2024
+export const FREE_SHIPPING_THRESHOLD = window?.BASH_FREE_THRESHOLD || 50000;
 
 const COUNTRIES = {
   za: { code: 'za', phonePlaceholder: '(+27)' }, // South Africa
