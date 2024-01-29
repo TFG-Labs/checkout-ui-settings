@@ -54,7 +54,6 @@ const DeliverController = (() => {
 
   const setupDeliver = () => {
     unblockShippingError();
-
     if ($('#bash--delivery-container').length) return;
 
     if (window.vtexjs.checkout.orderForm) {

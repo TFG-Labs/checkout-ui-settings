@@ -1,5 +1,13 @@
 // @ts-nocheck
-import { PICKUP, RICA_APP, TV_APP } from '../../utils/const';
+import {
+  AD_TYPE,
+  COLLECT_FEE,
+  DELIVERY_FEE,
+  FREE_SHIPPING_THRESHOLD,
+  PICKUP,
+  RICA_APP,
+  TV_APP,
+} from '../../utils/const';
 import { getSpecialCategories, hideBusinessName, isValidNumberBash, showBusinessName } from '../../utils/functions';
 import isInSouthAfrica from '../../utils/isInSouthAfrica';
 import { getBestPhoneNumber } from '../../utils/phoneFields';
@@ -346,7 +354,10 @@ export const updateDeliveryFeeDisplay = () => {
   if (!window.vtexjs.checkout.orderForm.totalizers) return;
 
   const { value: shippingFee } = window.vtexjs.checkout.orderForm.totalizers.find((item) => item.id === 'Shipping') || {
-    value: 5000,
+    value:
+      window.vtexjs.checkout.orderForm?.shippingData?.address?.addressType === AD_TYPE.PICKUP
+        ? COLLECT_FEE
+        : DELIVERY_FEE,
   };
 
   let feeText = 'Free';
