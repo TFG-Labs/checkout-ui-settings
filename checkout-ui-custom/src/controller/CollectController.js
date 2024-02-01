@@ -318,10 +318,10 @@ const CollectController = (() => {
           const savingCollect = localStorage.getItem('saving-shipping-collect');
 
           if (!savingCollect) {
-            const { phone } = getOrderFormCustomData(PICKUP_APP);
+            const customData = getOrderFormCustomData(PICKUP_APP);
 
             /* Redirect to shipping if required fields are empty */
-            if (address && address.addressType === AD_TYPE.PICKUP && (!address.receiverName || !phone)) {
+            if (address && address.addressType === AD_TYPE.PICKUP && (!address.receiverName || !customData?.phone)) {
               window.location.hash = STEPS.SHIPPING;
               localStorage.setItem('shipping-incomplete-values', true);
               sendEvent({

@@ -260,6 +260,12 @@ const DeliverController = (() => {
     }
   });
 
+  // From delivery summary view, click into Collect form.
+  $(document).on('click', ' #punt-collect', () => {
+    document.getElementById('edit-shipping-data').click();
+    setTimeout(() => document.getElementById('shipping-option-pickup-in-point').click(), 200);
+  });
+
   $(document).on('submit', '#bash--address-form', submitAddressForm);
   $(document).on('submit', '#bash--delivery-form', submitDeliveryForm);
 
