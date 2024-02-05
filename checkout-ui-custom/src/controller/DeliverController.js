@@ -1,3 +1,4 @@
+// @ts-nocheck
 /* eslint-disable func-names */
 import DeliverContainer from '../partials/Deliver/DeliverContainer';
 import ExtraFieldsContainer from '../partials/Deliver/ExtraFieldsContainer';
@@ -10,15 +11,16 @@ import {
   populateRicaFields,
   populateTVFields,
   setCartClasses,
-  updateDeliveryFeeDisplay
+  updateDeliveryFeeDisplay,
 } from '../partials/Deliver/utils';
 import { AD_TYPE, STEPS } from '../utils/const';
+import formatAddressSummary from '../utils/formatAddressSummary';
 import {
   clearLoaders,
   getSpecialCategories,
   hideBusinessName,
   scrollToInvalidField,
-  showBusinessName
+  showBusinessName,
 } from '../utils/functions';
 import { preparePhoneField } from '../utils/phoneFields';
 import sendEvent from '../utils/sendEvent';
@@ -52,7 +54,6 @@ const DeliverController = (() => {
 
   const setupDeliver = () => {
     unblockShippingError();
-
     if ($('#bash--delivery-container').length) return;
 
     if (window.vtexjs.checkout.orderForm) {
@@ -70,7 +71,7 @@ const DeliverController = (() => {
       DeliverContainer({
         hasFurnOnly: state.hasFurnOnly,
         hasFurnMixed: state.hasFurnMixed,
-      }),
+      })
     );
 
     if (state.hasFurn) {
@@ -86,7 +87,7 @@ const DeliverController = (() => {
         ExtraFieldsContainer({
           hasSim: state.hasSim,
           hasTV: state.hasTVs,
-        }),
+        })
       );
 
       if (state.hasSim) populateRicaFields();
@@ -108,7 +109,7 @@ const DeliverController = (() => {
 
   // EVENTS
 
-  $(window).unload(() => {
+  $(window).unload(async () => {
     clearAddresses();
   });
 
@@ -154,7 +155,10 @@ const DeliverController = (() => {
       if (errors) populateDeliveryError(errors);
     }
 
-    if (addressType === AD_TYPE.PICKUP) {
+    if (
+      addressType === AD_TYPE.PICKUP || // sometimes addressType is undefined ;(
+      $('#shipping-option-pickup-in-point').hasClass('shp-method-option-active')
+    ) {
       // User has Collect enabled, but has Rica or TV products,
       // or Furniture + Non Furn.
       if (hasTVs || hasSimCards || hasFurnitureMixed) {
@@ -172,6 +176,7 @@ const DeliverController = (() => {
 
     setCartClasses();
     updateDeliveryFeeDisplay();
+    formatAddressSummary();
 
     if (window.location.hash === STEPS.PAYMENT && !customShippingDataIsValid()) {
       scrollToInvalidField();
@@ -212,13 +217,15 @@ const DeliverController = (() => {
 
     if (!address) return;
 
-    getAddressByName(address.addressName).then((addressByName) => {
-      setAddress(addressByName || address, { validateExtraFields: false });
-      $('input[type="radio"][name="selected-address"]:checked').attr('checked', false);
-      $(this).attr('checked', true);
-    }).catch((e) => {
-      console.error('Could not get address - address selection', e?.message);
-    });
+    getAddressByName(address.addressName)
+      .then((addressByName) => {
+        setAddress(addressByName || address, { validateExtraFields: false });
+        $('input[type="radio"][name="selected-address"]:checked').attr('checked', false);
+        $(this).attr('checked', true);
+      })
+      .catch((e) => {
+        console.error('Could not get address - address selection', e?.message);
+      });
   });
 
   // Rica - show/hide address fields
@@ -253,6 +260,12 @@ const DeliverController = (() => {
     }
   });
 
+  // From delivery summary view, click into Collect form.
+  $(document).on('click', ' #punt-collect', () => {
+    document.getElementById('edit-shipping-data').click();
+    setTimeout(() => document.getElementById('shipping-option-pickup-in-point').click(), 200);
+  });
+
   $(document).on('submit', '#bash--address-form', submitAddressForm);
   $(document).on('submit', '#bash--delivery-form', submitDeliveryForm);
 
@@ -263,9 +276,14 @@ const DeliverController = (() => {
     });
   });
 
+  // Remove address error when user selects an address.
+  $(document).on('click', '.bash--radio-option', () => {
+    $('#bash-delivery-error-container').html('');
+  });
+
   // Invalid fields - remove styling on click, keyup
   $(document).on('keyup click', '.invalid', function () {
-    $(this).removeClass("invalid")
+    $(this).removeClass('invalid');
   });
 
   // Form validation
@@ -300,7 +318,7 @@ const DeliverController = (() => {
 
   return {
     state,
-    init: () => { },
+    init: () => {},
   };
 })();
 export default DeliverController;

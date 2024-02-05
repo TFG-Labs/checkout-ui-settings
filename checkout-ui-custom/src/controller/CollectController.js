@@ -182,18 +182,6 @@ const CollectController = (() => {
     checkFields(['pickup-receiver', 'custom-pickup-complement']);
   };
 
-  const updateCollectSummary = (name, number) => {
-    if (!name || !number) return;
-    if (!$('.vtex-omnishipping-1-x-SummaryItemAddress .collect-receiver').length) {
-      $('.vtex-omnishipping-1-x-SummaryItemAddress').append(`<p class="collect-receiver">
-      ${name} - ${number}
-      </p>`);
-      return;
-    }
-
-    $('.collect-receiver').html(`${name} - ${number} `);
-  };
-
   const saveCollectFields = () => {
     checkForm();
     if (state.validForm) {
@@ -209,12 +197,10 @@ const CollectController = (() => {
       try {
         window.vtexjs.checkout
           .getOrderForm()
-          .then((orderForm) => {
+          .then(async (orderForm) => {
             const { address } = orderForm.shippingData;
 
-            sendOrderFormCustomData(PICKUP_APP, { phone: collectPhone }).then(() => {
-              updateCollectSummary(address.receiverName, collectPhone);
-            });
+            await sendOrderFormCustomData(PICKUP_APP, { phone: collectPhone });
 
             return window.vtexjs.checkout.calculateShipping(address);
           })
@@ -284,11 +270,11 @@ const CollectController = (() => {
       state.collectReset = true;
     });
 
-    prePopulateReceiverName();
-
     if (window.location.hash === STEPS.SHIPPING && shippingLoaded) {
       state.inCollect = $('#shipping-option-pickup-in-point').hasClass('shp-method-option-active');
       state.pickupSelected = $('div.ask-for-geolocation').length === 0;
+
+      prePopulateReceiverName();
 
       if (state.inCollect) {
         if (
@@ -332,10 +318,10 @@ const CollectController = (() => {
           const savingCollect = localStorage.getItem('saving-shipping-collect');
 
           if (!savingCollect) {
-            const { phone } = getOrderFormCustomData(PICKUP_APP);
+            const customData = getOrderFormCustomData(PICKUP_APP);
 
             /* Redirect to shipping if required fields are empty */
-            if (address && address.addressType === AD_TYPE.PICKUP && (!address.receiverName || !phone)) {
+            if (address && address.addressType === AD_TYPE.PICKUP && (!address.receiverName || !customData?.phone)) {
               window.location.hash = STEPS.SHIPPING;
               localStorage.setItem('shipping-incomplete-values', true);
               sendEvent({
