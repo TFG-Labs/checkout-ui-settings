@@ -24,13 +24,16 @@ const formatDeliverySummary = () => {
   const deliverContext = getOrderFormCustomData(DELIVER_APP);
   let data = {};
 
-  try {
-    data = JSON.parse(deliverContext.jsonString);
-  } catch (e) {
-    console.error("Couldn't parse deliverContext", e?.message);
+  if (deliverContext) {
+    try {
+      data = JSON.parse(deliverContext?.jsonString);
+    } catch (e) {
+      console.error("Couldn't parse deliverContext", e?.message);
+    }
   }
 
-  const { receiverPhone, businessName } = data;
+  const receiverPhone = data?.receiverPhone;
+  const businessName = data?.businessName;
   const nameAndNumber = [];
   if (receiverName) nameAndNumber.push(receiverName);
   if (receiverPhone) nameAndNumber.push(formatPhoneNumber(prependZero(receiverPhone)));
