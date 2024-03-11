@@ -172,7 +172,7 @@ const AddressForm = () => {
       required: true,
       type: 'tel',
       helperText: 'We send shipping updates to this number.',
-      minlength: 9,
+      minlength: 12,
       error: 'Please enter a valid phone number',
       containerClasses: 'custom-field-complement' // for sa flag
     },
@@ -184,14 +184,14 @@ const AddressForm = () => {
   <form id="bash--address-form" method="post">
     ${formFields}
 
-    <button 
+    <button
       class="submit btn-go-to-payment btn btn-large btn-success"
-      id="btn-save-address" 
+      id="btn-save-address"
       type="submit">
       Save address
     </button>
   </form>
-  
+
   `;
 };
 

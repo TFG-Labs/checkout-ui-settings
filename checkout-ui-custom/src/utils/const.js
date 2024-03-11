@@ -37,6 +37,8 @@ const FURNITURE_FEES =
   'http://image.tfgmedia.co.za/image/1/process/500x790?source=http://cdn.tfgmedia.co.za' +
   '/15/Marketing/HTMLPages/Furniture_Delivery_Fees_tab_image.jpg';
 
+const GOOGLE_LIBPHONELIBRARY_URL = 'https://cdnjs.cloudflare.com/ajax/libs/google-libphonenumber/3.2.34/libphonenumber.js';
+
 // SHIPPING
 export const DELIVERY_FEE = 6000;
 export const COLLECT_FEE = 2500;
@@ -76,6 +78,7 @@ export {
   FURNITURE_FEES,
   FURNITURE_FEE_LINK,
   GEOLOCATE,
+  GOOGLE_LIBPHONELIBRARY_URL,
   MANUAL,
   NONE,
   PICKUP,
