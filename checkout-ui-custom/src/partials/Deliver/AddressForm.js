@@ -172,7 +172,7 @@ const AddressForm = () => {
       required: true,
       type: 'tel',
       helperText: 'We send shipping updates to this number.',
-      minlength: 12,
+      minlength: 9,
       error: 'Please enter a valid phone number',
       containerClasses: 'custom-field-complement' // for sa flag
     },
