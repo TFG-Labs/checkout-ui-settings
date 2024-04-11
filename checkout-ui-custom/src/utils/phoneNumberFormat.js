@@ -6,10 +6,9 @@ const usePhoneNumberFormatting = () => {
       const parsedPhoneNumber = parsePhoneNumberFromString(phoneNumber, countryCode);
       if (parsedPhoneNumber) {
         return parsedPhoneNumber.formatInternational();
-      } else {
-        console.error('Invalid phone number:', phoneNumber);
-        return phoneNumber;
       }
+      console.error('Invalid phone number:', phoneNumber);
+      return phoneNumber;
     } catch (error) {
       console.error('Error formatting phone number:', error);
       return phoneNumber;

@@ -5,7 +5,7 @@ import { BASE_URL_API } from './const';
 import { catchError, clearLoaders, getHeadersByConfig } from './functions';
 import usePhoneNumberFormatting from './phoneNumberFormat';
 
-const {formatPhoneNumber,isValidNumber} = usePhoneNumberFormatting();
+const { formatPhoneNumber } = usePhoneNumberFormatting();
 
 // API Functions
 // GET addresses
@@ -188,7 +188,7 @@ export const sendOrderFormCustomData = async (appId, data, rica = false) => {
   const { orderFormId } = window.vtexjs.checkout.orderForm;
 
   if (data.phone) {
-    data.phone = formatPhoneNumber(data.phone, 'ZA');
+    data.phone = formatPhoneNumber(data.phone, 'ZA').trim();
   }
 
   const path = `/api/checkout/pub/orderForm/${orderFormId}/customData/${appId}`;

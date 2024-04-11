@@ -8,6 +8,9 @@ import { clearLoaders, getSpecialCategories, isValidNumberBash, scrollToInvalidF
 import { getBestPhoneNumber } from '../utils/phoneFields';
 import sendEvent from '../utils/sendEvent';
 import { getOrderFormCustomData, sendOrderFormCustomData } from '../utils/services';
+import usePhoneNumberFormatting from '../utils/phoneNumberFormat';
+
+const { formatPhoneNumber, isValidNumber } = usePhoneNumberFormatting();
 
 const CollectController = (() => {
   const state = {
@@ -242,7 +245,7 @@ const CollectController = (() => {
       $('.btn-go-to-payment-wrapper').before(PickupPhoneField);
     }
 
-    if (phoneNumber) $('#custom-pickup-complement').val(phoneNumber).css('border', 0);
+    if (isValidNumber(phoneNumber)) $('#custom-pickup-complement').val(phoneNumber).css('border', 0);
   };
 
   //! TODO: al merger a develop podemos refactorizar esta función llevándola a utils

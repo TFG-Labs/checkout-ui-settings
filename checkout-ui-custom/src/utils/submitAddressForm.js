@@ -5,7 +5,7 @@ import usePhoneNumberFormatting from './phoneNumberFormat';
 import { addOrUpdateAddress, getAddressByName } from './services';
 import setAddress from './setAddress';
 
- const { formatPhoneNumber } = usePhoneNumberFormatting();
+const { formatPhoneNumber } = usePhoneNumberFormatting();
 
 const submitAddressForm = async (event) => {
   event.preventDefault();
@@ -57,7 +57,7 @@ const submitAddressForm = async (event) => {
   address.geoCoordinate = geoCoords; // for MasterData
   address.geoCoordinates = geoCoords; // for shippingData
 
-  address.receiverPhone = formatPhoneNumber(address.receiverPhone, 'ZA');
+  address.receiverPhone = formatPhoneNumber(address.receiverPhone, 'ZA').trim();
 
   const shippingAddress = address;
 

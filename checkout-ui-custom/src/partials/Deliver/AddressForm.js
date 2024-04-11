@@ -1,7 +1,9 @@
 import FormField from './Elements/FormField';
 import { getBestRecipient } from './utils';
+import usePhoneNumberFormatting from '../../utils/phoneNumberFormat';
 
 const AddressForm = () => {
+  const { formatPhoneNumber } = usePhoneNumberFormatting();
   const fields = [
     {
       name: 'addressId',
@@ -174,11 +176,15 @@ const AddressForm = () => {
       helperText: 'We send shipping updates to this number.',
       minlength: 9,
       error: 'Please enter a valid phone number',
-      containerClasses: 'custom-field-complement' // for sa flag
+      containerClasses: 'custom-field-complement', // for sa flag
     },
   ];
 
   const formFields = fields.map((field) => FormField(field)).join('');
+
+  console.log('====================================');
+  console.log('AddressForm.js', new Date(), formFields);
+  console.log('====================================');
 
   return `
   <form id="bash--address-form" method="post">
