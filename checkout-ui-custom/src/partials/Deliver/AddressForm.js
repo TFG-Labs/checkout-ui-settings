@@ -182,10 +182,6 @@ const AddressForm = () => {
 
   const formFields = fields.map((field) => FormField(field)).join('');
 
-  console.log('====================================');
-  console.log('AddressForm.js', new Date(), formFields);
-  console.log('====================================');
-
   return `
   <form id="bash--address-form" method="post">
     ${formFields}
