@@ -86,5 +86,6 @@ export {
   TIMEOUT_500,
   TIMEOUT_750,
   TV_APP,
-  TV_CAT,
+  TV_CAT
 };
+

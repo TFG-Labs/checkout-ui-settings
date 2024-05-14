@@ -15,6 +15,9 @@ import { getOrderFormCustomData } from '../../utils/services';
 import { DeliveryError } from './DeliveryError';
 import { Alert } from './Elements/Alert';
 import { requiredAddressFields, requiredRicaFields, requiredTVFields } from './constants';
+import usePhoneNumberFormatting from '../../utils/phoneNumberFormat';
+
+const { formatPhoneNumber, isValidNumber } = usePhoneNumberFormatting();
 
 export const setDeliveryLoading = () => {
   document.querySelector('.bash--delivery-container')?.classList.add('shimmer');
@@ -189,10 +192,14 @@ export const populateAddressForm = (address) => {
   // Only overwrite defaults if values exist.
   if (receiverName) document.getElementById('bash--input-receiverName').value = receiverName ?? '';
   if (complement) document.getElementById('bash--input-complement').value = complement ?? '';
-  document.getElementById('bash--input-receiverPhone').value = getBestPhoneNumber({
-    preferred: receiverPhone,
-    type: 'delivery',
-    fields,
+  document.getElementById('bash--input-receiverPhone').value =
+    formatPhoneNumber(receiverPhone).trim() || getBestPhoneNumber({
+      preferred: receiverPhone,
+      type: 'delivery',
+      fields,
+    });
+  document.getElementById('bash--input-receiverPhone')?.addEventListener('onblur', (event) => {
+    event.target.value = (event.target.value).trim();
   });
 
   $(':invalid').trigger('change');
@@ -315,7 +322,7 @@ export const addressIsValid = (address, validateExtraFields = true) => {
   if (
     requiredFields.includes('receiverPhone') &&
     !invalidFields.includes('receiverPhone') &&
-    !isValidNumberBash(address.receiverPhone)
+    !isValidNumber(formatPhoneNumber(address.receiverPhone, 'ZA'), 'ZA')
   ) {
     invalidFields.push('receiverPhone');
     $('#bash--input-receiverPhone').addClass('invalid');

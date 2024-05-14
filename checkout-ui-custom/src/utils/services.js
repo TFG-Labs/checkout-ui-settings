@@ -3,6 +3,9 @@ import AddressListing from '../partials/Deliver/AddressListing';
 import CheckoutDB from './checkoutDB';
 import { BASE_URL_API } from './const';
 import { catchError, clearLoaders, getHeadersByConfig } from './functions';
+import usePhoneNumberFormatting from './phoneNumberFormat';
+
+const { formatPhoneNumber } = usePhoneNumberFormatting();
 
 // API Functions
 // GET addresses
@@ -183,6 +186,10 @@ export const clearAddresses = async () => DB.clearData();
  */
 export const sendOrderFormCustomData = async (appId, data, rica = false) => {
   const { orderFormId } = window.vtexjs.checkout.orderForm;
+
+  if (data.phone) {
+    data.phone = formatPhoneNumber(data.phone, 'ZA').trim();
+  }
 
   const path = `/api/checkout/pub/orderForm/${orderFormId}/customData/${appId}`;
   const body = JSON.stringify({

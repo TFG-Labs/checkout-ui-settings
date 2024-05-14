@@ -13,12 +13,10 @@ import sendEvent from './sendEvent';
 import { sendOrderFormCustomData, updateAddressListing } from './services';
 
 const updateDeliveryData = ({ businessName, receiverPhone }) => sendOrderFormCustomData(DELIVER_APP, {
-  jsonString: JSON.stringify(
-    {
-      businessName: businessName || '',
-      receiverPhone: receiverPhone || ''
-    }
-  )
+  jsonString: JSON.stringify({
+    businessName: businessName || '',
+    receiverPhone: receiverPhone || '',
+  }),
 });
 
 const setAddress = (address, options = { validateExtraFields: true }) => {

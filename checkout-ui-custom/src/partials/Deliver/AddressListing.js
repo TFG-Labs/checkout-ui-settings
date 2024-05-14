@@ -1,4 +1,4 @@
-import { formatPhoneNumber, prependZero } from '../../utils/phoneFields';
+import usePhoneNumberFormatting from '../../utils/phoneNumberFormat';
 import Radio from './Elements/Radio';
 
 const isSelectedAddress = (address, selectedAddress) => {
@@ -18,8 +18,9 @@ const isSelectedAddress = (address, selectedAddress) => {
 
   return addressObject === selectedAddressObject;
 };
-
+const countryCode = 'ZA';
 const AddressListing = (address) => {
+  const { formatPhoneNumber } = usePhoneNumberFormatting();
   if (!address) return '';
 
   const {
@@ -36,13 +37,13 @@ const AddressListing = (address) => {
   } = address;
 
   const addressLine = [
-    `${businessName ? `${businessName}, ` : ''} ${number ? `${number.trim()} ` : ''}${street}`,
+    `${businessName ? `${businessName}, ` : ''} ${number ? `${formatPhoneNumber(number.trim(), countryCode)} ` : ''}${street}`,
     neighborhood ?? city,
     postalCode,
   ]
     .join(', ')
     .trim();
-  const contactLine = [receiverName, formatPhoneNumber(prependZero(receiverPhone || complement))].join(' - ');
+  const contactLine = [receiverName, formatPhoneNumber(receiverPhone || complement, countryCode)].join(' - ');
 
   // orderform
   const selectedAddress = window?.vtexjs?.checkout?.orderForm?.shippingData?.address;

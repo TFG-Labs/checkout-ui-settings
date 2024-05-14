@@ -2,10 +2,12 @@
 
 import PuntCollect from '../partials/Deliver/PuntCollect';
 import { AD_TYPE, DELIVER_APP, PICKUP_APP } from './const';
-import { formatPhoneNumber, prependZero } from './phoneFields';
+
 import { getOrderFormCustomData } from './services';
+import usePhoneNumberFormatting from './phoneNumberFormat';
 
 const formatDeliverySummary = () => {
+  const { formatPhoneNumber } = usePhoneNumberFormatting();
   if (document.getElementById('summary-delivery-recipient') !== null) return;
 
   // Add Punt Collect text
@@ -33,7 +35,7 @@ const formatDeliverySummary = () => {
   const { receiverPhone, businessName } = data;
   const nameAndNumber = [];
   if (receiverName) nameAndNumber.push(receiverName);
-  if (receiverPhone) nameAndNumber.push(formatPhoneNumber(prependZero(receiverPhone)));
+  if (receiverPhone) nameAndNumber.push(formatPhoneNumber(receiverPhone, 'ZA').trim());
 
   $(deliveryParent).append(`
     <div id="summary-delivery-recipient">
@@ -55,6 +57,7 @@ const formatDeliverySummary = () => {
 };
 
 const formatCollectionSummary = () => {
+  const { formatPhoneNumber } = usePhoneNumberFormatting();
   if (document.getElementById('summary-collection-recipient') !== null) return;
 
   const collectParent = 'div.shp-summary-group-title.vtex-omnishipping-1-x-SummaryItemAddress';
@@ -69,7 +72,7 @@ const formatCollectionSummary = () => {
 
   const nameAndNumber = [];
   if (receiverName) nameAndNumber.push(receiverName);
-  if (phone) nameAndNumber.push(formatPhoneNumber(prependZero(phone)));
+  if (phone) nameAndNumber.push(formatPhoneNumber(phone, 'ZA').trim());
 
   $(collectParent).append(`<div id="summary-collection-recipient">${nameAndNumber.join(' - ')}<div>`);
 };
