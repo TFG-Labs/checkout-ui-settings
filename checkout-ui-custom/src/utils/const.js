@@ -54,7 +54,7 @@ const getUrlApi = () => {
   if (prodHosts.includes(window.location.host)) {
     return 'https://store-api.www.bash.com/custom-api/';
   }
-  if (stageHosts.includes(window.location.host)) {
+  if (stageHosts.includes(window.location.host) || /(?=.*)thefoschiniqa.myvtex.com/) {
     return 'https://store-api.staging.tfglabs.dev/custom-api/';
   }
   return `${window.location.protocol}//${window.location.host}/custom-api/`;

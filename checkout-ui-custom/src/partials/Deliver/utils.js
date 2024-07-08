@@ -3,19 +3,18 @@ import {
   AD_TYPE,
   COLLECT_FEE,
   DELIVERY_FEE,
-  FREE_SHIPPING_THRESHOLD,
   PICKUP,
   RICA_APP,
-  TV_APP,
+  TV_APP
 } from '../../utils/const';
-import { getSpecialCategories, hideBusinessName, isValidNumberBash, showBusinessName } from '../../utils/functions';
+import { getSpecialCategories, hideBusinessName, showBusinessName } from '../../utils/functions';
 import isInSouthAfrica from '../../utils/isInSouthAfrica';
 import { getBestPhoneNumber } from '../../utils/phoneFields';
+import usePhoneNumberFormatting from '../../utils/phoneNumberFormat';
 import { getOrderFormCustomData } from '../../utils/services';
 import { DeliveryError } from './DeliveryError';
 import { Alert } from './Elements/Alert';
 import { requiredAddressFields, requiredRicaFields, requiredTVFields } from './constants';
-import usePhoneNumberFormatting from '../../utils/phoneNumberFormat';
 
 const { formatPhoneNumber, isValidNumber } = usePhoneNumberFormatting();
 
@@ -218,7 +217,10 @@ const checkForAddressResults = (event) => {
 };
 
 export const initGoogleAutocomplete = () => {
-  if (!window.google) return;
+  if (!window.google.places) {
+    window.postMessage({ action: 'setDeliveryView', view: 'address-form' });
+    return;
+  }
 
   const input = document.getElementById('bash--input-address-search');
   if (!input) return;
