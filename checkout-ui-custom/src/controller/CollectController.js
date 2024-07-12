@@ -8,6 +8,7 @@ import { AD_TYPE, GEOLOCATE, MANUAL, NONE, PICKUP, PICKUP_APP, STEPS } from '../
 import { clearLoaders, getSpecialCategories, scrollToInvalidField } from '../utils/functions';
 import { getBestPhoneNumber } from '../utils/phoneFields';
 import usePhoneNumberFormatting from '../utils/phoneNumberFormat';
+import { postMessage } from '../utils/postMessage';
 import sendEvent from '../utils/sendEvent';
 import { getOrderFormCustomData, sendOrderFormCustomData } from '../utils/services';
 
@@ -157,16 +158,12 @@ const CollectController = (() => {
         scrollToInvalidField();
         state.validForm = false;
 
-        postMessage('COLLECTION_VALIDATION_ERROR', `${field} is invalid`)
+        postMessage(COLLECTION_VALIDATION_ERROR, `${field} is invalid`);
       } else {
         $(parent).removeClass('error');
       }
     });
   };
-
-  const postMessage = (type, message) => {
-    window.postMessage({type, message }, '*');
-  }
 
   const checkForm = () => {
     $('span.help.error').remove();

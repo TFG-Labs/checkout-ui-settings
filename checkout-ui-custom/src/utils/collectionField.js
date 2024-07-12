@@ -3,6 +3,9 @@
 export const PICKUP_RECEIVER = 'pickup-receiver';
 export const CUSTOM_PICKUP_COMPLEMENT = 'custom-pickup-complement';
 
+//CONSTANTS
+export const COLLECTION_VALIDATION_ERROR =  'COLLECTION_VALIDATION_ERROR';
+
 /**
  * Determines if a field is valid or not
  */
