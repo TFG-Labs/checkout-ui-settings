@@ -141,23 +141,48 @@ const CollectController = (() => {
     pickupMap();
   };
 
-  const checkFields = (fields) => {
-    fields.forEach((field) => {
+  /**
+   * Determines if a field is valid or not
+   */
+  const isValidField = (field) => {
       let isValid = true;
-      let parent;
-
       switch (field) {
         case 'pickup-receiver':
           isValid = !($(`#${field}`).length > 0 && !$(`#${field}`).attr('disabled') && !$(`#${field}`).val());
-          parent = '.shp-pickup-receiver';
           break;
         case 'custom-pickup-complement':
           isValid = isValidNumberBash($(`#${field}`).val());
-          parent = '#box-pickup-complement';
           break;
         default:
           break;
       }
+
+      return isValid;
+
+  };
+
+  /**
+   * For a given field return is parent element
+   */
+  const getParentElement = (field) => {
+    let parent;
+    switch (field) {
+      case 'pickup-receiver':
+        parent = '.shp-pickup-receiver';
+        break;
+      case 'custom-pickup-complement':
+        parent = '#box-pickup-complement';
+        break;
+      default:
+        break;
+    }
+
+    return parent;
+  }
+  const checkFields = (fields) => {
+    fields.forEach((field) => {
+      const isValid = isValidField(field); 
+      const parent = getParentElement(field);
 
       if (!isValid) {
         $(parent).addClass('error');
@@ -165,7 +190,6 @@ const CollectController = (() => {
         $(`${parent} span.error`).show();
         scrollToInvalidField();
         state.validForm = false;
-
 
         postMessage('COLLECTION_VALIDATION_ERROR', field)
       } else {
