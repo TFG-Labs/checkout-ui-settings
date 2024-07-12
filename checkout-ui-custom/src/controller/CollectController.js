@@ -6,9 +6,9 @@ import { getBestRecipient, setPickupLoading } from '../partials/Deliver/utils';
 import { AD_TYPE, GEOLOCATE, MANUAL, NONE, PICKUP, PICKUP_APP, STEPS } from '../utils/const';
 import { clearLoaders, getSpecialCategories, isValidNumberBash, scrollToInvalidField } from '../utils/functions';
 import { getBestPhoneNumber } from '../utils/phoneFields';
+import usePhoneNumberFormatting from '../utils/phoneNumberFormat';
 import sendEvent from '../utils/sendEvent';
 import { getOrderFormCustomData, sendOrderFormCustomData } from '../utils/services';
-import usePhoneNumberFormatting from '../utils/phoneNumberFormat';
 
 const { formatPhoneNumber, isValidNumber } = usePhoneNumberFormatting();
 
@@ -166,18 +166,17 @@ const CollectController = (() => {
         scrollToInvalidField();
         state.validForm = false;
 
-        window.postMessage(
-          {
-            type: 'COLLECTION_VALIDATION_ERROR',
-            message: `${field} is invalid`,
-          },
-          '*'
-        );
+
+        postMessage('COLLECTION_VALIDATION_ERROR', field)
       } else {
         $(parent).removeClass('error');
       }
     });
   };
+
+  const postMessage = (type, field) => {
+    window.postMessage({type, message:`${field} is invalid` }, '*');
+  }
 
   const checkForm = () => {
     $('span.help.error').remove();
