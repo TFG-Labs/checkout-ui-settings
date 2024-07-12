@@ -12,6 +12,10 @@ import { getOrderFormCustomData, sendOrderFormCustomData } from '../utils/servic
 
 const { formatPhoneNumber, isValidNumber } = usePhoneNumberFormatting();
 
+//FIELD IDENTIFIERS
+const PICKUP_RECEIVER = 'pickup-receiver';
+const CUSTOM_PICKUP_COMPLEMENT = 'custom-pickup-complement';
+
 const CollectController = (() => {
   const state = {
     inCollect: false,
@@ -147,10 +151,10 @@ const CollectController = (() => {
   const isValidField = (field) => {
       let isValid = true;
       switch (field) {
-        case 'pickup-receiver':
+        case PICKUP_RECEIVER:
           isValid = !($(`#${field}`).length > 0 && !$(`#${field}`).attr('disabled') && !$(`#${field}`).val());
           break;
-        case 'custom-pickup-complement':
+        case CUSTOM_PICKUP_COMPLEMENT:
           isValid = isValidNumberBash($(`#${field}`).val());
           break;
         default:
@@ -167,10 +171,10 @@ const CollectController = (() => {
   const getParentElement = (field) => {
     let parent;
     switch (field) {
-      case 'pickup-receiver':
+      case PICKUP_RECEIVER:
         parent = '.shp-pickup-receiver';
         break;
-      case 'custom-pickup-complement':
+      case CUSTOM_PICKUP_COMPLEMENT:
         parent = '#box-pickup-complement';
         break;
       default:
@@ -205,7 +209,7 @@ const CollectController = (() => {
   const checkForm = () => {
     $('span.help.error').remove();
     state.validForm = true;
-    checkFields(['pickup-receiver', 'custom-pickup-complement']);
+    checkFields([PICKUP_RECEIVER, CUSTOM_PICKUP_COMPLEMENT]);
   };
 
   const saveCollectFields = () => {
