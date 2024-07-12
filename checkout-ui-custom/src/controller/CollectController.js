@@ -3,8 +3,9 @@ import { InputError } from '../partials';
 import { PickupPhoneField } from '../partials/AddressForm';
 import PickupContainer from '../partials/Collect/PickupContainer';
 import { getBestRecipient, setPickupLoading } from '../partials/Deliver/utils';
+import { CUSTOM_PICKUP_COMPLEMENT, PICKUP_RECEIVER, getParentElement, isValidField } from '../utils/collectionField';
 import { AD_TYPE, GEOLOCATE, MANUAL, NONE, PICKUP, PICKUP_APP, STEPS } from '../utils/const';
-import { clearLoaders, getSpecialCategories, isValidNumberBash, scrollToInvalidField } from '../utils/functions';
+import { clearLoaders, getSpecialCategories, scrollToInvalidField } from '../utils/functions';
 import { getBestPhoneNumber } from '../utils/phoneFields';
 import usePhoneNumberFormatting from '../utils/phoneNumberFormat';
 import sendEvent from '../utils/sendEvent';
@@ -12,9 +13,7 @@ import { getOrderFormCustomData, sendOrderFormCustomData } from '../utils/servic
 
 const { formatPhoneNumber, isValidNumber } = usePhoneNumberFormatting();
 
-//FIELD IDENTIFIERS
-const PICKUP_RECEIVER = 'pickup-receiver';
-const CUSTOM_PICKUP_COMPLEMENT = 'custom-pickup-complement';
+
 
 const CollectController = (() => {
   const state = {
@@ -145,44 +144,7 @@ const CollectController = (() => {
     pickupMap();
   };
 
-  /**
-   * Determines if a field is valid or not
-   */
-  const isValidField = (field) => {
-      let isValid = true;
-      switch (field) {
-        case PICKUP_RECEIVER:
-          isValid = !($(`#${field}`).length > 0 && !$(`#${field}`).attr('disabled') && !$(`#${field}`).val());
-          break;
-        case CUSTOM_PICKUP_COMPLEMENT:
-          isValid = isValidNumberBash($(`#${field}`).val());
-          break;
-        default:
-          break;
-      }
-
-      return isValid;
-
-  };
-
-  /**
-   * For a given field return is parent element
-   */
-  const getParentElement = (field) => {
-    let parent;
-    switch (field) {
-      case PICKUP_RECEIVER:
-        parent = '.shp-pickup-receiver';
-        break;
-      case CUSTOM_PICKUP_COMPLEMENT:
-        parent = '#box-pickup-complement';
-        break;
-      default:
-        break;
-    }
-
-    return parent;
-  }
+  
   const checkFields = (fields) => {
     fields.forEach((field) => {
       const isValid = isValidField(field); 
@@ -195,15 +157,15 @@ const CollectController = (() => {
         scrollToInvalidField();
         state.validForm = false;
 
-        postMessage('COLLECTION_VALIDATION_ERROR', field)
+        postMessage('COLLECTION_VALIDATION_ERROR', `${field} is invalid`)
       } else {
         $(parent).removeClass('error');
       }
     });
   };
 
-  const postMessage = (type, field) => {
-    window.postMessage({type, message:`${field} is invalid` }, '*');
+  const postMessage = (type, message) => {
+    window.postMessage({type, message }, '*');
   }
 
   const checkForm = () => {
