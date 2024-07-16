@@ -236,13 +236,15 @@ export const initGoogleAutocomplete = () => {
         const place = autocomplete.getPlace();
         const { address_components: addressComponents, geometry } = place;
 
-        const address = mapGoogleAddress(addressComponents, geometry);
+        const address = debounce(() => {
+          mapGoogleAddress(addressComponents, geometry);
+        });
 
         // Populate the form
         // Set view to add-address
-        debounce(() => {
-          populateAddressFromSearch(address);
-        });
+
+        populateAddressFromSearch(address);
+
         window.postMessage({ action: 'setDeliveryView', view: 'address-form' });
         input.value = '';
       });
