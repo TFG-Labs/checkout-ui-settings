@@ -227,11 +227,11 @@ export const initGoogleAutocomplete = () => {
   };
 
   input.addEventListener('keyup', () => {
-    if (input.value.length > 2) {
-      const autocomplete = new window.google.maps.places.Autocomplete(input, {
+    let autocomplete;
+    if (input.value.length === 3) {
+      autocomplete = new window.google.maps.places.Autocomplete(input, {
         componentRestrictions: { country: 'ZA' },
       });
-
       window.google.maps.event.addListener(autocomplete, 'place_changed', () => {
         const place = autocomplete.getPlace();
         const { address_components: addressComponents, geometry } = place;
@@ -240,13 +240,21 @@ export const initGoogleAutocomplete = () => {
 
         // Populate the form
         // Set view to add-address
-        populateAddressFromSearch(address);
+        debounce(() => {
+          populateAddressFromSearch(address);
+        });
         window.postMessage({ action: 'setDeliveryView', view: 'address-form' });
         input.value = '';
       });
-      debounce(() => {
-        checkForAddressResults;
-      });
+      checkForAddressResults;
+    } else if (input.value.length < 3) {
+      const pacContainers = document.querySelectorAll('.pac-container');
+
+      if (pacContainers) {
+        pacContainers.forEach((container) => container.parentNode.removeChild(container));
+        google.maps.event.clearInstanceListeners(autocomplete);
+        autocomplete = null;
+      }
     }
   });
 };
