@@ -124,6 +124,8 @@ export const upsertAddress = async (address) => {
       newAddress.geoCoordinate[1] === ''
         ? 'MANUAL_ENTRY'
         : 'AUTO_COMPLETE_GOOGLE';
+  } else {
+    delete newAddress.captureMethod;
   }
 
   const headers = getHeadersByConfig({ cookie: true, cache: true, json: true });
