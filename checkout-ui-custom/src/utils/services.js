@@ -43,6 +43,7 @@ export const getAddresses = async () => {
     'country',
     'tvID',
     'geoCoordinate',
+    'captureMethod'
   ].join(',');
 
   const headers = getHeadersByConfig({ cookie: true, cache: true, json: false });
@@ -117,6 +118,12 @@ export const upsertAddress = async (address) => {
 
   if (!existingAddress.id) {
     newAddress.addressName = address.addressId || `address-${Date.now()}`;
+    newAddress.captureMethod =
+      newAddress.geoCoordinate &&
+      newAddress.geoCoordinate[0] === '' &&
+      newAddress.geoCoordinate[1] === ''
+        ? 'MANUAL_ENTRY'
+        : 'AUTO_COMPLETE_GOOGLE';
   }
 
   const headers = getHeadersByConfig({ cookie: true, cache: true, json: true });

@@ -32,6 +32,7 @@ const submitAddressForm = async (event) => {
     'neighborhood',
     'complement',
     'companyBuilding',
+    'captureMethod',
     'lat',
     'lng',
   ];
