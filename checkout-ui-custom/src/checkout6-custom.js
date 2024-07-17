@@ -1,6 +1,7 @@
 import CollectController from './controller/CollectController';
 import DeliverController from './controller/DeliverController';
 import ViewController from './controller/ViewController';
+import { postCollectionValidationErrors } from './utils/postMessage';
 import sendEvent from './utils/sendEvent';
 
 const script = document.createElement('script');
@@ -19,6 +20,10 @@ const loadScripts = async () => {
       ViewController.init();
       CollectController.init();
       DeliverController.init();
+      
+      window.bash = window.bash || {};
+      window.bash.postCollectionValidationErrors = postCollectionValidationErrors;
+      console.log('Finish Load Scripts');
     }
   } catch (e) {
     console.error('VTEX_ORDERFORM_ERROR: Could not load at custom-shipping-steps Entry Point', e);
@@ -32,6 +37,8 @@ const loadScripts = async () => {
     ViewController.init();
     CollectController.init();
     DeliverController.init();
+    window.bash = window.bash || {};
+    window.bash.postCollectionValidationErrors = postCollectionValidationErrors;
   }
 };
 
