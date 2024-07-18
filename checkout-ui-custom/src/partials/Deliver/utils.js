@@ -268,10 +268,14 @@ export const initGoogleAutocomplete = () => {
       input.addEventListener('input', debouncedAutocomplete);
     } else if (input.value.length < 3) {
       clearAutocomplete(autocomplete);
+      autocomplete = null;
     }
 
     if (input.value.length > 2) {
-      input.addEventListener('keyup', checkForAddressResults);
+      const debounceThis = debounce(() => {
+        checkForAddressResults();
+      });
+      input.addEventListener('keyup', debounceThis);
     }
   });
 };
