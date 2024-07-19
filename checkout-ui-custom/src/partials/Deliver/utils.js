@@ -114,6 +114,13 @@ const populateAddressFromSearch = (address) => {
 
   // Update previously invalid fields.
   $(':invalid').trigger('change');
+  // Select the element
+  const noteField = document.querySelector('.bash--note-field');
+
+  // Hide the element after the transition
+  setTimeout(() => {
+    noteField.style.display = 'none'; // This will hide the element
+  }, 500); // Match this timeout with the CSS transition duration
 };
 
 export const populateAddressForm = (address) => {
