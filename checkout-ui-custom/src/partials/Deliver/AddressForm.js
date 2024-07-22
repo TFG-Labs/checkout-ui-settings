@@ -1,6 +1,6 @@
+import usePhoneNumberFormatting from '../../utils/phoneNumberFormat';
 import FormField from './Elements/FormField';
 import { getBestRecipient } from './utils';
-import usePhoneNumberFormatting from '../../utils/phoneNumberFormat';
 
 const AddressForm = () => {
   const { formatPhoneNumber } = usePhoneNumberFormatting();
@@ -186,12 +186,26 @@ const AddressForm = () => {
   <form id="bash--address-form" method="post">
     ${formFields}
 
+    <a
+      id="btn-delete-address"
+      href="#"
+    >
+      Delete address
+    </a>
+
     <button
       class="submit btn-go-to-payment btn btn-large btn-success"
       id="btn-save-address"
       type="submit">
-      Save address
+      Delete address
     </button>
+
+    <a
+      id="btn-delete-address"
+      href="#"
+    >
+      Delete address
+    </a>
   </form>
 
   `;
