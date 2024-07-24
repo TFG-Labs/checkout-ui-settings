@@ -1,21 +1,13 @@
 // @ts-nocheck
-import {
-  AD_TYPE,
-  COLLECT_FEE,
-  DELIVERY_FEE,
-  FREE_SHIPPING_THRESHOLD,
-  PICKUP,
-  RICA_APP,
-  TV_APP,
-} from '../../utils/const';
-import { getSpecialCategories, hideBusinessName, isValidNumberBash, showBusinessName } from '../../utils/functions';
+import { AD_TYPE, COLLECT_FEE, DELIVERY_FEE, PICKUP, RICA_APP, TV_APP } from '../../utils/const';
+import { getSpecialCategories, hideBusinessName, showBusinessName } from '../../utils/functions';
 import isInSouthAfrica from '../../utils/isInSouthAfrica';
 import { getBestPhoneNumber } from '../../utils/phoneFields';
+import usePhoneNumberFormatting from '../../utils/phoneNumberFormat';
 import { getOrderFormCustomData } from '../../utils/services';
+import { requiredAddressFields, requiredRicaFields, requiredTVFields } from './constants';
 import { DeliveryError } from './DeliveryError';
 import { Alert } from './Elements/Alert';
-import { requiredAddressFields, requiredRicaFields, requiredTVFields } from './constants';
-import usePhoneNumberFormatting from '../../utils/phoneNumberFormat';
 
 const { formatPhoneNumber, isValidNumber } = usePhoneNumberFormatting();
 
@@ -193,13 +185,14 @@ export const populateAddressForm = (address) => {
   if (receiverName) document.getElementById('bash--input-receiverName').value = receiverName ?? '';
   if (complement) document.getElementById('bash--input-complement').value = complement ?? '';
   document.getElementById('bash--input-receiverPhone').value =
-    formatPhoneNumber(receiverPhone).trim() || getBestPhoneNumber({
+    formatPhoneNumber(receiverPhone).trim() ||
+    getBestPhoneNumber({
       preferred: receiverPhone,
       type: 'delivery',
       fields,
     });
   document.getElementById('bash--input-receiverPhone')?.addEventListener('onblur', (event) => {
-    event.target.value = (event.target.value).trim();
+    event.target.value = event.target.value.trim();
   });
 
   $(':invalid').trigger('change');
@@ -221,25 +214,36 @@ export const initGoogleAutocomplete = () => {
   if (!window.google) return;
 
   const input = document.getElementById('bash--input-address-search');
+  let autocomplete;
   if (!input) return;
-  const autocomplete = new window.google.maps.places.Autocomplete(input, {
-    componentRestrictions: { country: 'ZA' },
+
+  const handleAutocomplete = () => {
+    autocomplete = new window.google.maps.places.Autocomplete(input, {
+      componentRestrictions: { country: 'ZA' },
+    });
+
+    window.google.maps.event.addListener(autocomplete, 'place_changed', () => {
+      const place = autocomplete.getPlace();
+      const { address_components: addressComponents, geometry } = place;
+
+      const address = mapGoogleAddress(addressComponents, geometry);
+
+      // Populate the form
+      // Set view to add-address
+      populateAddressFromSearch(address);
+      window.postMessage({ action: 'setDeliveryView', view: 'address-form' });
+      input.value = '';
+    });
+  };
+
+  input?.addEventListener('keyup', (event) => {
+    if (input.value.length === 3) {
+      handleAutocomplete();
+    }
+    if (input.value.length > 2) {
+      checkForAddressResults(event);
+    }
   });
-
-  window.google.maps.event.addListener(autocomplete, 'place_changed', () => {
-    const place = autocomplete.getPlace();
-    const { address_components: addressComponents, geometry } = place;
-
-    const address = mapGoogleAddress(addressComponents, geometry);
-
-    // Populate the form
-    // Set view to add-address
-    populateAddressFromSearch(address);
-    window.postMessage({ action: 'setDeliveryView', view: 'address-form' });
-    input.value = '';
-  });
-
-  input?.addEventListener('keyup', checkForAddressResults);
 };
 
 export const parseAttribute = (data) => {
