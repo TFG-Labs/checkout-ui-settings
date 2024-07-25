@@ -4,6 +4,7 @@ import AddressForm from './AddressForm';
 import AddressSearch from './AddressSearch';
 import { DeliveryErrorContainer } from './DeliveryError';
 import DeliveryOptions from './DeliveryOptions';
+import EditAddressForm from './EditAddressForm';
 import { AlertContainer } from './Elements/Alert';
 import MixedProducts from './MixedProducts';
 import TVorRICAMsg from './TVorRICAMsg';
@@ -61,7 +62,14 @@ const DeliverContainer = ({ hasFurn, hasFurnOnly, hasFurnMixed }) => `
         >enter it manually</a>.
       </p>
     </section>
-    
+
+    <section class="bash--delivery-view" data-section="address-edit">
+       <p>Here we are again</p>
+        ${EditAddressForm()}
+    </section>
+
+
+   
     <section class="bash--delivery-view" data-section="address-form">
        <div class="bash--heading">
         <h3>Delivery address</h3>
