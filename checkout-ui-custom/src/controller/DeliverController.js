@@ -299,7 +299,7 @@ const DeliverController = (() => {
           if (data.content) {
             try {
               const address = JSON.parse(decodeURIComponent($(`#${data.content}`).data('address')));
-              populateAddressForm(address);
+              populateAddressForm(address, data.view === 'address-edit');
             } catch (e) {
               console.warn('Could not parse address Json', data.content);
             }

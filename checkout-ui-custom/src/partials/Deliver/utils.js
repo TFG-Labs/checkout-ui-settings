@@ -1,20 +1,12 @@
 // @ts-nocheck
-import {
-  AD_TYPE,
-  COLLECT_FEE,
-  DELIVERY_FEE,
-  FREE_SHIPPING_THRESHOLD,
-  PICKUP,
-  RICA_APP,
-  TV_APP,
-} from '../../utils/const';
+import { AD_TYPE, COLLECT_FEE, DELIVERY_FEE, PICKUP, RICA_APP, TV_APP } from '../../utils/const';
 import { getSpecialCategories, hideBusinessName, isValidNumberBash, showBusinessName } from '../../utils/functions';
 import isInSouthAfrica from '../../utils/isInSouthAfrica';
 import { getBestPhoneNumber } from '../../utils/phoneFields';
 import { getOrderFormCustomData } from '../../utils/services';
+import { requiredAddressFields, requiredRicaFields, requiredTVFields } from './constants';
 import { DeliveryError } from './DeliveryError';
 import { Alert } from './Elements/Alert';
-import { requiredAddressFields, requiredRicaFields, requiredTVFields } from './constants';
 
 export const setDeliveryLoading = () => {
   document.querySelector('.bash--delivery-container')?.classList.add('shimmer');
@@ -113,7 +105,7 @@ const populateAddressFromSearch = (address) => {
   $(':invalid').trigger('change');
 };
 
-export const populateAddressForm = (address) => {
+export const populateAddressForm = (address, isEdit = false) => {
   const {
     number,
     street,
@@ -136,18 +128,17 @@ export const populateAddressForm = (address) => {
   // Clear any populated fields
   document.getElementById('bash--address-form')?.reset();
   hideBusinessName();
+
   let lat;
   let lng;
   try {
     [lng, lat] = JSON.parse(JSON.stringify(geoCoordinate));
 
     if (!isInSouthAfrica([lng, lat])) {
-      // Coordinates are most likely still at [lat, lng]
       if (isInSouthAfrica[(lat, lng)]) {
         lng = lat;
         lat = lng;
       } else {
-        // Unset the coordinates
         lng = 0;
         lat = 0;
       }
@@ -156,25 +147,79 @@ export const populateAddressForm = (address) => {
     console.warn('Could not parse geo coords', { address, geoCoordinate });
   }
 
-  // Only overwrite defaults if values exist.
+  const fieldsToToggle = [
+    'street',
+    'businessName',
+    'companyBuilding',
+    'neighborhood',
+    'city',
+    'postalCode',
+    'state',
+    'suburb-postal-reminder',
+    'addressType',
+    'country-display',
+  ];
+
+  // Function to toggle visibility of a field and its label
+  const toggleFieldVisibility = (fieldName, show) => {
+    const field = document.getElementById(`bash--input-${fieldName}`);
+    const label = document.querySelector(`label[for="bash--input-${fieldName}"]`);
+    if (field) field.style.display = show ? '' : 'none';
+    if (label) label.style.display = show ? '' : 'none';
+  };
+
+  // Toggle visibility based on isEdit
+  fieldsToToggle.forEach((field) => toggleFieldVisibility(field, !isEdit));
+
+  // Always show receiver name and phone
+  toggleFieldVisibility('receiverName', true);
+  toggleFieldVisibility('receiverPhone', true);
+
+  // Hide address type radio buttons when editing
+  const toggleClassVisibility = (className, show) => {
+    const elements = document.querySelectorAll(className);
+    elements.forEach((element) => {
+      element.style.display = show ? '' : 'none';
+    });
+  };
+
+  // Hide specific elements when editing
+  if (isEdit) {
+    const addressDisplay = document.querySelector('.address-display span');
+    if (addressDisplay) {
+      const addressLine = [
+        `${businessName ? `${businessName}, ` : ''}${number ? `${number.trim()} ` : ''}${street}`,
+        neighborhood || city,
+        postalCode,
+      ];
+      const formattedAddress = addressLine.filter(Boolean).join(', ');
+      addressDisplay.textContent = formattedAddress;
+    }
+    toggleClassVisibility('.bash--radio-options', false);
+    toggleClassVisibility('.bash--note-field.country-display', false);
+    toggleClassVisibility('.bash--note-field.suburb-postal-reminder', false);
+  } else {
+    toggleClassVisibility('.bash--radio-options', true);
+    toggleClassVisibility('.bash--note-field.country-display', true);
+    toggleClassVisibility('.bash--note-field.suburb-postal-reminder', true);
+  }
+
+  // Populate fields (they will be hidden if necessary)
   if (receiverName) document.getElementById('bash--input-receiverName').value = receiverName ?? '';
   if (complement) document.getElementById('bash--input-complement').value = complement ?? '';
-
-  // addressId indicates that address is being edited / completed.
-  if (id || addressId) document.getElementById('bash--input-addressId').value = id || addressId; // TODO remove this?
+  if (id || addressId) document.getElementById('bash--input-addressId').value = id || addressId;
   if (addressName) document.getElementById('bash--input-addressName').value = addressName;
 
   const streetLine = `${number ? `${number} ` : ''}${street}`.replace(`, ${companyBuilding}`, '');
 
-  // Address type
-  if (addressType === 'commercial') {
+  if (addressType === 'business' && !isEdit) {
     $('#radio-addressType-business').click();
     showBusinessName({ focus: false });
   }
 
   if (businessName) document.getElementById('bash--input-businessName').value = businessName;
 
-  document.getElementById('bash--input-number').value = '';
+  document.getElementById('bash--input-number').value = number || '';
   document.getElementById('bash--input-street').value = streetLine || '';
   document.getElementById('bash--input-companyBuilding').value = companyBuilding || '';
   document.getElementById('bash--input-neighborhood').value = neighborhood || '';
@@ -186,18 +231,32 @@ export const populateAddressForm = (address) => {
 
   const fields = getOrderFormCustomData(PICKUP);
 
-  // Only overwrite defaults if values exist.
-  if (receiverName) document.getElementById('bash--input-receiverName').value = receiverName ?? '';
-  if (complement) document.getElementById('bash--input-complement').value = complement ?? '';
-  document.getElementById('bash--input-receiverPhone').value = getBestPhoneNumber({
-    preferred: receiverPhone,
-    type: 'delivery',
-    fields,
-  });
+  // Set receiver phone
+  const phoneNumberField = document.getElementById('bash--input-receiverPhone');
+  if (phoneNumberField) {
+    let phoneNumber = getBestPhoneNumber({
+      preferred: receiverPhone,
+      type: 'delivery',
+      fields,
+    });
+
+    if (phoneNumber.startsWith('+27')) {
+      phoneNumber = phoneNumber.substring(3);
+    }
+
+    phoneNumber = phoneNumber.trim();
+
+    if (phoneNumber.startsWith('0')) {
+      phoneNumber = phoneNumber.substring(1);
+    }
+
+    phoneNumber = phoneNumber.replace(/\s+/g, '');
+
+    phoneNumberField.value = phoneNumber;
+  }
 
   $(':invalid').trigger('change');
 };
-
 const checkForAddressResults = (event) => {
   setTimeout(() => {
     const pacContainers = document.querySelectorAll('.pac-container');
