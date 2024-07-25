@@ -207,12 +207,10 @@ const checkForAddressResults = (event) => {
     if (
       pacContainers?.length === hiddenPacContainers?.length &&
       event.target?.value?.length > 3 &&
-      !pacItems.length > 0
+      !(pacItems.length > 0)
     ) {
-      console.log();
       $('#address-search-field-container:not(.no-results)').addClass('no-results');
     } else {
-      console.log('else');
       $('#address-search-field-container.no-results').removeClass('no-results');
     }
   }, 250);
@@ -246,21 +244,18 @@ export const initGoogleAutocomplete = () => {
   };
 
   input?.addEventListener('keyup', (event) => {
-    const valueLength = input.value.length;
-
-    if (valueLength === 3) {
+    if (input.value.length === 3) {
       handleAutocomplete();
     }
-
-    if (valueLength > 2) {
+    if (input.value.length > 2) {
       checkForAddressResults(event);
-    } else if (valueLength === 2 && autocomple) {
-      checkForAddressResults(event);
-
-      google.maps.event.removeListener(autocompleListener);
-      autocompleListener = null;
-      google.maps.event.clearInstanceListeners(autocomplete);
-      document.querySelectorAll('.pac-container').forEach((container) => container.remove());
+    } else if (input.value.length === 2) {
+      if (autocomplete) {
+        checkForAddressResults(event);
+        google.maps.event.removeListener(autocompleListener);
+        google.maps.event.clearInstanceListeners(autocomplete);
+        document.querySelectorAll('.pac-container').forEach((container) => container.remove());
+      }
     }
   });
 };
