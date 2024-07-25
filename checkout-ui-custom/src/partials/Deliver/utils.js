@@ -202,9 +202,17 @@ const checkForAddressResults = (event) => {
   setTimeout(() => {
     const pacContainers = document.querySelectorAll('.pac-container');
     const hiddenPacContainers = document.querySelectorAll(".pac-container[style*='display: none']");
-    if (pacContainers?.length === hiddenPacContainers?.length && event.target?.value?.length > 3) {
+    const pacItems = document.querySelectorAll('.pac-item');
+
+    if (
+      pacContainers?.length === hiddenPacContainers?.length &&
+      event.target?.value?.length > 3 &&
+      !pacItems.length > 0
+    ) {
+      console.log();
       $('#address-search-field-container:not(.no-results)').addClass('no-results');
     } else {
+      console.log('else');
       $('#address-search-field-container.no-results').removeClass('no-results');
     }
   }, 250);
@@ -215,6 +223,7 @@ export const initGoogleAutocomplete = () => {
 
   const input = document.getElementById('bash--input-address-search');
   let autocomplete;
+  let autocompleListener;
   if (!input) return;
 
   const handleAutocomplete = () => {
@@ -222,7 +231,7 @@ export const initGoogleAutocomplete = () => {
       componentRestrictions: { country: 'ZA' },
     });
 
-    window.google.maps.event.addListener(autocomplete, 'place_changed', () => {
+    autocompleteListener = window.google.maps.event.addListener(autocomplete, 'place_changed', () => {
       const place = autocomplete.getPlace();
       const { address_components: addressComponents, geometry } = place;
 
@@ -237,11 +246,21 @@ export const initGoogleAutocomplete = () => {
   };
 
   input?.addEventListener('keyup', (event) => {
-    if (input.value.length === 3) {
+    const valueLength = input.value.length;
+
+    if (valueLength === 3) {
       handleAutocomplete();
     }
-    if (input.value.length > 2) {
+
+    if (valueLength > 2) {
       checkForAddressResults(event);
+    } else if (valueLength === 2 && autocomple) {
+      checkForAddressResults(event);
+
+      google.maps.event.removeListener(autocompleListener);
+      autocompleListener = null;
+      google.maps.event.clearInstanceListeners(autocomplete);
+      document.querySelectorAll('.pac-container').forEach((container) => container.remove());
     }
   });
 };
