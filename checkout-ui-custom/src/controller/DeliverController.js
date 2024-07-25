@@ -1,6 +1,7 @@
 // @ts-nocheck
 /* eslint-disable func-names */
 import DeliverContainer from '../partials/Deliver/DeliverContainer';
+import EditAddressForm from '../partials/Deliver/EditAddressForm';
 import ExtraFieldsContainer from '../partials/Deliver/ExtraFieldsContainer';
 import {
   clearRicaFields,
@@ -24,7 +25,7 @@ import {
 } from '../utils/functions';
 import { preparePhoneField } from '../utils/phoneFields';
 import sendEvent from '../utils/sendEvent';
-import { clearAddresses, getAddressByName, removeFromCart } from '../utils/services';
+import { clearAddresses, getAddress, getAddressByName, removeFromCart } from '../utils/services';
 import setAddress from '../utils/setAddress';
 import submitAddressForm from '../utils/submitAddressForm';
 import submitDeliveryForm from '../utils/submitDeliveryForm';
@@ -50,6 +51,16 @@ const DeliverController = (() => {
         });
       }
     }
+  };
+
+  const RenderEditAddress = async (addressName) => {
+    const data = await getAddress(addressName, '?_fields=id,receiverPhone,receiverName');
+    const content = /* html */ `
+        <div> 
+          ${EditAddressForm(data)} 
+        </div>
+      `;
+    document.querySelector('#edit-adress-section').innerHTML = content;
   };
 
   const setupDeliver = () => {
@@ -304,6 +315,9 @@ const DeliverController = (() => {
               console.warn('Could not parse address Json', data.content);
             }
           }
+        }
+        if (data.view === 'edit-address') {
+          RenderEditAddress(data.content);
         }
         break;
       case 'FB_LOG':

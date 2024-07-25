@@ -4,7 +4,7 @@ import FormField from './Elements/FormField';
  * Form Exclusively for Address Edits
  */
 
-const DeleteButton = () => `
+const DeleteButton = () => /* html */ `
     <a
       id="btn-delete-address"
       href="#"
@@ -13,7 +13,7 @@ const DeleteButton = () => `
     </a>
   `;
 
-const SaveButton = () => `
+const SaveButton = () => /* html */ `
     <button
       class="submit btn-go-to-payment btn btn-large btn-success"
       id="btn-save-address"
@@ -21,7 +21,7 @@ const SaveButton = () => `
       Delete address
     </button>
 `;
-const EditAddressForm = () => {
+const EditAddressForm = (data) => {
   // TODO: SK - FETCH THE ADDRESS
   // TODO: SK - POPULATE SUMMARY BLOCK
   // TODO: SK - POPULATE FORM - RECIPIENT NAME, PHONE
@@ -57,9 +57,8 @@ const EditAddressForm = () => {
 
   return `
     <form id="bash--edit-address-form" method="post" style="border: 1px solid black;">
-      <p>Edit Address Shaheenss</p>
       ${formFields}
-
+      ${JSON.stringify(data)}
       ${DeleteButton()}
       ${SaveButton()}
     </form>

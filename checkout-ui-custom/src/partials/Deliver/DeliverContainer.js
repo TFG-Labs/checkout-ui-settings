@@ -4,12 +4,11 @@ import AddressForm from './AddressForm';
 import AddressSearch from './AddressSearch';
 import { DeliveryErrorContainer } from './DeliveryError';
 import DeliveryOptions from './DeliveryOptions';
-import EditAddressForm from './EditAddressForm';
 import { AlertContainer } from './Elements/Alert';
 import MixedProducts from './MixedProducts';
 import TVorRICAMsg from './TVorRICAMsg';
 
-const DeliverContainer = ({ hasFurn, hasFurnOnly, hasFurnMixed }) => `
+const DeliverContainer = ({ hasFurn, hasFurnOnly, hasFurnMixed }) => /* html */ `
   <div class="bash--delivery-container ${hasFurn && 'has-furniture'}"
    id="bash--delivery-container" data-view="select-address">
     <div id="bash--shipping-messages">
@@ -63,12 +62,11 @@ const DeliverContainer = ({ hasFurn, hasFurnOnly, hasFurnMixed }) => `
       </p>
     </section>
 
-    <section class="bash--delivery-view" data-section="edit-address">
-       <p>Here we are again</p>
-        ${EditAddressForm()}
+    <section 
+      id="edit-adress-section" 
+      class="bash--delivery-view" 
+      data-section="edit-address">
     </section>
-
-
    
     <section class="bash--delivery-view" data-section="address-form">
        <div class="bash--heading">

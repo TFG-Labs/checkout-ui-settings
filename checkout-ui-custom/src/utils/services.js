@@ -71,7 +71,7 @@ export const getAddresses = async () => {
 };
 
 // GET Address by ID / Name?
-const getAddress = async (addressName, fields) => {
+export const getAddress = async (addressName, fields) => {
   let data = {};
   const headers = getHeadersByConfig({ cookie: true, cache: true, json: false });
   const options = {
@@ -273,6 +273,5 @@ export const deleteAddress = async (addressId) => {
     $(`#address-${addressId}`).remove();
   });
 };
-
 
 export default getAddresses;
