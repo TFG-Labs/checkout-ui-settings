@@ -32,20 +32,21 @@ const EditAddressForm = (data) => {
     {
       name: 'addressId',
       type: 'hidden',
-      value: '',
+      value: data.id,
       required: false,
     },
     {
       name: 'receiverName',
       label: 'Recipient’s name',
       required: true,
-      value: '',
+      value: data?.receiverName ?? '',
     },
     {
       name: 'receiverPhone',
       label: 'Recipient’s mobile number',
       required: true,
       type: 'tel',
+      value: data?.receiverPhone ?? '',
       helperText: 'We send shipping updates to this number.',
       minlength: 9,
       error: 'Please enter a valid phone number',
@@ -55,10 +56,9 @@ const EditAddressForm = (data) => {
 
   const formFields = fields.map((field) => FormField(field)).join('');
 
-  return `
+  return /* html */ `
     <form id="bash--edit-address-form" method="post" style="border: 1px solid black;">
       ${formFields}
-      ${JSON.stringify(data)}
       ${DeleteButton()}
       ${SaveButton()}
     </form>
