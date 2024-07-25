@@ -54,7 +54,6 @@ const DeliverController = (() => {
   };
 
   const RenderEditAddress = async (addressName) => {
-    const data = await getAddress(addressName, '?_fields=id,receiverPhone,receiverName');
     const fields = 'id,receiverPhone,receiverName,number,companyBuilding,street,city,postalCode,state';
     const data = await getAddress(addressName, `?_fields=${fields}`);
     document.querySelector('#edit-adress-section').innerHTML = EditAddressForm(data);
