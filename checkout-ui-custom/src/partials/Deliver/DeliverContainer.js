@@ -63,7 +63,7 @@ const DeliverContainer = ({ hasFurn, hasFurnOnly, hasFurnMixed }) => `
       </p>
     </section>
 
-    <section class="bash--delivery-view" data-section="address-edit">
+    <section class="bash--delivery-view" data-section="edit-address">
        <p>Here we are again</p>
         ${EditAddressForm()}
     </section>

@@ -62,7 +62,7 @@ const AddressListing = (address) => {
     <div>${contactLine}</div>  
   </div>
   <div class="address-edit">
-    <a href="#" data-view="address-edit" data-content="address-${addressName}">
+    <a href="#" data-view="edit-address" data-content="address-${addressName}">
       Edit
     </a>
   </div>

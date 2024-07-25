@@ -57,7 +57,7 @@ const EditAddressForm = () => {
 
   return `
     <form id="bash--edit-address-form" method="post" style="border: 1px solid black;">
-      <p>Edit Address Shaheens</p>
+      <p>Edit Address Shaheenss</p>
       ${formFields}
 
       ${DeleteButton()}
