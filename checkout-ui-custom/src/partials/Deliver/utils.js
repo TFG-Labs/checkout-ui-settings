@@ -198,22 +198,40 @@ export const populateAddressForm = (address) => {
   $(':invalid').trigger('change');
 };
 
-const checkForAddressResults = (event) => {
-  setTimeout(() => {
-    const pacContainers = document.querySelectorAll('.pac-container');
-    const hiddenPacContainers = document.querySelectorAll(".pac-container[style*='display: none']");
-    const pacItems = document.querySelectorAll('.pac-item');
+export const isNetworkSlow = () => {
+  const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
 
-    if (
-      pacContainers?.length === hiddenPacContainers?.length &&
-      event.target?.value?.length > 3 &&
-      !(pacItems.length > 0)
-    ) {
-      $('#address-search-field-container:not(.no-results)').addClass('no-results');
-    } else {
-      $('#address-search-field-container.no-results').removeClass('no-results');
-    }
-  }, 250);
+  if (
+    connection.effectiveType === 'slow-2g' ||
+    connection.effectiveType === '2g' ||
+    connection.effectiveType === '3g'
+  ) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
+const checkForAddressResults = (event) => {
+  const isSlowNetwork = isNetworkSlow();
+  setTimeout(
+    () => {
+      const pacContainers = document.querySelectorAll('.pac-container');
+      const hiddenPacContainers = document.querySelectorAll(".pac-container[style*='display: none']");
+      const pacItems = document.querySelectorAll('.pac-item');
+
+      if (
+        pacContainers?.length === hiddenPacContainers?.length &&
+        event.target?.value?.length > 3 &&
+        pacItems?.length === 0
+      ) {
+        $('#address-search-field-container:not(.no-results)').addClass('no-results');
+      } else {
+        $('#address-search-field-container.no-results').removeClass('no-results');
+      }
+    },
+    isSlowNetwork ? 5000 : 250
+  );
 };
 
 export const initGoogleAutocomplete = () => {
@@ -221,7 +239,7 @@ export const initGoogleAutocomplete = () => {
 
   const input = document.getElementById('bash--input-address-search');
   let autocomplete;
-  let autocompleListener;
+  let autocompleteListener;
   if (!input) return;
 
   const handleAutocomplete = () => {
@@ -244,17 +262,19 @@ export const initGoogleAutocomplete = () => {
   };
 
   input?.addEventListener('keyup', (event) => {
-    if (input.value.length === 3) {
+    const inputLength = input.value.length;
+    if (inputLength === 3) {
       handleAutocomplete();
     }
-    if (input.value.length > 2) {
-      checkForAddressResults(event);
-    } else if (input.value.length === 2) {
-      if (autocomplete) {
+    if (inputLength > 2) {
+      if (!Number(event.key) && event.key !== ' ') {
         checkForAddressResults(event);
-        google.maps.event.removeListener(autocompleListener);
+      }
+    } else if (inputLength === 2) {
+      if (autocomplete) {
+        google.maps.event.removeListener(autocompleteListener);
         google.maps.event.clearInstanceListeners(autocomplete);
-        document.querySelectorAll('.pac-container').forEach((container) => container.remove());
+        $('.pac-container').remove();
       }
     }
   });
