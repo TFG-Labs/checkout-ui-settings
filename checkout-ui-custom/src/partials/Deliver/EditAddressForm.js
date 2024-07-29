@@ -1,3 +1,5 @@
+import { isValidNumber } from 'libphonenumber-js';
+import { formatPhoneNumber } from '../../utils/phoneFields';
 import FormField from './Elements/FormField';
 
 const Heading = () => /* html */ `
@@ -80,10 +82,35 @@ export const submitEditAddressForm = async (event) => {
 
   const form = document.getElementById('bash--edit-address-form');
   const formData = new FormData(form);
-  const id = formData.get('addressId');
-  const name = formData.get('receiverName');
-  const phone = formData.get('receiverPhone');
+  const addressId = formData.get('addressId');
+  const receiverName = formData.get('receiverName');
+  const receiverPhone = formData.get('receiverPhone');
 
-  console.log({ id, name, phone });
+  const data = { addressId, receiverName, receiverPhone };
+  data.receiverPhone = formatPhoneNumber(data.receiverPhone, 'ZA').trim();
+
+  // VALIDATE FIELDS
+  const invalidFields = [];
+  if (!receiverName) invalidFields.push('receiverName');
+  if (!receiverPhone || !isValidNumber(formatPhoneNumber(receiverPhone, 'ZA'), 'ZA')) {
+    invalidFields.push('receiverPhone');
+  }
+
+  console.log('invalidFields', invalidFields);
+
+  // if (
+  //   requiredFields.includes('receiverPhone') &&
+  //   !invalidFields.includes('receiverPhone') &&
+  //   !isValidNumber(formatPhoneNumber(address.x, 'ZA'), 'ZA')
+  // ) {
+  //   invalidFields.push('receiverPhone');
+  //   $('#bash--input-receiverPhone').addClass('invalid');
+  //   $('#bash--label-receiverPhone').focus();
+  // }
+
+  // IF FALSE APPLY VALIDATIONDS
+
+  // OTHERWISE API CALL AND SUBMIT
 };
+
 export default EditAddressForm;
