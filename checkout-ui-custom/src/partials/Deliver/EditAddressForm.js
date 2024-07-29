@@ -1,5 +1,7 @@
 import { isValidNumber } from 'libphonenumber-js';
 import { formatPhoneNumber } from '../../utils/phoneFields';
+import { upsertAddress } from '../../utils/services';
+import { RefreshAddressOverview } from './Addresses';
 import FormField from './Elements/FormField';
 
 const Heading = () => /* html */ `
@@ -77,40 +79,48 @@ const EditAddressForm = (data) => {
 
 export const submitEditAddressForm = async (event) => {
   event.preventDefault();
-  console.log('---- SUBMIT EDIT ADDRESS-----');
-  console.log('event', event);
 
+  // PULL ALL FORM FIELDS
   const form = document.getElementById('bash--edit-address-form');
   const formData = new FormData(form);
   const addressId = formData.get('addressId');
   const receiverName = formData.get('receiverName');
   const receiverPhone = formData.get('receiverPhone');
 
-  const data = { addressId, receiverName, receiverPhone };
+  // PREP PAYLOAD
+  const data = { addressId, addressName: addressId, receiverName, receiverPhone };
   data.receiverPhone = formatPhoneNumber(data.receiverPhone, 'ZA').trim();
 
   // VALIDATE FIELDS
   const invalidFields = [];
-  if (!receiverName) invalidFields.push('receiverName');
-  if (!receiverPhone || !isValidNumber(formatPhoneNumber(receiverPhone, 'ZA'), 'ZA')) {
+  if (!data.receiverName) invalidFields.push('receiverName');
+  if (!data.receiverPhone || !isValidNumber(data.receiverPhone, 'ZA')) {
     invalidFields.push('receiverPhone');
+    $('#bash--input-receiverPhone').addClass('invalid');
   }
 
-  console.log('invalidFields', invalidFields);
+  // APPLY VALIDATION UI
+  if (invalidFields.length > 0) {
+    console.error({ invalidFields });
+    $('#bash--edit-address-form').addClass('show-form-errors');
+    $(`#bash--input-${invalidFields[0]}`).focus();
 
-  // if (
-  //   requiredFields.includes('receiverPhone') &&
-  //   !invalidFields.includes('receiverPhone') &&
-  //   !isValidNumber(formatPhoneNumber(address.x, 'ZA'), 'ZA')
-  // ) {
-  //   invalidFields.push('receiverPhone');
-  //   $('#bash--input-receiverPhone').addClass('invalid');
-  //   $('#bash--label-receiverPhone').focus();
-  // }
+    window.postMessage(
+      {
+        type: 'ADDRESS_VALIDATION_ERROR',
+        message: 'Address validation error. See invalidFields.',
+        invalidFields,
+      },
+      '*'
+    );
+    return;
+  }
 
-  // IF FALSE APPLY VALIDATIONDS
-
-  // OTHERWISE API CALL AND SUBMIT
+  // SUBMIT API DATA AND GO TO OVERVIEW SCREEN
+  upsertAddress(data).then(() => {
+    window.postMessage({ action: 'setDeliveryView', view: 'select-address' });
+    RefreshAddressOverview();
+  });
 };
 
 export default EditAddressForm;
