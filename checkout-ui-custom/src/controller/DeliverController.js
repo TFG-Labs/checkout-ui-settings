@@ -59,6 +59,10 @@ const DeliverController = (() => {
     document.querySelector('#edit-adress-section').innerHTML = EditAddressForm(data);
   };
 
+  const clearEditAddress = () => {
+    document.querySelector('#edit-adress-section').innerHTML = '';
+  };
+
   const setupDeliver = () => {
     unblockShippingError();
     if ($('#bash--delivery-container').length) return;
@@ -301,6 +305,7 @@ const DeliverController = (() => {
     switch (data.action) {
       case 'setDeliveryView':
         document.querySelector('.bash--delivery-container')?.setAttribute('data-view', data.view);
+        clearEditAddress();
         if (data.view === 'address-form') {
           preparePhoneField('#bash--input-receiverPhone');
           if (data.content) {
