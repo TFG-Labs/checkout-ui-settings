@@ -1,5 +1,12 @@
 import FormField from './Elements/FormField';
 
+const Heading = () => /* html */ `
+    <div class="bash--heading">
+      <h3>Address Details</h3>
+      <a href="#" class="back-button--select" data-view="select-address">&lt; Back</a>
+    </div>
+`;
+
 const SaveButton = () => /* html */ `
   <button
     class="submit btn-go-to-payment btn btn-large btn-success"
@@ -12,7 +19,10 @@ const SaveButton = () => /* html */ `
 const ContactCard = (data) => {
   const { number, companyBuilding, street, city, postalCode } = data;
 
-  const addressLine = [companyBuilding, `${number ? `${number} ` : ''}${street}`, city, postalCode].join(', ').trim();
+  const addressLine = [companyBuilding, `${number ? `${number} ` : ''}${street}`, city, postalCode]
+    .filter((item) => item !== undefined && item !== null && item !== '')
+    .join(', ')
+    .trim();
 
   return /* html */ `
     <div style="border: 0.5px solid #0404041A; border-radius: 8px; padding: 16px; display: flex; align-items: center;">
@@ -58,13 +68,12 @@ const EditAddressForm = (data) => {
   ];
 
   return /* html */ `
-    <div> 
-      ${ContactCard(data)}
-      <form id="bash--edit-address-form" method="post">
-        ${fields.map((field) => FormField(field)).join('')}
-        ${SaveButton()}
-      </form>
-     </div>
+    ${Heading()}
+    ${ContactCard(data)}
+    <form id="bash--edit-address-form" method="post">
+      ${fields.map((field) => FormField(field)).join('')}
+      ${SaveButton()}
+    </form>
   `;
 };
 
