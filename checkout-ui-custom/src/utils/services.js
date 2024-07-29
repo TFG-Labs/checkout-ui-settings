@@ -55,9 +55,9 @@ export const getAddresses = async () => {
 
   return fetch(
     `${BASE_URL_API}masterdata/addresses?t=${cacheBust}&_fields=${fields}&_where=${encodeURIComponent(
-      `userIdQuery=${email}`,
+      `userIdQuery=${email}`
     )}`,
-    options,
+    options
   )
     .then((res) => res.json())
     .then(async (data) => {
@@ -81,7 +81,7 @@ const getAddress = async (addressName, fields) => {
 
   const response = await fetch(
     `${BASE_URL_API}masterdata/addresses/${fields}&_where=addressName=${addressName}&timestamp=${Date.now()}`,
-    options,
+    options
   )
     .then((res) => res.json())
     .catch((error) => catchError(`GET_ADDRESS_ERROR: ${error?.message}`));
@@ -219,15 +219,87 @@ export const getOrderFormCustomData = (appId) => {
   return fields;
 };
 
-export const removeFromCart = (index) => window.vtexjs.checkout
-  .updateItems([
-    {
-      index: `${index}`,
-      quantity: 0,
-    },
-  ])
-  .done(() => {
-    clearLoaders();
+export const removeFromCart = (index) =>
+  window.vtexjs.checkout
+    .updateItems([
+      {
+        index: `${index}`,
+        quantity: 0,
+      },
+    ])
+    .done(() => {
+      clearLoaders();
+    });
+
+export const removeAddressFromDB = async (address) => {
+  if (!address.addressName) {
+    return;
+  }
+
+  if (!address.addressId) address.addressId = address.addressName;
+
+  try {
+    await DB.deleteAddress(address.addressId);
+    updateAddressListing(address);
+  } catch (error) {
+    console.error('Error deleting address:', error);
+  }
+};
+
+export const removeAddressFromOrderForm = async (addressId) => {
+  return vtexjs.checkout
+    .getOrderForm()
+    .then(function (orderForm) {
+      let shippingData = orderForm.shippingData;
+      const filterAddresses = (addresses) => addresses.filter((address) => address.addressId !== addressId);
+
+      shippingData.availableAddresses = filterAddresses(shippingData.availableAddresses || []);
+      shippingData.selectedAddresses = filterAddresses(shippingData.selectedAddresses || []);
+
+      // Send the updated shippingData back to VTEX
+      return vtexjs.checkout.sendAttachment('shippingData', shippingData);
+    })
+    .done(function (orderForm) {
+      console.log(orderForm.shippingData);
+    })
+    .fail(function (error) {
+      console.error('Error removing address from order form:', error);
+    });
+};
+
+// Remove address from MasterData
+export const removeAddressFromMasterData = async (addressId) => {
+  if (!addressId) {
+    return Promise.reject(new Error('No address ID provided'));
+  }
+
+  const path = `${BASE_URL_API}masterdata/address/${addressId}`;
+  const headers = getHeadersByConfig({
+    cookie: true,
+    cache: true,
+    json: true,
   });
+
+  const options = {
+    method: 'POST',
+    headers,
+    credentials: 'include',
+  };
+
+  try {
+    const response = await fetch(path, options);
+    if (response.ok) {
+      console.log(`Address with ID ${addressId} successfully deleted from MasterData`);
+      return response.json();
+    } else {
+      const errorData = await response.json();
+      console.error(`Error deleting address from MasterData`, errorData);
+      throw new Error('Error deleting address from MasterData');
+    }
+  } catch (error) {
+    console.error('Error in removeAddressFromMasterData:', error);
+    throw new Error(`Error deleting address from MasterData: ${error.message}`);
+  }
+};
 
 export default getAddresses;
