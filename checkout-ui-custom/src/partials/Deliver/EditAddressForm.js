@@ -35,10 +35,6 @@ const ContactCard = (data) => {
 };
 
 const EditAddressForm = (data) => {
-  // TODO: SK - FETCH THE ADDRESS
-  // TODO: SK - POPULATE SUMMARY BLOCK
-  // TODO: SK - POPULATE FORM - RECIPIENT NAME, PHONE
-  // FORMAT  + VALIDATE PHONE NUMBER
   // VALIDATE DATA AND DEAL WITH ERRORS
   // TODO HOW DO WE DETERMINE WHICH FORM TO SHOW
   const fields = [
@@ -77,4 +73,17 @@ const EditAddressForm = (data) => {
   `;
 };
 
+export const submitEditAddressForm = async (event) => {
+  event.preventDefault();
+  console.log('---- SUBMIT EDIT ADDRESS-----');
+  console.log('event', event);
+
+  const form = document.getElementById('bash--edit-address-form');
+  const formData = new FormData(form);
+  const id = formData.get('addressId');
+  const name = formData.get('receiverName');
+  const phone = formData.get('receiverPhone');
+
+  console.log({ id, name, phone });
+};
 export default EditAddressForm;

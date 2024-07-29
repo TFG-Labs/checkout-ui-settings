@@ -1,7 +1,7 @@
 // @ts-nocheck
 /* eslint-disable func-names */
 import DeliverContainer from '../partials/Deliver/DeliverContainer';
-import EditAddressForm from '../partials/Deliver/EditAddressForm';
+import EditAddressForm, { submitEditAddressForm } from '../partials/Deliver/EditAddressForm';
 import ExtraFieldsContainer from '../partials/Deliver/ExtraFieldsContainer';
 import {
   clearRicaFields,
@@ -57,6 +57,7 @@ const DeliverController = (() => {
     const fields = 'id,receiverPhone,receiverName,number,companyBuilding,street,city,postalCode,state';
     const data = await getAddress(addressName, `?_fields=${fields}`);
     document.querySelector('#edit-adress-section').innerHTML = EditAddressForm(data);
+    preparePhoneField('#bash--input-receiverPhone');
   };
 
   const clearEditAddress = () => {
@@ -277,8 +278,10 @@ const DeliverController = (() => {
     setTimeout(() => document.getElementById('shipping-option-pickup-in-point').click(), 200);
   });
 
+  // submit address form listeners
   $(document).on('submit', '#bash--address-form', submitAddressForm);
   $(document).on('submit', '#bash--delivery-form', submitDeliveryForm);
+  $(document).on('submit', '#bash--edit-address-form', submitEditAddressForm);
 
   $(document).on('click', '.remove-cart-item', function (e) {
     e.preventDefault();
