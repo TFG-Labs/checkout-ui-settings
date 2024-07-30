@@ -11,10 +11,10 @@ import {
   populateRicaFields,
   populateTVFields,
   setCartClasses,
-  showAlertBox,
   updateDeliveryFeeDisplay,
 } from '../partials/Deliver/utils';
 import { AD_TYPE, STEPS } from '../utils/const';
+import handleDeleteAddress from '../utils/deleteAddress';
 import formatAddressSummary from '../utils/formatAddressSummary';
 import {
   clearLoaders,
@@ -25,14 +25,7 @@ import {
 } from '../utils/functions';
 import { preparePhoneField } from '../utils/phoneFields';
 import sendEvent from '../utils/sendEvent';
-import {
-  clearAddresses,
-  getAddressByName,
-  removeAddressFromDB,
-  removeAddressFromMasterData,
-  removeAddressFromOrderForm,
-  removeFromCart,
-} from '../utils/services';
+import { clearAddresses, getAddressByName, removeFromCart } from '../utils/services';
 import setAddress from '../utils/setAddress';
 import submitAddressForm from '../utils/submitAddressForm';
 import submitDeliveryForm from '../utils/submitDeliveryForm';
@@ -113,20 +106,6 @@ const DeliverController = (() => {
         $(field)[0].setCustomValidity('');
       });
     });
-  };
-
-  // Handle address deletion
-  const handleDeleteAddress = async (addressName) => {
-    try {
-      const address = await getAddressByName(addressName);
-      await Promise.all([
-        removeAddressFromDB(address),
-        removeAddressFromOrderForm(addressName),
-        removeAddressFromMasterData(address.id),
-      ]);
-    } catch (error) {
-      console.error('Error deleting address:', error);
-    }
   };
 
   // EVENTS
@@ -315,9 +294,6 @@ const DeliverController = (() => {
     if (confirm(`Are you sure you want to delete the address "${addressName}"?`)) {
       handleDeleteAddress(addressName);
     }
-    // Switch to the address list view
-    window.postMessage({ action: 'setDeliveryView', view: 'select-address' });
-    showAlertBox();
   });
 
   // Form validation

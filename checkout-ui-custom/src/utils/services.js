@@ -274,14 +274,9 @@ export const removeAddressFromMasterData = async (addressId) => {
   }
 
   const path = `${BASE_URL_API}masterdata/address/${addressId}`;
-  const headers = getHeadersByConfig({
-    cookie: true,
-    cache: true,
-    json: true,
-  });
-
+  const headers = getHeadersByConfig({ cookie: true, cache: true, json: false });
   const options = {
-    method: 'POST',
+    method: 'delete',
     headers,
     credentials: 'include',
   };
