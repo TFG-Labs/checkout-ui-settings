@@ -212,7 +212,7 @@ export const isNetworkSlow = () => {
   }
 };
 
-const checkForAddressResults = (event) => {
+const checkForAddressResults = (event, isAutoCompleteInit = true) => {
   const isSlowNetwork = isNetworkSlow();
   setTimeout(
     () => {
@@ -222,7 +222,7 @@ const checkForAddressResults = (event) => {
 
       if (
         pacContainers?.length === hiddenPacContainers?.length &&
-        event.target?.value?.length > 3 &&
+        event.target?.value?.length > 2 &&
         pacItems?.length === 0
       ) {
         $('#address-search-field-container:not(.no-results)').addClass('no-results');
@@ -230,7 +230,7 @@ const checkForAddressResults = (event) => {
         $('#address-search-field-container.no-results').removeClass('no-results');
       }
     },
-    isSlowNetwork ? 5000 : 250
+    isAutoCompleteInit && isSlowNetwork ? 5000 : 250
   );
 };
 
@@ -275,6 +275,7 @@ export const initGoogleAutocomplete = () => {
         google.maps.event.removeListener(autocompleteListener);
         google.maps.event.clearInstanceListeners(autocomplete);
         $('.pac-container').remove();
+        checkForAddressResults(event, false);
       }
     }
   });
