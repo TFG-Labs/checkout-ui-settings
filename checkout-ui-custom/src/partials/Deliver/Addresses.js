@@ -2,7 +2,7 @@ import { clearLoaders } from '../../utils/functions';
 import { getAddresses } from '../../utils/services';
 import AddressListing from './AddressListing';
 
-const Addresses = () => {
+const RefreshAddressList = () => {
   getAddresses()
     .then(({ data: addresses }) => {
       const addressesHtml = addresses.map((address) => AddressListing(address));
@@ -24,7 +24,10 @@ const Addresses = () => {
       console.error('ERROR getAddresses', e);
       throw new Error('Error getAddresses', e.message);
     });
+};
 
+const Addresses = () => {
+  RefreshAddressList();
   return `
  <div class="bash--addresses shimmer" id="bash-address-list">
     Loading address book...

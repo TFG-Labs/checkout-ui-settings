@@ -333,7 +333,6 @@ const DeliverController = (() => {
 
   // Clear local checkout DB on ext.
   // window.addEventListener('beforeunload', clearAddresses);
-
   return {
     state,
     init: () => {},

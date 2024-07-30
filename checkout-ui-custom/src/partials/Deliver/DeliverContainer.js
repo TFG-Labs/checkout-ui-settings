@@ -76,7 +76,6 @@ const DeliverContainer = ({ hasFurn, hasFurnOnly, hasFurnMixed }) => /* html */ 
       </div>
       ${AddressForm()}
     </section>
-    
   </div>`;
 
 export default DeliverContainer;
