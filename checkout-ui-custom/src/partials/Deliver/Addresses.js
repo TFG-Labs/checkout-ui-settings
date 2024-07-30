@@ -2,6 +2,12 @@ import { clearLoaders } from '../../utils/functions';
 import { getAddresses } from '../../utils/services';
 import AddressListing from './AddressListing';
 
+const AddressListingContainer = () => /* html */ `
+ <div class="bash--addresses shimmer" id="bash-address-list">
+    Loading address book...
+  </div>
+  `;
+
 const RefreshAddressList = () => {
   getAddresses()
     .then(({ data: addresses }) => {
@@ -28,11 +34,7 @@ const RefreshAddressList = () => {
 
 const Addresses = () => {
   RefreshAddressList();
-  return `
- <div class="bash--addresses shimmer" id="bash-address-list">
-    Loading address book...
-  </div>
-  `;
+  return AddressListingContainer();
 };
 
 export const RefreshAddressOverview = () => {
@@ -41,5 +43,6 @@ export const RefreshAddressOverview = () => {
       <div class="bash--addresses shimmer" id="bash-address-list">Loading address SHAHEEN...</div>
     `;
   }
+  RefreshAddressList();
 };
 export default Addresses;
