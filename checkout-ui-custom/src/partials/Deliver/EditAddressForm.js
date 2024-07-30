@@ -1,7 +1,6 @@
 import { isValidNumber } from 'libphonenumber-js';
 import { formatPhoneNumber } from '../../utils/phoneFields';
-import { upsertAddress } from '../../utils/services';
-import { RefreshAddressOverview } from './Addresses';
+import { getAddressByName } from '../../utils/services';
 import FormField from './Elements/FormField';
 
 const Heading = () => /* html */ `
@@ -88,18 +87,17 @@ export const submitEditAddressForm = async (event) => {
   // PULL ALL FORM FIELDS
   const form = document.getElementById('bash--edit-address-form');
   const formData = new FormData(form);
-  const addressId = formData.get('addressId');
-  const receiverName = formData.get('receiverName');
-  const receiverPhone = formData.get('receiverPhone');
 
-  // PREP PAYLOAD
-  const data = { addressId, addressName: addressId, receiverName, receiverPhone };
-  data.receiverPhone = formatPhoneNumber(data.receiverPhone, 'ZA').trim();
+  const addressId = formData.get('addressId');
+  const addressName = formData.get('addressName');
+  const receiverName = formData.get('receiverName');
+  let receiverPhone = formData.get('receiverPhone');
+  receiverPhone = formatPhoneNumber(receiverPhone, 'ZA').trim();
 
   // VALIDATE FIELDS
   const invalidFields = [];
-  if (!data.receiverName) invalidFields.push('receiverName');
-  if (!data.receiverPhone || !isValidNumber(data.receiverPhone, 'ZA')) {
+  if (!receiverName) invalidFields.push('receiverName');
+  if (!receiverPhone || !isValidNumber(receiverPhone, 'ZA')) {
     invalidFields.push('receiverPhone');
     $('#bash--input-receiverPhone').addClass('invalid');
   }
@@ -120,12 +118,18 @@ export const submitEditAddressForm = async (event) => {
     );
     return;
   }
-
-  // SUBMIT API DATA AND GO TO OVERVIEW SCREEN
-  upsertAddress(data).then(() => {
-    window.postMessage({ action: 'setDeliveryView', view: 'select-address' });
-    RefreshAddressOverview();
+  getAddressByName(addressName).then((address) => {
+    console.log('ADDRESS', address);
+    console.log('ABD', { addressId, addressName, receiverName, receiverPhone });
+    // updateAddressListing(address);
   });
+
+  // addOrUpdateAddress({data,...});
+  // // SUBMIT API DATA AND GO TO OVERVIEW SCREEN
+  // upsertAddress(data).then(() => {
+  //   window.postMessage({ action: 'setDeliveryView', view: 'select-address' });
+  //   RefreshAddressOverview();
+  // });
 };
 
 export default EditAddressForm;
