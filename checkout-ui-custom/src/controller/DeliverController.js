@@ -25,7 +25,7 @@ import {
 } from '../utils/functions';
 import { preparePhoneField } from '../utils/phoneFields';
 import sendEvent from '../utils/sendEvent';
-import { clearAddresses, getAddress, getAddressByName, removeFromCart } from '../utils/services';
+import { clearAddresses, getAddressByName, removeFromCart } from '../utils/services';
 import setAddress from '../utils/setAddress';
 import submitAddressForm from '../utils/submitAddressForm';
 import submitDeliveryForm from '../utils/submitDeliveryForm';
@@ -54,8 +54,7 @@ const DeliverController = (() => {
   };
 
   const RenderEditAddress = async (addressName) => {
-    const fields = 'id,receiverPhone,receiverName,number,companyBuilding,street,city,postalCode,state';
-    const data = await getAddress(addressName, `?_fields=${fields}`);
+    const data = await getAddressByName(addressName);
     document.querySelector('#edit-adress-section').innerHTML = EditAddressForm(data);
     preparePhoneField('#bash--input-receiverPhone');
   };

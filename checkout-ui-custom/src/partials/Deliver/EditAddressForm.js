@@ -39,14 +39,19 @@ const ContactCard = (data) => {
 };
 
 const EditAddressForm = (data) => {
-  // VALIDATE DATA AND DEAL WITH ERRORS
-  // TODO HOW DO WE DETERMINE WHICH FORM TO SHOW
   const fields = [
     {
       name: 'addressId',
       type: 'hidden',
       value: data.id,
       required: false,
+    },
+    {
+      name: 'addressName',
+      type: 'hidden',
+      value: data.addressName,
+      required: false,
+      maxLength: 50,
     },
     {
       name: 'receiverName',
