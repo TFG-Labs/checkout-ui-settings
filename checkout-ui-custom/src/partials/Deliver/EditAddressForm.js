@@ -4,6 +4,8 @@ import { addOrUpdateAddress, getAddressByName } from '../../utils/services';
 import setAddress from '../../utils/setAddress';
 import FormField from './Elements/FormField';
 
+const EDIT_FORM_RECEIVER_PHONE_ID = 'bash--input-edit-adress-form-receiverPhone';
+
 const Heading = () => /* html */ `
     <div class="bash--heading">
       <h3>Address Details</h3>
@@ -69,6 +71,7 @@ const EditAddressForm = (data) => {
       minlength: 9,
       error: 'Please enter a valid phone number',
       containerClasses: 'custom-field-complement', // for sa flag
+      idOverride: EDIT_FORM_RECEIVER_PHONE_ID,
     },
   ];
 
@@ -100,7 +103,7 @@ export const submitEditAddressForm = async (event) => {
   if (!receiverName) invalidFields.push('receiverName');
   if (!receiverPhone || !isValidNumber(receiverPhone, 'ZA')) {
     invalidFields.push('receiverPhone');
-    $('#bash--input-receiverPhone').addClass('invalid');
+    $(`#${EDIT_FORM_RECEIVER_PHONE_ID}`).addClass('invalid');
   }
 
   // APPLY VALIDATION UI
