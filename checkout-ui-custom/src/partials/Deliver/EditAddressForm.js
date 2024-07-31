@@ -1,6 +1,6 @@
 import { isValidNumber } from 'libphonenumber-js';
 import { formatPhoneNumber } from '../../utils/phoneFields';
-import { getAddressByName } from '../../utils/services';
+import { addOrUpdateAddress, getAddressByName } from '../../utils/services';
 import FormField from './Elements/FormField';
 
 const Heading = () => /* html */ `
@@ -118,18 +118,19 @@ export const submitEditAddressForm = async (event) => {
     );
     return;
   }
+  // POST ADDRESS UPDATE AND CHANGE VIEW
   getAddressByName(addressName).then((address) => {
-    console.log('ADDRESS', address);
-    console.log('ABD', { addressId, addressName, receiverName, receiverPhone });
-    // updateAddressListing(address);
-  });
+    const payload = {
+      ...address,
+      addressId,
+      addressName,
+      receiverName,
+      receiverPhone,
+    };
 
-  // addOrUpdateAddress({data,...});
-  // // SUBMIT API DATA AND GO TO OVERVIEW SCREEN
-  // upsertAddress(data).then(() => {
-  //   window.postMessage({ action: 'setDeliveryView', view: 'select-address' });
-  //   RefreshAddressOverview();
-  // });
+    addOrUpdateAddress(payload);
+    window.postMessage({ action: 'setDeliveryView', view: 'select-address' });
+  });
 };
 
 export default EditAddressForm;
