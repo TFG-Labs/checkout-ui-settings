@@ -71,7 +71,7 @@ export const getAddresses = async () => {
 };
 
 // GET Address by ID / Name?
-export const getAddress = async (addressName, fields) => {
+const getAddress = async (addressName, fields) => {
   let data = {};
   const headers = getHeadersByConfig({ cookie: true, cache: true, json: false });
   const options = {

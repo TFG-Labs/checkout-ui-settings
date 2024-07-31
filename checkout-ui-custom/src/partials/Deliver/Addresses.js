@@ -36,13 +36,4 @@ const Addresses = () => {
   RefreshAddressList();
   return AddressListingContainer();
 };
-
-export const RefreshAddressOverview = () => {
-  if (document.getElementById('bash-address-list')) {
-    document.getElementById('bash-address-list').innerHTML = /* HTML */ `
-      <div class="bash--addresses shimmer" id="bash-address-list">Loading address SHAHEEN...</div>
-    `;
-  }
-  RefreshAddressList();
-};
 export default Addresses;

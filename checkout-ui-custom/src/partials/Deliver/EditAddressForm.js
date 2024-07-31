@@ -1,6 +1,7 @@
 import { isValidNumber } from 'libphonenumber-js';
 import { formatPhoneNumber } from '../../utils/phoneFields';
 import { addOrUpdateAddress, getAddressByName } from '../../utils/services';
+import setAddress from '../../utils/setAddress';
 import FormField from './Elements/FormField';
 
 const Heading = () => /* html */ `
@@ -119,16 +120,25 @@ export const submitEditAddressForm = async (event) => {
     return;
   }
   // POST ADDRESS UPDATE AND CHANGE VIEW
-  getAddressByName(addressName).then((address) => {
+  getAddressByName(addressName).then(async (address) => {
     const payload = {
       ...address,
       addressId,
       addressName,
       receiverName,
       receiverPhone,
+      geoCoordinates: address?.geoCoordinate || [], // for shippingData
     };
 
+    // Apply the selected address to customers orderForm.
+    const setAddressResponse = await setAddress(payload, { validateExtraFields: false });
+    const { success } = setAddressResponse;
+    if (!success) {
+      console.error('Set address error', { setAddressResponse });
+      return;
+    }
     addOrUpdateAddress(payload);
+
     window.postMessage({ action: 'setDeliveryView', view: 'select-address' });
   });
 };
