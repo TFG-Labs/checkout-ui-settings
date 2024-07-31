@@ -10,20 +10,18 @@ import {
 const handleDeleteAddress = async (addressName) => {
   try {
     const address = await getAddressByName(addressName);
-    // Remove address from all relevant sources
-    const results = await Promise.allSettled([
-      removeAddressFromDB(address),
-      removeAddressFromOrderForm(addressName),
-      removeAddressFromMasterData(address.id),
-    ]);
 
-    const hasErrors = results.some((result) => result.status === 'rejected');
-    if (hasErrors) {
-      const errors = results.filter((result) => result.status === 'rejected').map((result) => result.reason);
-      console.error('Errors during deletion:', errors);
-      showAlertBox('Error deleting address.');
-      return;
-    }
+    await removeAddressFromDB(address).catch((error) => {
+      console.error('Error deleting address from DB:', error);
+    });
+
+    await removeAddressFromOrderForm(addressName).catch((error) => {
+      console.error('Error deleting address from OrderForm:', error);
+    });
+
+    await removeAddressFromMasterData(address.id).catch((error) => {
+      console.error('Error deleting address from MasterData:', error);
+    });
 
     // Switch to the select-address view
     window.postMessage({ action: 'setDeliveryView', view: 'select-address' });
