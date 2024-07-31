@@ -308,7 +308,7 @@ const DeliverController = (() => {
       case 'setDeliveryView':
         document.querySelector('.bash--delivery-container')?.setAttribute('data-view', data.view);
         clearEditAddress();
-        if (data.view === 'address-form') {
+        if (data.view === 'address-form' || data.view === 'address-edit') {
           preparePhoneField('#bash--input-receiverPhone');
           if (data.content) {
             try {
