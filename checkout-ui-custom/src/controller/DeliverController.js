@@ -1,7 +1,10 @@
 // @ts-nocheck
 /* eslint-disable func-names */
 import DeliverContainer from '../partials/Deliver/DeliverContainer';
-import EditAddressForm, { submitEditAddressForm } from '../partials/Deliver/EditAddressForm';
+import EditAddressForm, {
+  EDIT_FORM_RECEIVER_PHONE_ID,
+  submitEditAddressForm,
+} from '../partials/Deliver/EditAddressForm';
 import ExtraFieldsContainer from '../partials/Deliver/ExtraFieldsContainer';
 import {
   clearRicaFields,
@@ -56,7 +59,7 @@ const DeliverController = (() => {
   const RenderEditAddress = async (addressName) => {
     const data = await getAddressByName(addressName);
     document.querySelector('#edit-adress-section').innerHTML = EditAddressForm(data);
-    preparePhoneField('#bash--input-receiverPhone');
+    preparePhoneField(`#${EDIT_FORM_RECEIVER_PHONE_ID}`);
   };
 
   const clearEditAddress = () => {
