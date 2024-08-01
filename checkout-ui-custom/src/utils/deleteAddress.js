@@ -11,6 +11,8 @@ const handleDeleteAddress = async (addressName) => {
   try {
     const address = await getAddressByName(addressName);
 
+    console.log('address to delete ========', address);
+
     await removeAddressFromDB(address).catch((error) => {
       console.error('Error deleting address from DB:', error);
     });
@@ -19,7 +21,9 @@ const handleDeleteAddress = async (addressName) => {
       console.error('Error deleting address from OrderForm:', error);
     });
 
-    await removeAddressFromMasterData(address.id).catch((error) => {
+    const addressId = address.addressId ?? address.id ?? '';
+
+    await removeAddressFromMasterData(addressId).catch((error) => {
       console.error('Error deleting address from MasterData:', error);
     });
 
