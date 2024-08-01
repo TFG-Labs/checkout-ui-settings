@@ -230,48 +230,4 @@ export const removeFromCart = (index) => window.vtexjs.checkout
     clearLoaders();
   });
 
-export const deleteAddressFromMasterdata = async (addressId) => {
-  const path = `${BASE_URL_API}masterdata/address/${addressId}`;
-  const headers = getHeadersByConfig({ cookie: true, cache: true, json: true });
-
-  const options = {
-    method: 'DELETE',
-    headers,
-    credentials: 'include',
-  };
-
-  return fetch(path, options)
-    .then((res) => res.json())
-    .catch((error) => catchError(`DELETE_ADDRESS_ERROR: ${error?.message}`));
-};
-
-export const deleteAddressFromOrderForm = async (addressId) => {
-  const { orderFormId } = window.vtexjs.checkout.orderForm;
-
-  const path = `/api/checkout/pub/orderForm/${orderFormId}/customData/${addressId}`;
-  const options = {
-    method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  };
-
-  return fetch(path, options)
-    .then((res) => res.json())
-    .catch((error) => catchError(`DELETE_ORDERFORM_ADDRESS_ERROR: ${error?.message}`));
-};
-
-export const deleteAddress = async (addressId) => {
-  // Delete from Masterdata
-  await deleteAddressFromMasterdata(addressId);
-
-  // Delete from OrderForm
-  await deleteAddressFromOrderForm(addressId);
-
-  // Remove from local store and update UI
-  DB.deleteAddress(addressId).then(() => {
-    $(`#address-${addressId}`).remove();
-  });
-};
-
 export default getAddresses;
