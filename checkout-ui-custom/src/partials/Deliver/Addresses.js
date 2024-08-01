@@ -24,10 +24,11 @@ const Addresses = () => {
       console.error('ERROR getAddresses', e);
       throw new Error('Error getAddresses', e.message);
     });
+
   return /* html */ `
     <div class="bash--addresses shimmer" id="bash-address-list">
       Loading address book...
-    </div>
+    </div> 
   `;
 };
 export default Addresses;
