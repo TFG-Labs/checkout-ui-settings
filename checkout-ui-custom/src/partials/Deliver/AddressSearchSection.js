@@ -20,13 +20,11 @@ const ManualSearchCTA = () => /* html */ `
 `;
 
 const AddressSearchSection = () => /* html */ `
-    <section class="bash--delivery-view" data-section="address-search">
-      ${Heading()}
-      <div class="address-search-field-container" id="address-search-field-container">
-          ${AddressSearch()} 
-      </div>
-      ${ManualSearchCTA()}
-    </section>
+  <section class="bash--delivery-view" data-section="address-search">
+    ${Heading()}
+    ${AddressSearch()} 
+    ${ManualSearchCTA()}
+  </section>
 `;
 
 export default AddressSearchSection;
