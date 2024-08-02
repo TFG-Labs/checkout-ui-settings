@@ -62,8 +62,18 @@ const DeliverController = (() => {
     preparePhoneField(`#${EDIT_FORM_RECEIVER_PHONE_ID}`);
   };
 
+  const RenderAddAddressAutoComplete = async (address) => {
+    // TODO Implement Render Add Address Auto Complete
+    console.log('noop', address);
+  };
+
   const clearEditAddress = () => {
     document.querySelector('#edit-adress-section').innerHTML = '';
+  };
+
+  const clearAddAddressAutoComplete = () => {
+    // TODO: implement this function
+    console.log('noop');
   };
 
   const setupDeliver = () => {
@@ -284,6 +294,7 @@ const DeliverController = (() => {
   $(document).on('submit', '#bash--address-form', submitAddressForm);
   $(document).on('submit', '#bash--delivery-form', submitDeliveryForm);
   $(document).on('submit', '#bash--edit-address-form', submitEditAddressForm);
+  // TODO: add event listenter for on submit adddd form
 
   $(document).on('click', '.remove-cart-item', function (e) {
     e.preventDefault();
@@ -310,7 +321,11 @@ const DeliverController = (() => {
     switch (data.action) {
       case 'setDeliveryView':
         document.querySelector('.bash--delivery-container')?.setAttribute('data-view', data.view);
+
+        // Clear form fields
         clearEditAddress();
+        clearAddAddressAutoComplete();
+
         if (data.view === 'address-form' || data.view === 'address-edit') {
           preparePhoneField('#bash--input-receiverPhone');
           if (data.content) {
@@ -324,6 +339,9 @@ const DeliverController = (() => {
         }
         if (data.view === 'edit-address') {
           RenderEditAddress(data.content);
+        }
+        if (data.view === 'add-address-autocomplete') {
+          RenderAddAddressAutoComplete(data.content);
         }
         break;
       case 'FB_LOG':
