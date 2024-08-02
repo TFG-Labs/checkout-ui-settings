@@ -28,31 +28,6 @@ export const setPickupLoading = () => {
   document.querySelector('.vtex-omnishipping-1-x-ask')?.classList?.add('shimmer');
 };
 
-export const mapGoogleAddress = (addressComponents, geometry) => {
-  if (!addressComponents || addressComponents.length < 1) return {};
-  const streetNumber = addressComponents.find((item) => item.types.includes('street_number'))?.long_name;
-  const street = addressComponents.find((item) => item.types.includes('route'))?.long_name;
-  const neighborhood = addressComponents.find((item) => item.types.includes('sublocality'))?.long_name;
-  const city = addressComponents.find((item) => item.types.includes('locality'))?.long_name;
-  const postalCode = addressComponents.find((item) => item.types.includes('postal_code'))?.long_name;
-  const state = addressComponents.find((item) => item.types.includes('administrative_area_level_1'))?.long_name;
-
-  const coords = { lat: '', lng: '' };
-  if (geometry) {
-    coords.lat = geometry.location.lat();
-    coords.lng = geometry.location.lng();
-  }
-
-  return {
-    street: `${streetNumber ?? ''} ${street ?? ''}`.trim(),
-    neighborhood,
-    city,
-    postalCode,
-    state,
-    ...coords,
-  };
-};
-
 export const provinceShortCode = (province) => {
   switch (province) {
     case 'Select':
@@ -352,5 +327,3 @@ export const showAlertBox = (alertText = 'Address saved') => {
     $('.alert-container').slideUp();
   }, 5000);
 };
-
-export default mapGoogleAddress;

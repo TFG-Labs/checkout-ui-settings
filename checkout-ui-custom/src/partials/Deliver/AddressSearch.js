@@ -1,6 +1,42 @@
 import FormField from './Elements/FormField';
-import { mapGoogleAddress, provinceShortCode } from './utils';
+import { provinceShortCode } from './utils';
 
+/**
+ * mapGoogleAddress - given a google address object, map it to a structured address object
+ * @param {Array} addressComponents - google address components
+ * @param {Object} geometry - google geometry object
+ * @returns {Object} - structured address object
+ */
+const mapGoogleAddress = (addressComponents, geometry) => {
+  if (!addressComponents || addressComponents.length < 1) return {};
+  const streetNumber = addressComponents.find((item) => item.types.includes('street_number'))?.long_name;
+  const street = addressComponents.find((item) => item.types.includes('route'))?.long_name;
+  const neighborhood = addressComponents.find((item) => item.types.includes('sublocality'))?.long_name;
+  const city = addressComponents.find((item) => item.types.includes('locality'))?.long_name;
+  const postalCode = addressComponents.find((item) => item.types.includes('postal_code'))?.long_name;
+  const state = addressComponents.find((item) => item.types.includes('administrative_area_level_1'))?.long_name;
+
+  const coords = { lat: '', lng: '' };
+  if (geometry) {
+    coords.lat = geometry.location.lat();
+    coords.lng = geometry.location.lng();
+  }
+
+  return {
+    street: `${streetNumber ?? ''} ${street ?? ''}`.trim(),
+    neighborhood,
+    city,
+    postalCode,
+    state,
+    ...coords,
+  };
+};
+
+/**
+ * populateAddressFromSearch - fills form fields based on the address returned from google auto complete
+ * @param {Object} address
+ * @returns {void}
+ */
 const populateAddressFromSearch = (address) => {
   const { street, neighborhood, postalCode, state, city, lat, lng } = address;
 
@@ -24,6 +60,11 @@ const populateAddressFromSearch = (address) => {
   $(':invalid').trigger('change');
 };
 
+/**
+ * checkForAddressResults - checks if there are any address results to display a notification
+ * @param {*} event
+ * @returns {void}
+ */
 const checkForAddressResults = (event) => {
   setTimeout(() => {
     const pacContainers = document.querySelectorAll('.pac-container');
@@ -36,6 +77,10 @@ const checkForAddressResults = (event) => {
   }, 250);
 };
 
+/**
+ * initGoogleAutocomplete - initializes google autocomplete on the address search field, add event listeners for place changed, change view on place changed
+ * @returns {void}
+ */
 const initGoogleAutocomplete = () => {
   if (!window.google) return;
 
