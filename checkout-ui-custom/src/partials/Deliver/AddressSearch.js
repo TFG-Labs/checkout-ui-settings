@@ -99,6 +99,8 @@ const initGoogleAutocomplete = () => {
     // Populate the form
     // Set view to add-address
     populateAddressFromSearch(address);
+
+    // TODO: populate the correct form with the correct adress
     window.postMessage({ action: 'setDeliveryView', view: 'address-form' });
     input.value = '';
   });
