@@ -49,6 +49,13 @@ const DeliverContainer = ({ hasFurn, hasFurnOnly, hasFurnMixed }) => /* html */ 
       class="bash--delivery-view" 
       data-section="edit-address">
     </section>
+
+    <section 
+      id="add-address-autocomplete-section" 
+      class="bash--delivery-view" 
+      data-section="add-address-autocomplete"
+    >
+    </section>
    
     <section class="bash--delivery-view" data-section="address-form">
        <div class="bash--heading">

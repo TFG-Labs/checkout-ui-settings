@@ -341,6 +341,9 @@ const DeliverController = (() => {
           RenderEditAddress(data.content);
         }
         if (data.view === 'add-address-autocomplete') {
+          // TODO: do we need to prepare fields
+          // TODO: do we need to address
+          // TODO: do we need to Render populate the Edit Address
           RenderAddAddressAutoComplete(data.content);
         }
         break;
