@@ -78,3 +78,38 @@ const AddAddressAutoCompleteForm = (address) => {
 };
 
 export default AddAddressAutoCompleteForm;
+
+// Data Field	Required	Editable	Rules	Validation
+// Recipient Name	True	Yes - all cases		@Grouped by journey  // not from google autocomplete
+
+// Data Field	Required	Editable	Rules	Validation
+// Recipient Cellphone Number	True	Yes - all cases		Frontend Backend: We should be storing these numbers in the E.164 format // not from google autocomplete
+
+// Data Field	Required	Editable	Rules	Validation
+// Street Number	True	Only on search		@Grouped by journey  // street_number - part street in master data
+
+// Data Field	Required	Editable	Rules	Validation
+// Street address	True	Only in manual		@Grouped by journey // route - part street in master data
+
+// Data Field	Required	Editable	Rules	Validation // not from google autocomplete
+// Address type	True	Yes - all cases	selection between: - Residential- Business	NA
+
+// Data Field	Required	Editable	Rules	Validation
+// Business name	False	Yes - all cases	Required field when Business address type is selected	@Grouped by journey // not from google autocomplete
+
+// Data Field	Required	Editable	Rules	Validation  // not from google autocomplete
+// Building/ Complex	False	Yes - all cases		@Grouped by journey
+
+// Data Field	Required	Editable	Rules	Validation
+// Suburb	True	Only in manual		@Grouped by journey  //neighborhood in master data
+
+// Data Field	Required	Editable	Rules	Validation
+// City	True	Only in manual		@Grouped by journey //city in master data
+
+// Data Field	Required	Editable	Rules	Validation
+// Province	True	Only in manual	Dropdown list with available Provinces to select	NA // called start in master data do i have to map it
+
+// Data Field	Required	Editable	Rules	Validation
+// Country	True	Never	Not selectable	South Africa
+
+// TODO: fix where back button tackes you for add address

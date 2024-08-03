@@ -7,8 +7,12 @@ import { provinceShortCode } from './utils';
  * @returns {boolean} - true if the address meets the <critera></critera>
  * */
 const isCompleteGoogleAddress = (address) => {
-  console.log('in isCompleteGoogleAddress', address);
-  // TODO
+  if (!address?.route) return false;
+  if (!address?.neighborhood) return false;
+  if (!address?.city) return false;
+  if (!address?.state) return false;
+  if (!address?.postalCode) return false;
+
   return true;
 };
 
@@ -25,7 +29,7 @@ const getAddressComponentByType = (addressComponents) => (type) => {
 /**
  * mapGoogleAddress - given a google address object, map it to a structured address object
  * @param {Object} place - google place object
- * @returns { address: Object, completeGoogleAddress: boolean} mapped address object and boolean indicating if the address is complete
+ * @returns { address: Object, isComplete: boolean} mapped address object and boolean indicating if the address is complete
  */
 const mapGoogleAddress = (place) => {
   const { address_components: addressComponents, geometry } = place;
@@ -64,7 +68,7 @@ const mapGoogleAddress = (place) => {
     ...coords,
   };
 
-  return { address: res, completeGoogleAddress: isCompleteGoogleAddress(res) };
+  return { address: res, isComplete: isCompleteGoogleAddress(subValues) };
 };
 
 /**
@@ -127,10 +131,10 @@ const initGoogleAutocomplete = () => {
 
   window.google.maps.event.addListener(autocomplete, 'place_changed', () => {
     const place = autocomplete.getPlace();
-    const { address, completeGoogleAddress } = mapGoogleAddress(place);
+    const { address, isComplete } = mapGoogleAddress(place);
 
     // Route to the correct view
-    if (completeGoogleAddress) {
+    if (isComplete) {
       window.postMessage({ action: 'setDeliveryView', view: 'add-address-autocomplete', content: address });
     } else {
       populateAddressFromSearch(address);
