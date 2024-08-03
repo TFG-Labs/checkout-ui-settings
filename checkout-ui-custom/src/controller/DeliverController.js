@@ -1,5 +1,6 @@
 // @ts-nocheck
 /* eslint-disable func-names */
+import AddAddressAutoCompleteForm from '../partials/Deliver/AddAddressAutoCompleteForm';
 import DeliverContainer from '../partials/Deliver/DeliverContainer';
 import EditAddressForm, {
   EDIT_FORM_RECEIVER_PHONE_ID,
@@ -63,9 +64,7 @@ const DeliverController = (() => {
   };
 
   const RenderAddAddressAutoComplete = async (address) => {
-    // TODO Implement Render Add Address Auto Complete
-    document.querySelector('#add-address-autocomplete-section').innerHTML = '<div>Replace Me</div>';
-    console.log('noop', address);
+    document.querySelector('#add-address-autocomplete-section').innerHTML = AddAddressAutoCompleteForm(address);
   };
 
   const clearEditAddress = () => {
@@ -344,7 +343,6 @@ const DeliverController = (() => {
         if (data.view === 'add-address-autocomplete') {
           // TODO: do we need to prepare fields
           // TODO: do we need to address
-          // TODO: do we need to Render populate the Edit Address
           RenderAddAddressAutoComplete(data.content);
         }
         break;
