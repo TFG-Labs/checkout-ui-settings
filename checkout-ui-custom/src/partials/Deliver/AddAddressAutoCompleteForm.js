@@ -1,5 +1,5 @@
-import ContactCard from './ContactCard';
 import FormField from './Elements/FormField';
+import { AddressSectionHeading, ContactCard, SubmitButton } from './FormComponents';
 import { getBestRecipient } from './utils';
 
 const AddAddressAutoCompleteForm = (address) => {
@@ -67,15 +67,11 @@ const AddAddressAutoCompleteForm = (address) => {
   // TODO: ASK JOHN WHAT IS COMPLEMENT
   // TODO: How to deal with seperate street number  field
   return /* html */ `
+    ${AddressSectionHeading('Delivery Details')}
+    ${ContactCard(address)}
     <form id="bash--address-form" method="post">
-      ${ContactCard(address)}
       ${fields.map((field) => FormField(field)).join('')}
-      <button
-        class="submit btn-go-to-payment btn btn-large btn-success"
-        id="btn-save-address"
-        type="submit">
-        Save address
-      </button>
+      ${SubmitButton()}
     </form>
   `;
 };

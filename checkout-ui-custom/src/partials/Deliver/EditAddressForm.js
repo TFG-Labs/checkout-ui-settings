@@ -2,26 +2,10 @@ import { isValidNumber } from 'libphonenumber-js';
 import { formatPhoneNumber } from '../../utils/phoneFields';
 import { addOrUpdateAddress, getAddressByName } from '../../utils/services';
 import setAddress from '../../utils/setAddress';
-import ContactCard from './ContactCard';
 import FormField from './Elements/FormField';
+import { AddressSectionHeading, ContactCard, SubmitButton } from './FormComponents';
 
 export const EDIT_FORM_RECEIVER_PHONE_ID = 'bash--input-edit-adress-form-receiverPhone';
-
-const Heading = () => /* html */ `
-    <div class="bash--heading">
-      <h3>Address Details</h3>
-      <a href="#" class="back-button--select" data-view="select-address">&lt; Back</a>
-    </div>
-`;
-
-const SaveButton = () => /* html */ `
-  <button
-    class="submit btn-go-to-payment btn btn-large btn-success"
-    id="btn-save-address"
-    type="submit">
-    Save Address
-  </button>
-`;
 
 const EditAddressForm = (data) => {
   const fields = [
@@ -59,11 +43,11 @@ const EditAddressForm = (data) => {
   ];
 
   return /* html */ `
-    ${Heading()}
+    ${AddressSectionHeading('Address Details')}
     ${ContactCard(data)}
     <form id="bash--edit-address-form" method="post">
       ${fields.map((field) => FormField(field)).join('')}
-      ${SaveButton()}
+      ${SubmitButton()}
     </form>
   `;
 };

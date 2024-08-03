@@ -2,7 +2,7 @@
  * ContactCard - View Component of a Address Summary
  * @param {Object} data - Address data
  */
-const ContactCard = (data) => {
+export const ContactCard = (data) => {
   const { number, businessName, street, neighborhood, city, postalCode } = data;
 
   const addressLine = [businessName, `${number ? `${number} ` : ''}${street}`, neighborhood ?? city, postalCode]
@@ -20,4 +20,28 @@ const ContactCard = (data) => {
   `;
 };
 
-export default ContactCard;
+/**
+ * SubmitButton - View Component of a Submit Button
+ * @returns {string} - HTML for a Submit Button
+
+ */
+export const SubmitButton = () => /* html */ `
+  <button
+    class="submit btn-go-to-payment btn btn-large btn-success"
+    id="btn-save-address"
+    type="submit">
+      Save address
+  </button>
+`;
+
+/**
+ * AddressSectionHeading - View Component of a Heading
+ * @param {string} title - Title of the Heading
+ * @returns {string} - HTML for a Heading
+ */
+export const AddressSectionHeading = (title) => /* html */ `
+  <div class="bash--heading">
+    <h3>${title}</h3>
+    <a href="#" class="back-button--select" data-view="select-address">&lt; Back</a>
+  </div>
+`;
