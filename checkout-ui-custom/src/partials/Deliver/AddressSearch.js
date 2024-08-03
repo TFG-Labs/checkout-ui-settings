@@ -113,7 +113,7 @@ const initGoogleAutocomplete = () => {
 
     // Route to the correct view
     if (isCompleteGoogleAddress(address)) {
-      window.postMessage({ action: 'setDeliveryView', view: 'add-address-autocomplete' });
+      window.postMessage({ action: 'setDeliveryView', view: 'add-address-autocomplete', content: address });
     } else {
       populateAddressFromSearch(address);
       window.postMessage({ action: 'setDeliveryView', view: 'address-form' });
