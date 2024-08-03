@@ -13,19 +13,33 @@ const isCompleteGoogleAddress = (address) => {
 };
 
 /**
+ * getAddressComponentByType - given an address component, return a function that takes a type and returns the long_name of the address component
+ * @param {*} addressComponents:
+ * @returns {function} - a function that takes a type and returns the long_name of the address component
+ */
+const getAddressComponentByType = (addressComponents) => (type) => {
+  const component = addressComponents.find((item) => item.types.includes(type));
+  return component?.long_name ?? null;
+};
+
+/**
  * mapGoogleAddress - given a google address object, map it to a structured address object
- * @param {Array} addressComponents - google address components
- * @param {Object} geometry - google geometry object
+ * @param {Object} place - google place object
  * @returns {Object} - structured address object
  */
-const mapGoogleAddress = (addressComponents, geometry) => {
-  if (!addressComponents || addressComponents.length < 1) return {};
-  const streetNumber = addressComponents.find((item) => item.types.includes('street_number'))?.long_name;
-  const street = addressComponents.find((item) => item.types.includes('route'))?.long_name;
-  const neighborhood = addressComponents.find((item) => item.types.includes('sublocality'))?.long_name;
-  const city = addressComponents.find((item) => item.types.includes('locality'))?.long_name;
-  const postalCode = addressComponents.find((item) => item.types.includes('postal_code'))?.long_name;
-  const state = addressComponents.find((item) => item.types.includes('administrative_area_level_1'))?.long_name;
+const mapGoogleAddress = (place) => {
+  const { address_components: addressComponents, geometry } = place;
+
+  if (!addressComponents || addressComponents.length < 1) return {}; // TODO: not convinced we should return an empty object here
+
+  const getAddressSubValue = getAddressComponentByType(addressComponents);
+
+  const streetNumber = getAddressSubValue('street_number');
+  const route = getAddressSubValue('route');
+  const neighborhood = getAddressSubValue('sublocality');
+  const city = getAddressSubValue('locality');
+  const postalCode = getAddressSubValue('postal_code');
+  const state = getAddressSubValue('administrative_area_level_1');
 
   const coords = { lat: '', lng: '' };
   if (geometry) {
@@ -34,7 +48,7 @@ const mapGoogleAddress = (addressComponents, geometry) => {
   }
 
   return {
-    street: `${streetNumber ?? ''} ${street ?? ''}`.trim(),
+    street: `${streetNumber ?? ''} ${route ?? ''}`.trim(),
     neighborhood,
     city,
     postalCode,
@@ -103,10 +117,7 @@ const initGoogleAutocomplete = () => {
 
   window.google.maps.event.addListener(autocomplete, 'place_changed', () => {
     const place = autocomplete.getPlace();
-    console.log('place', place);
-    const { address_components: addressComponents, geometry } = place;
-
-    const address = mapGoogleAddress(addressComponents, geometry);
+    const address = mapGoogleAddress(place);
 
     // Route to the correct view
     if (isCompleteGoogleAddress(address)) {
