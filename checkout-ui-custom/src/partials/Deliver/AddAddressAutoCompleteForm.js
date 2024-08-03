@@ -66,6 +66,7 @@ const AddAddressAutoCompleteForm = (address) => {
   // TODO: LEGIT WHERE ARE WE STORING THIS INFO FOR  ON SUBMIT
   // TODO: ASK JOHN WHAT IS COMPLEMENT
   // TODO: How to deal with seperate street number  field
+  // TODO: Why does the street number have no validation
   return /* html */ `
     ${AddressSectionHeading('Delivery Details')}
     ${ContactCard(address)}

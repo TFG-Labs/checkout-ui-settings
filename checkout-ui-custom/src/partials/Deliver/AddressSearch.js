@@ -103,13 +103,10 @@ const initGoogleAutocomplete = () => {
 
   window.google.maps.event.addListener(autocomplete, 'place_changed', () => {
     const place = autocomplete.getPlace();
+    console.log('place', place);
     const { address_components: addressComponents, geometry } = place;
 
     const address = mapGoogleAddress(addressComponents, geometry);
-
-    // Populate the form
-    // Set view to add-address
-    // populateAddressFromSearch(address);
 
     // Route to the correct view
     if (isCompleteGoogleAddress(address)) {
