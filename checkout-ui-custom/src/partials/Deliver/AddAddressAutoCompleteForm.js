@@ -1,3 +1,4 @@
+import ContactCard from './ContactCard';
 import FormField from './Elements/FormField';
 import { getBestRecipient } from './utils';
 
@@ -58,8 +59,6 @@ const AddAddressAutoCompleteForm = (address) => {
     },
   ];
 
-  const formFields = fields.map((field) => FormField(field)).join('');
-
   // TODO: VALIDATE DATA RETURNED FROM  GOOGLE - IS IT SUFFICIENT
   // TODO: IF YES - MOVE TO THIS FORM
   // TODO: Rename  ID FORM
@@ -69,10 +68,8 @@ const AddAddressAutoCompleteForm = (address) => {
   // TODO: How to deal with seperate street number  field
   return /* html */ `
     <form id="bash--address-form" method="post">
-      <p>Add Address Form Auto Completes</p>
-      ${JSON.stringify(address)}
-      ${formFields}
-
+      ${ContactCard(address)}
+      ${fields.map((field) => FormField(field)).join('')}
       <button
         class="submit btn-go-to-payment btn btn-large btn-success"
         id="btn-save-address"
