@@ -2,8 +2,8 @@ import FormField from './Elements/FormField';
 import { provinceShortCode } from './utils';
 
 /**
- *  isCompleteGoogleAddress - checks if the address meets the criteria to show the add address auto complete form
- *  @param {Object} address - address object
+ * isCompleteGoogleAddress - checks if the address meets the criteria to show the add address auto complete form
+ * @param {Object} address - address object
  * @returns {boolean} - true if the address meets the <critera></critera>
  * */
 const isCompleteGoogleAddress = (address) => {
@@ -32,14 +32,22 @@ const mapGoogleAddress = (place) => {
 
   if (!addressComponents || addressComponents.length < 1) return {}; // TODO: not convinced we should return an empty object here
 
+  const AUTOCOMPLETE_COMPONENT_MATRIX = [
+    { type: 'street_number', target: 'streetNumber' },
+    { type: 'route', target: 'route' },
+    { type: 'sublocality', target: 'neighborhood' },
+    { type: 'locality', target: 'city' },
+    { type: 'postal_code', target: 'postalCode' },
+    { type: 'administrative_area_level_1', target: 'state' },
+  ];
+
   const getAddressSubValue = getAddressComponentByType(addressComponents);
 
-  const streetNumber = getAddressSubValue('street_number');
-  const route = getAddressSubValue('route');
-  const neighborhood = getAddressSubValue('sublocality');
-  const city = getAddressSubValue('locality');
-  const postalCode = getAddressSubValue('postal_code');
-  const state = getAddressSubValue('administrative_area_level_1');
+  const subValues = AUTOCOMPLETE_COMPONENT_MATRIX.reduce((acc, component) => {
+    acc[component.target] = getAddressSubValue(component.type);
+    return acc;
+  }, {});
+
 
   const coords = { lat: '', lng: '' };
   if (geometry) {
@@ -47,14 +55,16 @@ const mapGoogleAddress = (place) => {
     coords.lng = geometry.location.lng();
   }
 
-  return {
-    street: `${streetNumber ?? ''} ${route ?? ''}`.trim(),
-    neighborhood,
-    city,
-    postalCode,
-    state,
+  const res = {
+    street: `${subValues.streetNumber ?? ''} ${subValues.route ?? ''}`.trim(),
+    neighborhood: subValues.neighborhood,
+    city: subValues.city,
+    postalCode: subValues.postalCode,
+    state: subValues.state,
     ...coords,
   };
+
+  return res;
 };
 
 /**
