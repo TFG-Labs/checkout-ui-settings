@@ -25,7 +25,7 @@ const getAddressComponentByType = (addressComponents) => (type) => {
 /**
  * mapGoogleAddress - given a google address object, map it to a structured address object
  * @param {Object} place - google place object
- * @returns {Object} - structured address object
+ * @returns { address: Object, completeGoogleAddress: boolean} mapped address object and boolean indicating if the address is complete
  */
 const mapGoogleAddress = (place) => {
   const { address_components: addressComponents, geometry } = place;
@@ -64,7 +64,7 @@ const mapGoogleAddress = (place) => {
     ...coords,
   };
 
-  return res;
+  return { address: res, completeGoogleAddress: isCompleteGoogleAddress(res) };
 };
 
 /**
@@ -127,10 +127,10 @@ const initGoogleAutocomplete = () => {
 
   window.google.maps.event.addListener(autocomplete, 'place_changed', () => {
     const place = autocomplete.getPlace();
-    const address = mapGoogleAddress(place);
+    const { address, completeGoogleAddress } = mapGoogleAddress(place);
 
     // Route to the correct view
-    if (isCompleteGoogleAddress(address)) {
+    if (completeGoogleAddress) {
       window.postMessage({ action: 'setDeliveryView', view: 'add-address-autocomplete', content: address });
     } else {
       populateAddressFromSearch(address);
