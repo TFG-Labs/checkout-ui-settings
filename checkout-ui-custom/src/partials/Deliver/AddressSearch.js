@@ -2,6 +2,17 @@ import FormField from './Elements/FormField';
 import { provinceShortCode } from './utils';
 
 /**
+ *  isCompleteGoogleAddress - checks if the address meets the criteria to show the add address auto complete form
+ *  @param {Object} address - address object
+ * @returns {boolean} - true if the address meets the <critera></critera>
+ * */
+const isCompleteGoogleAddress = (address) => {
+  console.log('in isCompleteGoogleAddress', address);
+  // TODO
+  return true;
+};
+
+/**
  * mapGoogleAddress - given a google address object, map it to a structured address object
  * @param {Array} addressComponents - google address components
  * @param {Object} geometry - google geometry object
@@ -98,13 +109,17 @@ const initGoogleAutocomplete = () => {
 
     // Populate the form
     // Set view to add-address
-    populateAddressFromSearch(address);
+    // populateAddressFromSearch(address);
 
-    // TODO: populate the correct form with the correct adress
-    window.postMessage({ action: 'setDeliveryView', view: 'address-form' });
-    input.value = '';
+    // Route to the correct view
+    if (isCompleteGoogleAddress(address)) {
+      window.postMessage({ action: 'setDeliveryView', view: 'add-address-autocomplete' });
+    } else {
+      populateAddressFromSearch(address);
+      window.postMessage({ action: 'setDeliveryView', view: 'address-form' });
+    }
   });
-
+  input.value = '';
   input?.addEventListener('keyup', checkForAddressResults);
 };
 

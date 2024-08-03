@@ -64,6 +64,7 @@ const DeliverController = (() => {
 
   const RenderAddAddressAutoComplete = async (address) => {
     // TODO Implement Render Add Address Auto Complete
+    document.querySelector('#add-address-autocomplete-section').innerHTML = '<div>Replace Me</div>';
     console.log('noop', address);
   };
 
