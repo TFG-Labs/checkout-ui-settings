@@ -23,9 +23,9 @@ const SaveButton = () => /* html */ `
 `;
 
 const ContactCard = (data) => {
-  const { number, companyBuilding, street, city, postalCode } = data;
+  const { number, businessName, street, neighborhood, city, postalCode } = data;
 
-  const addressLine = [companyBuilding, `${number ? `${number} ` : ''}${street}`, city, postalCode]
+  const addressLine = [businessName, `${number ? `${number} ` : ''}${street}`, neighborhood ?? city, postalCode]
     .filter((item) => item !== undefined && item !== null && item !== '')
     .join(', ')
     .trim();
