@@ -1,5 +1,7 @@
 import { isValidNumber } from 'libphonenumber-js';
 import { formatPhoneNumber } from '../../utils/phoneFields';
+import { addOrUpdateAddress } from '../../utils/services';
+import setAddress from '../../utils/setAddress';
 import FormField from './Elements/FormField';
 import { AddressSectionHeading, ContactCard, SubmitButton } from './FormComponents';
 import { provinceShortCode } from './utils';
@@ -126,12 +128,12 @@ export const submitAddAddressAutoCompleteForm = async (event) => {
   const formData = new FormData(form);
 
   // visible fields
-  const streetNumber = formData.get('streetNumber');
-  const addressType = formData.get('addressType');
-  const businessName = formData.get('businessName');
-  const companyBuilding = formData.get('companyBuilding');
-  const receiverName = formData.get('receiverName');
-  let receiverPhone = formData.get('receiverPhone');
+  const streetNumber = formData.get('streetNumber')?.trim();
+  const addressType = formData.get('addressType')?.trim();
+  const businessName = formData.get('businessName')?.trim();
+  const companyBuilding = formData.get('companyBuilding')?.trim();
+  const receiverName = formData.get('receiverName')?.trim();
+  let receiverPhone = formData.get('receiverPhone')?.trim();
   receiverPhone = formatPhoneNumber(receiverPhone, 'ZA').trim();
 
   // hidden fields
@@ -203,15 +205,15 @@ export const submitAddAddressAutoCompleteForm = async (event) => {
   console.log('payload', payload);
 
   // Apply the selected address to customers orderForm.
-  // const setAddressResponse = await setAddress(payload, { validateExtraFields: false });
-  // const { success } = setAddressResponse;
-  // if (!success) {
-  //   console.error('Set address error', { setAddressResponse });
-  //   return;
-  // }
-  // addOrUpdateAddress(payload);
+  const setAddressResponse = await setAddress(payload, { validateExtraFields: false });
+  const { success } = setAddressResponse;
+  if (!success) {
+    console.error('Set address error', { setAddressResponse });
+    return;
+  }
+  addOrUpdateAddress(payload);
 
-  // window.postMessage({ action: 'setDeliveryView', view: 'select-address' });
+  window.postMessage({ action: 'setDeliveryView', view: 'select-address' });
 };
 
 export default AddAddressAutoCompleteForm;
