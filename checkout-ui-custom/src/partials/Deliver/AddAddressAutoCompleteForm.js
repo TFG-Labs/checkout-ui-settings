@@ -8,18 +8,12 @@ export const ADD_ADDRESS_AUTOCOMPLETE_FORM_RECEIVER_PHONE_ID = 'bash--input-add-
 
 const AddAddressAutoCompleteForm = (address) => {
   const fields = [
-    // TODO: fix where back button tackes you for add address
-    // TODO: what to do with addressId and addressName
-    // TODO: // Street Number TrueOnly on search @Grouped by journey  // street_number - part street in master data
-    // TODO: Do we tranform province ?
-    // TODO: street: `${subValues.streetNumber ?? ''} ${subValues.route ?? ''}`.trim(),
     {
       name: 'streetNumber',
       required: true,
       label: 'Street number',
       value: address?.streetNumber || '',
     },
-    // TODO:  Address type True Yes - all cases selection between: - Residential- Business NA
     {
       name: 'addressType',
       label: 'Address type',
@@ -30,7 +24,6 @@ const AddAddressAutoCompleteForm = (address) => {
         { value: 'business', label: 'Business' },
       ],
     },
-    // TODO Business name False Yes - all cases Required field when Business address type is selected @Grouped by journey // not from google autocomplete
     {
       name: 'businessName',
       label: 'Business name',
@@ -38,7 +31,6 @@ const AddAddressAutoCompleteForm = (address) => {
       value: '',
       maxLength: 100,
     },
-    // TODO  Building/ Complex False Yes - all cases @Grouped by journey
     {
       name: 'companyBuilding',
       label: 'Building/Complex and number',
@@ -47,13 +39,11 @@ const AddAddressAutoCompleteForm = (address) => {
       maxLength: 100,
     },
     {
-      // TODO Recipient Name True Yes - all cases	@Grouped by journey  // not from google autocomplete
       name: 'receiverName',
       label: 'Recipient’s name',
       required: true,
       value: '',
     },
-    // TODO Recipient Cellphone Number True Yes - all cases Frontend Backend: We should be storing these numbers in the E.164 format // not from google autocomplete
     {
       name: 'receiverPhone',
       label: 'Recipient’s mobile number',
@@ -116,8 +106,6 @@ const AddAddressAutoCompleteForm = (address) => {
       value: address?.lng || '',
     },
   ];
-  // TODO: How to deal with seperate street number  field
-  // TODO: Why does the street number have no validation
 
   const street = `${address?.streetNumber ?? ''} ${address?.route ?? ''}`.trim();
   return /* html */ `
@@ -132,8 +120,6 @@ const AddAddressAutoCompleteForm = (address) => {
 
 export const submitAddAddressAutoCompleteForm = async (event) => {
   event.preventDefault();
-
-  // TODO: how do you do the conditional address type check
 
   // PULL ALL FORM FIELDS
   const form = document.getElementById('bash--add-address-autocomplete-form');
@@ -181,32 +167,39 @@ export const submitAddAddressAutoCompleteForm = async (event) => {
 
   const invalidFields = [];
   if (!streetNumber) invalidFields.push('streetNumber');
-  if (!addressType) invalidFields.push('addressType');
   if (addressType === 'business' && !businessName) invalidFields.push('businessName');
-  if (!companyBuilding) invalidFields.push('companyBuilding'); // TODO: is this true
   if (!receiverName) invalidFields.push('receiverName');
   if (!receiverPhone || !isValidNumber(receiverPhone, 'ZA')) {
     invalidFields.push('receiverPhone');
     $(`#${ADD_ADDRESS_AUTOCOMPLETE_FORM_RECEIVER_PHONE_ID}`).addClass('invalid');
   }
 
-  console.log('invalidFields', invalidFields);
   // APPLY VALIDATION UI
-  // if (invalidFields.length > 0) {
-  //   console.error({ invalidFields });
-  //   $('#bash--edit-address-form').addClass('show-form-errors');
-  //   $(`#bash--input-${invalidFields[0]}`).focus();
+  if (invalidFields.length > 0) {
+    console.error({ invalidFields });
+    $('#bash--add-address-autocomplete-form').addClass('show-form-errors');
+    $(`#bash--input-${invalidFields[0]}`).focus();
 
-  //   window.postMessage(
-  //     {
-  //       type: 'ADDRESS_VALIDATION_ERROR',
-  //       message: 'Address validation error. See invalidFields.',
-  //       invalidFields,
-  //     },
-  //     '*'
-  //   );
-  //   return;
-  // }
+    window.postMessage(
+      {
+        type: 'ADDRESS_VALIDATION_ERROR',
+        message: 'Address validation error. See invalidFields.',
+        invalidFields,
+      },
+      '*'
+    );
+    return;
+  }
+
+  // TODO: fix where back button tackes you for add address
+  // TODO: what to do with addressId and addressName
+  // TODO: // Street Number TrueOnly on search @Grouped by journey  // street_number - part street in master data
+  // TODO: Do we tranform province ?
+  // TODO: street: `${subValues.streetNumber ?? ''} ${subValues.route ?? ''}`.trim(),
+
+  console.log('invalidFields', invalidFields);
+  // TODO: How to deal with seperate street number  field
+  // TODO: Why does the street number have no validation
   // POST ADDRESS UPDATE AND CHANGE VIEW
   // getAddressByName(addressName).then(async (address) => {
   //   const payload = {
