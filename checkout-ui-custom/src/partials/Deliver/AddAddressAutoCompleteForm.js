@@ -7,11 +7,12 @@ const AddAddressAutoCompleteForm = (address) => {
     // TODO: what to do with addressId and addressName
     // TODO: // Street Number TrueOnly on search @Grouped by journey  // street_number - part street in master data
     // TODO: Do we tranform province ?
+    // TODO: street: `${subValues.streetNumber ?? ''} ${subValues.route ?? ''}`.trim(),
     {
       name: 'streetNumber',
       required: true,
       label: 'Street number',
-      value: '',
+      value: address?.streetNumber || '',
     },
     // TODO:  Address type True Yes - all cases selection between: - Residential- Business NA
     {
@@ -66,24 +67,23 @@ const AddAddressAutoCompleteForm = (address) => {
       containerClasses: 'custom-field-complement', // for sa flag
     },
     // HIDDEN FIELDS
-    // TODO: Street address True Only in manual @Grouped by journey // route - part street in master data
     {
       name: 'route',
       required: true,
-      value: '',
+      value: address.route,
       type: 'hidden',
     },
     {
       name: 'neighborhood',
       required: true,
-      value: '',
+      value: address.neighborhood,
       type: 'hidden',
     },
     {
       name: 'state',
       required: true,
       type: 'hidden',
-      value: '',
+      value: address.state,
     },
     {
       type: 'hidden',
@@ -94,22 +94,34 @@ const AddAddressAutoCompleteForm = (address) => {
     {
       name: 'postalCode',
       required: true,
-      value: '',
+      value: address.postalCode,
       type: 'hidden',
+    },
+    {
+      name: 'lat',
+      required: false,
+      type: 'hidden',
+      value: address?.lat || '',
+    },
+    {
+      name: 'lng',
+      required: false,
+      type: 'hidden',
+      value: address?.lng || '',
     },
   ];
 
-  // TODO: VALIDATE DATA RETURNED FROM  GOOGLE - IS IT SUFFICIENT
-  // TODO: IF YES - MOVE TO THIS FORM
   // TODO: Rename  ID FORM
   // TODO: Add on SUBMIT
   // TODO: LEGIT WHERE ARE WE STORING THIS INFO FOR  ON SUBMIT
   // TODO: ASK JOHN WHAT IS COMPLEMENT
   // TODO: How to deal with seperate street number  field
   // TODO: Why does the street number have no validation
+
+  const street = `${address?.streetNumber ?? ''} ${address?.route ?? ''}`.trim();
   return /* html */ `
     ${AddressSectionHeading('Delivery Details')}
-    ${ContactCard(address)}
+    ${ContactCard({ ...address, street })}
     ${JSON.stringify(address)}
     <form id="bash--address-form" method="post">
       ${fields.map((field) => FormField(field)).join('')}

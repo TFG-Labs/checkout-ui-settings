@@ -29,12 +29,25 @@ const getAddressComponentByType = (addressComponents) => (type) => {
 /**
  * mapGoogleAddress - given a google address object, map it to a structured address object
  * @param {Object} place - google place object
- * @returns { address: Object, isComplete: boolean} mapped address object and boolean indicating if the address is complete
+ * @returns {
+ *  address: {
+ *    streetNumber: string | undefined,
+ *    route: string,
+ *    neighborhood: string,
+ *    city: string,
+ *    postalCode: string,
+ *    state: string,
+ *    lat: string,
+ *    lng: string,
+ *  },
+ *  isComplete: boolean
+ * } mapped address object and boolean indicating if the address is complete
  */
 const mapGoogleAddress = (place) => {
   const { address_components: addressComponents, geometry } = place;
 
-  if (!addressComponents || addressComponents.length < 1) return {}; // TODO: not convinced we should return an empty object here
+
+  if (!addressComponents || addressComponents.length < 1) return { address: {}, isComplete: false };
 
   const AUTOCOMPLETE_COMPONENT_MATRIX = [
     { type: 'street_number', target: 'streetNumber' },
@@ -59,14 +72,7 @@ const mapGoogleAddress = (place) => {
     coords.lng = geometry.location.lng();
   }
 
-  const res = {
-    street: `${subValues.streetNumber ?? ''} ${subValues.route ?? ''}`.trim(),
-    neighborhood: subValues.neighborhood,
-    city: subValues.city,
-    postalCode: subValues.postalCode,
-    state: subValues.state,
-    ...coords,
-  };
+  const res = { ...subValues, ...coords };
 
   return { address: res, isComplete: isCompleteGoogleAddress(subValues) };
 };

@@ -342,7 +342,6 @@ const DeliverController = (() => {
         }
         if (data.view === 'add-address-autocomplete') {
           // TODO: do we need to prepare fields
-          // TODO: do we need to address
           RenderAddAddressAutoComplete(data.content);
         }
         break;
