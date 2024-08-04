@@ -144,23 +144,6 @@ export const submitAddAddressAutoCompleteForm = async (event) => {
   const lat = formData.get('lat')?.trim();
   const lng = formData.get('lng')?.trim();
 
-  console.log('yeetamus', {
-    streetNumber,
-    addressType,
-    businessName,
-    companyBuilding,
-    receiverName,
-    receiverPhone,
-    route,
-    neighborhood,
-    city,
-    state,
-    country,
-    postalCode,
-    lat,
-    lng,
-  });
-
   // VALIDATE FIELDS
   // we only validate visible fields - hidden fields had been validated
   // prior otherwise the user would not be able to get to this form
@@ -192,36 +175,43 @@ export const submitAddAddressAutoCompleteForm = async (event) => {
   }
 
   // TODO: fix where back button tackes you for add address
-  // TODO: what to do with addressId and addressName
-  // TODO: // Street Number TrueOnly on search @Grouped by journey  // street_number - part street in master data
-  // TODO: Do we tranform province ?
-  // TODO: street: `${subValues.streetNumber ?? ''} ${subValues.route ?? ''}`.trim(),
 
   console.log('invalidFields', invalidFields);
-  // TODO: How to deal with seperate street number  field
-  // TODO: Why does the street number have no validation
+
   // POST ADDRESS UPDATE AND CHANGE VIEW
-  // getAddressByName(addressName).then(async (address) => {
-  //   const payload = {
-  //     ...address,
-  //     addressId,
-  //     addressName,
-  //     receiverName,
-  //     receiverPhone,
-  //     geoCoordinates: address?.geoCoordinate || [], // for shippingData
-  //   };
+  const geoCoords = [parseFloat(lng) || '', parseFloat(lat) || ''];
 
-  //   // Apply the selected address to customers orderForm.
-  //   const setAddressResponse = await setAddress(payload, { validateExtraFields: false });
-  //   const { success } = setAddressResponse;
-  //   if (!success) {
-  //     console.error('Set address error', { setAddressResponse });
-  //     return;
-  //   }
-  //   addOrUpdateAddress(payload);
+  const payload = {
+    isDisposable: false,
+    // addressId -> TODO: not sure
+    // addressName -> TODO: not sure
+    addressType,
+    receiverName,
+    receiverPhone: formatPhoneNumber(receiverPhone, 'ZA').trim(),
+    postalCode,
+    city,
+    state,
+    country,
+    businessName,
+    street: `${streetNumber ?? ''} ${route ?? ''}`.trim(),
+    neighborhood,
+    companyBuilding,
+    geoCoordinates: geoCoords, // for shippingData
+    geoCoordinate: geoCoords, // for MasterData
+  };
 
-  //   window.postMessage({ action: 'setDeliveryView', view: 'select-address' });
-  // });
+  console.log('payload', payload);
+
+  // Apply the selected address to customers orderForm.
+  // const setAddressResponse = await setAddress(payload, { validateExtraFields: false });
+  // const { success } = setAddressResponse;
+  // if (!success) {
+  //   console.error('Set address error', { setAddressResponse });
+  //   return;
+  // }
+  // addOrUpdateAddress(payload);
+
+  // window.postMessage({ action: 'setDeliveryView', view: 'select-address' });
 };
 
 export default AddAddressAutoCompleteForm;
