@@ -1,6 +1,8 @@
+import { isValidNumber } from 'libphonenumber-js';
 import { formatPhoneNumber } from '../../utils/phoneFields';
 import FormField from './Elements/FormField';
 import { AddressSectionHeading, ContactCard, SubmitButton } from './FormComponents';
+import { provinceShortCode } from './utils';
 
 export const ADD_ADDRESS_AUTOCOMPLETE_FORM_RECEIVER_PHONE_ID = 'bash--input-add-adress-autocomplete-form-receiverPhone';
 
@@ -77,16 +79,10 @@ const AddAddressAutoCompleteForm = (address) => {
       type: 'hidden',
     },
     {
-      name: 'state',
+      name: 'city',
       required: true,
+      value: address.city,
       type: 'hidden',
-      value: address.state,
-    },
-    {
-      name: 'country',
-      type: 'hidden',
-      required: true,
-      value: 'ZAF',
     },
     {
       name: 'postalCode',
@@ -94,6 +90,19 @@ const AddAddressAutoCompleteForm = (address) => {
       value: address.postalCode,
       type: 'hidden',
     },
+    {
+      name: 'state',
+      required: true,
+      type: 'hidden',
+      value: provinceShortCode(address.state),
+    },
+    {
+      name: 'country',
+      type: 'hidden',
+      required: true,
+      value: 'ZAF',
+    },
+
     {
       name: 'lat',
       required: false,
@@ -140,15 +149,16 @@ export const submitAddAddressAutoCompleteForm = async (event) => {
   receiverPhone = formatPhoneNumber(receiverPhone, 'ZA').trim();
 
   // hidden fields
-  const route = formData.get('route');
-  const neighborhood = formData.get('neighborhood');
-  const state = formData.get('state');
-  const country = formData.get('country');
-  const postalCode = formData.get('postalCode');
-  const lat = formData.get('lat');
-  const lng = formData.get('lng');
+  const route = formData.get('route')?.trim();
+  const neighborhood = formData.get('neighborhood')?.trim();
+  const city = formData.get('city')?.trim();
+  const state = formData.get('state')?.trim();
+  const country = formData.get('country')?.trim();
+  const postalCode = formData.get('postalCode')?.trim();
+  const lat = formData.get('lat')?.trim();
+  const lng = formData.get('lng')?.trim();
 
-  console.log('yeet', {
+  console.log('yeetamus', {
     streetNumber,
     addressType,
     businessName,
@@ -157,6 +167,7 @@ export const submitAddAddressAutoCompleteForm = async (event) => {
     receiverPhone,
     route,
     neighborhood,
+    city,
     state,
     country,
     postalCode,
@@ -168,13 +179,18 @@ export const submitAddAddressAutoCompleteForm = async (event) => {
   // we only validate visible fields - hidden fields had been validated
   // prior otherwise the user would not be able to get to this form
 
-  // const invalidFields = [];
-  // if (!receiverName) invalidFields.push('receiverName');
-  // if (!receiverPhone || !isValidNumber(receiverPhone, 'ZA')) {
-  //   invalidFields.push('receiverPhone');
-  //   $(`#${EDIT_FORM_RECEIVER_PHONE_ID}`).addClass('invalid');
-  // }
+  const invalidFields = [];
+  if (!streetNumber) invalidFields.push('streetNumber');
+  if (!addressType) invalidFields.push('addressType');
+  if (addressType === 'business' && !businessName) invalidFields.push('businessName');
+  if (!companyBuilding) invalidFields.push('companyBuilding'); // TODO: is this true
+  if (!receiverName) invalidFields.push('receiverName');
+  if (!receiverPhone || !isValidNumber(receiverPhone, 'ZA')) {
+    invalidFields.push('receiverPhone');
+    $(`#${ADD_ADDRESS_AUTOCOMPLETE_FORM_RECEIVER_PHONE_ID}`).addClass('invalid');
+  }
 
+  console.log('invalidFields', invalidFields);
   // APPLY VALIDATION UI
   // if (invalidFields.length > 0) {
   //   console.error({ invalidFields });
