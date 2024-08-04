@@ -1,15 +1,19 @@
 import FormField from './Elements/FormField';
 import { AddressSectionHeading, ContactCard, SubmitButton } from './FormComponents';
-import { getBestRecipient } from './utils';
 
 const AddAddressAutoCompleteForm = (address) => {
   const fields = [
+    // TODO: fix where back button tackes you for add address
+    // TODO: what to do with addressId and addressName
+    // TODO: // Street Number TrueOnly on search @Grouped by journey  // street_number - part street in master data
+    // TODO: Do we tranform province ?
     {
-      name: 'number',
+      name: 'streetNumber',
       required: true,
       label: 'Street number',
       value: '',
     },
+    // TODO:  Address type True Yes - all cases selection between: - Residential- Business NA
     {
       name: 'addressType',
       label: 'Address type',
@@ -20,6 +24,7 @@ const AddAddressAutoCompleteForm = (address) => {
         { value: 'business', label: 'Business' },
       ],
     },
+    // TODO Business name False Yes - all cases Required field when Business address type is selected @Grouped by journey // not from google autocomplete
     {
       name: 'businessName',
       label: 'Business name',
@@ -27,6 +32,7 @@ const AddAddressAutoCompleteForm = (address) => {
       value: '',
       maxLength: 100,
     },
+    // TODO  Building/ Complex False Yes - all cases @Grouped by journey
     {
       name: 'companyBuilding',
       label: 'Building/Complex and number',
@@ -35,10 +41,11 @@ const AddAddressAutoCompleteForm = (address) => {
       maxLength: 100,
     },
     {
+      // TODO Recipient Name True Yes - all cases	@Grouped by journey  // not from google autocomplete
       name: 'receiverName',
       label: 'Recipient’s name',
       required: true,
-      value: getBestRecipient({ type: 'delivery' }),
+      value: '',
     },
     {
       name: 'complement', // TODO: ask john what is this?
@@ -47,6 +54,7 @@ const AddAddressAutoCompleteForm = (address) => {
       helperText: 'We send shipping updates to this number.',
       value: '',
     },
+    // TODO Recipient Cellphone Number True Yes - all cases Frontend Backend: We should be storing these numbers in the E.164 format // not from google autocomplete
     {
       name: 'receiverPhone',
       label: 'Recipient’s mobile number',
@@ -56,6 +64,38 @@ const AddAddressAutoCompleteForm = (address) => {
       minlength: 9,
       error: 'Please enter a valid phone number',
       containerClasses: 'custom-field-complement', // for sa flag
+    },
+    // HIDDEN FIELDS
+    // TODO: Street address True Only in manual @Grouped by journey // route - part street in master data
+    {
+      name: 'route',
+      required: true,
+      value: '',
+      type: 'hidden',
+    },
+    {
+      name: 'neighborhood',
+      required: true,
+      value: '',
+      type: 'hidden',
+    },
+    {
+      name: 'state',
+      required: true,
+      type: 'hidden',
+      value: '',
+    },
+    {
+      type: 'hidden',
+      required: true,
+      name: 'country',
+      value: 'ZAF',
+    },
+    {
+      name: 'postalCode',
+      required: true,
+      value: '',
+      type: 'hidden',
     },
   ];
 
@@ -70,6 +110,7 @@ const AddAddressAutoCompleteForm = (address) => {
   return /* html */ `
     ${AddressSectionHeading('Delivery Details')}
     ${ContactCard(address)}
+    ${JSON.stringify(address)}
     <form id="bash--address-form" method="post">
       ${fields.map((field) => FormField(field)).join('')}
       ${SubmitButton()}
@@ -78,38 +119,3 @@ const AddAddressAutoCompleteForm = (address) => {
 };
 
 export default AddAddressAutoCompleteForm;
-
-// Data Field	Required	Editable	Rules	Validation
-// Recipient Name	True	Yes - all cases		@Grouped by journey  // not from google autocomplete
-
-// Data Field	Required	Editable	Rules	Validation
-// Recipient Cellphone Number	True	Yes - all cases		Frontend Backend: We should be storing these numbers in the E.164 format // not from google autocomplete
-
-// Data Field	Required	Editable	Rules	Validation
-// Street Number	True	Only on search		@Grouped by journey  // street_number - part street in master data
-
-// Data Field	Required	Editable	Rules	Validation
-// Street address	True	Only in manual		@Grouped by journey // route - part street in master data
-
-// Data Field	Required	Editable	Rules	Validation // not from google autocomplete
-// Address type	True	Yes - all cases	selection between: - Residential- Business	NA
-
-// Data Field	Required	Editable	Rules	Validation
-// Business name	False	Yes - all cases	Required field when Business address type is selected	@Grouped by journey // not from google autocomplete
-
-// Data Field	Required	Editable	Rules	Validation  // not from google autocomplete
-// Building/ Complex	False	Yes - all cases		@Grouped by journey
-
-// Data Field	Required	Editable	Rules	Validation
-// Suburb	True	Only in manual		@Grouped by journey  //neighborhood in master data
-
-// Data Field	Required	Editable	Rules	Validation
-// City	True	Only in manual		@Grouped by journey //city in master data
-
-// Data Field	Required	Editable	Rules	Validation
-// Province	True	Only in manual	Dropdown list with available Provinces to select	NA // called start in master data do i have to map it
-
-// Data Field	Required	Editable	Rules	Validation
-// Country	True	Never	Not selectable	South Africa
-
-// TODO: fix where back button tackes you for add address
