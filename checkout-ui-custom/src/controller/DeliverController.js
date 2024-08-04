@@ -1,6 +1,8 @@
 // @ts-nocheck
 /* eslint-disable func-names */
-import AddAddressAutoCompleteForm from '../partials/Deliver/AddAddressAutoCompleteForm';
+import AddAddressAutoCompleteForm, {
+  submitAddAddressAutoCompleteForm,
+} from '../partials/Deliver/AddAddressAutoCompleteForm';
 import DeliverContainer from '../partials/Deliver/DeliverContainer';
 import EditAddressForm, {
   EDIT_FORM_RECEIVER_PHONE_ID,
@@ -288,7 +290,7 @@ const DeliverController = (() => {
   $(document).on('submit', '#bash--address-form', submitAddressForm);
   $(document).on('submit', '#bash--delivery-form', submitDeliveryForm);
   $(document).on('submit', '#bash--edit-address-form', submitEditAddressForm);
-  // TODO: add event listenter for on submit adddd form
+  $(document).on('submit', '#bash--add-address-autocomplete-form', submitAddAddressAutoCompleteForm);
 
   $(document).on('click', '.remove-cart-item', function (e) {
     e.preventDefault();

@@ -1,6 +1,13 @@
 import FormField from './Elements/FormField';
 import { AddressSectionHeading, ContactCard, SubmitButton } from './FormComponents';
 
+export const submitAddAddressAutoCompleteForm = async (event) => {
+  event.preventDefault();
+
+  // TODO
+  console.log('submitAddAddressAutoCompleteForm');
+};
+
 const AddAddressAutoCompleteForm = (address) => {
   const fields = [
     // TODO: fix where back button tackes you for add address
@@ -122,7 +129,7 @@ const AddAddressAutoCompleteForm = (address) => {
   return /* html */ `
     ${AddressSectionHeading('Delivery Details')}
     ${ContactCard({ ...address, street })}
-    <form id="bash--address-form" method="post">
+    <form id="bash--add-address-autocomplete-form" method="post">
       ${fields.map((field) => FormField(field)).join('')}
       ${SubmitButton()}
     </form>
