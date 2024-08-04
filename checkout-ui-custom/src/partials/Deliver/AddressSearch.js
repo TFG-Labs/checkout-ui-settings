@@ -143,7 +143,10 @@ const initGoogleAutocomplete = () => {
     if (isComplete) {
       window.postMessage({ action: 'setDeliveryView', view: 'add-address-autocomplete', content: address });
     } else {
-      populateAddressFromSearch(address);
+      populateAddressFromSearch({
+        ...address,
+        street: `${address?.streetNumber ?? ''} ${address?.route ?? ''}`.trim(), // this will likely split into two values when we split out the form
+      });
       window.postMessage({ action: 'setDeliveryView', view: 'address-form' });
     }
   });

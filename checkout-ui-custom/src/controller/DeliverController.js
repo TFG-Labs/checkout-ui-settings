@@ -1,6 +1,7 @@
 // @ts-nocheck
 /* eslint-disable func-names */
 import AddAddressAutoCompleteForm, {
+  ADD_ADDRESS_AUTOCOMPLETE_FORM_RECEIVER_PHONE_ID,
   submitAddAddressAutoCompleteForm,
 } from '../partials/Deliver/AddAddressAutoCompleteForm';
 import DeliverContainer from '../partials/Deliver/DeliverContainer';
@@ -60,16 +61,22 @@ const DeliverController = (() => {
   };
 
   const RenderEditAddress = async (addressName) => {
-    document.querySelector('#edit-adress-section').innerHTML = '';
     const data = await getAddressByName(addressName);
     document.querySelector('#edit-adress-section').innerHTML = EditAddressForm(data);
     preparePhoneField(`#${EDIT_FORM_RECEIVER_PHONE_ID}`);
   };
 
   const RenderAddAddressAutoComplete = async (address) => {
-    document.querySelector('#add-address-autocomplete-section').innerHTML = '';
     document.querySelector('#add-address-autocomplete-section').innerHTML = AddAddressAutoCompleteForm(address);
-    // TODO: prepare phone fields
+    preparePhoneField(`#${ADD_ADDRESS_AUTOCOMPLETE_FORM_RECEIVER_PHONE_ID}`);
+  };
+
+  const clearEditAddress = () => {
+    document.querySelector('#edit-adress-section').innerHTML = '';
+  };
+
+  const clearAddAddressAutoComplete = () => {
+    document.querySelector('#add-address-autocomplete-section').innerHTML = '';
   };
 
   const setupDeliver = () => {
@@ -317,6 +324,10 @@ const DeliverController = (() => {
     switch (data.action) {
       case 'setDeliveryView':
         document.querySelector('.bash--delivery-container')?.setAttribute('data-view', data.view);
+
+        // Clear form fields
+        clearEditAddress();
+        clearAddAddressAutoComplete();
 
         if (data.view === 'address-form' || data.view === 'address-edit') {
           preparePhoneField('#bash--input-receiverPhone');
