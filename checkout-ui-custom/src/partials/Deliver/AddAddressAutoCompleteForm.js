@@ -122,7 +122,6 @@ const AddAddressAutoCompleteForm = (address) => {
   return /* html */ `
     ${AddressSectionHeading('Delivery Details')}
     ${ContactCard({ ...address, street })}
-    ${JSON.stringify(address)}
     <form id="bash--address-form" method="post">
       ${fields.map((field) => FormField(field)).join('')}
       ${SubmitButton()}

@@ -58,22 +58,16 @@ const DeliverController = (() => {
   };
 
   const RenderEditAddress = async (addressName) => {
+    document.querySelector('#edit-adress-section').innerHTML = '';
     const data = await getAddressByName(addressName);
     document.querySelector('#edit-adress-section').innerHTML = EditAddressForm(data);
     preparePhoneField(`#${EDIT_FORM_RECEIVER_PHONE_ID}`);
   };
 
   const RenderAddAddressAutoComplete = async (address) => {
+    document.querySelector('#add-address-autocomplete-section').innerHTML = '';
     document.querySelector('#add-address-autocomplete-section').innerHTML = AddAddressAutoCompleteForm(address);
-  };
-
-  const clearEditAddress = () => {
-    document.querySelector('#edit-adress-section').innerHTML = '';
-  };
-
-  const clearAddAddressAutoComplete = () => {
-    // TODO: implement this function
-    console.log('noop');
+    // TODO: prepare phone fields
   };
 
   const setupDeliver = () => {
@@ -322,10 +316,6 @@ const DeliverController = (() => {
       case 'setDeliveryView':
         document.querySelector('.bash--delivery-container')?.setAttribute('data-view', data.view);
 
-        // Clear form fields
-        clearEditAddress();
-        clearAddAddressAutoComplete();
-
         if (data.view === 'address-form' || data.view === 'address-edit') {
           preparePhoneField('#bash--input-receiverPhone');
           if (data.content) {
@@ -341,7 +331,6 @@ const DeliverController = (() => {
           RenderEditAddress(data.content);
         }
         if (data.view === 'add-address-autocomplete') {
-          // TODO: do we need to prepare fields
           RenderAddAddressAutoComplete(data.content);
         }
         break;
