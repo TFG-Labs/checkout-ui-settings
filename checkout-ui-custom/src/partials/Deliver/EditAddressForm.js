@@ -57,13 +57,13 @@ const EditAddressForm = (data) => {
     },
     {
       name: 'receiverName',
-      label: 'Recipient’s name',
+      label: 'Recipient name and surname',
       required: true,
       value: data?.receiverName ?? '',
     },
     {
       name: 'receiverPhone',
-      label: 'Recipient name and surname',
+      label: 'Recipient’s mobile number',
       required: true,
       type: 'tel',
       value: data?.receiverPhone ?? '',
