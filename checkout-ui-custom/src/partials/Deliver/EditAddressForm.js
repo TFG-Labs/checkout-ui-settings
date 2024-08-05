@@ -57,7 +57,7 @@ const EditAddressForm = (data) => {
     },
     {
       name: 'receiverName',
-      label: 'Recipient name and surname',
+      label: "Recipient's name and surname",
       required: true,
       value: data?.receiverName ?? '',
     },
