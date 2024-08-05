@@ -18,6 +18,7 @@ import {
   updateDeliveryFeeDisplay,
 } from '../partials/Deliver/utils';
 import { AD_TYPE, STEPS } from '../utils/const';
+import handleDeleteAddress from '../utils/deleteAddress';
 import formatAddressSummary from '../utils/formatAddressSummary';
 import {
   clearLoaders,
@@ -300,6 +301,15 @@ const DeliverController = (() => {
   // Invalid fields - remove styling on click, keyup
   $(document).on('keyup click', '.invalid', function () {
     $(this).removeClass('invalid');
+  });
+
+  // Add event listener for delete address
+  $(document).on('click', '#btn-delete-address', function (e) {
+    e.preventDefault();
+    const addressName = $('#bash--input-addressName').val();
+    if (confirm(`Are you sure you want to delete the address "${addressName}"?`)) {
+      handleDeleteAddress(addressName);
+    }
   });
 
   // Form validation

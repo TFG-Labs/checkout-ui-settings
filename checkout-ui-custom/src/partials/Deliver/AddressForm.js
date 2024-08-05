@@ -1,6 +1,6 @@
+import usePhoneNumberFormatting from '../../utils/phoneNumberFormat';
 import FormField from './Elements/FormField';
 import { getBestRecipient } from './utils';
-import usePhoneNumberFormatting from '../../utils/phoneNumberFormat';
 
 const AddressForm = () => {
   const { formatPhoneNumber } = usePhoneNumberFormatting();
@@ -183,17 +183,26 @@ const AddressForm = () => {
   const formFields = fields.map((field) => FormField(field)).join('');
 
   return `
-  <form id="bash--address-form" method="post">
-    ${formFields}
-
-    <button
-      class="submit btn-go-to-payment btn btn-large btn-success"
-      id="btn-save-address"
-      type="submit">
-      Save address
-    </button>
-  </form>
-
+    <form id="bash--address-form" method="post">
+      ${formFields}
+      <div
+        id="address-button-container"
+      > 
+        <button
+          class="btn-delete-address"
+          id="btn-delete-address"
+          type="submit"
+        >
+          Delete
+        </button>
+        <button
+          class="submit btn-go-to-payment btn btn-large btn-success"
+          id="btn-save-address"
+          type="submit">
+          Save
+        </button>
+      </div>
+    </form>
   `;
 };
 
