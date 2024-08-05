@@ -5,6 +5,7 @@ import AddAddressAutoCompleteForm, {
   submitAddAddressAutoCompleteForm,
 } from '../partials/Deliver/AddAddressAutoCompleteForm';
 import DeliverContainer from '../partials/Deliver/DeliverContainer';
+
 import EditAddressForm, {
   EDIT_FORM_RECEIVER_PHONE_ID,
   submitEditAddressForm,
@@ -22,7 +23,8 @@ import {
   updateDeliveryFeeDisplay,
 } from '../partials/Deliver/utils';
 import { AD_TYPE, STEPS } from '../utils/const';
-import formatAddressSummary from '../utils/formatAddressSummary';
+import handleDeleteAddress from '../utils/deleteAddress';
+import { formatAddressSummary } from '../utils/formatAddressSummary';
 import {
   clearLoaders,
   getSpecialCategories,
@@ -314,6 +316,15 @@ const DeliverController = (() => {
   // Invalid fields - remove styling on click, keyup
   $(document).on('keyup click', '.invalid', function () {
     $(this).removeClass('invalid');
+  });
+
+  // Add event listener for delete address
+  $(document).on('click', '#btn-delete-address', (e) => {
+    e.preventDefault();
+    const addressName = $('#bash--input-addressName').val();
+    if (confirm(`Are you sure you want to delete the address "${addressName}"?`)) {
+      handleDeleteAddress(addressName);
+    }
   });
 
   // Form validation
