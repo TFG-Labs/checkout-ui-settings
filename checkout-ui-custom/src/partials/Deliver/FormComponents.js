@@ -3,9 +3,9 @@
  * @param {Object} data - Address data
  */
 export const ContactCard = (data) => {
-  const { number, businessName, street, neighborhood, city, postalCode } = data;
+  const { businessName, street, city, postalCode, neighborhood } = data;
 
-  const addressLine = [businessName, `${number ? `${number} ` : ''}${street}`, neighborhood ?? city, postalCode]
+  const addressLine = [businessName, street, neighborhood ?? city, postalCode]
     .filter((item) => item !== undefined && item !== null && item !== '')
     .join(', ')
     .trim();
