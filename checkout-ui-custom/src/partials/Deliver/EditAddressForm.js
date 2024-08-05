@@ -43,7 +43,7 @@ const EditAddressForm = (data) => {
   ];
 
   return /* html */ `
-    ${AddressSectionHeading('Address Details')}
+    ${AddressSectionHeading('Address Details', 'select-address')}
     ${ContactCard(data)}
     <form id="bash--edit-address-form" method="post">
       ${fields.map((field) => FormField(field)).join('')}

@@ -37,11 +37,12 @@ export const SubmitButton = () => /* html */ `
 /**
  * AddressSectionHeading - View Component of a Heading
  * @param {string} title - Title of the Heading
+ * @param {string} backView - View to go back to: select-address | address-search
  * @returns {string} - HTML for a Heading
  */
-export const AddressSectionHeading = (title) => /* html */ `
+export const AddressSectionHeading = (title, backView) => /* html */ `
   <div class="bash--heading">
     <h3>${title}</h3>
-    <a href="#" class="back-button--select" data-view="select-address">&lt; Back</a>
+    <a href="#" class="back-button--select" data-view="${backView}">&lt; Back</a>
   </div>
 `;

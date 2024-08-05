@@ -46,7 +46,6 @@ const getAddressComponentByType = (addressComponents) => (type) => {
 const mapGoogleAddress = (place) => {
   const { address_components: addressComponents, geometry } = place;
 
-
   if (!addressComponents || addressComponents.length < 1) return { address: {}, isComplete: false };
 
   const AUTOCOMPLETE_COMPONENT_MATRIX = [
@@ -64,7 +63,6 @@ const mapGoogleAddress = (place) => {
     acc[component.target] = getAddressSubValue(component.type);
     return acc;
   }, {});
-
 
   const coords = { lat: '', lng: '' };
   if (geometry) {
@@ -142,6 +140,7 @@ const initGoogleAutocomplete = () => {
     // Route to the correct view
     if (isComplete) {
       window.postMessage({ action: 'setDeliveryView', view: 'add-address-autocomplete', content: address });
+      input.value = '';
     } else {
       populateAddressFromSearch({
         ...address,

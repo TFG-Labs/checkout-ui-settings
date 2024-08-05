@@ -110,8 +110,9 @@ const AddAddressAutoCompleteForm = (address) => {
   ];
 
   const street = `${address?.streetNumber ?? ''} ${address?.route ?? ''}`.trim();
+
   return /* html */ `
-    ${AddressSectionHeading('Delivery Details')}
+    ${AddressSectionHeading('Delivery Details', 'address-search')}
     ${ContactCard({ ...address, street })}
     <form id="bash--add-address-autocomplete-form" method="post">
       ${fields.map((field) => FormField(field)).join('')}
@@ -176,17 +177,11 @@ export const submitAddAddressAutoCompleteForm = async (event) => {
     return;
   }
 
-  // TODO: fix where back button tackes you for add address
-
-  console.log('invalidFields', invalidFields);
-
   // POST ADDRESS UPDATE AND CHANGE VIEW
   const geoCoords = [parseFloat(lng) || '', parseFloat(lat) || ''];
 
   const payload = {
     isDisposable: false,
-    // addressId -> TODO: not sure
-    // addressName -> TODO: not sure
     addressType,
     receiverName,
     receiverPhone: formatPhoneNumber(receiverPhone, 'ZA').trim(),
@@ -201,8 +196,6 @@ export const submitAddAddressAutoCompleteForm = async (event) => {
     geoCoordinates: geoCoords, // for shippingData
     geoCoordinate: geoCoords, // for MasterData
   };
-
-  console.log('payload', payload);
 
   // Apply the selected address to customers orderForm.
   const setAddressResponse = await setAddress(payload, { validateExtraFields: false });
