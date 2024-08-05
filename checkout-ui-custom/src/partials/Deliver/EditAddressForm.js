@@ -23,9 +23,9 @@ const SaveButton = () => /* html */ `
 `;
 
 const ContactCard = (data) => {
-  const { number, companyBuilding, street, city, postalCode } = data;
+  const { businessName, street, city, postalCode, neighborhood } = data;
 
-  const addressLine = [companyBuilding, `${number ? `${number} ` : ''}${street}`, city, postalCode]
+  const addressLine = [businessName, street, neighborhood ?? city, postalCode]
     .filter((item) => item !== undefined && item !== null && item !== '')
     .join(', ')
     .trim();
@@ -63,7 +63,7 @@ const EditAddressForm = (data) => {
     },
     {
       name: 'receiverPhone',
-      label: 'Recipient’s mobile number',
+      label: 'Recipient name and surname',
       required: true,
       type: 'tel',
       value: data?.receiverPhone ?? '',
