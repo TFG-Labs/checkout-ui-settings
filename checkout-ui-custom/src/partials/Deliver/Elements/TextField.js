@@ -7,13 +7,16 @@ const TextField = ({
   autoComplete = 'on',
   minLength = 0,
   maxLength = 0,
+  idOverride,
 }) => {
   const fieldId = name.replace(/\s/g, '-');
-  return `
+
+  const id = idOverride || `bash--input-${fieldId}`;
+  return /* html */ `
   <input 
     ${required ? ' required ' : ''}
     autocomplete="${autoComplete}" 
-    id="bash--input-${fieldId}" 
+    id="${id}" 
     type="${type}" 
     name="${name}" 
     ${minLength > 0 ? `minlength="${minLength}"` : ''}

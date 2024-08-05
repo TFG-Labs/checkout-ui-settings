@@ -25,11 +25,10 @@ const Addresses = () => {
       throw new Error('Error getAddresses', e.message);
     });
 
-  return `
- <div class="bash--addresses shimmer" id="bash-address-list">
-    Loading addresses...
-  </div>
+  return /* html */ `
+    <div class="bash--addresses shimmer" id="bash-address-list">
+      Loading address book...
+    </div> 
   `;
 };
-
 export default Addresses;
