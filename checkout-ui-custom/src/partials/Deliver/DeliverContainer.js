@@ -66,7 +66,7 @@ const DeliverContainer = ({ hasFurn, hasFurnOnly, hasFurnMixed }) => /* html */ 
 
     <section 
       id="manual-address-section" 
-      class="bash--delivery-view" 
+      class="bash--delivery-manual" 
       data-section="manual-address">
     </section>
 

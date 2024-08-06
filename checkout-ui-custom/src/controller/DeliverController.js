@@ -68,10 +68,7 @@ const DeliverController = (() => {
       if (!section) {
         throw new Error('Manual address section not found');
       }
-      section.innerHTML = `
-      <p>This is the updated content of the manual address section.</p>
-      <p>Additional information can be added here.</p>
-    `;
+      section.innerHTML = AddManualAddress();
     } catch (error) {
       console.error('Error rendering manual address section:', error);
     }
