@@ -1,11 +1,10 @@
 // @ts-nocheck
 /* eslint-disable func-names */
 import DeliverContainer from '../partials/Deliver/DeliverContainer';
-import EditAddressForm, {
-  EDIT_FORM_RECEIVER_PHONE_ID,
-  submitEditAddressForm,
-} from '../partials/Deliver/EditAddressForm';
+import { EDIT_FORM_RECEIVER_PHONE_ID, submitEditAddressForm } from '../partials/Deliver/EditAddressForm';
+
 import ExtraFieldsContainer from '../partials/Deliver/ExtraFieldsContainer';
+import AddManualAddress from '../partials/Deliver/ManualAddAddressForm';
 import {
   clearRicaFields,
   customShippingDataIsValid,
@@ -59,12 +58,30 @@ const DeliverController = (() => {
 
   const RenderEditAddress = async (addressName) => {
     const data = await getAddressByName(addressName);
-    document.querySelector('#edit-adress-section').innerHTML = EditAddressForm(data);
+    document.querySelector('#edit-adress-section').innerHTML = AddManualAddress(data);
     preparePhoneField(`#${EDIT_FORM_RECEIVER_PHONE_ID}`);
   };
 
+  const RenderAddManualAddress = async () => {
+    try {
+      const section = document.querySelector('#manual-address-section');
+      if (!section) {
+        throw new Error('Manual address section not found');
+      }
+      section.innerHTML = `
+      <p>This is the updated content of the manual address section.</p>
+      <p>Additional information can be added here.</p>
+    `;
+    } catch (error) {
+      console.error('Error rendering manual address section:', error);
+    }
+  };
   const clearEditAddress = () => {
     document.querySelector('#edit-adress-section').innerHTML = '';
+  };
+
+  const clearManualAddress = () => {
+    document.querySelector('#manual-address-section').innerHTML = '';
   };
 
   const setupDeliver = () => {
@@ -317,10 +334,12 @@ const DeliverController = (() => {
     const { data } = event;
     if (!data || !data.action) return;
 
+    console.log(data.view, 'ALL IS FULL LOVE!!!');
     switch (data.action) {
       case 'setDeliveryView':
         document.querySelector('.bash--delivery-container')?.setAttribute('data-view', data.view);
         clearEditAddress();
+        clearManualAddress();
         if (data.view === 'address-form' || data.view === 'address-edit') {
           preparePhoneField('#bash--input-receiverPhone');
           if (data.content) {
@@ -334,6 +353,10 @@ const DeliverController = (() => {
         }
         if (data.view === 'edit-address') {
           RenderEditAddress(data.content);
+        }
+
+        if (data.view === 'manual-address-form') {
+          RenderAddManualAddress();
         }
         break;
       case 'FB_LOG':
