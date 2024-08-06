@@ -1,6 +1,10 @@
 // @ts-nocheck
 /* eslint-disable func-names */
 import DeliverContainer from '../partials/Deliver/DeliverContainer';
+import EditAddressForm, {
+  EDIT_FORM_RECEIVER_PHONE_ID,
+  submitEditAddressForm,
+} from '../partials/Deliver/EditAddressForm';
 import ExtraFieldsContainer from '../partials/Deliver/ExtraFieldsContainer';
 import {
   clearRicaFields,
@@ -14,6 +18,7 @@ import {
   updateDeliveryFeeDisplay,
 } from '../partials/Deliver/utils';
 import { AD_TYPE, STEPS } from '../utils/const';
+import handleDeleteAddress from '../utils/deleteAddress';
 import formatAddressSummary from '../utils/formatAddressSummary';
 import {
   clearLoaders,
@@ -50,6 +55,16 @@ const DeliverController = (() => {
         });
       }
     }
+  };
+
+  const RenderEditAddress = async (addressName) => {
+    const data = await getAddressByName(addressName);
+    document.querySelector('#edit-adress-section').innerHTML = EditAddressForm(data);
+    preparePhoneField(`#${EDIT_FORM_RECEIVER_PHONE_ID}`);
+  };
+
+  const clearEditAddress = () => {
+    document.querySelector('#edit-adress-section').innerHTML = '';
   };
 
   const setupDeliver = () => {
@@ -266,8 +281,10 @@ const DeliverController = (() => {
     setTimeout(() => document.getElementById('shipping-option-pickup-in-point').click(), 200);
   });
 
+  // submit address form listeners
   $(document).on('submit', '#bash--address-form', submitAddressForm);
   $(document).on('submit', '#bash--delivery-form', submitDeliveryForm);
+  $(document).on('submit', '#bash--edit-address-form', submitEditAddressForm);
 
   $(document).on('click', '.remove-cart-item', function (e) {
     e.preventDefault();
@@ -286,6 +303,15 @@ const DeliverController = (() => {
     $(this).removeClass('invalid');
   });
 
+  // Add event listener for delete address
+  $(document).on('click', '#btn-delete-address', function (e) {
+    e.preventDefault();
+    const addressName = $('#bash--input-addressName').val();
+    if (confirm(`Are you sure you want to delete the address "${addressName}"?`)) {
+      handleDeleteAddress(addressName);
+    }
+  });
+
   // Form validation
   window.addEventListener('message', (event) => {
     const { data } = event;
@@ -294,6 +320,7 @@ const DeliverController = (() => {
     switch (data.action) {
       case 'setDeliveryView':
         document.querySelector('.bash--delivery-container')?.setAttribute('data-view', data.view);
+        clearEditAddress();
         if (data.view === 'address-form' || data.view === 'address-edit') {
           preparePhoneField('#bash--input-receiverPhone');
           if (data.content) {
@@ -305,6 +332,9 @@ const DeliverController = (() => {
             }
           }
         }
+        if (data.view === 'edit-address') {
+          RenderEditAddress(data.content);
+        }
         break;
       case 'FB_LOG':
         break;
@@ -315,7 +345,6 @@ const DeliverController = (() => {
 
   // Clear local checkout DB on ext.
   // window.addEventListener('beforeunload', clearAddresses);
-
   return {
     state,
     init: () => {},

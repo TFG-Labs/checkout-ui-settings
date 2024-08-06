@@ -19,6 +19,7 @@ const FormField = ({
   checked,
   error = 'This field is required.',
   containerClasses = '',
+  idOverride = null,
 }) => {
   const fieldId = name.replace(/\s/g, '-');
 
@@ -33,14 +34,26 @@ const FormField = ({
       case 'checkbox':
         return Checkbox({ name, label, checked });
       default:
-        return TextField({ name, value, required, type, placeholder, autoComplete, maxLength, minLength: minlength });
+        return TextField({
+          name,
+          value,
+          required,
+          type,
+          placeholder,
+          autoComplete,
+          maxLength,
+          minLength: minlength,
+          idOverride,
+        });
     }
   };
 
   const separateLabel = `<label id="bash--label-${fieldId}" for="bash--input-${fieldId}">${label}</label>`;
 
   return `
-<p class="input bash--${type}field-${name.replace(/\s/g, '-')} bash--${type} ${required ? 'required' : 'optional'} ${containerClasses}">
+<p class="input bash--${type}field-${name.replace(/\s/g, '-')} bash--${type} ${
+    required ? 'required' : 'optional'
+  } ${containerClasses}">
   ${label && type !== 'checkbox' ? separateLabel : ''}
   ${formField()}
   <span class="bash--field-error">${error}</span>

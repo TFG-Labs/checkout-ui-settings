@@ -8,7 +8,7 @@ import { AlertContainer } from './Elements/Alert';
 import MixedProducts from './MixedProducts';
 import TVorRICAMsg from './TVorRICAMsg';
 
-const DeliverContainer = ({ hasFurn, hasFurnOnly, hasFurnMixed }) => `
+const DeliverContainer = ({ hasFurn, hasFurnOnly, hasFurnMixed }) => /* html */ `
   <div class="bash--delivery-container ${hasFurn && 'has-furniture'}"
    id="bash--delivery-container" data-view="select-address">
     <div id="bash--shipping-messages">
@@ -61,7 +61,13 @@ const DeliverContainer = ({ hasFurn, hasFurnOnly, hasFurnMixed }) => `
         >enter it manually</a>.
       </p>
     </section>
-    
+
+    <section 
+      id="edit-adress-section" 
+      class="bash--delivery-view" 
+      data-section="edit-address">
+    </section>
+   
     <section class="bash--delivery-view" data-section="address-form">
        <div class="bash--heading">
         <h3>Delivery address</h3>
@@ -70,7 +76,6 @@ const DeliverContainer = ({ hasFurn, hasFurnOnly, hasFurnMixed }) => `
       </div>
       ${AddressForm()}
     </section>
-    
   </div>`;
 
 export default DeliverContainer;

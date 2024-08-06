@@ -183,31 +183,26 @@ const AddressForm = () => {
   const formFields = fields.map((field) => FormField(field)).join('');
 
   return `
-  <form id="bash--address-form" method="post">
-    ${formFields}
-
-    <a
-      id="btn-delete-address"
-      href="#"
-    >
-      Delete address
-    </a>
-
-    <button
-      class="submit btn-go-to-payment btn btn-large btn-success"
-      id="btn-save-address"
-      type="submit">
-      Delete address
-    </button>
-
-    <a
-      id="btn-delete-address"
-      href="#"
-    >
-      Delete address
-    </a>
-  </form>
-
+    <form id="bash--address-form" method="post">
+      ${formFields}
+      <div
+        id="address-button-container"
+      > 
+        <button
+          class="btn-delete-address"
+          id="btn-delete-address"
+          type="submit"
+        >
+          Delete
+        </button>
+        <button
+          class="submit btn-go-to-payment btn btn-large btn-success"
+          id="btn-save-address"
+          type="submit">
+          Save
+        </button>
+      </div>
+    </form>
   `;
 };
 
