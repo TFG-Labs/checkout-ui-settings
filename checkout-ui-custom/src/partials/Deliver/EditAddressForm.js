@@ -3,9 +3,36 @@ import { formatPhoneNumber } from '../../utils/phoneFields';
 import { addOrUpdateAddress, getAddressByName } from '../../utils/services';
 import setAddress from '../../utils/setAddress';
 import FormField from './Elements/FormField';
-import { AddressSectionHeading, ContactCard, SubmitButton } from './FormComponents';
+import { AddressSectionHeading, ContactCard } from './FormComponents';
 
 export const EDIT_FORM_RECEIVER_PHONE_ID = 'bash--input-edit-adress-form-receiverPhone';
+
+const SaveButton = () => /* html */ `
+  <button
+    class="submit btn-go-to-payment btn btn-large btn-success"
+    id="btn-save-address"
+    type="submit">
+    Save
+  </button>
+`;
+
+const DeleteButton = () => /* html */ `
+  <button
+    class="btn btn-small"
+    id="btn-delete-address"
+    type="submit">
+    Delete
+  </button>
+`;
+
+const ButtonContainer = () => /* html */ `
+  <div
+    id="address-button-container"
+  >
+    ${DeleteButton()}
+    ${SaveButton()}
+  </div>
+`;
 
 const EditAddressForm = (data) => {
   const fields = [
@@ -47,7 +74,7 @@ const EditAddressForm = (data) => {
     ${ContactCard(data)}
     <form id="bash--edit-address-form" method="post">
       ${fields.map((field) => FormField(field)).join('')}
-      ${SubmitButton()}
+      ${ButtonContainer()}
     </form>
   `;
 };
