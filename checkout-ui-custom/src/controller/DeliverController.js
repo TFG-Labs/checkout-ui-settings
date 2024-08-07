@@ -1,6 +1,6 @@
 // @ts-nocheck
 /* eslint-disable func-names */
-import AddAddressManual from '../partials/Deliver/AddAddressManualForm';
+import AddAddressManual, { submitAddAddressManualForm } from '../partials/Deliver/AddAddressManualForm';
 import DeliverContainer from '../partials/Deliver/DeliverContainer';
 import EditAddressForm, {
   EDIT_FORM_RECEIVER_PHONE_ID,
@@ -292,6 +292,7 @@ const DeliverController = (() => {
 
   // submit address form listeners
   $(document).on('submit', '#bash--address-form', submitAddressForm);
+  $(document).on('submit', '#bash--add-address-manual-form', submitAddAddressManualForm);
   $(document).on('submit', '#bash--delivery-form', submitDeliveryForm);
   $(document).on('submit', '#bash--edit-address-form', submitEditAddressForm);
 
