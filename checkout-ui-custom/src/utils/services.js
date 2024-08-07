@@ -255,6 +255,7 @@ export const removeAddressFromOrderForm = async (addressId) => {
 
       shippingData.availableAddresses = filterAddresses(shippingData.availableAddresses || []);
       shippingData.selectedAddresses = filterAddresses(shippingData.selectedAddresses || []);
+      shippingData.logisticsInfo = filterAddresses(shippingData.selectedAddresses || []);
 
       // Send the updated shippingData back to VTEX
       return vtexjs.checkout.sendAttachment('shippingData', shippingData);

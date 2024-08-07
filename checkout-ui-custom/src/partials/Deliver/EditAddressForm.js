@@ -18,8 +18,26 @@ const SaveButton = () => /* html */ `
     class="submit btn-go-to-payment btn btn-large btn-success"
     id="btn-save-address"
     type="submit">
-    Save Address
+    Save
   </button>
+`;
+
+const DeleteButton = () => /* html */ `
+  <button
+    class="btn btn-small"
+    id="btn-delete-address"
+    type="submit">
+    Delete
+  </button>
+`;
+
+const ButtonContainer = () => /* html */ `
+  <div
+    id="address-button-container"
+  >
+    ${DeleteButton()}
+    ${SaveButton()}
+  </div>
 `;
 
 const ContactCard = (data) => {
@@ -80,7 +98,7 @@ const EditAddressForm = (data) => {
     ${ContactCard(data)}
     <form id="bash--edit-address-form" method="post">
       ${fields.map((field) => FormField(field)).join('')}
-      ${SaveButton()}
+      ${ButtonContainer()}
     </form>
   `;
 };

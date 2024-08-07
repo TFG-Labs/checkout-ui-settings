@@ -307,7 +307,7 @@ const DeliverController = (() => {
   $(document).on('click', '#btn-delete-address', function (e) {
     e.preventDefault();
     const addressName = $('#bash--input-addressName').val();
-    if (confirm(`Are you sure you want to delete the address "${addressName}"?`)) {
+    if (confirm('Please note: Deleting this address will not delete any pending orders to this address.')) {
       handleDeleteAddress(addressName);
     }
   });
