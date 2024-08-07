@@ -183,7 +183,7 @@ const AddressForm = () => {
   const formFields = fields.map((field) => FormField(field)).join('');
 
   return `
-    <form id="bash--manual-address-form" method="post">
+    <form id="bash--address-form" method="post">
       ${formFields}
       <div
         id="address-button-container"

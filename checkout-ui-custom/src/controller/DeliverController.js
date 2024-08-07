@@ -63,16 +63,9 @@ const DeliverController = (() => {
   };
 
   const RenderAddManualAddress = async () => {
-    try {
-      const section = document.querySelector('#manual-address-section');
-      if (!section) {
-        throw new Error('Manual address section not found');
-      }
-      section.innerHTML = AddManualAddress();
-    } catch (error) {
-      console.error('Error rendering manual address section:', error);
-    }
+    document.querySelector('#manual-address-section').innerHTML = AddManualAddress();
   };
+
   const clearEditAddress = () => {
     document.querySelector('#edit-adress-section').innerHTML = '';
   };
@@ -160,7 +153,9 @@ const DeliverController = (() => {
     if (window.location.hash === STEPS.SHIPPING) {
       setTimeout(() => {
         console.info('SCROLL TO SHIPPING');
-        document.getElementById('shipping-data').scrollIntoView({ behavior: 'smooth' });
+        document.getElementById('shipping-data').scrollIntoView({
+          behavior: 'smooth',
+        });
       }, 500);
       setupDeliver();
       setCartClasses();
@@ -223,7 +218,11 @@ const DeliverController = (() => {
     e.preventDefault();
     const viewTarget = $(this).data('view');
     const content = decodeURIComponent($(this).data('content'));
-    window.postMessage({ action: 'setDeliveryView', view: viewTarget, content });
+    window.postMessage({
+      action: 'setDeliveryView',
+      view: viewTarget,
+      content,
+    });
   });
 
   // Clear form on adding new address
@@ -248,7 +247,9 @@ const DeliverController = (() => {
 
     getAddressByName(address.addressName)
       .then((addressByName) => {
-        setAddress(addressByName || address, { validateExtraFields: false });
+        setAddress(addressByName || address, {
+          validateExtraFields: false,
+        });
         $('input[type="radio"][name="selected-address"]:checked').attr('checked', false);
         $(this).attr('checked', true);
       })
@@ -271,7 +272,9 @@ const DeliverController = (() => {
   $(document).on('change', 'input[name="addressType"]', function () {
     if ($(this).is(':checked')) {
       if ($(this).val() === 'business') {
-        showBusinessName({ focus: true });
+        showBusinessName({
+          focus: true,
+        });
       } else {
         hideBusinessName();
       }
@@ -330,8 +333,6 @@ const DeliverController = (() => {
   window.addEventListener('message', (event) => {
     const { data } = event;
     if (!data || !data.action) return;
-
-    console.log(data.view, 'ALL IS FULL LOVE!!!');
     switch (data.action) {
       case 'setDeliveryView':
         document.querySelector('.bash--delivery-container')?.setAttribute('data-view', data.view);

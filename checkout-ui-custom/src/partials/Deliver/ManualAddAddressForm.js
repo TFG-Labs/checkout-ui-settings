@@ -1,4 +1,3 @@
-import usePhoneNumberFormatting from '../../utils/phoneNumberFormat';
 import FormField from './Elements/FormField';
 import { getBestRecipient } from './utils';
 
@@ -10,7 +9,6 @@ const Heading = () => /* html */ `
 `;
 
 const AddressForm = () => {
-  const { formatPhoneNumber } = usePhoneNumberFormatting();
   const fields = [
     {
       name: 'addressId',
@@ -191,19 +189,15 @@ const AddressForm = () => {
 
   return `
   <div>
-      ${Heading()}
+      <div class="bash--heading">
+        <h3>Add a new delivery address</h3>
+        <a href='#' data-view='select-address' id='back-button-select-address'>&lt; Back</a>
+      </div>
     <form id="bash--address-form" method="post">
       ${formFields}
       <div
         id="address-button-container"
       > 
-        <button
-          class="btn-delete-address"
-          id="btn-delete-address"
-          type="submit"
-        >
-          Delete
-        </button>
         <button
           class="submit btn-go-to-payment btn btn-large btn-success"
           id="btn-save-address"
