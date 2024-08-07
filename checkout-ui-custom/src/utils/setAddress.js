@@ -29,6 +29,7 @@ const setAddress = (address, options = { validateExtraFields: true }) => {
 
   const { isValid, invalidFields } = addressIsValid(address, validateExtraFields);
 
+  // TODO: they gonna take you to a address form and populate it, we should not be getting here
   if (!isValid) {
     console.error({ invalidFields });
     populateAddressForm(address);
@@ -37,6 +38,7 @@ const setAddress = (address, options = { validateExtraFields: true }) => {
     $(`#bash--input-${invalidFields[0]}`).focus();
 
     if (requiredAddressFields.includes(invalidFields[0])) {
+      // TODO: at this stage valifation should already have been done
       window.postMessage({
         action: 'setDeliveryView',
         view: 'address-edit',

@@ -142,11 +142,12 @@ const initGoogleAutocomplete = () => {
       window.postMessage({ action: 'setDeliveryView', view: 'add-address-autocomplete', content: address });
       input.value = '';
     } else {
+      // TODO populateAddressFromSearch needs to change
       populateAddressFromSearch({
         ...address,
         street: `${address?.streetNumber ?? ''} ${address?.route ?? ''}`.trim(), // this will likely split into two values when we split out the form
       });
-      window.postMessage({ action: 'setDeliveryView', view: 'address-form' });
+      window.postMessage({ action: 'setDeliveryView', view: 'add-address-autocomplete-manual' });
     }
   });
   input.value = '';

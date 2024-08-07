@@ -70,7 +70,7 @@ const submitAddressForm = async (event) => {
     if (requiredAddressFields.includes(invalidFields[0])) {
       window.postMessage({
         action: 'setDeliveryView',
-        view: 'address-form',
+        view: 'address-form', //TODO surely this will change, and  this might become redundant
       });
     }
 
@@ -98,7 +98,7 @@ const submitAddressForm = async (event) => {
 
   window.postMessage({ action: 'setDeliveryView', view: 'select-address' });
 
-  // Scroll up
+  // Scroll up //TODO: this is very useful: we might need ot for address saved
   setTimeout(() => {
     if ($('.bash--extra-fields').length > 0) {
       document.querySelector('.bash--extra-fields').scrollIntoView({ behavior: 'smooth' });

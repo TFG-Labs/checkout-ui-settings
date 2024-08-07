@@ -4,6 +4,7 @@ import AddAddressAutoCompleteForm, {
   ADD_ADDRESS_AUTOCOMPLETE_FORM_RECEIVER_PHONE_ID,
   submitAddAddressAutoCompleteForm,
 } from '../partials/Deliver/AddAddressAutoCompleteForm';
+import AddAddressAutoCompleteManualForm from '../partials/Deliver/AddAddressAutoCompleteManualForm';
 import DeliverContainer from '../partials/Deliver/DeliverContainer';
 
 import EditAddressForm, {
@@ -62,6 +63,7 @@ const DeliverController = (() => {
     }
   };
 
+  // TODO: we can probably get away with one form mounting point - it will make it more performant
   const RenderEditAddress = async (addressName) => {
     const data = await getAddressByName(addressName);
     document.querySelector('#edit-adress-section').innerHTML = EditAddressForm(data);
@@ -73,12 +75,23 @@ const DeliverController = (() => {
     preparePhoneField(`#${ADD_ADDRESS_AUTOCOMPLETE_FORM_RECEIVER_PHONE_ID}`);
   };
 
+  const RenderAddAddressAutoCompleteManual = async (address) => {
+    console.log('yeeeet');
+    document.querySelector('#add-address-autocomplete-manual-section').innerHTML =
+      AddAddressAutoCompleteManualForm(address);
+    // TODO: preparePhoneField(`#${ADD_ADDRESS_AUTOCOMPLETE_FORM_RECEIVER_PHONE_ID}`);
+  };
+
   const clearEditAddress = () => {
     document.querySelector('#edit-adress-section').innerHTML = '';
   };
 
   const clearAddAddressAutoComplete = () => {
     document.querySelector('#add-address-autocomplete-section').innerHTML = '';
+  };
+
+  const clearddAddressAutoCompleteManual = () => {
+    document.querySelector('#add-address-autocomplete-manual-section').innerHTML = '';
   };
 
   const setupDeliver = () => {
@@ -339,13 +352,15 @@ const DeliverController = (() => {
         // Clear form fields
         clearEditAddress();
         clearAddAddressAutoComplete();
+        clearddAddressAutoCompleteManual();
 
         if (data.view === 'address-form' || data.view === 'address-edit') {
+          // TODO these types are forms are no longer gonna exist
           preparePhoneField('#bash--input-receiverPhone');
           if (data.content) {
             try {
               const address = JSON.parse(decodeURIComponent($(`#${data.content}`).data('address')));
-              populateAddressForm(address);
+              populateAddressForm(address); // TODO  this function is no longer gonna exist
             } catch (e) {
               console.warn('Could not parse address Json', data.content);
             }
@@ -356,6 +371,9 @@ const DeliverController = (() => {
         }
         if (data.view === 'add-address-autocomplete') {
           RenderAddAddressAutoComplete(data.content);
+        }
+        if (data.view === 'add-address-autocomplete-manual') {
+          RenderAddAddressAutoCompleteManual(data.content);
         }
         break;
       case 'FB_LOG':
