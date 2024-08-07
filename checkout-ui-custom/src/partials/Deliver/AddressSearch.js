@@ -10,7 +10,6 @@ const AddressSearch = () => {
     name: 'address-search',
     placeholder: 'Start typing an address...',
     autoComplete: 'off',
-
   });
 
   return `
@@ -20,7 +19,7 @@ const AddressSearch = () => {
       <span class="icon"></span>
       <div class="notification-content">
       We could not find your address. 
-        <a class="no-results-drop-down" href="" data-view="address-form" id="no-address-search-results">
+        <a class="no-results-drop-down" href="" data-view="manual-address" id="no-address-search-results">
           Please click here to enter it manually.
         </a>
     </div>

@@ -1,5 +1,6 @@
 // @ts-nocheck
 /* eslint-disable func-names */
+import AddAddressManual from '../partials/Deliver/AddAddressManualForm';
 import DeliverContainer from '../partials/Deliver/DeliverContainer';
 import EditAddressForm, {
   EDIT_FORM_RECEIVER_PHONE_ID,
@@ -63,8 +64,16 @@ const DeliverController = (() => {
     preparePhoneField(`#${EDIT_FORM_RECEIVER_PHONE_ID}`);
   };
 
+  const RenderAddAddressManual = async () => {
+    document.querySelector('#manual-address-section').innerHTML = AddAddressManual();
+  };
+
   const clearEditAddress = () => {
     document.querySelector('#edit-adress-section').innerHTML = '';
+  };
+
+  const clearManualAddress = () => {
+    document.querySelector('#manual-address-section').innerHTML = '';
   };
 
   const setupDeliver = () => {
@@ -321,6 +330,7 @@ const DeliverController = (() => {
       case 'setDeliveryView':
         document.querySelector('.bash--delivery-container')?.setAttribute('data-view', data.view);
         clearEditAddress();
+        clearManualAddress();
         if (data.view === 'address-form' || data.view === 'address-edit') {
           preparePhoneField('#bash--input-receiverPhone');
           if (data.content) {
@@ -334,6 +344,10 @@ const DeliverController = (() => {
         }
         if (data.view === 'edit-address') {
           RenderEditAddress(data.content);
+        }
+
+        if (data.view === 'manual-address') {
+          RenderAddAddressManual();
         }
         break;
       case 'FB_LOG':
