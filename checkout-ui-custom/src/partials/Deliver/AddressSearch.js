@@ -150,15 +150,14 @@ const initGoogleAutocomplete = () => {
  * @returns {string} - html string
  */
 const AddressNotFoundNotification = () => /* html */ `
-  <div id="no-address-search-results-notification" class="notification info" >
-    <span class="icon"></span>
-    <div class="notification-content">
+    <div id="no-address-search-results-notification" class="notification info" >
+      <span class="icon"></span>
+      <div class="notification-content">
       We could not find your address. 
-      <a class="no-results-drop-down" href="" data-view="address-form" id="no-address-search-results">
-        Please click here to enter it manually.
-      </a>
+        <a class="no-results-drop-down" href="" data-view="manual-address" id="no-address-search-results">
+          Please click here to enter it manually.
+        </a>
     </div>
-  </div>
 `;
 
 /**
@@ -180,7 +179,6 @@ const AddressSearch = () => {
     <div class="address-search-field-container" id="address-search-field-container">
       ${searchField}
       ${AddressNotFoundNotification()}
-    </div>
   `;
 };
 

@@ -5,6 +5,7 @@ import AddAddressAutoCompleteForm, {
   submitAddAddressAutoCompleteForm,
 } from '../partials/Deliver/AddAddressAutoCompleteForm';
 import AddAddressAutoCompleteManualForm from '../partials/Deliver/AddAddressAutoCompleteManualForm';
+import AddAddressManual, { submitAddAddressManualForm } from '../partials/Deliver/AddAddressManualForm';
 import DeliverContainer from '../partials/Deliver/DeliverContainer';
 
 import EditAddressForm, {
@@ -82,6 +83,10 @@ const DeliverController = (() => {
     // TODO: preparePhoneField(`#${ADD_ADDRESS_AUTOCOMPLETE_FORM_RECEIVER_PHONE_ID}`);
   };
 
+  const RenderAddAddressManual = async () => {
+    document.querySelector('#manual-address-section').innerHTML = AddAddressManual();
+  };
+
   const clearEditAddress = () => {
     document.querySelector('#edit-adress-section').innerHTML = '';
   };
@@ -92,6 +97,10 @@ const DeliverController = (() => {
 
   const clearddAddressAutoCompleteManual = () => {
     document.querySelector('#add-address-autocomplete-manual-section').innerHTML = '';
+  };
+
+  const clearManualAddress = () => {
+    document.querySelector('#manual-address-section').innerHTML = '';
   };
 
   const setupDeliver = () => {
@@ -310,6 +319,7 @@ const DeliverController = (() => {
 
   // submit address form listeners
   $(document).on('submit', '#bash--address-form', submitAddressForm);
+  $(document).on('submit', '#bash--add-address-manual-form', submitAddAddressManualForm);
   $(document).on('submit', '#bash--delivery-form', submitDeliveryForm);
   $(document).on('submit', '#bash--edit-address-form', submitEditAddressForm);
   $(document).on('submit', '#bash--add-address-autocomplete-form', submitAddAddressAutoCompleteForm);
@@ -353,6 +363,7 @@ const DeliverController = (() => {
         clearEditAddress();
         clearAddAddressAutoComplete();
         clearddAddressAutoCompleteManual();
+        clearManualAddress();
 
         if (data.view === 'address-form' || data.view === 'address-edit') {
           // TODO these types are forms are no longer gonna exist
@@ -374,6 +385,9 @@ const DeliverController = (() => {
         }
         if (data.view === 'add-address-autocomplete-manual') {
           RenderAddAddressAutoCompleteManual(data.content);
+        }
+        if (data.view === 'manual-address') {
+          RenderAddAddressManual();
         }
         break;
       case 'FB_LOG':

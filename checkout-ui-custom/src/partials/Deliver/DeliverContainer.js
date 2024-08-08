@@ -43,6 +43,11 @@ const DeliverContainer = ({ hasFurn, hasFurnOnly, hasFurnMixed }) => /* html */ 
     </section>
    </form>
    ${AddressSearchSection()}
+    <section 
+      id="manual-address-section"
+      class="bash--delivery-view" 
+      data-section="manual-address">
+    </section>
 
     <section 
       id="edit-adress-section" 
