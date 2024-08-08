@@ -3,7 +3,7 @@ const AddAddressAutoCompleteManualForm = (address) => {
   console.log('address', address);
   return /* html */ `
     <div>
-      <p>Placeholder</p>
+      <p>${JSON.stringify(address)}</p>
     </div>
   `;
 };

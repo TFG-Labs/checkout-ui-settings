@@ -1,5 +1,4 @@
 import FormField from './Elements/FormField';
-import { provinceShortCode } from './utils';
 
 /**
  * isCompleteGoogleAddress - checks if the address meets the criteria to show the add address auto complete form
@@ -75,6 +74,7 @@ const mapGoogleAddress = (place) => {
   return { address: res, isComplete: isCompleteGoogleAddress(subValues) };
 };
 
+// TODO: delete this function at some point
 /**
  * populateAddressFromSearch - fills form fields based on the address returned from google auto complete
  * @param {Object} address
@@ -83,25 +83,25 @@ const mapGoogleAddress = (place) => {
 const populateAddressFromSearch = (address) => {
   const { street, neighborhood, postalCode, state, city, lat, lng } = address;
 
-  // Clear any populated fields
-  document.getElementById('bash--address-form')?.reset();
+  // NO ADDRESS ID
+  // NO ADDRESS NAME
 
-  // Clear hidden ID fields to prevent overwriting existing.
-  document.getElementById('bash--input-addressId').value = '';
-  document.getElementById('bash--input-addressName').value = '';
+  // THERE  MUST BE A STREET NUMBER  - IT IS EDITABLE
 
-  document.getElementById('bash--input-number').value = '  ';
-  document.getElementById('bash--input-street').value = street ?? '';
-  document.getElementById('bash--input-neighborhood').value = neighborhood ?? '';
-  document.getElementById('bash--input-city').value = city ?? '';
-  document.getElementById('bash--input-postalCode').value = postalCode ?? '';
-  document.getElementById('bash--input-state').value = provinceShortCode(state);
-  document.getElementById('bash--input-lat').value = lat || '';
-  document.getElementById('bash--input-lng').value = lng || '';
-
-  // Update previously invalid fields.
-  $(':invalid').trigger('change');
+  // WHAT WE HAVE
+  // - Street Number: streetNumber  -> todo we gonna have to pull it out seperately from street;
+  //  neighbourhood
+  // city
+  // postalCode  -> provinceShortCode(state)
+  // lat
+  // lng
 };
+
+// // TODO populateAddressFromSearch needs to change
+// populateAddressFromSearch({
+//   ...address,
+//   street: `${address?.streetNumber ?? ''} ${address?.route ?? ''}`.trim(), // this will likely split into two values when we split out the form
+// });
 
 /**
  * checkForAddressResults - checks if there are any address results to display a notification
@@ -137,18 +137,9 @@ const initGoogleAutocomplete = () => {
     const place = autocomplete.getPlace();
     const { address, isComplete } = mapGoogleAddress(place);
 
-    // Route to the correct view
-    if (isComplete) {
-      window.postMessage({ action: 'setDeliveryView', view: 'add-address-autocomplete', content: address });
-      input.value = '';
-    } else {
-      // TODO populateAddressFromSearch needs to change
-      populateAddressFromSearch({
-        ...address,
-        street: `${address?.streetNumber ?? ''} ${address?.route ?? ''}`.trim(), // this will likely split into two values when we split out the form
-      });
-      window.postMessage({ action: 'setDeliveryView', view: 'add-address-autocomplete-manual' });
-    }
+    const view = isComplete ? 'add-address-autocomplete' : 'add-address-autocomplete-manual';
+    window.postMessage({ action: 'setDeliveryView', view, content: address });
+    input.value = '';
   });
   input.value = '';
   input?.addEventListener('keyup', checkForAddressResults);
