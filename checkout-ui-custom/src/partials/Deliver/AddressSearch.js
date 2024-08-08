@@ -179,6 +179,7 @@ const AddressSearch = () => {
     <div class="address-search-field-container" id="address-search-field-container">
       ${searchField}
       ${AddressNotFoundNotification()}
+    </div>
   `;
 };
 
