@@ -8,7 +8,13 @@ import { getBestRecipient } from './utils';
 
 export const ADD_ADDRESS_FORM_MANUAL_RECIEVER_PHONE_ID = 'bash--input-add-address-manual-form-receiverPhone';
 
-const AddAddressManualForm = () => {
+/**
+ *
+ * @param {Object} config - form configuration.
+ * @param {Object} [config.address] - address object to initialize form with, optional, but must be present if type = add-address-autocomplete-manual
+ * @param {string} config.type - type of address form to render "add-address-manual" | "add-address-autocomplete-manual"
+ */
+const AddAddressManualForm = (config) => {
   const fields = [
     {
       name: 'addressId',
@@ -155,6 +161,7 @@ const AddAddressManualForm = () => {
     <form id="bash--add-address-manual-form" method="post">
       ${fields.map((field) => FormField(field)).join('')}
       ${SubmitButton('Save address')}
+      <p>config ${JSON.stringify(config)}</p>
     </form>
   `;
 };

@@ -4,8 +4,7 @@ import AddAddressAutoCompleteForm, {
   ADD_ADDRESS_AUTOCOMPLETE_FORM_RECEIVER_PHONE_ID,
   submitAddAddressAutoCompleteForm,
 } from '../partials/Deliver/AddAddressAutoCompleteForm';
-import AddAddressAutoCompleteManualForm from '../partials/Deliver/AddAddressAutoCompleteManualForm';
-import AddAddressManual, {
+import AddAddressManualForm, {
   ADD_ADDRESS_FORM_MANUAL_RECIEVER_PHONE_ID,
   submitAddAddressManualForm,
 } from '../partials/Deliver/AddAddressManualForm';
@@ -78,14 +77,10 @@ const DeliverController = (() => {
     preparePhoneField(`#${ADD_ADDRESS_AUTOCOMPLETE_FORM_RECEIVER_PHONE_ID}`);
   };
 
-  const RenderAddAddressAutoCompleteManual = async (address) => {
-    document.querySelector('#add-address-autocomplete-manual-section').innerHTML =
-      AddAddressAutoCompleteManualForm(address);
-    // TODO: preparePhoneField(`#${ADD_ADDRESS_AUTOCOMPLETE_FORM_RECEIVER_PHONE_ID}`);
-  };
+  const RenderAddAddressManual = async (type, address) => {
+    const mountPoint = type === 'MANUAL' ? '#manual-address-section' : '#add-address-autocomplete-manual-section';
 
-  const RenderAddAddressManual = async () => {
-    document.querySelector('#manual-address-section').innerHTML = AddAddressManual();
+    document.querySelector(mountPoint).innerHTML = AddAddressManualForm({ type, address });
     preparePhoneField(`#${ADD_ADDRESS_FORM_MANUAL_RECIEVER_PHONE_ID}`);
   };
 
@@ -363,8 +358,8 @@ const DeliverController = (() => {
         // Clear form fields
         clearEditAddress();
         clearAddAddressAutoComplete();
-        clearddAddressAutoCompleteManual();
         clearManualAddress();
+        clearddAddressAutoCompleteManual();
 
         if (data.view === 'address-form' || data.view === 'address-edit') {
           // TODO these types are forms are no longer gonna exist
@@ -385,10 +380,10 @@ const DeliverController = (() => {
           RenderAddAddressAutoComplete(data.content);
         }
         if (data.view === 'add-address-autocomplete-manual') {
-          RenderAddAddressAutoCompleteManual(data.content);
+          RenderAddAddressManual('AUTO_COMPLETE_MANUAL_FAILOVER', data.content);
         }
         if (data.view === 'manual-address') {
-          RenderAddAddressManual();
+          RenderAddAddressManual('MANUAL');
         }
         break;
       case 'FB_LOG':
