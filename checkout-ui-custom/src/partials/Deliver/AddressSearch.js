@@ -74,35 +74,6 @@ const mapGoogleAddress = (place) => {
   return { address: res, isComplete: isCompleteGoogleAddress(subValues) };
 };
 
-// TODO: delete this function at some point
-/**
- * populateAddressFromSearch - fills form fields based on the address returned from google auto complete
- * @param {Object} address
- * @returns {void}
- */
-const populateAddressFromSearch = (address) => {
-  const { street, neighborhood, postalCode, state, city, lat, lng } = address;
-
-  // NO ADDRESS ID
-  // NO ADDRESS NAME
-
-  // THERE  MUST BE A STREET NUMBER  - IT IS EDITABLE
-
-  // WHAT WE HAVE
-  // - Street Number: streetNumber  -> todo we gonna have to pull it out seperately from street;
-  //  neighbourhood
-  // city
-  // postalCode  -> provinceShortCode(state)
-  // lat
-  // lng
-};
-
-// // TODO populateAddressFromSearch needs to change
-// populateAddressFromSearch({
-//   ...address,
-//   street: `${address?.streetNumber ?? ''} ${address?.route ?? ''}`.trim(), // this will likely split into two values when we split out the form
-// });
-
 /**
  * checkForAddressResults - checks if there are any address results to display a notification
  * @param {*} event

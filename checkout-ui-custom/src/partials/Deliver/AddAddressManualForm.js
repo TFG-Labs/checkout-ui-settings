@@ -12,16 +12,18 @@ export const ADD_ADDRESS_FORM_MANUAL_RECIEVER_PHONE_ID = 'bash--input-add-addres
  *
  * @param {Object} config - form configuration.
  * @param {Object} [config.address] - address object to initialize form with, optional, but must be present if type = add-address-autocomplete-manual
- * @param {string} config.type - type of address form to render "add-address-manual" | "add-address-autocomplete-manual"
+ * @param {string} config.type - type of address form to render "MANUAL" | "AUTOCOMPLETE_MANUAL"
  */
-const AddAddressManualForm = (config) => {
+const populateFields = (config) => {
   const fields = [
+    // TODO: you probably need a hidden field for the type of the address
     {
       name: 'addressId',
       type: 'hidden',
       value: '',
       required: false,
     },
+
     {
       name: 'addressName',
       type: 'hidden',
@@ -29,18 +31,30 @@ const AddAddressManualForm = (config) => {
       required: false,
       maxLength: 50,
     },
+
+    // TODO conditional value
     {
       name: 'lat',
       required: false,
       type: 'hidden',
       value: '',
     },
+
+    // TODO: conditional value
     {
       name: 'lng',
       required: false,
       type: 'hidden',
       value: '',
     },
+    {
+      type: 'hidden',
+      required: true,
+      name: 'country',
+      value: 'ZAF',
+    },
+
+    // VISIBLE FIELDS
     {
       name: 'addressType',
       label: 'Address type',
@@ -65,12 +79,15 @@ const AddAddressManualForm = (config) => {
       value: '',
       maxLength: 100,
     },
+
+    // TODO - conditional value and split
     {
       name: 'street',
       label: 'Street address',
       required: true,
       value: '',
     },
+    // TODO - conditional value
     {
       name: 'neighborhood',
       label: 'Suburb',
@@ -78,6 +95,8 @@ const AddAddressManualForm = (config) => {
       maxLength: 750,
       required: true,
     },
+
+    // TODO - conditional value
     {
       name: 'city',
       label: 'City',
@@ -85,6 +104,7 @@ const AddAddressManualForm = (config) => {
       value: '',
       maxLength: 750,
     },
+    // TODO - conditional value
     {
       name: 'postalCode',
       label: 'Postal code',
@@ -94,12 +114,15 @@ const AddAddressManualForm = (config) => {
       maxLength: 4,
       required: true,
     },
+    // TODO - conditional value
     {
       type: 'note',
       required: false,
       name: 'suburb-postal-reminder',
       value: 'Make sure to specify the correct Suburb and Postal code so we can easily find your address.',
     },
+
+    // TODO - conditional value
     {
       name: 'state',
       label: 'Province',
@@ -119,29 +142,10 @@ const AddAddressManualForm = (config) => {
       ],
     },
     {
-      type: 'note',
-      required: false,
-      name: 'country-display',
-      label: 'Country',
-      value: 'South Africa',
-    },
-    {
-      type: 'hidden',
-      required: true,
-      name: 'country',
-      value: 'ZAF',
-    },
-    {
       name: 'receiverName',
       label: "Recipient's name",
       required: true,
       value: getBestRecipient({ type: 'delivery' }),
-    },
-    {
-      name: 'complement',
-      required: false,
-      type: 'hidden',
-      value: '',
     },
     {
       name: 'receiverPhone',
@@ -156,12 +160,24 @@ const AddAddressManualForm = (config) => {
     },
   ];
 
+  return fields;
+};
+
+/**
+ *
+ * @param {Object} config - form configuration.
+ * @param {Object} [config.address] - address object to initialize form with, optional, but must be present if type = add-address-autocomplete-manual
+ * @param {string} config.type - type of address form to render "MANUAL" | "AUTOCOMPLETE_MANUAL"
+ */
+const AddAddressManualForm = (config) => {
+  const fields = populateFields(config);
+
   return /* html */ `
     ${AddressSectionHeading('Add a new delivery address', 'select-address')}
     <form id="bash--add-address-manual-form" method="post">
       ${fields.map((field) => FormField(field)).join('')}
       ${SubmitButton('Save address')}
-      <p>config ${JSON.stringify(config)}</p>
+      <p>configss ${JSON.stringify(config)}</p>
     </form>
   `;
 };

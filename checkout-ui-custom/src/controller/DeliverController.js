@@ -380,7 +380,7 @@ const DeliverController = (() => {
           RenderAddAddressAutoComplete(data.content);
         }
         if (data.view === 'add-address-autocomplete-manual') {
-          RenderAddAddressManual('AUTO_COMPLETE_MANUAL_FAILOVER', data.content);
+          RenderAddAddressManual('AUTOCOMPLETE_MANUAL', data.content);
         }
         if (data.view === 'manual-address') {
           RenderAddAddressManual('MANUAL');
