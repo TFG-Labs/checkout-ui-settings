@@ -3,25 +3,10 @@ import { formatPhoneNumber } from '../../utils/phoneFields';
 import { addOrUpdateAddress } from '../../utils/services';
 import setAddress from '../../utils/setAddress';
 import FormField from './Elements/FormField';
+import { AddressSectionHeading, SubmitButton } from './FormComponents';
 import { getBestRecipient } from './utils';
 
 export const ADD_ADDRESS_FORM_MANUAL_RECIEVER_PHONE_ID = 'bash--input-add-address-manual-form-receiverPhone';
-
-const Heading = () => /* html */ `
-    <div class="bash--heading">
-      <h3>Add a new delivery address</h3>
-      <a href="#" class="back-button--select" data-view="select-address">&lt; Back</a>
-    </div>
-`;
-
-const SaveButton = () => /* html */ `
-  <button
-    class="submit btn-go-to-payment btn btn-large btn-success"
-    id="btn-save-address"
-    type="submit">
-    Save Address
-  </button>
-`;
 
 const AddAddressManualForm = () => {
   const fields = [
@@ -142,7 +127,7 @@ const AddAddressManualForm = () => {
     },
     {
       name: 'receiverName',
-      label: `Recipient's name`,
+      label: "Recipient's name",
       required: true,
       value: getBestRecipient({ type: 'delivery' }),
     },
@@ -154,7 +139,7 @@ const AddAddressManualForm = () => {
     },
     {
       name: 'receiverPhone',
-      label: `Recipient's mobile number`,
+      label: "Recipient's mobile number",
       required: true,
       type: 'tel',
       helperText: 'We send shipping updates to this number.',
@@ -166,10 +151,10 @@ const AddAddressManualForm = () => {
   ];
 
   return /* html */ `
-    ${Heading()}
+    ${AddressSectionHeading('Add a new delivery address', 'select-address')}
     <form id="bash--add-address-manual-form" method="post">
       ${fields.map((field) => FormField(field)).join('')}
-      ${SaveButton()}
+      ${SubmitButton('Save address')}
     </form>
   `;
 };
@@ -186,7 +171,7 @@ export const submitAddAddressManualForm = async (event) => {
     payload[key] = value.trim();
   }
 
-  let receiverPhone = payload.receiverPhone;
+  let { receiverPhone } = payload;
   receiverPhone = formatPhoneNumber(receiverPhone, 'ZA').trim();
 
   // VALIDATE FIELDS

@@ -3,18 +3,9 @@ import { formatPhoneNumber } from '../../utils/phoneFields';
 import { addOrUpdateAddress, getAddressByName } from '../../utils/services';
 import setAddress from '../../utils/setAddress';
 import FormField from './Elements/FormField';
-import { AddressSectionHeading, ContactCard } from './FormComponents';
+import { AddressSectionHeading, ContactCard, SubmitButton } from './FormComponents';
 
 export const EDIT_FORM_RECEIVER_PHONE_ID = 'bash--input-edit-adress-form-receiverPhone';
-
-const SaveButton = () => /* html */ `
-  <button
-    class="submit btn-go-to-payment btn btn-large btn-success"
-    id="btn-save-address"
-    type="submit">
-    Save
-  </button>
-`;
 
 const DeleteButton = () => /* html */ `
   <button
@@ -30,7 +21,7 @@ const ButtonContainer = () => /* html */ `
     id="address-button-container"
   >
     ${DeleteButton()}
-    ${SaveButton()}
+    ${SubmitButton('Save')}
   </div>
 `;
 
