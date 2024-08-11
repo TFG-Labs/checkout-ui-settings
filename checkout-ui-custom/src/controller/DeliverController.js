@@ -245,12 +245,6 @@ const DeliverController = (() => {
     window.postMessage({ action: 'setDeliveryView', view: viewTarget, content });
   });
 
-  // Clear form on adding new address
-  $(document).on('click', '#no-address-search-results', () => {
-    document.getElementById('bash--address-form').reset();
-    document.getElementById('bash--input-street').focus();
-  });
-
   // Select address
   $(document).on('change', 'input[type="radio"][name="selected-address"]', function () {
     const address = parseAttribute($(this).parents('.bash--address-listing').data('address'));
@@ -361,18 +355,6 @@ const DeliverController = (() => {
         clearManualAddress();
         clearddAddressAutoCompleteManual();
 
-        if (data.view === 'address-form' || data.view === 'address-edit') {
-          // TODO these types are forms are no longer gonna exist
-          preparePhoneField('#bash--input-receiverPhone');
-          if (data.content) {
-            try {
-              const address = JSON.parse(decodeURIComponent($(`#${data.content}`).data('address')));
-              populateAddressForm(address); // TODO  this function is no longer gonna exist
-            } catch (e) {
-              console.warn('Could not parse address Json', data.content);
-            }
-          }
-        }
         if (data.view === 'edit-address') {
           RenderEditAddress(data.content);
         }

@@ -1,6 +1,5 @@
 import { FURNITURE_FEE_LINK } from '../../utils/const';
 import Addresses from './Addresses';
-import AddressForm from './AddressForm';
 import AddressSearchSection from './AddressSearchSection';
 import { DeliveryErrorContainer } from './DeliveryError';
 import DeliveryOptions from './DeliveryOptions';
@@ -65,15 +64,6 @@ const DeliverContainer = ({ hasFurn, hasFurnOnly, hasFurnMixed }) => /* html */ 
       id="add-address-autocomplete-manual-section" 
       class="bash--delivery-view" 
       data-section="add-address-autocomplete-manual">
-    </section>
-   
-    <section class="bash--delivery-view" data-section="address-form">
-       <div class="bash--heading">
-        <h3>Delivery address</h3>
-        <a href="#" class="back-button--search" data-view="address-search">&lt; Back</a>
-        <a href="#" class="back-button--select" data-view="select-address">&lt; Back</a>
-      </div>
-      ${AddressForm()}
     </section>
   </div>`;
 
