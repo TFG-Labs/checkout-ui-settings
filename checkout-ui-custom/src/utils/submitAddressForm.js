@@ -1,103 +1,9 @@
 // @ts-nocheck
-import { requiredAddressFields } from '../partials/Deliver/constants';
-import { addressIsValid, showAlertBox } from '../partials/Deliver/utils';
-import usePhoneNumberFormatting from './phoneNumberFormat';
-import { addOrUpdateAddress, getAddressByName } from './services';
-import setAddress from './setAddress';
 
-const { formatPhoneNumber } = usePhoneNumberFormatting();
+import { showAlertBox } from '../partials/Deliver/utils';
 
+// TODO: what do we do with this extra fields
 const submitAddressForm = async (event) => {
-  event.preventDefault();
-
-  // Prevent false positive for invalid selects.
-  $('select').change();
-
-  const form = document.forms['bash--address-form'];
-  const addressName = $('#bash--input-addressName').val();
-  const storedAddress = await getAddressByName(addressName);
-
-  const fields = [
-    'addressId',
-    'addressName',
-    'addressType',
-    'receiverName',
-    'receiverPhone',
-    'postalCode',
-    'city',
-    'state',
-    'country',
-    'businessName',
-    'street',
-    'neighborhood',
-    'complement',
-    'companyBuilding',
-    'lat',
-    'lng',
-  ];
-
-  const address = {
-    isDisposable: false,
-    reference: null,
-    geoCoordinates: [],
-    country: 'ZAF',
-    ...storedAddress,
-    number: '', // stop using number field (combined with street).
-    complement: '', // stop using complement field (ifo receiverPhone).
-  };
-
-  for (let f = 0; f < fields.length; f++) {
-    address[fields[f]] = form[fields[f]]?.value || null;
-  }
-
-  address.addressName = address.addressName || address.addressId;
-  address.addressId = address.addressId || address.addressName;
-
-  const geoCoords = [parseFloat(address.lng) || '', parseFloat(address.lat) || ''];
-  address.geoCoordinate = geoCoords; // for MasterData
-  address.geoCoordinates = geoCoords; // for shippingData
-
-  address.receiverPhone = formatPhoneNumber(address.receiverPhone, 'ZA').trim();
-
-  const shippingAddress = address;
-
-  const { isValid, invalidFields } = addressIsValid(address, false);
-
-  if (!isValid) {
-    console.error({ invalidFields });
-    $('#bash--address-form').addClass('show-form-errors');
-    $(`#bash--input-${invalidFields[0]}`).focus();
-    if (requiredAddressFields.includes(invalidFields[0])) {
-      window.postMessage({
-        action: 'setDeliveryView',
-        view: 'address-form', //TODO surely this will change, and  this might become redundant
-      });
-    }
-
-    window.postMessage(
-      {
-        type: 'ADDRESS_VALIDATION_ERROR',
-        message: 'Address validation error. See invalidFields.',
-        invalidFields,
-      },
-      '*'
-    );
-
-    return;
-  }
-
-  // Apply the selected address to customers orderForm.
-  const setAddressResponse = await setAddress(shippingAddress, { validateExtraFields: false });
-  const { success } = setAddressResponse;
-  if (!success) {
-    console.error('Set address error', { setAddressResponse });
-    return;
-  }
-
-  await addOrUpdateAddress(address);
-
-  window.postMessage({ action: 'setDeliveryView', view: 'select-address' });
-
   // Scroll up //TODO: this is very useful: we might need ot for address saved
   setTimeout(() => {
     if ($('.bash--extra-fields').length > 0) {
@@ -110,3 +16,21 @@ const submitAddressForm = async (event) => {
 };
 
 export default submitAddressForm;
+
+// TODO how to use isDisposable
+// TODO take care of complement
+// take care of lat, lng field
+
+// TODO: const geoCoords = [parseFloat(address.lng) || '', parseFloat(address.lat) || ''];
+// TODO:  address.geoCoordinate = geoCoords; // for MasterData
+// TOOD: address.geoCoordinates = geoCoords; // for shippingData
+
+// const address = {
+//   isDisposable: false,
+//   reference: null,
+//   geoCoordinates: [],
+//   country: 'ZAF',
+//   ...storedAddress,
+//   number: '', // stop using number field (combined with street).
+//   complement: '', // stop using complement field (ifo receiverPhone).
+// };

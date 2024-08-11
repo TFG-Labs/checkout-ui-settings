@@ -41,7 +41,6 @@ import { preparePhoneField } from '../utils/phoneFields';
 import sendEvent from '../utils/sendEvent';
 import { clearAddresses, getAddressByName, removeFromCart } from '../utils/services';
 import setAddress from '../utils/setAddress';
-import submitAddressForm from '../utils/submitAddressForm';
 import submitDeliveryForm from '../utils/submitDeliveryForm';
 
 const DeliverController = (() => {
@@ -321,7 +320,6 @@ const DeliverController = (() => {
   });
 
   // submit address form listeners
-  $(document).on('submit', '#bash--address-form', submitAddressForm);
   $(document).on('submit', '#bash--add-address-manual-form', submitAddAddressManualForm);
   $(document).on('submit', '#bash--delivery-form', submitDeliveryForm);
   $(document).on('submit', '#bash--edit-address-form', submitEditAddressForm);
