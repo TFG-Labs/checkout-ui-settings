@@ -85,6 +85,7 @@ const DeliverController = (() => {
 
   const RenderAddAddressManual = async () => {
     document.querySelector('#manual-address-section').innerHTML = AddAddressManual();
+    preparePhoneField(`#${ADD_ADDRESS_FORM_MANUAL_RECIEVER_PHONE_ID}`);
   };
 
   const clearEditAddress = () => {

@@ -5,7 +5,7 @@ import setAddress from '../../utils/setAddress';
 import FormField from './Elements/FormField';
 import { getBestRecipient } from './utils';
 
-export const ADD_FORM_RECEIVER_PHONE_ID = 'bash--input-add-address-form-receiverPhone';
+export const ADD_ADDRESS_FORM_MANUAL_RECIEVER_PHONE_ID = 'bash--input-add-address-manual-form-receiverPhone';
 
 const Heading = () => /* html */ `
     <div class="bash--heading">
@@ -51,19 +51,6 @@ const AddAddressManualForm = () => {
       value: '',
     },
     {
-      name: 'number',
-      label: 'Street Number',
-      required: true,
-      value: '',
-      type: 'text',
-    },
-    {
-      name: 'street',
-      label: 'Street address',
-      required: true,
-      value: '',
-    },
-    {
       name: 'addressType',
       label: 'Address type',
       required: true,
@@ -86,6 +73,12 @@ const AddAddressManualForm = () => {
       required: false,
       value: '',
       maxLength: 100,
+    },
+    {
+      name: 'street',
+      label: 'Street address',
+      required: true,
+      value: '',
     },
     {
       name: 'neighborhood',
@@ -168,7 +161,7 @@ const AddAddressManualForm = () => {
       minlength: 9,
       error: 'Please enter a valid phone number',
       containerClasses: 'custom-field-complement',
-      idOverride: ADD_FORM_RECEIVER_PHONE_ID,
+      idOverride: ADD_ADDRESS_FORM_MANUAL_RECIEVER_PHONE_ID,
     },
   ];
 
@@ -198,7 +191,6 @@ export const submitAddAddressManualForm = async (event) => {
 
   // VALIDATE FIELDS
   const invalidFields = [];
-  if (!payload.number) invalidFields.push('number');
   if (!payload.street) invalidFields.push('street');
   if (payload.addressType === 'business' && !payload.businessName) invalidFields.push('businessName');
   if (!payload.neighborhood) invalidFields.push('neighborhood');
@@ -208,7 +200,7 @@ export const submitAddAddressManualForm = async (event) => {
   if (!payload.receiverName) invalidFields.push('receiverName');
   if (!receiverPhone || !isValidNumber(receiverPhone, 'ZA')) {
     invalidFields.push('receiverPhone');
-    $(`#${ADD_FORM_RECEIVER_PHONE_ID}`).addClass('invalid');
+    $(`#${ADD_ADDRESS_FORM_MANUAL_RECIEVER_PHONE_ID}`).addClass('invalid');
   }
 
   // APPLY VALIDATION UI
