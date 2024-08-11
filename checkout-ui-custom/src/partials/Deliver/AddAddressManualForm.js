@@ -4,7 +4,7 @@ import { addOrUpdateAddress } from '../../utils/services';
 import setAddress from '../../utils/setAddress';
 import FormField from './Elements/FormField';
 import { AddressSectionHeading, SubmitButton } from './FormComponents';
-import { getBestRecipient } from './utils';
+import { getBestRecipient, provinceShortCode } from './utils';
 
 export const ADD_ADDRESS_FORM_MANUAL_RECIEVER_PHONE_ID = 'bash--input-add-address-manual-form-receiverPhone';
 
@@ -15,15 +15,29 @@ export const ADD_ADDRESS_FORM_MANUAL_RECIEVER_PHONE_ID = 'bash--input-add-addres
  * @param {string} config.type - type of address form to render "MANUAL" | "AUTOCOMPLETE_MANUAL"
  */
 const populateFields = (config) => {
+  const { type, address } = config;
+  const lng = type === ('AUTOCOMPLETE_MANUAL' && address?.lng) ? address.lat : '';
+  const lat = type === ('AUTOCOMPLETE_MANUAL' && address?.lat) ? address.lat : '';
+  const street = type === 'AUTOCOMPLETE_MANUAL' ? `${address?.streetNumber ?? ''} ${address?.route ?? ''}`.trim() : '';
+  const neighborhood = type === 'AUTOCOMPLETE_MANUAL' && address?.neighborhood ? address?.neighborhood : '';
+  const city = type === 'AUTOCOMPLETE_MANUAL' && address?.city ? address.city : '';
+  const postalCode = type === 'AUTOCOMPLETE_MANUAL' && address?.postalCode ? address.postalCode : '';
+  const state = type === 'AUTOCOMPLETE_MANUAL' && address?.state ? provinceShortCode(address.state) : ''; // TODO figure outh why state is mis behaving // TODO type
+
   const fields = [
-    // TODO: you probably need a hidden field for the type of the address
+    // HIDDEN FIELDS
+    {
+      name: 'formType',
+      type: 'hidden',
+      value: config.type,
+      required: false,
+    },
     {
       name: 'addressId',
       type: 'hidden',
       value: '',
       required: false,
     },
-
     {
       name: 'addressName',
       type: 'hidden',
@@ -31,21 +45,17 @@ const populateFields = (config) => {
       required: false,
       maxLength: 50,
     },
-
-    // TODO conditional value
     {
       name: 'lat',
       required: false,
       type: 'hidden',
-      value: '',
+      value: lat,
     },
-
-    // TODO: conditional value
     {
       name: 'lng',
       required: false,
       type: 'hidden',
-      value: '',
+      value: lng,
     },
     {
       type: 'hidden',
@@ -53,7 +63,6 @@ const populateFields = (config) => {
       name: 'country',
       value: 'ZAF',
     },
-
     // VISIBLE FIELDS
     {
       name: 'addressType',
@@ -79,55 +88,47 @@ const populateFields = (config) => {
       value: '',
       maxLength: 100,
     },
-
-    // TODO - conditional value and split
     {
       name: 'street',
       label: 'Street address',
       required: true,
-      value: '',
+      value: street,
     },
-    // TODO - conditional value
     {
       name: 'neighborhood',
       label: 'Suburb',
-      value: '',
+      value: neighborhood,
       maxLength: 750,
       required: true,
     },
-
-    // TODO - conditional value
     {
       name: 'city',
       label: 'City',
       required: true,
-      value: '',
+      value: city,
       maxLength: 750,
     },
-    // TODO - conditional value
     {
       name: 'postalCode',
       label: 'Postal code',
-      value: '',
+      value: postalCode,
       type: 'tel',
       minlength: 4,
       maxLength: 4,
       required: true,
     },
-    // TODO - conditional value
     {
       type: 'note',
       required: false,
       name: 'suburb-postal-reminder',
       value: 'Make sure to specify the correct Suburb and Postal code so we can easily find your address.',
     },
-
-    // TODO - conditional value
     {
       name: 'state',
       label: 'Province',
       type: 'dropdown',
       required: true,
+      value: state,
       options: [
         { value: '', label: 'Select' },
         { value: 'EC', label: 'Eastern Cape' },
