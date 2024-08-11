@@ -5,7 +5,10 @@ import AddAddressAutoCompleteForm, {
   submitAddAddressAutoCompleteForm,
 } from '../partials/Deliver/AddAddressAutoCompleteForm';
 import AddAddressAutoCompleteManualForm from '../partials/Deliver/AddAddressAutoCompleteManualForm';
-import AddAddressManual, { submitAddAddressManualForm } from '../partials/Deliver/AddAddressManualForm';
+import AddAddressManual, {
+  ADD_ADDRESS_FORM_MANUAL_RECIEVER_PHONE_ID,
+  submitAddAddressManualForm,
+} from '../partials/Deliver/AddAddressManualForm';
 import DeliverContainer from '../partials/Deliver/DeliverContainer';
 
 import EditAddressForm, {
@@ -77,7 +80,6 @@ const DeliverController = (() => {
   };
 
   const RenderAddAddressAutoCompleteManual = async (address) => {
-    console.log('yeeeet');
     document.querySelector('#add-address-autocomplete-manual-section').innerHTML =
       AddAddressAutoCompleteManualForm(address);
     // TODO: preparePhoneField(`#${ADD_ADDRESS_AUTOCOMPLETE_FORM_RECEIVER_PHONE_ID}`);
