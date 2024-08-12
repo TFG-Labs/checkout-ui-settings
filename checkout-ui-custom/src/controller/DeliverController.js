@@ -241,6 +241,7 @@ const DeliverController = (() => {
     e.preventDefault();
     const viewTarget = $(this).data('view');
     const content = decodeURIComponent($(this).data('content'));
+    $('#bash-delivery-error-container').html('');
     window.postMessage({ action: 'setDeliveryView', view: viewTarget, content });
   });
 

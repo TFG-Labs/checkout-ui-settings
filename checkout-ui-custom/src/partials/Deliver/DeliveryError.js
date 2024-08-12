@@ -40,7 +40,7 @@ export const NoAddressSelectedError = () => /* html */ `
 export const CouldNotSaveAddressError = () => /* html */ `
    <div id="bash-delivery-error" class="notification error"  >
       <div class="notification-content">
-         <p>Select a delivery address.</p>
+         <p>Address could not be saved.</p>
       </div>
    </div> 
 `;
