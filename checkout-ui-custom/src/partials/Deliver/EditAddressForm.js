@@ -21,7 +21,7 @@ const ButtonContainer = () => /* html */ `
     id="address-button-container"
   >
     ${DeleteButton()}
-    ${SubmitButton('Save')}
+    ${SubmitButton('Save', 'btn-save-address')}
   </div>
 `;
 

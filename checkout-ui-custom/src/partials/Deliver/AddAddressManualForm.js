@@ -177,7 +177,7 @@ const AddAddressManualForm = (config) => {
     ${AddressSectionHeading('Add a new delivery address', 'select-address')}
     <form id="bash--add-address-manual-form" method="post">
       ${fields.map((field) => FormField(field)).join('')}
-      ${SubmitButton('Save address')}
+      ${SubmitButton('Save address', 'btn-save-address')}
       <p>configss ${JSON.stringify(config)}</p>
     </form>
   `;

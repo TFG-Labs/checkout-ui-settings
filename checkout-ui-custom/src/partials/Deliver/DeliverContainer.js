@@ -4,6 +4,7 @@ import AddressSearchSection from './AddressSearchSection';
 import { DeliveryErrorContainer } from './DeliveryError';
 import DeliveryOptions from './DeliveryOptions';
 import { AlertContainer } from './Elements/Alert';
+import { SubmitButton } from './FormComponents';
 import MixedProducts from './MixedProducts';
 import TVorRICAMsg from './TVorRICAMsg';
 
@@ -33,12 +34,7 @@ const DeliverContainer = ({ hasFurn, hasFurnOnly, hasFurnMixed }) => /* html */ 
         ${hasFurnOnly || hasFurnMixed ? FURNITURE_FEE_LINK : ''}
       </div>
       ${DeliveryOptions({ hasFurnOnly, hasFurnitureMixed: hasFurnMixed })}
-      <button 
-        class="submit btn-go-to-payment btn btn-large btn-success"
-        id="btn-save-delivery" 
-        type="submit">
-          Go to payment
-      </button>
+      ${SubmitButton('Go to payment', 'btn-save-delivery')}
     </section>
    </form>
    ${AddressSearchSection()}

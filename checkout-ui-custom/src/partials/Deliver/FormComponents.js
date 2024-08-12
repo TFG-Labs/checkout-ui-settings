@@ -25,10 +25,10 @@ export const ContactCard = (data) => {
  * @returns {string} - HTML for a Submit Button
  * @param {string} title - Title of the Button
  */
-export const SubmitButton = (title) => /* html */ `
+export const SubmitButton = (title, id) => /* html */ `
   <button
     class="submit btn-go-to-payment btn btn-large btn-success"
-    id="btn-save-address"
+    id="${id}"
     type="submit">
       ${title}
   </button>
@@ -44,6 +44,6 @@ export const SubmitButton = (title) => /* html */ `
 export const AddressSectionHeading = (title, backView, anchorId) => /* html */ `
   <div class="bash--heading">
     <h3>${title}</h3>
-    <a href="#" class="back-button--select" data-view="${backView}" id="${anchorId}">&lt; Back</a>
+    <a href="#" class="back-button--select" data-view="${backView}" id="${anchorId}">Back</a>
   </div>
 `;

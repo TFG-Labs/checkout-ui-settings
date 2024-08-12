@@ -116,7 +116,7 @@ const AddAddressAutoCompleteForm = (address) => {
     ${ContactCard({ ...address, street })}
     <form id="bash--add-address-autocomplete-form" method="post">
       ${fields.map((field) => FormField(field)).join('')}
-      ${SubmitButton('Save address')}
+      ${SubmitButton('Save address', 'btn-save-address')}
     </form>
   `;
 };
