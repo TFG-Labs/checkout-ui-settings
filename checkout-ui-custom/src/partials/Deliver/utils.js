@@ -218,7 +218,6 @@ export const showAlertBox = (alertText = 'Address saved') => {
 };
 
 export const postAddressSaveScroll = () => {
-  // Scroll up //TODO: this is very useful: we might need ot for address saved
   setTimeout(() => {
     if ($('.bash--extra-fields').length > 0) {
       document.querySelector('.bash--extra-fields').scrollIntoView({ behavior: 'smooth' });

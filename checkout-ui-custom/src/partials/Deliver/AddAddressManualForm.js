@@ -2,10 +2,10 @@ import { isValidNumber } from 'libphonenumber-js';
 import { formatPhoneNumber } from '../../utils/phoneFields';
 import { addOrUpdateAddress } from '../../utils/services';
 import setAddress from '../../utils/setAddress';
+import { CouldNotSaveAddressError, ShowDeliveryError } from './DeliveryError';
 import FormField from './Elements/FormField';
 import { AddressSectionHeading, SubmitButton } from './FormComponents';
 import { getBestRecipient, postAddressSaveScroll, provinceShortCode } from './utils';
-import { CouldNotSaveAddressError, ShowDeliveryError } from './DeliveryError';
 
 export const ADD_ADDRESS_FORM_MANUAL_RECIEVER_PHONE_ID = 'bash--input-add-address-manual-form-receiverPhone';
 
@@ -24,14 +24,6 @@ const populateFields = (config) => {
   const city = type === 'AUTOCOMPLETE_MANUAL' && address?.city ? address.city : '';
   const postalCode = type === 'AUTOCOMPLETE_MANUAL' && address?.postalCode ? address.postalCode : '';
   const state = type === 'AUTOCOMPLETE_MANUAL' && address?.state ? provinceShortCode(address.state) : ''; // TODO figure outh why state is mis behaving // TODO type
-
-  // TODO how to use isDisposable
-  // TODO take care of complement
-  // take care of lat, lng field
-
-  // TODO: const geoCoords = [parseFloat(address.lng) || '', parseFloat(address.lat) || ''];
-  // TODO:  address.geoCoordinate = geoCoords; // for MasterData
-  // TOOD: address.geoCoordinates = geoCoords; // for shippingData
 
   const fields = [
     // HIDDEN FIELDS
@@ -137,7 +129,6 @@ const populateFields = (config) => {
       label: 'Province',
       type: 'dropdown',
       required: true,
-      value: state,
       options: [
         { value: '', label: 'Select' },
         { value: 'EC', label: 'Eastern Cape' },
@@ -149,7 +140,7 @@ const populateFields = (config) => {
         { value: 'NC', label: 'Northern Cape' },
         { value: 'NW', label: 'North West' },
         { value: 'WC', label: 'Western Cape' },
-      ],
+      ].map((option) => ({ ...option, selected: option.value === state })),
     },
     {
       name: 'receiverName',
@@ -239,6 +230,10 @@ export const submitAddAddressManualForm = async (event) => {
 
   // UPDATE PAYLOAD
   payload.receiverPhone = receiverPhone;
+  payload.isDisposable = false;
+  const geoCoords = [parseFloat(payload.lng) || '', parseFloat(payload.lat) || ''];
+  payload.geoCoordinate = geoCoords; // for MasterData
+  payload.geoCoordinates = geoCoords; // for shippingData
 
   // POST ADDRESS UPDATE AND CHANGE VIEW
   try {

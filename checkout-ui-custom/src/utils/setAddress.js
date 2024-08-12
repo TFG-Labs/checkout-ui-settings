@@ -28,8 +28,6 @@ const setAddress = (address) => {
 
   const { isValid, invalidFields } = addressIsValid(address);
 
-  // TODO: they gonna take you to a address form and populate it, we should not be getting here
-  // TODO  we need to alert on failure, how do we simulate failure
   if (!isValid) {
     console.error({ invalidFields });
     return { success: false, error: 'Invalid address details.' };
