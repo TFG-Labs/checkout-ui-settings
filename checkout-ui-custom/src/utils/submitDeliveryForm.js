@@ -36,7 +36,7 @@ const submitDeliveryForm = async (event) => {
   // Final check to validate that the selected address has no validation errors.
   const { success: didSetAddress } = await setAddress(fullAddress);
   if (!didSetAddress) {
-    console.error('Delivery Form - Address Validation error');
+    console.error('Delivery Form - Address Validation error'); //TO DO some notifcation could not set address
     clearLoaders();
     return;
   }

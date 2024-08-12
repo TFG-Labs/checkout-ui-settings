@@ -1,23 +1,23 @@
-import { requiredAddressFields, requiredTVFields, validAddressTypes } from '../partials/Deliver/constants';
+import { requiredTVFields, validAddressTypes } from '../partials/Deliver/constants';
 import {
   addressIsValid,
-  populateAddressForm,
   populateDeliveryError,
   populateExtraFields,
   populateRicaFields,
-  setDeliveryLoading
+  setDeliveryLoading,
 } from '../partials/Deliver/utils';
 import { AD_TYPE, DELIVER_APP } from './const';
 import { clearLoaders, getSpecialCategories } from './functions';
 import sendEvent from './sendEvent';
 import { sendOrderFormCustomData, updateAddressListing } from './services';
 
-const updateDeliveryData = ({ businessName, receiverPhone }) => sendOrderFormCustomData(DELIVER_APP, {
-  jsonString: JSON.stringify({
-    businessName: businessName || '',
-    receiverPhone: receiverPhone || '',
-  }),
-});
+const updateDeliveryData = ({ businessName, receiverPhone }) =>
+  sendOrderFormCustomData(DELIVER_APP, {
+    jsonString: JSON.stringify({
+      businessName: businessName || '',
+      receiverPhone: receiverPhone || '',
+    }),
+  });
 
 const setAddress = (address) => {
   const { items } = window.vtexjs.checkout.orderForm;
@@ -29,21 +29,9 @@ const setAddress = (address) => {
   const { isValid, invalidFields } = addressIsValid(address);
 
   // TODO: they gonna take you to a address form and populate it, we should not be getting here
-  // TODO  we need to alert
+  // TODO  we need to alert on failure, how do we simulate failure
   if (!isValid) {
     console.error({ invalidFields });
-    populateAddressForm(address);
-    $('#bash--address-form').addClass('show-form-errors');
-    $(`#bash--input-${invalidFields[0]}`).focus();
-
-    if (requiredAddressFields.includes(invalidFields[0])) {
-      // TODO: at this stage valifation should already have been done
-      window.postMessage({
-        action: 'setDeliveryView',
-        view: 'address-edit',
-      });
-    }
-
     return { success: false, error: 'Invalid address details.' };
   }
 
@@ -98,7 +86,7 @@ const setAddress = (address) => {
           eventCategory: 'Checkout_SystemError',
           action: 'OrderFormFailed',
           label: 'Could not update businessName and/or receiverPhone ',
-          description: 'Could not update businessName and/or receiverPhone.'
+          description: 'Could not update businessName and/or receiverPhone.',
         });
       }
 
