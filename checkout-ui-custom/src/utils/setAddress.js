@@ -29,6 +29,7 @@ const setAddress = (address) => {
   const { isValid, invalidFields } = addressIsValid(address);
 
   // TODO: they gonna take you to a address form and populate it, we should not be getting here
+  // TODO  we need to alert
   if (!isValid) {
     console.error({ invalidFields });
     populateAddressForm(address);
@@ -85,11 +86,6 @@ const setAddress = (address) => {
 
       if (errors.length > 0) {
         populateDeliveryError(errors);
-        window.postMessage({
-          action: 'setDeliveryView',
-          view: 'address-form', // TODO: surely this form doesnt exist
-        });
-
         return { success: false, errors };
       }
 
