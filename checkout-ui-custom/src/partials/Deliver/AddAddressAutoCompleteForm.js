@@ -2,6 +2,7 @@ import { isValidNumber } from 'libphonenumber-js';
 import { formatPhoneNumber } from '../../utils/phoneFields';
 import { addOrUpdateAddress } from '../../utils/services';
 import setAddress from '../../utils/setAddress';
+import { CouldNotSaveAddressError, ShowDeliveryError } from './DeliveryError';
 import FormField from './Elements/FormField';
 import { AddressSectionHeading, ContactCard, SubmitButton } from './FormComponents';
 import { provinceShortCode } from './utils';
@@ -201,6 +202,7 @@ export const submitAddAddressAutoCompleteForm = async (event) => {
   const setAddressResponse = await setAddress(payload);
   const { success } = setAddressResponse;
   if (!success) {
+    ShowDeliveryError(CouldNotSaveAddressError());
     console.error('Set address error', { setAddressResponse });
     return;
   }

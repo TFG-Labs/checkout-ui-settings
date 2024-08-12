@@ -5,6 +5,7 @@ import setAddress from '../../utils/setAddress';
 import FormField from './Elements/FormField';
 import { AddressSectionHeading, SubmitButton } from './FormComponents';
 import { getBestRecipient, provinceShortCode } from './utils';
+import { CouldNotSaveAddressError, ShowDeliveryError } from './DeliveryError';
 
 export const ADD_ADDRESS_FORM_MANUAL_RECIEVER_PHONE_ID = 'bash--input-add-address-manual-form-receiverPhone';
 
@@ -244,6 +245,7 @@ export const submitAddAddressManualForm = async (event) => {
     // Apply the new address to customers orderForm.
     const setAddressResponse = await setAddress(payload);
     if (!setAddressResponse.success) {
+      ShowDeliveryError(CouldNotSaveAddressError());
       console.error('Set address error', { setAddressResponse });
       throw new Error('Failed to set address');
     }
