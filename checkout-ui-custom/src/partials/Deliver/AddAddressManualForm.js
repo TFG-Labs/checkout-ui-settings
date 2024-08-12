@@ -24,6 +24,14 @@ const populateFields = (config) => {
   const postalCode = type === 'AUTOCOMPLETE_MANUAL' && address?.postalCode ? address.postalCode : '';
   const state = type === 'AUTOCOMPLETE_MANUAL' && address?.state ? provinceShortCode(address.state) : ''; // TODO figure outh why state is mis behaving // TODO type
 
+  // TODO how to use isDisposable
+  // TODO take care of complement
+  // take care of lat, lng field
+
+  // TODO: const geoCoords = [parseFloat(address.lng) || '', parseFloat(address.lat) || ''];
+  // TODO:  address.geoCoordinate = geoCoords; // for MasterData
+  // TOOD: address.geoCoordinates = geoCoords; // for shippingData
+
   const fields = [
     // HIDDEN FIELDS
     {
@@ -178,7 +186,6 @@ const AddAddressManualForm = (config) => {
     <form id="bash--add-address-manual-form" method="post">
       ${fields.map((field) => FormField(field)).join('')}
       ${SubmitButton('Save address', 'btn-save-address')}
-      <p>configss ${JSON.stringify(config)}</p>
     </form>
   `;
 };

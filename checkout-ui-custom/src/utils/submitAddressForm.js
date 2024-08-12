@@ -16,21 +16,3 @@ const submitAddressForm = async (event) => {
 };
 
 export default submitAddressForm;
-
-// TODO how to use isDisposable
-// TODO take care of complement
-// take care of lat, lng field
-
-// TODO: const geoCoords = [parseFloat(address.lng) || '', parseFloat(address.lat) || ''];
-// TODO:  address.geoCoordinate = geoCoords; // for MasterData
-// TOOD: address.geoCoordinates = geoCoords; // for shippingData
-
-// const address = {
-//   isDisposable: false,
-//   reference: null,
-//   geoCoordinates: [],
-//   country: 'ZAF',
-//   ...storedAddress,
-//   number: '', // stop using number field (combined with street).
-//   complement: '', // stop using complement field (ifo receiverPhone).
-// };
