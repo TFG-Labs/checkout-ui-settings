@@ -6,9 +6,9 @@ import { getBestRecipient, setPickupLoading } from '../partials/Deliver/utils';
 import {
   COLLECTION_VALIDATION_ERROR,
   CUSTOM_PICKUP_COMPLEMENT,
-  PICKUP_RECEIVER,
   getParentElement,
   isValidField,
+  PICKUP_RECEIVER,
 } from '../utils/collectionField';
 import { AD_TYPE, GEOLOCATE, MANUAL, NONE, PICKUP, PICKUP_APP, STEPS } from '../utils/const';
 import { clearLoaders, getSpecialCategories, scrollToInvalidField } from '../utils/functions';
@@ -248,6 +248,7 @@ const CollectController = (() => {
       $(customPaymentBtn).removeAttr('id').attr('id', 'custom-go-to-payment');
       $(customPaymentBtn).removeAttr('data-bind');
       $(customPaymentBtn).css('display', 'block');
+      $(customPaymentBtn).text('Save & Continue');
 
       $('p.btn-go-to-payment-wrapper').append(customPaymentBtn);
 
