@@ -19,7 +19,6 @@ import {
   clearRicaFields,
   customShippingDataIsValid,
   parseAttribute,
-  populateAddressForm,
   populateDeliveryError,
   populateRicaFields,
   populateTVFields,
