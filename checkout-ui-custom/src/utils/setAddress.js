@@ -26,7 +26,7 @@ const setAddress = (address) => {
   if (hasTVs) populateExtraFields(address, requiredTVFields, 'tv_');
   if (hasSimCards) populateRicaFields();
 
-  const { isValid, invalidFields } = addressIsValid(address, false);
+  const { isValid, invalidFields } = addressIsValid(address);
 
   // TODO: they gonna take you to a address form and populate it, we should not be getting here
   if (!isValid) {

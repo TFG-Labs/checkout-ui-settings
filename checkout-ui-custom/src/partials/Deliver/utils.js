@@ -216,20 +216,9 @@ export const populateTVFields = async () => {
 };
 
 // Runs when you setAddress
-export const addressIsValid = (address, validateExtraFields = true) => {
-  const { items } = window.vtexjs.checkout.orderForm;
-  const { hasTVs, hasSimCards } = getSpecialCategories(items);
-
-  let requiredFields = requiredAddressFields;
+export const addressIsValid = (address) => {
+  const requiredFields = requiredAddressFields;
   const invalidFields = [];
-
-  if (hasTVs && validateExtraFields) {
-    requiredFields = [...requiredFields, ...requiredTVFields];
-  }
-
-  if (hasSimCards && validateExtraFields) {
-    requiredFields = [...requiredFields, ...requiredRicaFields];
-  }
 
   for (let i = 0; i < requiredFields.length; i++) {
     if (!address[requiredFields[i]]) invalidFields.push(requiredFields[i]);
