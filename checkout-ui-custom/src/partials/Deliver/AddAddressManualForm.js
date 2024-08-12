@@ -128,13 +128,6 @@ const AddAddressManualForm = () => {
       ],
     },
     {
-      type: 'note',
-      required: false,
-      name: 'country-display',
-      label: 'Country',
-      value: 'South Africa',
-    },
-    {
       type: 'hidden',
       required: true,
       name: 'country',
