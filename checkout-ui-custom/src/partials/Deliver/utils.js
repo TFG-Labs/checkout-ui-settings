@@ -1,21 +1,11 @@
 // @ts-nocheck
-import {
-  AD_TYPE,
-  COLLECT_FEE,
-  DELIVERY_FEE,
-  FREE_SHIPPING_THRESHOLD,
-  PICKUP,
-  RICA_APP,
-  TV_APP,
-} from '../../utils/const';
-import { getSpecialCategories, hideBusinessName, isValidNumberBash, showBusinessName } from '../../utils/functions';
-import isInSouthAfrica from '../../utils/isInSouthAfrica';
-import { getBestPhoneNumber } from '../../utils/phoneFields';
+import { AD_TYPE, COLLECT_FEE, DELIVERY_FEE, RICA_APP, TV_APP } from '../../utils/const';
+import { getSpecialCategories } from '../../utils/functions';
+import usePhoneNumberFormatting from '../../utils/phoneNumberFormat';
 import { getOrderFormCustomData } from '../../utils/services';
 import { DeliveryError } from './DeliveryError';
 import { Alert } from './Elements/Alert';
 import { requiredAddressFields, requiredRicaFields, requiredTVFields } from './constants';
-import usePhoneNumberFormatting from '../../utils/phoneNumberFormat';
 
 const { formatPhoneNumber, isValidNumber } = usePhoneNumberFormatting();
 
@@ -225,4 +215,16 @@ export const showAlertBox = (alertText = 'Address saved') => {
   setTimeout(() => {
     $('.alert-container').slideUp();
   }, 5000);
+};
+
+export const postAddressSaveScroll = () => {
+  // Scroll up //TODO: this is very useful: we might need ot for address saved
+  setTimeout(() => {
+    if ($('.bash--extra-fields').length > 0) {
+      document.querySelector('.bash--extra-fields').scrollIntoView({ behavior: 'smooth' });
+    } else {
+      document.getElementById('bash-delivery-options').scrollIntoView({ behavior: 'smooth' });
+    }
+  }, 500);
+  showAlertBox();
 };

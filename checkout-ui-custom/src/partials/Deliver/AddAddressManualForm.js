@@ -4,7 +4,7 @@ import { addOrUpdateAddress } from '../../utils/services';
 import setAddress from '../../utils/setAddress';
 import FormField from './Elements/FormField';
 import { AddressSectionHeading, SubmitButton } from './FormComponents';
-import { getBestRecipient, provinceShortCode } from './utils';
+import { getBestRecipient, postAddressSaveScroll, provinceShortCode } from './utils';
 import { CouldNotSaveAddressError, ShowDeliveryError } from './DeliveryError';
 
 export const ADD_ADDRESS_FORM_MANUAL_RECIEVER_PHONE_ID = 'bash--input-add-address-manual-form-receiverPhone';
@@ -252,6 +252,7 @@ export const submitAddAddressManualForm = async (event) => {
     await addOrUpdateAddress(payload);
 
     window.postMessage({ action: 'setDeliveryView', view: 'select-address' });
+    postAddressSaveScroll();
   } catch (error) {
     console.error('Error adding new address', error);
     window.postMessage(

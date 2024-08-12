@@ -64,7 +64,6 @@ const DeliverController = (() => {
     }
   };
 
-  // TODO: we can probably get away with one form mounting point - it will make it more performant
   const RenderEditAddress = async (addressName) => {
     const data = await getAddressByName(addressName);
     document.querySelector('#edit-adress-section').innerHTML = EditAddressForm(data);

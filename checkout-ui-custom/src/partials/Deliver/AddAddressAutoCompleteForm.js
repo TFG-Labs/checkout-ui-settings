@@ -5,7 +5,7 @@ import setAddress from '../../utils/setAddress';
 import { CouldNotSaveAddressError, ShowDeliveryError } from './DeliveryError';
 import FormField from './Elements/FormField';
 import { AddressSectionHeading, ContactCard, SubmitButton } from './FormComponents';
-import { provinceShortCode } from './utils';
+import { postAddressSaveScroll, provinceShortCode } from './utils';
 
 export const ADD_ADDRESS_AUTOCOMPLETE_FORM_RECEIVER_PHONE_ID = 'bash--input-add-adress-autocomplete-form-receiverPhone';
 
@@ -206,6 +206,7 @@ export const submitAddAddressAutoCompleteForm = async (event) => {
     console.error('Set address error', { setAddressResponse });
     return;
   }
+  postAddressSaveScroll();
   addOrUpdateAddress(payload);
 
   window.postMessage({ action: 'setDeliveryView', view: 'select-address' });
