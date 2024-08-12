@@ -29,12 +29,26 @@ export const DeliveryError = ({ text, fields }) => {
 `;
 };
 
-export const NoAddressSelectedError = () => /* html */` 
+export const NoAddressSelectedError = () => /* html */ ` 
 <div id="bash-delivery-error" class="notification error"  >
    <div class="notification-content">
       <p>Select a delivery address.</p>
    </div>  
 </div>  
 `;
+
+export const CouldNotSaveAddressError = () => /* html */ `
+   <div id="bash-delivery-error" class="notification error"  >
+      <div class="notification-content">
+         <p>Select a delivery address.</p>
+      </div>
+   </div> 
+`;
+
+export const ShowDeliveryError = (htmlString) => {
+  const containerId = '#bash-delivery-error-container';
+  $('html, body').animate({ scrollTop: $(containerId).offset().top }, 400);
+  $(containerId).html(htmlString);
+};
 
 export default DeliveryErrorContainer;
