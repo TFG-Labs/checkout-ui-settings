@@ -119,7 +119,7 @@ export const submitEditAddressForm = async (event) => {
     };
 
     // Apply the selected address to customers orderForm.
-    const setAddressResponse = await setAddress(payload, { validateExtraFields: false });
+    const setAddressResponse = await setAddress(payload);
     const { success } = setAddressResponse;
     if (!success) {
       console.error('Set address error', { setAddressResponse });

@@ -19,22 +19,20 @@ const updateDeliveryData = ({ businessName, receiverPhone }) => sendOrderFormCus
   }),
 });
 
-const setAddress = (address, options = { validateExtraFields: true }) => {
-  const { validateExtraFields } = options;
+const setAddress = (address) => {
   const { items } = window.vtexjs.checkout.orderForm;
   const { hasTVs, hasSimCards } = getSpecialCategories(items);
 
   if (hasTVs) populateExtraFields(address, requiredTVFields, 'tv_');
   if (hasSimCards) populateRicaFields();
 
-  const { isValid, invalidFields } = addressIsValid(address, validateExtraFields);
+  const { isValid, invalidFields } = addressIsValid(address, false);
 
   // TODO: they gonna take you to a address form and populate it, we should not be getting here
   if (!isValid) {
     console.error({ invalidFields });
     populateAddressForm(address);
     $('#bash--address-form').addClass('show-form-errors');
-    if (validateExtraFields) $('#bash--delivery-form')?.addClass('show-form-errors');
     $(`#bash--input-${invalidFields[0]}`).focus();
 
     if (requiredAddressFields.includes(invalidFields[0])) {
@@ -89,7 +87,7 @@ const setAddress = (address, options = { validateExtraFields: true }) => {
         populateDeliveryError(errors);
         window.postMessage({
           action: 'setDeliveryView',
-          view: 'address-form',
+          view: 'address-form', // TODO: surely this form doesnt exist
         });
 
         return { success: false, errors };

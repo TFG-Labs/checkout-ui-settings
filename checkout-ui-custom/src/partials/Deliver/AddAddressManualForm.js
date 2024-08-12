@@ -235,7 +235,7 @@ export const submitAddAddressManualForm = async (event) => {
   // POST ADDRESS UPDATE AND CHANGE VIEW
   try {
     // Apply the new address to customers orderForm.
-    const setAddressResponse = await setAddress(payload, { validateExtraFields: false });
+    const setAddressResponse = await setAddress(payload);
     if (!setAddressResponse.success) {
       console.error('Set address error', { setAddressResponse });
       throw new Error('Failed to set address');
