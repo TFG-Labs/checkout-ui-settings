@@ -189,13 +189,6 @@ const AddressForm = () => {
         id="address-button-container"
       > 
         <button
-          class="btn-delete-address"
-          id="btn-delete-address"
-          type="submit"
-        >
-          Delete
-        </button>
-        <button
           class="submit btn-go-to-payment btn btn-large btn-success"
           id="btn-save-address"
           type="submit">
