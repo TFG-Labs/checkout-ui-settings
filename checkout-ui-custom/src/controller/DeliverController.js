@@ -4,6 +4,10 @@ import AddAddressAutoCompleteForm, {
   ADD_ADDRESS_AUTOCOMPLETE_FORM_RECEIVER_PHONE_ID,
   submitAddAddressAutoCompleteForm,
 } from '../partials/Deliver/AddAddressAutoCompleteForm';
+import AddAddressManual, {
+  ADD_ADDRESS_FORM_MANUAL_RECIEVER_PHONE_ID,
+  submitAddAddressManualForm,
+} from '../partials/Deliver/AddAddressManualForm';
 import DeliverContainer from '../partials/Deliver/DeliverContainer';
 
 import EditAddressForm, {
@@ -68,6 +72,11 @@ const DeliverController = (() => {
     preparePhoneField(`#${EDIT_FORM_RECEIVER_PHONE_ID}`);
   };
 
+  const RenderAddAddressManual = async () => {
+    document.querySelector('#manual-address-section').innerHTML = AddAddressManual();
+    preparePhoneField(`#${ADD_ADDRESS_FORM_MANUAL_RECIEVER_PHONE_ID}`);
+  };
+
   const RenderAddAddressAutoComplete = async (address) => {
     document.querySelector('#add-address-autocomplete-section').innerHTML = AddAddressAutoCompleteForm(address);
     preparePhoneField(`#${ADD_ADDRESS_AUTOCOMPLETE_FORM_RECEIVER_PHONE_ID}`);
@@ -75,6 +84,10 @@ const DeliverController = (() => {
 
   const clearEditAddress = () => {
     document.querySelector('#edit-adress-section').innerHTML = '';
+  };
+
+  const clearManualAddress = () => {
+    document.querySelector('#manual-address-section').innerHTML = '';
   };
 
   const clearAddAddressAutoComplete = () => {
@@ -297,6 +310,7 @@ const DeliverController = (() => {
 
   // submit address form listeners
   $(document).on('submit', '#bash--address-form', submitAddressForm);
+  $(document).on('submit', '#bash--add-address-manual-form', submitAddAddressManualForm);
   $(document).on('submit', '#bash--delivery-form', submitDeliveryForm);
   $(document).on('submit', '#bash--edit-address-form', submitEditAddressForm);
   $(document).on('submit', '#bash--add-address-autocomplete-form', submitAddAddressAutoCompleteForm);
@@ -338,6 +352,7 @@ const DeliverController = (() => {
 
         // Clear form fields
         clearEditAddress();
+        clearManualAddress();
         clearAddAddressAutoComplete();
 
         if (data.view === 'address-form' || data.view === 'address-edit') {
@@ -353,6 +368,9 @@ const DeliverController = (() => {
         }
         if (data.view === 'edit-address') {
           RenderEditAddress(data.content);
+        }
+        if (data.view === 'manual-address') {
+          RenderAddAddressManual();
         }
         if (data.view === 'add-address-autocomplete') {
           RenderAddAddressAutoComplete(data.content);

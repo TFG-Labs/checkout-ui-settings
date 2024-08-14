@@ -45,6 +45,12 @@ const DeliverContainer = ({ hasFurn, hasFurnOnly, hasFurnMixed }) => /* html */ 
    ${AddressSearchSection()}
 
     <section 
+      id="manual-address-section"
+      class="bash--delivery-view" 
+      data-section="manual-address">
+    </section>
+
+    <section 
       id="edit-adress-section" 
       class="bash--delivery-view" 
       data-section="edit-address">
