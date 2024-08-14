@@ -1,7 +1,12 @@
 // @ts-nocheck
 /* eslint-disable func-names */
+import AddAddressAutoCompleteForm, {
+  ADD_ADDRESS_AUTOCOMPLETE_FORM_RECEIVER_PHONE_ID,
+  submitAddAddressAutoCompleteForm,
+} from '../partials/Deliver/AddAddressAutoCompleteForm';
 import AddAddressManual, { submitAddAddressManualForm } from '../partials/Deliver/AddAddressManualForm';
 import DeliverContainer from '../partials/Deliver/DeliverContainer';
+
 import EditAddressForm, {
   EDIT_FORM_RECEIVER_PHONE_ID,
   submitEditAddressForm,
@@ -19,8 +24,8 @@ import {
   updateDeliveryFeeDisplay,
 } from '../partials/Deliver/utils';
 import { AD_TYPE, STEPS } from '../utils/const';
-import handleDeleteAddress from '../utils/deleteAddress';
-import formatAddressSummary from '../utils/formatAddressSummary';
+// import handleDeleteAddress from '../utils/deleteAddress';
+import { formatAddressSummary } from '../utils/formatAddressSummary';
 import {
   clearLoaders,
   getSpecialCategories,
@@ -69,12 +74,21 @@ const DeliverController = (() => {
     preparePhoneField(`#${ADD_ADDRESS_FORM_MANUAL_RECIEVER_PHONE_ID}`);
   };
 
+  const RenderAddAddressAutoComplete = async (address) => {
+    document.querySelector('#add-address-autocomplete-section').innerHTML = AddAddressAutoCompleteForm(address);
+    preparePhoneField(`#${ADD_ADDRESS_AUTOCOMPLETE_FORM_RECEIVER_PHONE_ID}`);
+  };
+
   const clearEditAddress = () => {
     document.querySelector('#edit-adress-section').innerHTML = '';
   };
 
   const clearManualAddress = () => {
     document.querySelector('#manual-address-section').innerHTML = '';
+  };
+  
+  const clearAddAddressAutoComplete = () => {
+    document.querySelector('#add-address-autocomplete-section').innerHTML = '';
   };
 
   const setupDeliver = () => {
@@ -296,6 +310,7 @@ const DeliverController = (() => {
   $(document).on('submit', '#bash--add-address-manual-form', submitAddAddressManualForm);
   $(document).on('submit', '#bash--delivery-form', submitDeliveryForm);
   $(document).on('submit', '#bash--edit-address-form', submitEditAddressForm);
+  $(document).on('submit', '#bash--add-address-autocomplete-form', submitAddAddressAutoCompleteForm);
 
   $(document).on('click', '.remove-cart-item', function (e) {
     e.preventDefault();
@@ -314,14 +329,14 @@ const DeliverController = (() => {
     $(this).removeClass('invalid');
   });
 
-  // Add event listener for delete address
-  $(document).on('click', '#btn-delete-address', function (e) {
-    e.preventDefault();
-    const addressName = $('#bash--input-addressName').val();
-    if (confirm(`Are you sure you want to delete the address "${addressName}"?`)) {
-      handleDeleteAddress(addressName);
-    }
-  });
+  // Add event listener for delete address: TEMPORARILY DISABLING< CAUSING ADDRESSES TO DISAPPEAR
+  // $(document).on('click', '#btn-delete-address', (e) => {
+  //   e.preventDefault();
+  //   const addressName = $('#bash--input-addressName').val();
+  //   if (confirm('Please note: Deleting this address will not delete any pending orders to this address.')) {
+  //     handleDeleteAddress(addressName);
+  //   }
+  // });
 
   // Form validation
   window.addEventListener('message', (event) => {
@@ -331,8 +346,12 @@ const DeliverController = (() => {
     switch (data.action) {
       case 'setDeliveryView':
         document.querySelector('.bash--delivery-container')?.setAttribute('data-view', data.view);
+
+        // Clear form fields
         clearEditAddress();
         clearManualAddress();
+        clearAddAddressAutoComplete();
+
         if (data.view === 'address-form' || data.view === 'address-edit') {
           preparePhoneField('#bash--input-receiverPhone');
           if (data.content) {
@@ -350,6 +369,8 @@ const DeliverController = (() => {
 
         if (data.view === 'manual-address') {
           RenderAddAddressManual();
+        if (data.view === 'add-address-autocomplete') {
+          RenderAddAddressAutoComplete(data.content);
         }
         break;
       case 'FB_LOG':

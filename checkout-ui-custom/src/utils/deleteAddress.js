@@ -13,8 +13,6 @@ const handleDeleteAddress = async (addressName) => {
   try {
     const address = await getAddressByName(addressName);
 
-    console.log('address to delete ========', address);
-
     await removeAddressFromDB(address).catch((error) => {
       console.error('Error deleting address from DB:', error);
     });
