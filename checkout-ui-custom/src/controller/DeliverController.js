@@ -86,7 +86,7 @@ const DeliverController = (() => {
   const clearManualAddress = () => {
     document.querySelector('#manual-address-section').innerHTML = '';
   };
-  
+
   const clearAddAddressAutoComplete = () => {
     document.querySelector('#add-address-autocomplete-section').innerHTML = '';
   };
@@ -366,9 +366,9 @@ const DeliverController = (() => {
         if (data.view === 'edit-address') {
           RenderEditAddress(data.content);
         }
-
         if (data.view === 'manual-address') {
           RenderAddAddressManual();
+        }
         if (data.view === 'add-address-autocomplete') {
           RenderAddAddressAutoComplete(data.content);
         }
