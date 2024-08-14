@@ -12,7 +12,7 @@ const ManualSearchCTA = () => /* html */ `
     Type your address above or 
     <a 
       href="" id="link-manual-address-entry"
-      data-view="address-form"
+      data-view="manual-address"
       onClick="document.getElementById('bash--input-street').focus()"
       style="text-decoration: underline" 
     >enter it manually</a>.
