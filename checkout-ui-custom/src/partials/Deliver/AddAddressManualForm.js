@@ -215,6 +215,7 @@ export const submitAddAddressManualForm = async (event) => {
 
   // UPDATE PAYLOAD
   payload.receiverPhone = receiverPhone;
+  // payload.captureMethod = 'MANUAL_ENTRY';
 
   // POST ADDRESS UPDATE AND CHANGE VIEW
   try {

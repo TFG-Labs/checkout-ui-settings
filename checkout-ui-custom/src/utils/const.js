@@ -52,10 +52,10 @@ const getUrlApi = () => {
   const stageHosts = ['thefoschiniqa.myvtex.com', 'staging.tfglabs.dev'];
 
   if (prodHosts.includes(window.location.host)) {
-    return 'https://store-api.www.bash.com/custom-api/';
+    return 'https://3c9f-213-172-146-112.ngrok-free.app/custom-api/';
   }
   if (stageHosts.includes(window.location.host)) {
-    return 'https://store-api.staging.tfglabs.dev/custom-api/';
+    return 'https://3c9f-213-172-146-112.ngrok-free.app/custom-api/';
   }
   return `${window.location.protocol}//${window.location.host}/custom-api/`;
 };
@@ -86,6 +86,5 @@ export {
   TIMEOUT_500,
   TIMEOUT_750,
   TV_APP,
-  TV_CAT
+  TV_CAT,
 };
-
