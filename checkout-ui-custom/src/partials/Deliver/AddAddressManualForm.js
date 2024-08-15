@@ -23,7 +23,7 @@ const populateFields = (config) => {
   const neighborhood = type === 'AUTOCOMPLETE_MANUAL' && address?.neighborhood ? address?.neighborhood : '';
   const city = type === 'AUTOCOMPLETE_MANUAL' && address?.city ? address.city : '';
   const postalCode = type === 'AUTOCOMPLETE_MANUAL' && address?.postalCode ? address.postalCode : '';
-  const state = type === 'AUTOCOMPLETE_MANUAL' && address?.state ? provinceShortCode(address.state) : ''; // TODO figure outh why state is mis behaving // TODO type
+  const state = type === 'AUTOCOMPLETE_MANUAL' && address?.state ? provinceShortCode(address.state) : '';
 
   const fields = [
     // HIDDEN FIELDS

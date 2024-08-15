@@ -37,7 +37,7 @@ const submitDeliveryForm = async (event) => {
   const { success: didSetAddress } = await setAddress(fullAddress);
   if (!didSetAddress) {
     ShowDeliveryError(CouldNotSaveAddressError());
-    console.error('Delivery Form - Address Validation error'); //TO DO some notifcation could not set address
+    console.error('Delivery Form - Address Validation error');
     clearLoaders();
     return;
   }
