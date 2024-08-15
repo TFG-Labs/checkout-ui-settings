@@ -15,20 +15,21 @@ const SaveButton = () => /* html */ `
     Save
   </button>
 `;
-// TEMPORARILY REMOVED  - CAUSING ISSUE
-// const DeleteButton = () => /* html */ `
-//   <button
-//     class="btn btn-small"
-//     id="btn-delete-address"
-//     type="submit">
-//     Delete
-//   </button>
-// `;
+
+const DeleteButton = () => /* html */ `
+  <button
+    class="btn btn-small"
+    id="btn-delete-address"
+    type="submit">
+    Delete
+  </button>
+`;
 
 const ButtonContainer = () => /* html */ `
   <div
     id="address-button-container"
   >
+    ${DeleteButton()}
     ${SaveButton()}
   </div>
 `;
