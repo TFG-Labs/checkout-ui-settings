@@ -20,7 +20,7 @@ const DeleteButton = () => /* html */ `
   <button
     class="btn btn-small"
     id="btn-delete-address"
-    type="submit">
+  >
     Delete
   </button>
 `;
