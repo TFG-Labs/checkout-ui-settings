@@ -298,48 +298,48 @@ export const removeAddressFromMasterData = async (addressId) => {
   }
 };
 
-export const deleteAddressFromMasterdata = async (addressId) => {	
-  const path = `${BASE_URL_API}masterdata/address/${addressId}`;	
-  const headers = getHeadersByConfig({ cookie: true, cache: true, json: true });	
+export const deleteAddressFromMasterdata = async (addressId) => {
+  const path = `${BASE_URL_API}masterdata/address/${addressId}`;
+  const headers = getHeadersByConfig({ cookie: true, cache: true, json: true });
 
-  const options = {	
-    method: 'DELETE',	
-    headers,	
-    credentials: 'include',	
-  };	
+  const options = {
+    method: 'DELETE',
+    headers,
+    credentials: 'include',
+  };
 
-  return fetch(path, options)	
-    .then((res) => res.json())	
-    .catch((error) => catchError(`DELETE_ADDRESS_ERROR: ${error?.message}`));	
-};	
+  return fetch(path, options)
+    .then((res) => res.json())
+    .catch((error) => catchError(`DELETE_ADDRESS_ERROR: ${error?.message}`));
+};
 
-export const deleteAddressFromOrderForm = async (addressId) => {	
-  const { orderFormId } = window.vtexjs.checkout.orderForm;	
+export const deleteAddressFromOrderForm = async (addressId) => {
+  const { orderFormId } = window.vtexjs.checkout.orderForm;
 
-  const path = `/api/checkout/pub/orderForm/${orderFormId}/customData/${addressId}`;	
-  const options = {	
-    method: 'DELETE',	
-    headers: {	
-      'Content-Type': 'application/json',	
-    },	
-  };	
+  const path = `/api/checkout/pub/orderForm/${orderFormId}/customData/${addressId}`;
+  const options = {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
 
-  return fetch(path, options)	
-    .then((res) => res.json())	
-    .catch((error) => catchError(`DELETE_ORDERFORM_ADDRESS_ERROR: ${error?.message}`));	
-};	
+  return fetch(path, options)
+    .then((res) => res.json())
+    .catch((error) => catchError(`DELETE_ORDERFORM_ADDRESS_ERROR: ${error?.message}`));
+};
 
-export const deleteAddress = async (addressId) => {	
-  // Delete from Masterdata	
-  await deleteAddressFromMasterdata(addressId);	
+export const deleteAddress = async (addressId) => {
+  // Delete from Masterdata
+  await deleteAddressFromMasterdata(addressId);
 
-  // Delete from OrderForm	
-  await deleteAddressFromOrderForm(addressId);	
+  // Delete from OrderForm
+  await deleteAddressFromOrderForm(addressId);
 
-  // Remove from local store and update UI	
-  DB.deleteAddress(addressId).then(() => {	
-    $(`#address-${addressId}`).remove();	
-  });	
+  // Remove from local store and update UI
+  DB.deleteAddress(addressId).then(() => {
+    $(`#address-${addressId}`).remove();
+  });
 };
 
 export default getAddresses;
