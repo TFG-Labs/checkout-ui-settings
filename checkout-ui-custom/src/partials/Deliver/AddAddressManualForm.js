@@ -17,8 +17,8 @@ export const ADD_ADDRESS_FORM_MANUAL_RECIEVER_PHONE_ID = 'bash--input-add-addres
  */
 const populateFields = (config) => {
   const { type, address } = config;
-  const lng = type === ('AUTOCOMPLETE_MANUAL' && address?.lng) ? address.lng : '';
-  const lat = type === ('AUTOCOMPLETE_MANUAL' && address?.lat) ? address.lat : '';
+  const lng = type === 'AUTOCOMPLETE_MANUAL' && address?.lng ? address.lng : '';
+  const lat = type === 'AUTOCOMPLETE_MANUAL' && address?.lat ? address.lat : '';
   const street = type === 'AUTOCOMPLETE_MANUAL' ? `${address?.streetNumber ?? ''} ${address?.route ?? ''}`.trim() : '';
   const neighborhood = type === 'AUTOCOMPLETE_MANUAL' && address?.neighborhood ? address?.neighborhood : '';
   const city = type === 'AUTOCOMPLETE_MANUAL' && address?.city ? address.city : '';
