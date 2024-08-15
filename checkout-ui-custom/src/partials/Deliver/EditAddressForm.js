@@ -9,7 +9,7 @@ import { postAddressSaveScroll } from './utils';
 
 export const EDIT_FORM_RECEIVER_PHONE_ID = 'bash--input-edit-adress-form-receiverPhone';
 
-// TEMPORARILY REMOVED  - CAUSING ISSUE WITH MISSING ADDRESSES
+// TEMPORARILY REMOVED  - CAUSING ISSUE
 // const DeleteButton = () => /* html */ `
 //   <button
 //     class="btn btn-small"
