@@ -28,32 +28,7 @@ export const setPickupLoading = () => {
   document.querySelector('.vtex-omnishipping-1-x-ask')?.classList?.add('shimmer');
 };
 
-export const mapGoogleAddress = (addressComponents, geometry) => {
-  if (!addressComponents || addressComponents.length < 1) return {};
-  const streetNumber = addressComponents.find((item) => item.types.includes('street_number'))?.long_name;
-  const street = addressComponents.find((item) => item.types.includes('route'))?.long_name;
-  const neighborhood = addressComponents.find((item) => item.types.includes('sublocality'))?.long_name;
-  const city = addressComponents.find((item) => item.types.includes('locality'))?.long_name;
-  const postalCode = addressComponents.find((item) => item.types.includes('postal_code'))?.long_name;
-  const state = addressComponents.find((item) => item.types.includes('administrative_area_level_1'))?.long_name;
-
-  const coords = { lat: '', lng: '' };
-  if (geometry) {
-    coords.lat = geometry.location.lat();
-    coords.lng = geometry.location.lng();
-  }
-
-  return {
-    street: `${streetNumber ?? ''} ${street ?? ''}`.trim(),
-    neighborhood,
-    city,
-    postalCode,
-    state,
-    ...coords,
-  };
-};
-
-const provinceShortCode = (province) => {
+export const provinceShortCode = (province) => {
   switch (province) {
     case 'Select':
       return '';
@@ -91,29 +66,6 @@ export const getBestRecipient = ({ preferred = undefined, type = 'delivery' }) =
   if (type === 'collect') return preferred || shippingReceiverName || clientProfileName || '';
 
   return preferred || document.getElementById('client-first-name')?.value || clientProfileName || '';
-};
-
-const populateAddressFromSearch = (address) => {
-  const { street, neighborhood, postalCode, state, city, lat, lng } = address;
-
-  // Clear any populated fields
-  document.getElementById('bash--address-form')?.reset();
-
-  // Clear hidden ID fields to prevent overwriting existing.
-  document.getElementById('bash--input-addressId').value = '';
-  document.getElementById('bash--input-addressName').value = '';
-
-  document.getElementById('bash--input-number').value = '  ';
-  document.getElementById('bash--input-street').value = street ?? '';
-  document.getElementById('bash--input-neighborhood').value = neighborhood ?? '';
-  document.getElementById('bash--input-city').value = city ?? '';
-  document.getElementById('bash--input-postalCode').value = postalCode ?? '';
-  document.getElementById('bash--input-state').value = provinceShortCode(state);
-  document.getElementById('bash--input-lat').value = lat || '';
-  document.getElementById('bash--input-lng').value = lng || '';
-
-  // Update previously invalid fields.
-  $(':invalid').trigger('change');
 };
 
 export const populateAddressForm = (address) => {
@@ -193,53 +145,17 @@ export const populateAddressForm = (address) => {
   if (receiverName) document.getElementById('bash--input-receiverName').value = receiverName ?? '';
   if (complement) document.getElementById('bash--input-complement').value = complement ?? '';
   document.getElementById('bash--input-receiverPhone').value =
-    formatPhoneNumber(receiverPhone).trim() || getBestPhoneNumber({
+    formatPhoneNumber(receiverPhone).trim() ||
+    getBestPhoneNumber({
       preferred: receiverPhone,
       type: 'delivery',
       fields,
     });
   document.getElementById('bash--input-receiverPhone')?.addEventListener('onblur', (event) => {
-    event.target.value = (event.target.value).trim();
+    event.target.value = event.target.value.trim();
   });
 
   $(':invalid').trigger('change');
-};
-
-const checkForAddressResults = (event) => {
-  setTimeout(() => {
-    const pacContainers = document.querySelectorAll('.pac-container');
-    const hiddenPacContainers = document.querySelectorAll(".pac-container[style*='display: none']");
-    if (pacContainers?.length === hiddenPacContainers?.length && event.target?.value?.length > 3) {
-      $('#address-search-field-container:not(.no-results)').addClass('no-results');
-    } else {
-      $('#address-search-field-container.no-results').removeClass('no-results');
-    }
-  }, 250);
-};
-
-export const initGoogleAutocomplete = () => {
-  if (!window.google) return;
-
-  const input = document.getElementById('bash--input-address-search');
-  if (!input) return;
-  const autocomplete = new window.google.maps.places.Autocomplete(input, {
-    componentRestrictions: { country: 'ZA' },
-  });
-
-  window.google.maps.event.addListener(autocomplete, 'place_changed', () => {
-    const place = autocomplete.getPlace();
-    const { address_components: addressComponents, geometry } = place;
-
-    const address = mapGoogleAddress(addressComponents, geometry);
-
-    // Populate the form
-    // Set view to add-address
-    populateAddressFromSearch(address);
-    window.postMessage({ action: 'setDeliveryView', view: 'address-form' });
-    input.value = '';
-  });
-
-  input?.addEventListener('keyup', checkForAddressResults);
 };
 
 export const parseAttribute = (data) => {
@@ -411,5 +327,3 @@ export const showAlertBox = (alertText = 'Address saved') => {
     $('.alert-container').slideUp();
   }, 5000);
 };
-
-export default mapGoogleAddress;
