@@ -1,3 +1,9 @@
+export const EVENT_NAME = {
+  ADDRESS_SAVED: 'address_saved',
+  ADD_ADDRESS: 'add_address',
+  ADD_ADDRESS_ERROR: 'add_address_error',
+};
+
 /// ////////////////////// ADDRESS ANALYTICS //////////////////////////
 
 // 1.  EVENT NAME: address_saved
