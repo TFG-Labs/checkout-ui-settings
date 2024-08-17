@@ -135,8 +135,15 @@ export const upsertAddress = async (address) => {
       }
       return res;
     })
-    .then((result) => result)
-    .catch((error) => catchError(`SAVE_ADDRESS_ERROR: ${error?.message}`));
+    .then((result) => {
+      console.log('Address saved to master data:', result);
+      // TODO: log event
+      return result;
+    })
+    .catch((error) => {
+      // TODO: log event
+      catchError(`SAVE_ADDRESS_ERROR: ${error?.message}`);
+    });
 };
 
 export const updateAddressListing = (address) => {
