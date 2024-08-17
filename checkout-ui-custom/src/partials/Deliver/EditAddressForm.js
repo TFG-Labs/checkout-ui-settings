@@ -129,7 +129,7 @@ export const submitEditAddressForm = async (event) => {
       return;
     }
     postAddressSaveScroll();
-    addOrUpdateAddress(payload);
+    addOrUpdateAddress(payload); // TODO
 
     window.postMessage({ action: 'setDeliveryView', view: 'select-address' });
   });
