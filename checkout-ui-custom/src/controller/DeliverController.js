@@ -25,7 +25,13 @@ import {
   setCartClasses,
   updateDeliveryFeeDisplay,
 } from '../partials/Deliver/utils';
-import { ADD_ADDRESS_STAGE, EVENT_NAME, PARAMETER, trackAddressEvent } from '../utils/addressAnalytics';
+import {
+  ADD_ADDRESS_CAPTURE_METHOD,
+  ADD_ADDRESS_METHOD,
+  ADD_ADDRESS_STAGE,
+  PARAMETER,
+  trackAddressEvent,
+} from '../utils/addressAnalytics';
 import { AD_TYPE, DATA_VIEW, STEPS } from '../utils/const';
 // import handleDeleteAddress from '../utils/deleteAddress';
 import { formatAddressSummary } from '../utils/formatAddressSummary';
@@ -346,7 +352,7 @@ const DeliverController = (() => {
     if (!data || !data.action) return;
 
     switch (data.action) {
-      case 'setDeliveryView':
+      case 'setDeliveryView': {
         document.querySelector('.bash--delivery-container')?.setAttribute('data-view', data.view);
 
         // Clear form fields
@@ -355,32 +361,41 @@ const DeliverController = (() => {
         clearManualAddress();
         clearAddAddressAutoCompleteManual();
 
-        // Render view
+        const trackAddressPayload = {
+          [PARAMETER.ADD_ADDRESS_STAGE]: ADD_ADDRESS_STAGE.CHECKOUT,
+          [PARAMETER.DOCUMENT_ID]: 'TODO', // TODO do we have to fetch the document id
+        };
+
+        // Render view and populate track event payload;
         if (data.view === DATA_VIEW.EDIT_ADDRESS) {
           RenderEditAddress(data.content);
+          trackAddressPayload[PARAMETER.ADD_ADDRESS_METHOD] = ADD_ADDRESS_METHOD.EDIT_ADDRESS;
+          // trackAddressPayload[PARAMETER.ADD_ADDRESS_CAPTURE_METHOD] = 'TODO'; -> Needs to be done after implementing master data call (original capture method
         }
         if (data.view === DATA_VIEW.ADD_ADDRESS_AUTOCOMPLETE) {
           RenderAddAddressAutoComplete(data.content);
+          trackAddressPayload[PARAMETER.ADD_ADDRESS_METHOD] = ADD_ADDRESS_METHOD.SEARCH_FOR_AN_ADDRESS;
+          trackAddressPayload[PARAMETER.ADD_ADDRESS_CAPTURE_METHOD] = ADD_ADDRESS_CAPTURE_METHOD.AUTO_COMPLETE_GOOGLE;
         }
         if (data.view === DATA_VIEW.ADD_ADDRESS_AUTOCOMPLETE_MANUAL) {
           RenderAddAddressManual('AUTOCOMPLETE_MANUAL', data.content);
+          trackAddressPayload[PARAMETER.ADD_ADDRESS_METHOD] = ADD_ADDRESS_METHOD.SEARCH_FOR_AN_ADDRESS;
+          trackAddressPayload[PARAMETER.ADD_ADDRESS_CAPTURE_METHOD] =
+            ADD_ADDRESS_CAPTURE_METHOD.MANUAL_ATTEMPTED_AUTO_COMPLETE_GOOGLE;
         }
         if (data.view === DATA_VIEW.MANUAL_ADDRESS) {
           RenderAddAddressManual('MANUAL');
+          trackAddressPayload[PARAMETER.ADD_ADDRESS_METHOD] = ADD_ADDRESS_METHOD.ADD_ADDRESS_MANUALLY;
+          trackAddressPayload[PARAMETER.ADD_ADDRESS_CAPTURE_METHOD] = ADD_ADDRESS_CAPTURE_METHOD.MANUAL_ENTRY;
         }
 
         // track address event
         if (data.view !== DATA_VIEW.SELECT_ADDRESS) {
-          trackAddressEvent({
-            eventName: EVENT_NAME.ADD_ADDRESS, // TODO should event name be event name
-            [PARAMETER.ADD_ADDRESS_STAGE]: ADD_ADDRESS_STAGE.CHECKOUT,
-            [PARAMETER.ADD_ADDRESS_METHOD]: 'TODO',
-            [PARAMETER.ADD_ADDRESS_CAPTURE_METHOD]: 'TODO',
-            [PARAMETER.DOCUMENT_ID]: 'TODO', // TODO do we have to fetch the document id
-          }); // TODO
+          trackAddressEvent(trackAddressPayload); // TODO
         }
 
         break;
+      }
       case 'FB_LOG':
         break;
       default:
