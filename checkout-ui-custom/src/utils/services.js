@@ -1,5 +1,6 @@
 /* eslint-disable no-new-wrappers */
 import AddressListing from '../partials/Deliver/AddressListing';
+import { ADD_ADDRESS_STAGE, EVENT_NAME, PARAMETER, trackAddressEvent } from './addressAnalytics';
 import CheckoutDB from './checkoutDB';
 import { BASE_URL_API } from './const';
 import { catchError, clearLoaders, getHeadersByConfig } from './functions';
@@ -137,11 +138,24 @@ export const upsertAddress = async (address) => {
     })
     .then((result) => {
       console.log('Address saved to master data:', result);
-      // TODO: log event
+      trackAddressEvent({
+        eventName: EVENT_NAME.ADDRESS_SAVED, // TODO should event name be event name
+        [PARAMETER.ADD_ADDRESS_STAGE]: ADD_ADDRESS_STAGE.CHECKOUT,
+        [PARAMETER.ADD_ADDRESS_METHOD]: 'TODO',
+        [PARAMETER.ADD_ADDRESS_CAPTURE_METHOD]: 'TODO',
+        [PARAMETER.DOCUMENT_ID]: 'TODO', // TODO do we have to fetch the document id
+      }); // TODO
       return result;
     })
     .catch((error) => {
       // TODO: log event
+      trackAddressEvent({
+        eventName: EVENT_NAME.ADD_ADDRESS_ERROR, // TODO should event name be event name
+        [PARAMETER.ADD_ADDRESS_STAGE]: ADD_ADDRESS_STAGE.CHECKOUT,
+        [PARAMETER.ADD_ADDRESS_METHOD]: 'TODO',
+        [PARAMETER.ADD_ADDRESS_CAPTURE_METHOD]: 'TODO',
+        [PARAMETER.DOCUMENT_ID]: 'TODO', // TODO do we have to fetch the document id
+      }); // TODO
       catchError(`SAVE_ADDRESS_ERROR: ${error?.message}`);
     });
 };
