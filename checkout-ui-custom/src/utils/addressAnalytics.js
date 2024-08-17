@@ -16,6 +16,12 @@ export const ADD_ADDRESS_STAGE = {
   CHECKOUT: 'checkout',
 };
 
+export const ADD_ADDRESS_CAPTURE_METHOD = {
+  AUTO_COMPLETE_GOOGLE: 'auto_complete_google',
+  MANUAL_ATTEMPTED_AUTO_COMPLETE_GOOGLE: 'manual_attempted_autocomplete_google',
+  MANUAL_ENTRY: 'manual_entry',
+};
+
 /// ////////////////////// ADDRESS ANALYTICS //////////////////////////
 
 // 1.  EVENT NAME: address_saved
