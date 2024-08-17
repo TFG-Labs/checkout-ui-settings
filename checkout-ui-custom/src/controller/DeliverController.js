@@ -41,6 +41,13 @@ import { clearAddresses, getAddressByName, removeFromCart } from '../utils/servi
 import setAddress from '../utils/setAddress';
 import submitDeliveryForm from '../utils/submitDeliveryForm';
 
+const DATA_VIEW = {
+  EDIT_ADDRESS: 'edit-address',
+  ADD_ADDRESS_AUTOCOMPLETE: 'add-address-autocomplete',
+  ADD_ADDRESS_AUTOCOMPLETE_MANUAL: 'add-address-autocomplete-manual',
+  MANUAL_ADDRESS: 'manual-address',
+};
+
 const DeliverController = (() => {
   const state = {
     view: 'list',
@@ -354,16 +361,16 @@ const DeliverController = (() => {
         clearManualAddress();
         clearddAddressAutoCompleteManual();
 
-        if (data.view === 'edit-address') {
+        if (data.view === DATA_VIEW.EDIT_ADDRESS) {
           RenderEditAddress(data.content);
         }
-        if (data.view === 'add-address-autocomplete') {
+        if (data.view === DATA_VIEW.ADD_ADDRESS_AUTOCOMPLETE) {
           RenderAddAddressAutoComplete(data.content);
         }
-        if (data.view === 'add-address-autocomplete-manual') {
+        if (data.view === DATA_VIEW.ADD_ADDRESS_AUTOCOMPLETE_MANUAL) {
           RenderAddAddressManual('AUTOCOMPLETE_MANUAL', data.content);
         }
-        if (data.view === 'manual-address') {
+        if (data.view === DATA_VIEW.MANUAL_ADDRESS) {
           RenderAddAddressManual('MANUAL');
         }
         break;
