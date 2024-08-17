@@ -25,6 +25,7 @@ import {
   setCartClasses,
   updateDeliveryFeeDisplay,
 } from '../partials/Deliver/utils';
+import { ADD_ADDRESS_STAGE, EVENT_NAME, PARAMETER, trackAddressEvent } from '../utils/addressAnalytics';
 import { AD_TYPE, STEPS } from '../utils/const';
 // import handleDeleteAddress from '../utils/deleteAddress';
 import { formatAddressSummary } from '../utils/formatAddressSummary';
@@ -46,6 +47,7 @@ const DATA_VIEW = {
   ADD_ADDRESS_AUTOCOMPLETE: 'add-address-autocomplete',
   ADD_ADDRESS_AUTOCOMPLETE_MANUAL: 'add-address-autocomplete-manual',
   MANUAL_ADDRESS: 'manual-address',
+  SELECT_ADDRESS: 'select-address',
 };
 
 const DeliverController = (() => {
@@ -97,7 +99,7 @@ const DeliverController = (() => {
     document.querySelector('#add-address-autocomplete-section').innerHTML = '';
   };
 
-  const clearddAddressAutoCompleteManual = () => {
+  const clearAddAddressAutoCompleteManual = () => {
     document.querySelector('#add-address-autocomplete-manual-section').innerHTML = '';
   };
 
@@ -356,11 +358,12 @@ const DeliverController = (() => {
         document.querySelector('.bash--delivery-container')?.setAttribute('data-view', data.view);
 
         // Clear form fields
-        clearEditAddress();
+        clearEditAddress(); // TODO could you do the clearing on
         clearAddAddressAutoComplete();
         clearManualAddress();
-        clearddAddressAutoCompleteManual();
+        clearAddAddressAutoCompleteManual();
 
+        // Render view
         if (data.view === DATA_VIEW.EDIT_ADDRESS) {
           RenderEditAddress(data.content);
         }
@@ -373,6 +376,18 @@ const DeliverController = (() => {
         if (data.view === DATA_VIEW.MANUAL_ADDRESS) {
           RenderAddAddressManual('MANUAL');
         }
+
+        // track address event
+        if (data.view !== DATA_VIEW.SELECT_ADDRESS) {
+          trackAddressEvent({
+            eventName: EVENT_NAME.ADD_ADDRESS, // TODO should event name be event name
+            [PARAMETER.ADD_ADDRESS_STAGE]: ADD_ADDRESS_STAGE.CHECKOUT,
+            [PARAMETER.ADD_ADDRESS_METHOD]: 'TODO',
+            [PARAMETER.ADD_ADDRESS_CAPTURE_METHOD]: 'TODO',
+            [PARAMETER.DOCUMENT_ID]: 'TODO', // TODO do we have to fetch the document id
+          }); // TODO
+        }
+
         break;
       case 'FB_LOG':
         break;
