@@ -11,6 +11,11 @@ export const PARAMETER = {
   ADD_ADDRESS_METHOD: 'add_address_method',
 };
 
+export const ADD_ADDRESS_STAGE = {
+  PROFILE: 'profile',
+  CHECKOUT: 'checkout',
+};
+
 /// ////////////////////// ADDRESS ANALYTICS //////////////////////////
 
 // 1.  EVENT NAME: address_saved
