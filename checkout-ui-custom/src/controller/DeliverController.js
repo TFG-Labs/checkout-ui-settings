@@ -26,7 +26,7 @@ import {
   updateDeliveryFeeDisplay,
 } from '../partials/Deliver/utils';
 import { ADD_ADDRESS_STAGE, EVENT_NAME, PARAMETER, trackAddressEvent } from '../utils/addressAnalytics';
-import { AD_TYPE, STEPS } from '../utils/const';
+import { AD_TYPE, DATA_VIEW, STEPS } from '../utils/const';
 // import handleDeleteAddress from '../utils/deleteAddress';
 import { formatAddressSummary } from '../utils/formatAddressSummary';
 import {
@@ -41,14 +41,6 @@ import sendEvent from '../utils/sendEvent';
 import { clearAddresses, getAddressByName, removeFromCart } from '../utils/services';
 import setAddress from '../utils/setAddress';
 import submitDeliveryForm from '../utils/submitDeliveryForm';
-
-const DATA_VIEW = {
-  EDIT_ADDRESS: 'edit-address',
-  ADD_ADDRESS_AUTOCOMPLETE: 'add-address-autocomplete',
-  ADD_ADDRESS_AUTOCOMPLETE_MANUAL: 'add-address-autocomplete-manual',
-  MANUAL_ADDRESS: 'manual-address',
-  SELECT_ADDRESS: 'select-address',
-};
 
 const DeliverController = (() => {
   const state = {
