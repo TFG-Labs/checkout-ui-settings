@@ -4,6 +4,13 @@ export const EVENT_NAME = {
   ADD_ADDRESS_ERROR: 'add_address_error',
 };
 
+export const PARAMETER = {
+  ADD_ADDRESS_STAGE: 'add_address_stage',
+  DOCUMENT_ID: 'document_id',
+  ADD_ADDRESS_CAPTURE_METHOD: 'add_address_capture_method',
+  ADD_ADDRESS_METHOD: 'add_address_method',
+};
+
 /// ////////////////////// ADDRESS ANALYTICS //////////////////////////
 
 // 1.  EVENT NAME: address_saved
