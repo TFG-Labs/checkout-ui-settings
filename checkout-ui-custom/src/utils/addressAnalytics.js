@@ -22,6 +22,12 @@ export const ADD_ADDRESS_CAPTURE_METHOD = {
   MANUAL_ENTRY: 'manual_entry',
 };
 
+export const ADD_ADDRESS_METHOD = {
+  SEARCH_FOR_AN_ADDRESS: 'search_for_an_address',
+  EDIT_ADDRESS: 'edit_address',
+  ADD_ADDRESS_MANUALLY: 'add_address_manually',
+};
+
 /// ////////////////////// ADDRESS ANALYTICS //////////////////////////
 
 // 1.  EVENT NAME: address_saved
@@ -33,6 +39,7 @@ export const ADD_ADDRESS_CAPTURE_METHOD = {
 //         - add_address_method: search_for_an_address | edit_address | add_address_manually
 // TODO: how is there no reference to the address that was saved?
 // TODO:  what is the difference between add_address_capture_method and add_address_method?
+export const trackAddressSaved = ({}) => {};
 
 // 2.  EVENT NAME: add_address
 //     TRIGGER: On the initiation of the address flow ie we reached the view with the form to enter data
@@ -42,6 +49,7 @@ export const ADD_ADDRESS_CAPTURE_METHOD = {
 //         - add_address_capture_method: auto_complete_google | manual_attempted_autocomplete_google | manual_entry
 //         - document_id: customers id  - TODO: verify if GTM automatically tracks
 // TODO:  how can  add_address_capture_method be valid if this is only triggered on getting to the view
+export const trackAddAddress = ({}) => {};
 
 // 3.  EVENT NAME: add_address_error
 //     TRIGGER: On failure of API call for address creation/update, opposite call to the existing address_saved
@@ -50,3 +58,8 @@ export const ADD_ADDRESS_CAPTURE_METHOD = {
 //         - add_address_method: search_for_an_address | edit_address | add_address_manually
 //         - add_address_capture_method: auto_complete_google | manual_attempted_autocomplete_google | manual_entry
 //         - document_id: customers id  - TODO: verify if GTM automatically tracks
+
+// TODO: likely we can only measure and check edit address related events after capture method
+export const trackAddAddressError = ({}) => {};
+
+export const trackAddressEvent = ({}) => {};
