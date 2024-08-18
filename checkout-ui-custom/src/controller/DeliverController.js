@@ -370,7 +370,7 @@ const DeliverController = (() => {
         if (data.view === DATA_VIEW.EDIT_ADDRESS) {
           RenderEditAddress(data.content);
           trackAddressPayload[PARAMETER.ADD_ADDRESS_METHOD] = ADD_ADDRESS_METHOD.EDIT_ADDRESS;
-          // trackAddressPayload[PARAMETER.ADD_ADDRESS_CAPTURE_METHOD] = 'TODO'; -> Needs to be done after implementing master data call (original capture method
+          trackAddressPayload[PARAMETER.ADD_ADDRESS_CAPTURE_METHOD] = null; // TODO Needs to be done after implementing master data call (original capture method
         }
         if (data.view === DATA_VIEW.ADD_ADDRESS_AUTOCOMPLETE) {
           RenderAddAddressAutoComplete(data.content);

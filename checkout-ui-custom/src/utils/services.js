@@ -143,7 +143,7 @@ export const upsertAddress = async (address) => {
         [PARAMETER.ADD_ADDRESS_STAGE]: ADD_ADDRESS_STAGE.CHECKOUT,
         [PARAMETER.ADD_ADDRESS_METHOD]: 'TODO',
         [PARAMETER.ADD_ADDRESS_CAPTURE_METHOD]: 'TODO',
-        [PARAMETER.DOCUMENT_ID]: 'TODO', // TODO do we have to fetch the document id
+        [PARAMETER.DOCUMENT_ID]: email, // TODO do we have to fetch the document id
       }); // TODO
       return result;
     })
@@ -154,7 +154,7 @@ export const upsertAddress = async (address) => {
         [PARAMETER.ADD_ADDRESS_STAGE]: ADD_ADDRESS_STAGE.CHECKOUT,
         [PARAMETER.ADD_ADDRESS_METHOD]: 'TODO',
         [PARAMETER.ADD_ADDRESS_CAPTURE_METHOD]: 'TODO',
-        [PARAMETER.DOCUMENT_ID]: 'TODO', // TODO do we have to fetch the document id
+        [PARAMETER.DOCUMENT_ID]: email, // TODO do we have to fetch the document id
       }); // TODO
       catchError(`SAVE_ADDRESS_ERROR: ${error?.message}`);
     });
