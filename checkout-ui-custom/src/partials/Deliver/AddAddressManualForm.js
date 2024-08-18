@@ -255,7 +255,7 @@ export const submitAddAddressManualForm = async (event) => {
           : ADD_ADDRESS_METHOD.ADD_ADDRESS_MANUALLY,
       add_addresss_capture_method:
         payload.formType === 'AUTOCOMPLETE_MANUAL'
-          ? ADD_ADDRESS_CAPTURE_METHOD.AUTO_COMPLETE_GOOGLE
+          ? ADD_ADDRESS_CAPTURE_METHOD.MANUAL_ATTEMPTED_AUTO_COMPLETE_GOOGLE
           : ADD_ADDRESS_CAPTURE_METHOD.MANUAL_ENTRY,
     };
     await addOrUpdateAddress(payload, config);

@@ -1,4 +1,5 @@
 import { isValidNumber } from 'libphonenumber-js';
+import { ADD_ADDRESS_CAPTURE_METHOD, ADD_ADDRESS_METHOD } from '../../utils/addressAnalytics';
 import { formatPhoneNumber } from '../../utils/phoneFields';
 import { addOrUpdateAddress } from '../../utils/services';
 import setAddress from '../../utils/setAddress';
@@ -207,7 +208,14 @@ export const submitAddAddressAutoCompleteForm = async (event) => {
     return;
   }
   postAddressSaveScroll();
-  addOrUpdateAddress(payload); // TODO
+
+  // persist address to local storage + master data
+  const config = {
+    persistMasterData: true,
+    add_address_method: ADD_ADDRESS_METHOD.SEARCH_FOR_AN_ADDRESS,
+    add_addresss_capture_method: ADD_ADDRESS_CAPTURE_METHOD.AUTO_COMPLETE_GOOGLE,
+  };
+  addOrUpdateAddress(payload, config);
 
   window.postMessage({ action: 'setDeliveryView', view: 'select-address' });
 };
