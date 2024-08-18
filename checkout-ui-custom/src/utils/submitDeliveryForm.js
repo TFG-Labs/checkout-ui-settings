@@ -71,7 +71,7 @@ const submitDeliveryForm = async (event) => {
     console.info({ tvDataSent });
   }
 
-  await addOrUpdateAddress(fullAddress); // TODO
+  await addOrUpdateAddress(fullAddress, { persistMasterData: false });
 
   // after submitting hide the delivery container
   $('.bash--delivery-container').css('display', 'none');
