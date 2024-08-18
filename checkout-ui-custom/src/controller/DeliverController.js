@@ -363,7 +363,7 @@ const DeliverController = (() => {
 
         const trackAddressPayload = {
           [PARAMETER.ADD_ADDRESS_STAGE]: ADD_ADDRESS_STAGE.CHECKOUT,
-          [PARAMETER.DOCUMENT_ID]: 'TODO', // TODO do we have to fetch the document id
+          [PARAMETER.DOCUMENT_ID]: window?.vtexjs?.checkout?.orderForm?.clientProfileData?.email || null,
         };
 
         // Render view and populate track event payload;
