@@ -391,7 +391,7 @@ const DeliverController = (() => {
 
         // track address event
         if (data.view !== DATA_VIEW.SELECT_ADDRESS) {
-          trackAddressEvent(trackAddressPayload); // TODO
+          trackAddressEvent(trackAddressPayload);
         }
 
         break;
