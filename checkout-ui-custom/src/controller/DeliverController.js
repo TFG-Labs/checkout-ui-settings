@@ -29,6 +29,7 @@ import {
   ADD_ADDRESS_CAPTURE_METHOD,
   ADD_ADDRESS_METHOD,
   ADD_ADDRESS_STAGE,
+  EVENT_NAME,
   PARAMETER,
   trackAddressEvent,
 } from '../utils/addressAnalytics';
@@ -356,12 +357,13 @@ const DeliverController = (() => {
         document.querySelector('.bash--delivery-container')?.setAttribute('data-view', data.view);
 
         // Clear form fields
-        clearEditAddress(); // TODO could you do the clearing on
+        clearEditAddress();
         clearAddAddressAutoComplete();
         clearManualAddress();
         clearAddAddressAutoCompleteManual();
 
         const trackAddressPayload = {
+          eventName: EVENT_NAME.ADD_ADDRESS,
           [PARAMETER.ADD_ADDRESS_STAGE]: ADD_ADDRESS_STAGE.CHECKOUT,
           [PARAMETER.DOCUMENT_ID]: window?.vtexjs?.checkout?.orderForm?.clientProfileData?.email || null,
         };
