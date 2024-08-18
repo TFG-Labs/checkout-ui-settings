@@ -1,4 +1,5 @@
 import { isValidNumber } from 'libphonenumber-js';
+import { ADD_ADDRESS_CAPTURE_METHOD, ADD_ADDRESS_METHOD } from '../../utils/addressAnalytics';
 import { formatPhoneNumber } from '../../utils/phoneFields';
 import { addOrUpdateAddress } from '../../utils/services';
 import setAddress from '../../utils/setAddress';
@@ -244,7 +245,20 @@ export const submitAddAddressManualForm = async (event) => {
       console.error('Set address error', { setAddressResponse });
       throw new Error('Failed to set address');
     }
-    await addOrUpdateAddress(payload); // TODO
+
+    // save address to local storage + master data
+    const config = {
+      persistMasterData: true,
+      add_address_method:
+        payload.formType === 'AUTOCOMPLETE_MANUAL'
+          ? ADD_ADDRESS_METHOD.SEARCH_FOR_AN_ADDRESS
+          : ADD_ADDRESS_METHOD.ADD_ADDRESS_MANUALLY,
+      add_addresss_capture_method:
+        payload.formType === 'AUTOCOMPLETE_MANUAL'
+          ? ADD_ADDRESS_CAPTURE_METHOD.AUTO_COMPLETE_GOOGLE
+          : ADD_ADDRESS_CAPTURE_METHOD.MANUAL_ENTRY,
+    };
+    await addOrUpdateAddress(payload, config);
 
     window.postMessage({ action: 'setDeliveryView', view: 'select-address' });
     postAddressSaveScroll();
