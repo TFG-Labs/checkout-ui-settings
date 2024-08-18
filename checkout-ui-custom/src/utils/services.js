@@ -181,7 +181,15 @@ export const updateAddressListing = (address) => {
   $(`input[type="radio"][name="selected-address"][value="${address.addressName}"]`).attr('checked', true);
 };
 
-export const addOrUpdateAddress = async (address) => {
+/**
+ *
+ * @param {Object} address
+ * @param {Object} config
+ * @param {ADD_ADDRESS_METHOD[keyof typeof ADD_ADDRESS_METHOD]} config.add_address_method -The initial view to add the address. Use one of the values from `ADD_ADDRESS_METHOD` (e.g., `ADD_ADDRESS_METHOD.SEARCH_FOR_AN_ADDRESS`).
+ * @param {ADD_ADDRESS_CAPTURE_METHOD[keyof typeof ADD_ADDRESS_CAPTURE_METHOD]} config.add_address_capture_method The method used to capture the address. Use one of the values from `ADD_ADDRESS_CAPTURE_METHOD` (e.g., `ADD_ADDRESS_CAPTURE_METHOD.AUTO_COMPLETE_GOOGLE`).
+ * @param {boolean} config.persistMasterData - boolean value to determine if an address should persist to master data
+ * @returns
+ */
   if (!address.addressName) {
     const streetStr = address.street
       .replace(/[^a-zA-Z0-9]/g, ' ')
@@ -197,7 +205,7 @@ export const addOrUpdateAddress = async (address) => {
   DB.addOrUpdateAddress(address).then(() => updateAddressListing(address));
 
   // Add or update at the API.
-  upsertAddress(address);
+  if (config.persistMasterData) upsertAddress(address, config);
 };
 
 export const getAddressByName = async (addressName) => DB.getAddress(addressName);
