@@ -190,6 +190,7 @@ export const updateAddressListing = (address) => {
  * @param {boolean} config.persistMasterData - boolean value to determine if an address should persist to master data
  * @returns
  */
+export const addOrUpdateAddress = async (address, config) => {
   if (!address.addressName) {
     const streetStr = address.street
       .replace(/[^a-zA-Z0-9]/g, ' ')
