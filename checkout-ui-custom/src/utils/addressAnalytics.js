@@ -59,10 +59,3 @@ export const trackAddressEvent = ({
   console.log('trackAddressEvent', payload);
   // TODO decide how to pipe to GTM
 };
-
-// TODO        - document_id: customers id  - TODO: verify if GTM automatically tracks
-// TODO: likely we can only measure and check edit address related events after capture method
-// TODO: look at gaEvent in master
-// TODO: add_address  how can  add_address_capture_method be valid if this is only triggered on getting to the view
-// TODO: how is there no reference to the address that was saved?
-// TODO:  what is the difference between add_address_capture_method and add_address_method?
