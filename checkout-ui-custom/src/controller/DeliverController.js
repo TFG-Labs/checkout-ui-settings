@@ -4,7 +4,7 @@ import AddAddressAutoCompleteForm, {
   ADD_ADDRESS_AUTOCOMPLETE_FORM_RECEIVER_PHONE_ID,
   submitAddAddressAutoCompleteForm,
 } from '../partials/Deliver/AddAddressAutoCompleteForm';
-import AddAddressManualForm, {
+import AddAddressManual, {
   ADD_ADDRESS_FORM_MANUAL_RECIEVER_PHONE_ID,
   submitAddAddressManualForm,
 } from '../partials/Deliver/AddAddressManualForm';
@@ -19,6 +19,7 @@ import {
   clearRicaFields,
   customShippingDataIsValid,
   parseAttribute,
+  populateAddressForm,
   populateDeliveryError,
   populateRicaFields,
   populateTVFields,
@@ -39,6 +40,7 @@ import { preparePhoneField } from '../utils/phoneFields';
 import sendEvent from '../utils/sendEvent';
 import { clearAddresses, getAddressByName, removeFromCart } from '../utils/services';
 import setAddress from '../utils/setAddress';
+import submitAddressForm from '../utils/submitAddressForm';
 import submitDeliveryForm from '../utils/submitDeliveryForm';
 
 const DeliverController = (() => {
@@ -70,32 +72,26 @@ const DeliverController = (() => {
     preparePhoneField(`#${EDIT_FORM_RECEIVER_PHONE_ID}`);
   };
 
+  const RenderAddAddressManual = async () => {
+    document.querySelector('#manual-address-section').innerHTML = AddAddressManual();
+    preparePhoneField(`#${ADD_ADDRESS_FORM_MANUAL_RECIEVER_PHONE_ID}`);
+  };
+
   const RenderAddAddressAutoComplete = async (address) => {
     document.querySelector('#add-address-autocomplete-section').innerHTML = AddAddressAutoCompleteForm(address);
     preparePhoneField(`#${ADD_ADDRESS_AUTOCOMPLETE_FORM_RECEIVER_PHONE_ID}`);
-  };
-
-  const RenderAddAddressManual = async (type, address) => {
-    const mountPoint = type === 'MANUAL' ? '#manual-address-section' : '#add-address-autocomplete-manual-section';
-
-    document.querySelector(mountPoint).innerHTML = AddAddressManualForm({ type, address });
-    preparePhoneField(`#${ADD_ADDRESS_FORM_MANUAL_RECIEVER_PHONE_ID}`);
   };
 
   const clearEditAddress = () => {
     document.querySelector('#edit-adress-section').innerHTML = '';
   };
 
-  const clearAddAddressAutoComplete = () => {
-    document.querySelector('#add-address-autocomplete-section').innerHTML = '';
-  };
-
-  const clearddAddressAutoCompleteManual = () => {
-    document.querySelector('#add-address-autocomplete-manual-section').innerHTML = '';
-  };
-
   const clearManualAddress = () => {
     document.querySelector('#manual-address-section').innerHTML = '';
+  };
+
+  const clearAddAddressAutoComplete = () => {
+    document.querySelector('#add-address-autocomplete-section').innerHTML = '';
   };
 
   const setupDeliver = () => {
@@ -240,8 +236,13 @@ const DeliverController = (() => {
     e.preventDefault();
     const viewTarget = $(this).data('view');
     const content = decodeURIComponent($(this).data('content'));
-    $('#bash-delivery-error-container').html('');
     window.postMessage({ action: 'setDeliveryView', view: viewTarget, content });
+  });
+
+  // Clear form on adding new address
+  $(document).on('click', '#no-address-search-results', () => {
+    document.getElementById('bash--address-form').reset();
+    document.getElementById('bash--input-street').focus();
   });
 
   // Select address
@@ -260,7 +261,7 @@ const DeliverController = (() => {
 
     getAddressByName(address.addressName)
       .then((addressByName) => {
-        setAddress(addressByName || address);
+        setAddress(addressByName || address, { validateExtraFields: false });
         $('input[type="radio"][name="selected-address"]:checked').attr('checked', false);
         $(this).attr('checked', true);
       })
@@ -308,6 +309,7 @@ const DeliverController = (() => {
   });
 
   // submit address form listeners
+  $(document).on('submit', '#bash--address-form', submitAddressForm);
   $(document).on('submit', '#bash--add-address-manual-form', submitAddAddressManualForm);
   $(document).on('submit', '#bash--delivery-form', submitDeliveryForm);
   $(document).on('submit', '#bash--edit-address-form', submitEditAddressForm);
@@ -350,21 +352,28 @@ const DeliverController = (() => {
 
         // Clear form fields
         clearEditAddress();
-        clearAddAddressAutoComplete();
         clearManualAddress();
-        clearddAddressAutoCompleteManual();
+        clearAddAddressAutoComplete();
 
+        if (data.view === 'address-form' || data.view === 'address-edit') {
+          preparePhoneField('#bash--input-receiverPhone');
+          if (data.content) {
+            try {
+              const address = JSON.parse(decodeURIComponent($(`#${data.content}`).data('address')));
+              populateAddressForm(address);
+            } catch (e) {
+              console.warn('Could not parse address Json', data.content);
+            }
+          }
+        }
         if (data.view === 'edit-address') {
           RenderEditAddress(data.content);
         }
+        if (data.view === 'manual-address') {
+          RenderAddAddressManual();
+        }
         if (data.view === 'add-address-autocomplete') {
           RenderAddAddressAutoComplete(data.content);
-        }
-        if (data.view === 'add-address-autocomplete-manual') {
-          RenderAddAddressManual('AUTOCOMPLETE_MANUAL', data.content);
-        }
-        if (data.view === 'manual-address') {
-          RenderAddAddressManual('MANUAL');
         }
         break;
       case 'FB_LOG':

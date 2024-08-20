@@ -1,35 +1,48 @@
-import { requiredTVFields, validAddressTypes } from '../partials/Deliver/constants';
+import { requiredAddressFields, requiredTVFields, validAddressTypes } from '../partials/Deliver/constants';
 import {
   addressIsValid,
+  populateAddressForm,
   populateDeliveryError,
   populateExtraFields,
   populateRicaFields,
-  setDeliveryLoading,
+  setDeliveryLoading
 } from '../partials/Deliver/utils';
 import { AD_TYPE, DELIVER_APP } from './const';
 import { clearLoaders, getSpecialCategories } from './functions';
 import sendEvent from './sendEvent';
 import { sendOrderFormCustomData, updateAddressListing } from './services';
 
-const updateDeliveryData = ({ businessName, receiverPhone }) =>
-  sendOrderFormCustomData(DELIVER_APP, {
-    jsonString: JSON.stringify({
-      businessName: businessName || '',
-      receiverPhone: receiverPhone || '',
-    }),
-  });
+const updateDeliveryData = ({ businessName, receiverPhone }) => sendOrderFormCustomData(DELIVER_APP, {
+  jsonString: JSON.stringify({
+    businessName: businessName || '',
+    receiverPhone: receiverPhone || '',
+  }),
+});
 
-const setAddress = (address) => {
+const setAddress = (address, options = { validateExtraFields: true }) => {
+  const { validateExtraFields } = options;
   const { items } = window.vtexjs.checkout.orderForm;
   const { hasTVs, hasSimCards } = getSpecialCategories(items);
 
   if (hasTVs) populateExtraFields(address, requiredTVFields, 'tv_');
   if (hasSimCards) populateRicaFields();
 
-  const { isValid, invalidFields } = addressIsValid(address);
+  const { isValid, invalidFields } = addressIsValid(address, validateExtraFields);
 
   if (!isValid) {
     console.error({ invalidFields });
+    populateAddressForm(address);
+    $('#bash--address-form').addClass('show-form-errors');
+    if (validateExtraFields) $('#bash--delivery-form')?.addClass('show-form-errors');
+    $(`#bash--input-${invalidFields[0]}`).focus();
+
+    if (requiredAddressFields.includes(invalidFields[0])) {
+      window.postMessage({
+        action: 'setDeliveryView',
+        view: 'address-edit',
+      });
+    }
+
     return { success: false, error: 'Invalid address details.' };
   }
 
@@ -72,6 +85,11 @@ const setAddress = (address) => {
 
       if (errors.length > 0) {
         populateDeliveryError(errors);
+        window.postMessage({
+          action: 'setDeliveryView',
+          view: 'address-form',
+        });
+
         return { success: false, errors };
       }
 
@@ -84,7 +102,7 @@ const setAddress = (address) => {
           eventCategory: 'Checkout_SystemError',
           action: 'OrderFormFailed',
           label: 'Could not update businessName and/or receiverPhone ',
-          description: 'Could not update businessName and/or receiverPhone.',
+          description: 'Could not update businessName and/or receiverPhone.'
         });
       }
 

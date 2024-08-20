@@ -1,5 +1,11 @@
 import AddressSearch from './AddressSearch';
-import { AddressSectionHeading } from './FormComponents';
+
+const Heading = () => /* html */ `
+  <div class="bash--heading">
+    <h3>Add a new delivery address</h3>
+    <a href='#' data-view='select-address' id='back-button-select-address'>&lt; Back</a>
+  </div>
+`;
 
 const ManualSearchCTA = () => /* html */ `
   <p style="font-size: 12px; margin: 16px 0" id="type-your-address-above">
@@ -15,7 +21,7 @@ const ManualSearchCTA = () => /* html */ `
 
 const AddressSearchSection = () => /* html */ `
   <section class="bash--delivery-view" data-section="address-search">
-    ${AddressSectionHeading('Add a new delivery address', 'select-address', 'back-button-select-address')}
+    ${Heading()}
     ${AddressSearch()} 
     ${ManualSearchCTA()}
   </section>
