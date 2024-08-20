@@ -1,4 +1,5 @@
 import FormField from './Elements/FormField';
+import { provinceShortCode } from './utils';
 
 /**
  * isCompleteGoogleAddress - checks if the address meets the criteria to show the add address auto complete form
@@ -75,6 +76,34 @@ const mapGoogleAddress = (place) => {
 };
 
 /**
+ * populateAddressFromSearch - fills form fields based on the address returned from google auto complete
+ * @param {Object} address
+ * @returns {void}
+ */
+const populateAddressFromSearch = (address) => {
+  const { street, neighborhood, postalCode, state, city, lat, lng } = address;
+
+  // Clear any populated fields
+  document.getElementById('bash--address-form')?.reset();
+
+  // Clear hidden ID fields to prevent overwriting existing.
+  document.getElementById('bash--input-addressId').value = '';
+  document.getElementById('bash--input-addressName').value = '';
+
+  document.getElementById('bash--input-number').value = '  ';
+  document.getElementById('bash--input-street').value = street ?? '';
+  document.getElementById('bash--input-neighborhood').value = neighborhood ?? '';
+  document.getElementById('bash--input-city').value = city ?? '';
+  document.getElementById('bash--input-postalCode').value = postalCode ?? '';
+  document.getElementById('bash--input-state').value = provinceShortCode(state);
+  document.getElementById('bash--input-lat').value = lat || '';
+  document.getElementById('bash--input-lng').value = lng || '';
+
+  // Update previously invalid fields.
+  $(':invalid').trigger('change');
+};
+
+/**
  * checkForAddressResults - checks if there are any address results to display a notification
  * @param {*} event
  * @returns {void}
@@ -108,9 +137,17 @@ const initGoogleAutocomplete = () => {
     const place = autocomplete.getPlace();
     const { address, isComplete } = mapGoogleAddress(place);
 
-    const view = isComplete ? 'add-address-autocomplete' : 'add-address-autocomplete-manual';
-    window.postMessage({ action: 'setDeliveryView', view, content: address });
-    input.value = '';
+    // Route to the correct view
+    if (isComplete) {
+      window.postMessage({ action: 'setDeliveryView', view: 'add-address-autocomplete', content: address });
+      input.value = '';
+    } else {
+      populateAddressFromSearch({
+        ...address,
+        street: `${address?.streetNumber ?? ''} ${address?.route ?? ''}`.trim(), // this will likely split into two values when we split out the form
+      });
+      window.postMessage({ action: 'setDeliveryView', view: 'address-form' });
+    }
   });
   input.value = '';
   input?.addEventListener('keyup', checkForAddressResults);
@@ -121,14 +158,15 @@ const initGoogleAutocomplete = () => {
  * @returns {string} - html string
  */
 const AddressNotFoundNotification = () => /* html */ `
-    <div id="no-address-search-results-notification" class="notification info" >
-      <span class="icon"></span>
-      <div class="notification-content">
+  <div id="no-address-search-results-notification" class="notification info" >
+    <span class="icon"></span>
+    <div class="notification-content">
       We could not find your address. 
-        <a class="no-results-drop-down" href="" data-view="manual-address" id="no-address-search-results">
-          Please click here to enter it manually.
-        </a>
+      <a class="no-results-drop-down" href="" data-view="manual-address" id="no-address-search-results">
+        Please click here to enter it manually.
+      </a>
     </div>
+  </div>
 `;
 
 /**

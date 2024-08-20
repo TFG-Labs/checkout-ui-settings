@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { CouldNotSaveAddressError, NoAddressSelectedError, ShowDeliveryError } from '../partials/Deliver/DeliveryError';
+import { NoAddressSelectedError } from '../partials/Deliver/DeliveryError';
 import { requiredRicaFields, requiredTVFields } from '../partials/Deliver/constants';
 import { setDeliveryLoading } from '../partials/Deliver/utils';
 import { RICA_APP, STEPS, TV_APP } from './const';
@@ -34,9 +34,8 @@ const submitDeliveryForm = async (event) => {
   fullAddress = { ...address, ...dbAddress };
 
   // Final check to validate that the selected address has no validation errors.
-  const { success: didSetAddress } = await setAddress(fullAddress);
+  const { success: didSetAddress } = await setAddress(fullAddress, { validateExtraFields: false });
   if (!didSetAddress) {
-    ShowDeliveryError(CouldNotSaveAddressError());
     console.error('Delivery Form - Address Validation error');
     clearLoaders();
     return;

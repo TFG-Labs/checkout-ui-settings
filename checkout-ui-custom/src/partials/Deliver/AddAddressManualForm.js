@@ -2,37 +2,29 @@ import { isValidNumber } from 'libphonenumber-js';
 import { formatPhoneNumber } from '../../utils/phoneFields';
 import { addOrUpdateAddress } from '../../utils/services';
 import setAddress from '../../utils/setAddress';
-import { CouldNotSaveAddressError, ShowDeliveryError } from './DeliveryError';
 import FormField from './Elements/FormField';
-import { AddressSectionHeading, SubmitButton } from './FormComponents';
-import { getBestRecipient, postAddressSaveScroll, provinceShortCode } from './utils';
+import { getBestRecipient } from './utils';
 
 export const ADD_ADDRESS_FORM_MANUAL_RECIEVER_PHONE_ID = 'bash--input-add-address-manual-form-receiverPhone';
 
-/**
- *
- * @param {Object} config - form configuration.
- * @param {Object} [config.address] - address object to initialize form with, optional, but must be present if type = add-address-autocomplete-manual
- * @param {string} config.type - type of address form to render "MANUAL" | "AUTOCOMPLETE_MANUAL"
- */
-const populateFields = (config) => {
-  const { type, address } = config;
-  const lng = type === 'AUTOCOMPLETE_MANUAL' && address?.lng ? address.lng : '';
-  const lat = type === 'AUTOCOMPLETE_MANUAL' && address?.lat ? address.lat : '';
-  const street = type === 'AUTOCOMPLETE_MANUAL' ? `${address?.streetNumber ?? ''} ${address?.route ?? ''}`.trim() : '';
-  const neighborhood = type === 'AUTOCOMPLETE_MANUAL' && address?.neighborhood ? address?.neighborhood : '';
-  const city = type === 'AUTOCOMPLETE_MANUAL' && address?.city ? address.city : '';
-  const postalCode = type === 'AUTOCOMPLETE_MANUAL' && address?.postalCode ? address.postalCode : '';
-  const state = type === 'AUTOCOMPLETE_MANUAL' && address?.state ? provinceShortCode(address.state) : '';
+const Heading = () => /* html */ `
+    <div class="bash--heading">
+      <h3>Add a new delivery address</h3>
+      <a href="#" class="back-button--select" data-view="select-address">&lt; Back</a>
+    </div>
+`;
 
+const SaveButton = () => /* html */ `
+  <button
+    class="submit btn-go-to-payment btn btn-large btn-success"
+    id="btn-save-address"
+    type="submit">
+    Save Address
+  </button>
+`;
+
+const AddAddressManualForm = () => {
   const fields = [
-    // HIDDEN FIELDS
-    {
-      name: 'formType',
-      type: 'hidden',
-      value: config.type,
-      required: false,
-    },
     {
       name: 'addressId',
       type: 'hidden',
@@ -50,21 +42,14 @@ const populateFields = (config) => {
       name: 'lat',
       required: false,
       type: 'hidden',
-      value: lat,
+      value: '',
     },
     {
       name: 'lng',
       required: false,
       type: 'hidden',
-      value: lng,
+      value: '',
     },
-    {
-      type: 'hidden',
-      required: true,
-      name: 'country',
-      value: 'ZAF',
-    },
-    // VISIBLE FIELDS
     {
       name: 'addressType',
       label: 'Address type',
@@ -93,12 +78,12 @@ const populateFields = (config) => {
       name: 'street',
       label: 'Street address',
       required: true,
-      value: street,
+      value: '',
     },
     {
       name: 'neighborhood',
       label: 'Suburb',
-      value: neighborhood,
+      value: '',
       maxLength: 750,
       required: true,
     },
@@ -106,13 +91,13 @@ const populateFields = (config) => {
       name: 'city',
       label: 'City',
       required: true,
-      value: city,
+      value: '',
       maxLength: 750,
     },
     {
       name: 'postalCode',
       label: 'Postal code',
-      value: postalCode,
+      value: '',
       type: 'tel',
       minlength: 4,
       maxLength: 4,
@@ -140,17 +125,29 @@ const populateFields = (config) => {
         { value: 'NC', label: 'Northern Cape' },
         { value: 'NW', label: 'North West' },
         { value: 'WC', label: 'Western Cape' },
-      ].map((option) => ({ ...option, selected: option.value === state })),
+      ],
+    },
+    {
+      type: 'hidden',
+      required: true,
+      name: 'country',
+      value: 'ZAF',
     },
     {
       name: 'receiverName',
-      label: "Recipient's name",
+      label: `Recipient's name`,
       required: true,
       value: getBestRecipient({ type: 'delivery' }),
     },
     {
+      name: 'complement',
+      required: false,
+      type: 'hidden',
+      value: '',
+    },
+    {
       name: 'receiverPhone',
-      label: "Recipient's mobile number",
+      label: `Recipient's mobile number`,
       required: true,
       type: 'tel',
       helperText: 'We send shipping updates to this number.',
@@ -161,23 +158,11 @@ const populateFields = (config) => {
     },
   ];
 
-  return fields;
-};
-
-/**
- *
- * @param {Object} config - form configuration.
- * @param {Object} [config.address] - address object to initialize form with, optional, but must be present if type = add-address-autocomplete-manual
- * @param {string} config.type - type of address form to render "MANUAL" | "AUTOCOMPLETE_MANUAL"
- */
-const AddAddressManualForm = (config) => {
-  const fields = populateFields(config);
-
   return /* html */ `
-    ${AddressSectionHeading('Add a new delivery address', 'select-address')}
+    ${Heading()}
     <form id="bash--add-address-manual-form" method="post">
       ${fields.map((field) => FormField(field)).join('')}
-      ${SubmitButton('Save address', 'btn-save-address')}
+      ${SaveButton()}
     </form>
   `;
 };
@@ -194,7 +179,7 @@ export const submitAddAddressManualForm = async (event) => {
     payload[key] = value.trim();
   }
 
-  let { receiverPhone } = payload;
+  let receiverPhone = payload.receiverPhone;
   receiverPhone = formatPhoneNumber(receiverPhone, 'ZA').trim();
 
   // VALIDATE FIELDS
@@ -230,24 +215,18 @@ export const submitAddAddressManualForm = async (event) => {
 
   // UPDATE PAYLOAD
   payload.receiverPhone = receiverPhone;
-  payload.isDisposable = false;
-  const geoCoords = [parseFloat(payload.lng) || '', parseFloat(payload.lat) || ''];
-  payload.geoCoordinate = geoCoords; // for MasterData
-  payload.geoCoordinates = geoCoords; // for shippingData
 
   // POST ADDRESS UPDATE AND CHANGE VIEW
   try {
     // Apply the new address to customers orderForm.
-    const setAddressResponse = await setAddress(payload);
+    const setAddressResponse = await setAddress(payload, { validateExtraFields: false });
     if (!setAddressResponse.success) {
-      ShowDeliveryError(CouldNotSaveAddressError());
       console.error('Set address error', { setAddressResponse });
       throw new Error('Failed to set address');
     }
     await addOrUpdateAddress(payload);
 
     window.postMessage({ action: 'setDeliveryView', view: 'select-address' });
-    postAddressSaveScroll();
   } catch (error) {
     console.error('Error adding new address', error);
     window.postMessage(
