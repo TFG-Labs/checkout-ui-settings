@@ -34,7 +34,7 @@ const DeliverContainer = ({ hasFurn, hasFurnOnly, hasFurnMixed }) => /* html */ 
         ${hasFurnOnly || hasFurnMixed ? FURNITURE_FEE_LINK : ''}
       </div>
       ${DeliveryOptions({ hasFurnOnly, hasFurnitureMixed: hasFurnMixed })}
-      ${SubmitButton('Go to payment', 'btn-save-delivery')}
+      ${SubmitButton('Save & Continue', 'btn-save-delivery')}
     </section>
    </form>
    ${AddressSearchSection()}
