@@ -146,21 +146,19 @@ export const upsertAddress = async (address, config) => {
     .then((result) => {
       console.log('Address saved to master data:', result);
       trackAddressEvent({
-        eventName: EVENT_NAME.ADDRESS_SAVED,
+        event: EVENT_NAME.ADDRESS_SAVED,
         [PARAMETER.ADD_ADDRESS_STAGE]: ADD_ADDRESS_STAGE.CHECKOUT,
         [PARAMETER.ADD_ADDRESS_METHOD]: config.add_address_method,
         [PARAMETER.ADD_ADDRESS_CAPTURE_METHOD]: config.add_address_capture_method,
-        [PARAMETER.DOCUMENT_ID]: email,
       });
       return result;
     })
     .catch((error) => {
       trackAddressEvent({
-        eventName: EVENT_NAME.ADD_ADDRESS_ERROR,
+        event: EVENT_NAME.ADD_ADDRESS_ERROR,
         [PARAMETER.ADD_ADDRESS_STAGE]: ADD_ADDRESS_STAGE.CHECKOUT,
         [PARAMETER.ADD_ADDRESS_METHOD]: config.add_address_method,
         [PARAMETER.ADD_ADDRESS_CAPTURE_METHOD]: config.add_address_capture_method,
-        [PARAMETER.DOCUMENT_ID]: email,
       });
       catchError(`SAVE_ADDRESS_ERROR: ${error?.message}`);
     });

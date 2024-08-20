@@ -363,9 +363,8 @@ const DeliverController = (() => {
         clearAddAddressAutoCompleteManual();
 
         const trackAddressPayload = {
-          eventName: EVENT_NAME.ADD_ADDRESS,
+          event: EVENT_NAME.ADD_ADDRESS,
           [PARAMETER.ADD_ADDRESS_STAGE]: ADD_ADDRESS_STAGE.CHECKOUT,
-          [PARAMETER.DOCUMENT_ID]: window?.vtexjs?.checkout?.orderForm?.clientProfileData?.email || null,
         };
 
         // Render view and populate track event payload;
@@ -392,7 +391,7 @@ const DeliverController = (() => {
         }
 
         // track address event
-        if (data.view !== DATA_VIEW.SELECT_ADDRESS) {
+        if (data.view !== DATA_VIEW.SELECT_ADDRESS && data.view !== DATA_VIEW.ADDRESS_SEARCH) {
           trackAddressEvent(trackAddressPayload);
         }
 

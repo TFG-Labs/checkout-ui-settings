@@ -76,6 +76,7 @@ export const DATA_VIEW = {
   ADD_ADDRESS_AUTOCOMPLETE_MANUAL: 'add-address-autocomplete-manual',
   MANUAL_ADDRESS: 'manual-address',
   SELECT_ADDRESS: 'select-address',
+  ADDRESS_SEARCH: 'address-search',
 };
 
 export {
