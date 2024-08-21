@@ -45,6 +45,14 @@ export const CouldNotSaveAddressError = () => /* html */ `
    </div> 
 `;
 
+export const CouldNotSelectAddressError = () => /* html */ `
+   <div id="bash-delivery-error" class="notification error"  >
+      <div class="notification-content">
+         <p>Address could not be selected, please select another address or add a new address</p>
+      </div>
+   </div> 
+`;
+
 export const ShowDeliveryError = (htmlString) => {
   const containerId = '#bash-delivery-error-container';
   $('html, body').animate({ scrollTop: $(containerId).offset().top }, 400);
