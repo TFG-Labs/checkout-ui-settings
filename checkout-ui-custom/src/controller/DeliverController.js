@@ -9,7 +9,7 @@ import AddAddressManualForm, {
   submitAddAddressManualForm,
 } from '../partials/Deliver/AddAddressManualForm';
 import DeliverContainer from '../partials/Deliver/DeliverContainer';
-import { CouldNotSaveAddressError, ShowDeliveryError } from '../partials/Deliver/DeliveryError';
+import { CouldNotSelectAddressError, ShowDeliveryError } from '../partials/Deliver/DeliveryError';
 
 import EditAddressForm, {
   EDIT_FORM_RECEIVER_PHONE_ID,
@@ -265,7 +265,7 @@ const DeliverController = (() => {
 
         const { success: didSetAddress } = await setAddress(addressByName || address);
         if (!didSetAddress) {
-          ShowDeliveryError(CouldNotSaveAddressError());
+          ShowDeliveryError(CouldNotSelectAddressError());
           console.error('Select Address - Set Address Failure');
         }
       })
