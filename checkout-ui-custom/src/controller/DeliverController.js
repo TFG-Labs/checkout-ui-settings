@@ -9,6 +9,7 @@ import AddAddressManualForm, {
   submitAddAddressManualForm,
 } from '../partials/Deliver/AddAddressManualForm';
 import DeliverContainer from '../partials/Deliver/DeliverContainer';
+import { CouldNotSaveAddressError, ShowDeliveryError } from '../partials/Deliver/DeliveryError';
 
 import EditAddressForm, {
   EDIT_FORM_RECEIVER_PHONE_ID,
@@ -259,10 +260,14 @@ const DeliverController = (() => {
     if (!address) return;
 
     getAddressByName(address.addressName)
-      .then((addressByName) => {
-        setAddress(addressByName || address);
+      .then(async (addressByName) => {
         $('input[type="radio"][name="selected-address"]:checked').attr('checked', false);
-        $(this).attr('checked', true);
+
+        const { success: didSetAddress } = await setAddress(addressByName || address);
+        if (!didSetAddress) {
+          ShowDeliveryError(CouldNotSaveAddressError());
+          console.error('Select Address - Set Address Failure');
+        }
       })
       .catch((e) => {
         console.error('Could not get address - address selection', e?.message);
