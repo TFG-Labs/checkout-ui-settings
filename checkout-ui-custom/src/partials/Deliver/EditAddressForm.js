@@ -9,20 +9,20 @@ import { postAddressSaveScroll } from './utils';
 
 export const EDIT_FORM_RECEIVER_PHONE_ID = 'bash--input-edit-adress-form-receiverPhone';
 
-// TEMPORARILY REMOVED  - CAUSING ISSUE
-// const DeleteButton = () => /* html */ `
-//   <button
-//     class="btn btn-small"
-//     id="btn-delete-address"
-//     type="submit">
-//     Delete
-//   </button>
-// `;
+const DeleteButton = () => /* html */ `
+  <button
+    class="btn btn-small"
+    id="btn-delete-address"
+  >
+    Delete
+  </button>
+`;
 
 const ButtonContainer = () => /* html */ `
   <div
     id="address-button-container"
   >
+    ${DeleteButton()}
     ${SubmitButton('Save', 'btn-save-address')}
   </div>
 `;

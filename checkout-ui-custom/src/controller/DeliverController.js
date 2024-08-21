@@ -27,7 +27,7 @@ import {
   updateDeliveryFeeDisplay,
 } from '../partials/Deliver/utils';
 import { AD_TYPE, STEPS } from '../utils/const';
-// import handleDeleteAddress from '../utils/deleteAddress';
+import handleDeleteAddress from '../utils/deleteAddress';
 import { formatAddressSummary } from '../utils/formatAddressSummary';
 import {
   clearLoaders,
@@ -336,14 +336,14 @@ const DeliverController = (() => {
     $(this).removeClass('invalid');
   });
 
-  // Add event listener for delete address: TEMPORARILY DISABLING< CAUSING ADDRESSES TO DISAPPEAR
-  // $(document).on('click', '#btn-delete-address', (e) => {
-  //   e.preventDefault();
-  //   const addressName = $('#bash--input-addressName').val();
-  //   if (confirm('Please note: Deleting this address will not delete any pending orders to this address.')) {
-  //     handleDeleteAddress(addressName);
-  //   }
-  // });
+  // event listener for delete address
+  $(document).on('click', '#btn-delete-address', (e) => {
+    e.preventDefault();
+    const addressName = $('#bash--input-addressName').val();
+    if (confirm('Please note: Deleting this address will not delete any pending orders to this address.')) {
+      handleDeleteAddress(addressName);
+    }
+  });
 
   // Form validation
   window.addEventListener('message', (event) => {
