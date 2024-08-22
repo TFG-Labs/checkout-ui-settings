@@ -2,9 +2,10 @@ import { isValidNumber } from 'libphonenumber-js';
 import { formatPhoneNumber } from '../../utils/phoneFields';
 import { addOrUpdateAddress } from '../../utils/services';
 import setAddress from '../../utils/setAddress';
+import { CouldNotSaveAddressError, ShowDeliveryError } from './DeliveryError';
 import FormField from './Elements/FormField';
 import { AddressSectionHeading, ContactCard, SubmitButton } from './FormComponents';
-import { provinceShortCode } from './utils';
+import { postAddressSaveScroll, provinceShortCode } from './utils';
 
 export const ADD_ADDRESS_AUTOCOMPLETE_FORM_RECEIVER_PHONE_ID = 'bash--input-add-adress-autocomplete-form-receiverPhone';
 
@@ -116,7 +117,7 @@ const AddAddressAutoCompleteForm = (address) => {
     ${ContactCard({ ...address, street })}
     <form id="bash--add-address-autocomplete-form" method="post">
       ${fields.map((field) => FormField(field)).join('')}
-      ${SubmitButton()}
+      ${SubmitButton('Save address', 'btn-save-address')}
     </form>
   `;
 };
@@ -198,12 +199,14 @@ export const submitAddAddressAutoCompleteForm = async (event) => {
   };
 
   // Apply the selected address to customers orderForm.
-  const setAddressResponse = await setAddress(payload, { validateExtraFields: false });
+  const setAddressResponse = await setAddress(payload);
   const { success } = setAddressResponse;
   if (!success) {
+    ShowDeliveryError(CouldNotSaveAddressError());
     console.error('Set address error', { setAddressResponse });
     return;
   }
+  postAddressSaveScroll();
   addOrUpdateAddress(payload);
 
   window.postMessage({ action: 'setDeliveryView', view: 'select-address' });

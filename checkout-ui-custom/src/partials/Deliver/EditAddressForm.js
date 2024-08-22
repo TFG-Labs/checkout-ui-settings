@@ -2,19 +2,12 @@ import { isValidNumber } from 'libphonenumber-js';
 import { formatPhoneNumber } from '../../utils/phoneFields';
 import { addOrUpdateAddress, getAddressByName } from '../../utils/services';
 import setAddress from '../../utils/setAddress';
+import { CouldNotSaveAddressError, ShowDeliveryError } from './DeliveryError';
 import FormField from './Elements/FormField';
-import { AddressSectionHeading, ContactCard } from './FormComponents';
+import { AddressSectionHeading, ContactCard, SubmitButton } from './FormComponents';
+import { postAddressSaveScroll } from './utils';
 
 export const EDIT_FORM_RECEIVER_PHONE_ID = 'bash--input-edit-adress-form-receiverPhone';
-
-const SaveButton = () => /* html */ `
-  <button
-    class="submit btn-go-to-payment btn btn-large btn-success"
-    id="btn-save-address"
-    type="submit">
-    Save
-  </button>
-`;
 
 const DeleteButton = () => /* html */ `
   <button
@@ -30,7 +23,7 @@ const ButtonContainer = () => /* html */ `
     id="address-button-container"
   >
     ${DeleteButton()}
-    ${SaveButton()}
+    ${SubmitButton('Save', 'btn-save-address')}
   </div>
 `;
 
@@ -128,12 +121,14 @@ export const submitEditAddressForm = async (event) => {
     };
 
     // Apply the selected address to customers orderForm.
-    const setAddressResponse = await setAddress(payload, { validateExtraFields: false });
+    const setAddressResponse = await setAddress(payload);
     const { success } = setAddressResponse;
     if (!success) {
+      ShowDeliveryError(CouldNotSaveAddressError());
       console.error('Set address error', { setAddressResponse });
       return;
     }
+    postAddressSaveScroll();
     addOrUpdateAddress(payload);
 
     window.postMessage({ action: 'setDeliveryView', view: 'select-address' });
