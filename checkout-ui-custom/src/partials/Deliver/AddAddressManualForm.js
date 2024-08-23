@@ -122,7 +122,7 @@ const populateFields = (config) => {
       required: true,
     },
     {
-      type: 'note',
+      type: isAutoCompleteManual ? 'hidden' : 'note',
       required: false,
       name: 'suburb-postal-reminder',
       value: 'Make sure to specify the correct Suburb and Postal code so we can easily find your address.',
