@@ -118,6 +118,7 @@ export const submitEditAddressForm = async (event) => {
       receiverName,
       receiverPhone,
       geoCoordinates: address?.geoCoordinate || [], // for shippingData
+      //todo add is disposable
     };
 
     // Apply the selected address to customers orderForm.
@@ -129,7 +130,6 @@ export const submitEditAddressForm = async (event) => {
       return;
     }
     postAddressSaveScroll();
-    addOrUpdateAddress(payload);
 
     window.postMessage({ action: 'setDeliveryView', view: 'select-address' });
   });
