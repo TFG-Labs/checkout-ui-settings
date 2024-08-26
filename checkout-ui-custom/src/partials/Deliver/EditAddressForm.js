@@ -1,6 +1,6 @@
 import { isValidNumber } from 'libphonenumber-js';
 import { formatPhoneNumber } from '../../utils/phoneFields';
-import { addOrUpdateAddress, getAddressByName } from '../../utils/services';
+import { getAddressByName } from '../../utils/services';
 import setAddress from '../../utils/setAddress';
 import { CouldNotSaveAddressError, ShowDeliveryError } from './DeliveryError';
 import FormField from './Elements/FormField';
@@ -118,7 +118,7 @@ export const submitEditAddressForm = async (event) => {
       receiverName,
       receiverPhone,
       geoCoordinates: address?.geoCoordinate || [], // for shippingData
-      //todo add is disposable
+      isDisposable: true,
     };
 
     // Apply the selected address to customers orderForm.
