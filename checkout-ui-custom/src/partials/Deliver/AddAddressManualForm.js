@@ -1,4 +1,5 @@
 import { isValidNumber } from 'libphonenumber-js';
+import { CAPTURE_METHOD } from '../../utils/const';
 import { formatPhoneNumber } from '../../utils/phoneFields';
 import { addOrUpdateAddress } from '../../utils/services';
 import setAddress from '../../utils/setAddress';
@@ -237,6 +238,10 @@ export const submitAddAddressManualForm = async (event) => {
   const geoCoords = [parseFloat(payload.lng) || '', parseFloat(payload.lat) || ''];
   payload.geoCoordinate = geoCoords; // for MasterData
   payload.geoCoordinates = geoCoords; // for shippingData
+  payload.captureMethod =
+    payload.formType === 'AUTOCOMPLETE_MANUAL'
+      ? CAPTURE_METHOD.MANUAL_ATTEMPTED_AUTOCOMPLETE_GOOGLE
+      : CAPTURE_METHOD.MANUAL_ENTRY;
 
   // POST ADDRESS UPDATE AND CHANGE VIEW
   try {

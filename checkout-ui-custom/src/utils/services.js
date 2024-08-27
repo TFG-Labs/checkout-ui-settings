@@ -43,6 +43,7 @@ export const getAddresses = async () => {
     'country',
     'tvID',
     'geoCoordinate',
+    'captureMethod'
   ].join(',');
 
   const headers = getHeadersByConfig({ cookie: true, cache: true, json: false });
