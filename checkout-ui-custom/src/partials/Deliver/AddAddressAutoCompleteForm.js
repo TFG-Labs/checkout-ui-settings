@@ -207,7 +207,7 @@ export const submitAddAddressAutoCompleteForm = async (event) => {
     return;
   }
   postAddressSaveScroll();
-  addOrUpdateAddress(payload);
+  addOrUpdateAddress(payload, true);
 
   window.postMessage({ action: 'setDeliveryView', view: 'select-address' });
 };

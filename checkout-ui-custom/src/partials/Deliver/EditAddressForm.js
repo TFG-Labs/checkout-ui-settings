@@ -1,6 +1,6 @@
 import { isValidNumber } from 'libphonenumber-js';
 import { formatPhoneNumber } from '../../utils/phoneFields';
-import { getAddressByName } from '../../utils/services';
+import { addOrUpdateAddress, getAddressByName } from '../../utils/services';
 import setAddress from '../../utils/setAddress';
 import { CouldNotSaveAddressError, ShowDeliveryError } from './DeliveryError';
 import FormField from './Elements/FormField';
@@ -142,6 +142,7 @@ export const submitEditAddressForm = async (event) => {
       return;
     }
     postAddressSaveScroll();
+    addOrUpdateAddress(payload, false);
 
     window.postMessage({ action: 'setDeliveryView', view: 'select-address' });
   });
