@@ -38,7 +38,7 @@ const DeliverContainer = ({ hasFurn, hasFurnOnly, hasFurnMixed }) => /* html */ 
         class="submit btn-go-to-payment btn btn-large btn-success"
         id="btn-save-delivery" 
         type="submit">
-          Save & Continue
+          Save & continue
       </button>
     </section>
    </form>
