@@ -23,14 +23,14 @@ export const ContactCard = (data) => {
 /**
  * SubmitButton - View Component of a Submit Button
  * @returns {string} - HTML for a Submit Button
-
+ * @param {string} title - Title of the Button
  */
-export const SubmitButton = () => /* html */ `
+export const SubmitButton = (title, id) => /* html */ `
   <button
     class="submit btn-go-to-payment btn btn-large btn-success"
-    id="btn-save-address"
+    id="${id}"
     type="submit">
-      Save address
+      ${title}
   </button>
 `;
 
@@ -38,11 +38,12 @@ export const SubmitButton = () => /* html */ `
  * AddressSectionHeading - View Component of a Heading
  * @param {string} title - Title of the Heading
  * @param {string} backView - View to go back to: select-address | address-search
+ * @param {string} anchorId - ID of the anchor - Optional
  * @returns {string} - HTML for a Heading
  */
-export const AddressSectionHeading = (title, backView) => /* html */ `
+export const AddressSectionHeading = (title, backView, anchorId) => /* html */ `
   <div class="bash--heading">
     <h3>${title}</h3>
-    <a href="#" class="back-button--select" data-view="${backView}">&lt; Back</a>
+    <a href="#" class="back-button--select" data-view="${backView}" id="${anchorId}">Back</a>
   </div>
 `;

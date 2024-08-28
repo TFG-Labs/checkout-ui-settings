@@ -2,7 +2,7 @@ import RICAForm from './RICAForm';
 import TVLicenseForm from './TVLicenseForm';
 
 const ExtraFieldsContainer = ({ hasTV, hasSim }) => {
-  const showTVLicenseForm = `
+  const showTVLicenseForm = /* html */`
     <div id="tv-license-form">
       <hr>
       <div class="bash--heading sub-heading heading-with-description">
@@ -13,7 +13,7 @@ const ExtraFieldsContainer = ({ hasTV, hasSim }) => {
     </div>
   `;
 
-  const showRICAForm = `
+  const showRICAForm = /* html */ `
     <div id="rica-form">
       <hr>
       <div class="bash--heading sub-heading heading-with-description">
@@ -27,7 +27,7 @@ const ExtraFieldsContainer = ({ hasTV, hasSim }) => {
     </div>
     `;
 
-  return `
+  return /* html */ `
   <section class="bash--extra-fields bash--delivery-view" data-section="select-address">
     ${hasTV ? showTVLicenseForm : ''}
     ${hasSim ? showRICAForm : ''}
