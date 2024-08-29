@@ -1,5 +1,6 @@
 import { isValidNumber } from 'libphonenumber-js';
 import { ADD_ADDRESS_CAPTURE_METHOD, ADD_ADDRESS_METHOD } from '../../utils/addressAnalytics';
+import { CAPTURE_METHOD } from '../../utils/const'; //TODO probably rename
 import { formatPhoneNumber } from '../../utils/phoneFields';
 import { addOrUpdateAddress } from '../../utils/services';
 import setAddress from '../../utils/setAddress';
@@ -18,13 +19,16 @@ export const ADD_ADDRESS_FORM_MANUAL_RECIEVER_PHONE_ID = 'bash--input-add-addres
  */
 const populateFields = (config) => {
   const { type, address } = config;
-  const lng = type === 'AUTOCOMPLETE_MANUAL' && address?.lng ? address.lng : '';
-  const lat = type === 'AUTOCOMPLETE_MANUAL' && address?.lat ? address.lat : '';
-  const street = type === 'AUTOCOMPLETE_MANUAL' ? `${address?.streetNumber ?? ''} ${address?.route ?? ''}`.trim() : '';
-  const neighborhood = type === 'AUTOCOMPLETE_MANUAL' && address?.neighborhood ? address?.neighborhood : '';
-  const city = type === 'AUTOCOMPLETE_MANUAL' && address?.city ? address.city : '';
-  const postalCode = type === 'AUTOCOMPLETE_MANUAL' && address?.postalCode ? address.postalCode : '';
-  const state = type === 'AUTOCOMPLETE_MANUAL' && address?.state ? provinceShortCode(address.state) : '';
+
+  const isAutoCompleteManual = type === 'AUTOCOMPLETE_MANUAL';
+
+  const lng = isAutoCompleteManual && address?.lng ? address.lng : '';
+  const lat = isAutoCompleteManual && address?.lat ? address.lat : '';
+  const street = isAutoCompleteManual ? `${address?.streetNumber ?? ''} ${address?.route ?? ''}`.trim() : '';
+  const neighborhood = isAutoCompleteManual && address?.neighborhood ? address?.neighborhood : '';
+  const city = isAutoCompleteManual && address?.city ? address.city : '';
+  const postalCode = isAutoCompleteManual && address?.postalCode ? address.postalCode : '';
+  const state = isAutoCompleteManual && address?.state ? provinceShortCode(address.state) : '';
 
   const fields = [
     // HIDDEN FIELDS
@@ -120,7 +124,7 @@ const populateFields = (config) => {
       required: true,
     },
     {
-      type: 'note',
+      type: isAutoCompleteManual ? 'hidden' : 'note',
       required: false,
       name: 'suburb-postal-reminder',
       value: 'Make sure to specify the correct Suburb and Postal code so we can easily find your address.',
@@ -235,6 +239,10 @@ export const submitAddAddressManualForm = async (event) => {
   const geoCoords = [parseFloat(payload.lng) || '', parseFloat(payload.lat) || ''];
   payload.geoCoordinate = geoCoords; // for MasterData
   payload.geoCoordinates = geoCoords; // for shippingData
+  payload.captureMethod =
+    payload.formType === 'AUTOCOMPLETE_MANUAL'
+      ? CAPTURE_METHOD.MANUAL_ATTEMPTED_AUTOCOMPLETE_GOOGLE
+      : CAPTURE_METHOD.MANUAL_ENTRY;
 
   // POST ADDRESS UPDATE AND CHANGE VIEW
   try {

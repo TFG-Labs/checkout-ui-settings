@@ -1,5 +1,6 @@
 import { isValidNumber } from 'libphonenumber-js';
 import { ADD_ADDRESS_CAPTURE_METHOD, ADD_ADDRESS_METHOD } from '../../utils/addressAnalytics';
+import { CAPTURE_METHOD } from '../../utils/const';
 import { formatPhoneNumber } from '../../utils/phoneFields';
 import { addOrUpdateAddress } from '../../utils/services';
 import setAddress from '../../utils/setAddress';
@@ -184,6 +185,7 @@ export const submitAddAddressAutoCompleteForm = async (event) => {
 
   const payload = {
     isDisposable: false,
+    captureMethod: CAPTURE_METHOD.AUTO_COMPLETE_GOOGLE,
     addressType,
     receiverName,
     receiverPhone: formatPhoneNumber(receiverPhone, 'ZA').trim(),
@@ -211,7 +213,7 @@ export const submitAddAddressAutoCompleteForm = async (event) => {
 
   // persist address to local storage + master data
   const config = {
-    persistMasterData: true,
+    persistMasterData: true, // TODO very different to what is in production
     add_address_method: ADD_ADDRESS_METHOD.SEARCH_FOR_AN_ADDRESS,
     add_addresss_capture_method: ADD_ADDRESS_CAPTURE_METHOD.AUTO_COMPLETE_GOOGLE,
   };

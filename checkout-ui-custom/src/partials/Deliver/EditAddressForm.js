@@ -10,20 +10,20 @@ import { postAddressSaveScroll } from './utils';
 
 export const EDIT_FORM_RECEIVER_PHONE_ID = 'bash--input-edit-adress-form-receiverPhone';
 
-// TEMPORARILY REMOVED  - CAUSING ISSUE
-// const DeleteButton = () => /* html */ `
-//   <button
-//     class="btn btn-small"
-//     id="btn-delete-address"
-//     type="submit">
-//     Delete
-//   </button>
-// `;
+const DeleteButton = () => /* html */ `
+  <button
+    class="btn btn-small"
+    id="btn-delete-address"
+  >
+    Delete
+  </button>
+`;
 
 const ButtonContainer = () => /* html */ `
   <div
     id="address-button-container"
   >
+    ${DeleteButton()}
     ${SubmitButton('Save', 'btn-save-address')}
   </div>
 `;
@@ -137,7 +137,7 @@ export const submitEditAddressForm = async (event) => {
       add_address_method: ADD_ADDRESS_METHOD.EDIT_ADDRESS,
       add_addresss_capture_method: null, // TODO - can only be completed after we complete masterData capture method
     };
-    addOrUpdateAddress(payload, config);
+    addOrUpdateAddress(payload, config); // TODO we likely need to pull from main
 
     window.postMessage({ action: 'setDeliveryView', view: 'select-address' });
   });

@@ -9,6 +9,7 @@ import AddAddressManualForm, {
   submitAddAddressManualForm,
 } from '../partials/Deliver/AddAddressManualForm';
 import DeliverContainer from '../partials/Deliver/DeliverContainer';
+import { CouldNotSelectAddressError, ShowDeliveryError } from '../partials/Deliver/DeliveryError';
 
 import EditAddressForm, {
   EDIT_FORM_RECEIVER_PHONE_ID,
@@ -34,7 +35,7 @@ import {
   trackAddressEvent,
 } from '../utils/addressAnalytics';
 import { AD_TYPE, DATA_VIEW, STEPS } from '../utils/const';
-// import handleDeleteAddress from '../utils/deleteAddress';
+import handleDeleteAddress from '../utils/deleteAddress';
 import { formatAddressSummary } from '../utils/formatAddressSummary';
 import {
   clearLoaders,
@@ -267,10 +268,15 @@ const DeliverController = (() => {
     if (!address) return;
 
     getAddressByName(address.addressName)
-      .then((addressByName) => {
-        setAddress(addressByName || address);
+      .then(async (addressByName) => {
         $('input[type="radio"][name="selected-address"]:checked').attr('checked', false);
-        $(this).attr('checked', true);
+        const addressParam = addressByName || address;
+
+        const { success: didSetAddress } = await setAddress(addressParam);
+        if (!didSetAddress) {
+          ShowDeliveryError(CouldNotSelectAddressError(addressParam));
+          console.error('Select Address - Set Address Failure');
+        }
       })
       .catch((e) => {
         console.error('Could not get address - address selection', e?.message);
@@ -338,14 +344,14 @@ const DeliverController = (() => {
     $(this).removeClass('invalid');
   });
 
-  // Add event listener for delete address: TEMPORARILY DISABLING< CAUSING ADDRESSES TO DISAPPEAR
-  // $(document).on('click', '#btn-delete-address', (e) => {
-  //   e.preventDefault();
-  //   const addressName = $('#bash--input-addressName').val();
-  //   if (confirm('Please note: Deleting this address will not delete any pending orders to this address.')) {
-  //     handleDeleteAddress(addressName);
-  //   }
-  // });
+  // event listener for delete address
+  $(document).on('click', '#btn-delete-address', (e) => {
+    e.preventDefault();
+    const addressName = $('#bash--input-addressName').val();
+    if (confirm('Please note: Deleting this address will not delete any pending orders to this address.')) {
+      handleDeleteAddress(addressName);
+    }
+  });
 
   // Form validation
   window.addEventListener('message', (event) => {
@@ -394,7 +400,6 @@ const DeliverController = (() => {
         if (data.view !== DATA_VIEW.SELECT_ADDRESS && data.view !== DATA_VIEW.ADDRESS_SEARCH) {
           trackAddressEvent(trackAddressPayload);
         }
-
         break;
       }
       case 'FB_LOG':
