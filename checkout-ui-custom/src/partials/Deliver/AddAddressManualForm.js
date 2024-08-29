@@ -1,6 +1,6 @@
 import { isValidNumber } from 'libphonenumber-js';
 import { ADD_ADDRESS_CAPTURE_METHOD, ADD_ADDRESS_METHOD } from '../../utils/addressAnalytics';
-import { CAPTURE_METHOD } from '../../utils/const'; //TODO probably rename
+import { CAPTURE_METHOD } from '../../utils/const'; // TODO probably rename
 import { formatPhoneNumber } from '../../utils/phoneFields';
 import { addOrUpdateAddress } from '../../utils/services';
 import setAddress from '../../utils/setAddress';
