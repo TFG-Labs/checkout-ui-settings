@@ -33,7 +33,7 @@ const PICKUP_APP = 'pickup';
 const DELIVER_APP = 'deliver';
 
 /**
- * Capture method for address analytics
+ * Capture method for master data
  */
 const CAPTURE_METHOD = {
   MANUAL_ENTRY: 'MANUAL_ENTRY',
