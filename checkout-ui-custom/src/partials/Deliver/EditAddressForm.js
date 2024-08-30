@@ -135,7 +135,7 @@ export const submitEditAddressForm = async (event) => {
     };
 
     // Apply the selected address to customers orderForm.
-    const setAddressResponse = await setAddress(payload);
+    const setAddressResponse = await setAddress(payload); //todo
     const { success } = setAddressResponse;
     if (!success) {
       ShowDeliveryError(CouldNotSaveAddressError());
@@ -150,7 +150,7 @@ export const submitEditAddressForm = async (event) => {
       add_address_method: ADD_ADDRESS_METHOD.EDIT_ADDRESS,
       add_addresss_capture_method: null, // TODO - can only be completed after we complete masterData capture method
     };
-    addOrUpdateAddress(payload, config);
+    addOrUpdateAddress(payload, config); // todo
 
     window.postMessage({ action: 'setDeliveryView', view: 'select-address' });
   });

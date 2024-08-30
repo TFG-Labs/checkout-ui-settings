@@ -202,7 +202,7 @@ export const submitAddAddressAutoCompleteForm = async (event) => {
   };
 
   // Apply the selected address to customers orderForm.
-  const setAddressResponse = await setAddress(payload);
+  const setAddressResponse = await setAddress(payload); // todo
   const { success } = setAddressResponse;
   if (!success) {
     ShowDeliveryError(CouldNotSaveAddressError());
@@ -217,7 +217,7 @@ export const submitAddAddressAutoCompleteForm = async (event) => {
     add_address_method: ADD_ADDRESS_METHOD.SEARCH_FOR_AN_ADDRESS,
     add_addresss_capture_method: ADD_ADDRESS_CAPTURE_METHOD.AUTO_COMPLETE_GOOGLE,
   };
-  addOrUpdateAddress(payload, config);
+  addOrUpdateAddress(payload, config); // todo
 
   window.postMessage({ action: 'setDeliveryView', view: 'select-address' });
 };

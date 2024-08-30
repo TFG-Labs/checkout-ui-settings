@@ -266,7 +266,7 @@ export const submitAddAddressManualForm = async (event) => {
           ? ADD_ADDRESS_CAPTURE_METHOD.MANUAL_ATTEMPTED_AUTO_COMPLETE_GOOGLE
           : ADD_ADDRESS_CAPTURE_METHOD.MANUAL_ENTRY,
     };
-    await addOrUpdateAddress(payload, config);
+    await addOrUpdateAddress(payload, config); // todo
 
     window.postMessage({ action: 'setDeliveryView', view: 'select-address' });
     postAddressSaveScroll();

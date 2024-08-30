@@ -272,7 +272,7 @@ const DeliverController = (() => {
         $('input[type="radio"][name="selected-address"]:checked').attr('checked', false);
         const addressParam = addressByName || address;
 
-        const { success: didSetAddress } = await setAddress(addressParam);
+        const { success: didSetAddress } = await setAddress(addressParam); //TODO: 
         if (!didSetAddress) {
           ShowDeliveryError(CouldNotSelectAddressError(addressParam));
           console.error('Select Address - Set Address Failure');

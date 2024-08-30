@@ -38,7 +38,7 @@ const submitDeliveryForm = async (event) => {
   fullAddress = { ...address, ...dbAddress };
 
   // Final check to validate that the selected address has no validation errors.
-  const { success: didSetAddress } = await setAddress(fullAddress);
+  const { success: didSetAddress } = await setAddress(fullAddress); //todo
   if (!didSetAddress) {
     ShowDeliveryError(CouldNotSelectAddressError(fullAddress));
     console.error('Delivery Form - Address Validation error');
@@ -75,7 +75,7 @@ const submitDeliveryForm = async (event) => {
     console.info({ tvDataSent });
   }
 
-  await addOrUpdateAddress(fullAddress, { persistMasterData: false });
+  await addOrUpdateAddress(fullAddress, { persistMasterData: false }); //todo
 
   // after submitting hide the delivery container
   $('.bash--delivery-container').css('display', 'none');
