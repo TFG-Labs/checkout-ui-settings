@@ -246,17 +246,8 @@ export const submitAddAddressManualForm = async (event) => {
 
   // POST ADDRESS UPDATE AND CHANGE VIEW
   try {
-    // Apply the new address to customers orderForm.
-    const setAddressResponse = await setAddress(payload);
-    if (!setAddressResponse.success) {
-      ShowDeliveryError(CouldNotSaveAddressError());
-      console.error('Set address error', { setAddressResponse });
-      throw new Error('Failed to set address');
-    }
-
-    // save address to local storage + master data
     const config = {
-      persistMasterData: true,
+      track: true,
       add_address_method:
         payload.formType === 'AUTOCOMPLETE_MANUAL'
           ? ADD_ADDRESS_METHOD.SEARCH_FOR_AN_ADDRESS
@@ -266,7 +257,16 @@ export const submitAddAddressManualForm = async (event) => {
           ? ADD_ADDRESS_CAPTURE_METHOD.MANUAL_ATTEMPTED_AUTO_COMPLETE_GOOGLE
           : ADD_ADDRESS_CAPTURE_METHOD.MANUAL_ENTRY,
     };
-    await addOrUpdateAddress(payload, config); // todo
+    // Apply the new address to customers orderForm.
+    const setAddressResponse = await setAddress(payload, config);
+    if (!setAddressResponse.success) {
+      ShowDeliveryError(CouldNotSaveAddressError());
+      console.error('Set address error', { setAddressResponse });
+      throw new Error('Failed to set address');
+    }
+
+    // save address to local storage + master data
+    await addOrUpdateAddress(payload, true);
 
     window.postMessage({ action: 'setDeliveryView', view: 'select-address' });
     postAddressSaveScroll();

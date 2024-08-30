@@ -38,7 +38,7 @@ const submitDeliveryForm = async (event) => {
   fullAddress = { ...address, ...dbAddress };
 
   // Final check to validate that the selected address has no validation errors.
-  const { success: didSetAddress } = await setAddress(fullAddress); //todo find a way to send the config saying dont track
+  const { success: didSetAddress } = await setAddress(fullAddress, { track: false });
   if (!didSetAddress) {
     ShowDeliveryError(CouldNotSelectAddressError(fullAddress));
     console.error('Delivery Form - Address Validation error');

@@ -136,8 +136,9 @@ export const submitEditAddressForm = async (event) => {
 
     // Apply the selected address to customers orderForm.
     const config = {
+      track: true,
       add_address_method: ADD_ADDRESS_METHOD.EDIT_ADDRESS,
-      add_address_capture_method: address.captureMethod || null,
+      add_address_capture_method: address.captureMethod || null, //TODO
     };
     const setAddressResponse = await setAddress(payload, config);
     const { success } = setAddressResponse;

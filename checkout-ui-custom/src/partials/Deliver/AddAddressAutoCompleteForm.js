@@ -202,6 +202,7 @@ export const submitAddAddressAutoCompleteForm = async (event) => {
   };
 
   const config = {
+    track: true,
     add_address_method: ADD_ADDRESS_METHOD.SEARCH_FOR_AN_ADDRESS,
     add_address_capture_method: ADD_ADDRESS_CAPTURE_METHOD.AUTO_COMPLETE_GOOGLE,
   };
