@@ -6,6 +6,7 @@ import {
   populateRicaFields,
   setDeliveryLoading,
 } from '../partials/Deliver/utils';
+import { ADD_ADDRESS_STAGE, EVENT_NAME, PARAMETER, trackAddressEvent } from './addressAnalytics';
 import { AD_TYPE, DELIVER_APP } from './const';
 import { clearLoaders, getSpecialCategories } from './functions';
 import sendEvent from './sendEvent';
@@ -19,7 +20,7 @@ const updateDeliveryData = ({ businessName, receiverPhone }) =>
     }),
   });
 
-const setAddress = (address) => {
+const setAddress = (address, config) => {
   const { items } = window.vtexjs.checkout.orderForm;
   const { hasTVs, hasSimCards } = getSpecialCategories(items);
 
@@ -88,9 +89,27 @@ const setAddress = (address) => {
         });
       }
 
+      trackAddressEvent({
+        event: EVENT_NAME.ADDRESS_SAVED,
+        [PARAMETER.ADD_ADDRESS_STAGE]: ADD_ADDRESS_STAGE.CHECKOUT,
+        [PARAMETER.ADD_ADDRESS_METHOD]: config.add_address_method,
+        [PARAMETER.ADD_ADDRESS_CAPTURE_METHOD]: config.add_address_capture_method,
+      });
       return { success: true };
     })
-    .done(() => clearLoaders());
+    .done(() => clearLoaders())
+    .fail((error) => {
+      // TODO simulate error
+      // TODO is there a way to indicate dont send an event - in config
+      trackAddressEvent({
+        event: EVENT_NAME.ADD_ADDRESS_ERROR,
+        [PARAMETER.ADD_ADDRESS_STAGE]: ADD_ADDRESS_STAGE.CHECKOUT,
+        [PARAMETER.ADD_ADDRESS_METHOD]: config.add_address_method,
+        [PARAMETER.ADD_ADDRESS_CAPTURE_METHOD]: config.add_address_capture_method,
+      });
+      console.error('Error setting address:', error);
+      return { success: false, error };
+    });
 };
 
 export default setAddress;

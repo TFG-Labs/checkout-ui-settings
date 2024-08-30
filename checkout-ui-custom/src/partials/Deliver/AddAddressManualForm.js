@@ -1,6 +1,6 @@
 import { isValidNumber } from 'libphonenumber-js';
 import { ADD_ADDRESS_CAPTURE_METHOD, ADD_ADDRESS_METHOD } from '../../utils/addressAnalytics';
-import { CAPTURE_METHOD } from '../../utils/const'; // TODO probably rename
+import { CAPTURE_METHOD } from '../../utils/const';
 import { formatPhoneNumber } from '../../utils/phoneFields';
 import { addOrUpdateAddress } from '../../utils/services';
 import setAddress from '../../utils/setAddress';
@@ -261,7 +261,7 @@ export const submitAddAddressManualForm = async (event) => {
         payload.formType === 'AUTOCOMPLETE_MANUAL'
           ? ADD_ADDRESS_METHOD.SEARCH_FOR_AN_ADDRESS
           : ADD_ADDRESS_METHOD.ADD_ADDRESS_MANUALLY,
-      add_addresss_capture_method:
+      add_address_capture_method:
         payload.formType === 'AUTOCOMPLETE_MANUAL'
           ? ADD_ADDRESS_CAPTURE_METHOD.MANUAL_ATTEMPTED_AUTO_COMPLETE_GOOGLE
           : ADD_ADDRESS_CAPTURE_METHOD.MANUAL_ENTRY,

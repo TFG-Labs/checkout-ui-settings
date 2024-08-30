@@ -201,8 +201,13 @@ export const submitAddAddressAutoCompleteForm = async (event) => {
     geoCoordinate: geoCoords, // for MasterData
   };
 
+  const config = {
+    add_address_method: ADD_ADDRESS_METHOD.SEARCH_FOR_AN_ADDRESS,
+    add_address_capture_method: ADD_ADDRESS_CAPTURE_METHOD.AUTO_COMPLETE_GOOGLE,
+  };
+
   // Apply the selected address to customers orderForm.
-  const setAddressResponse = await setAddress(payload); // todo
+  const setAddressResponse = await setAddress(payload, config);
   const { success } = setAddressResponse;
   if (!success) {
     ShowDeliveryError(CouldNotSaveAddressError());
@@ -212,12 +217,7 @@ export const submitAddAddressAutoCompleteForm = async (event) => {
   postAddressSaveScroll();
 
   // persist address to local storage + master data
-  const config = {
-    persistMasterData: true, // TODO very different to what is in production
-    add_address_method: ADD_ADDRESS_METHOD.SEARCH_FOR_AN_ADDRESS,
-    add_addresss_capture_method: ADD_ADDRESS_CAPTURE_METHOD.AUTO_COMPLETE_GOOGLE,
-  };
-  addOrUpdateAddress(payload, config); // todo
+  addOrUpdateAddress(payload, true);
 
   window.postMessage({ action: 'setDeliveryView', view: 'select-address' });
 };

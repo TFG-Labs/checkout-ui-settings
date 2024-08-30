@@ -44,7 +44,7 @@ export const getAddresses = async () => {
     'country',
     'tvID',
     'geoCoordinate',
-    'captureMethod'
+    'captureMethod',
   ].join(',');
 
   const headers = getHeadersByConfig({ cookie: true, cache: true, json: false });
@@ -104,7 +104,8 @@ const getAddress = async (addressName, fields) => {
  * @param {ADD_ADDRESS_CAPTURE_METHOD[keyof typeof ADD_ADDRESS_CAPTURE_METHOD]} config.add_address_capture_method The method used to capture the address. Use one of the values from `ADD_ADDRESS_CAPTURE_METHOD` (e.g., `ADD_ADDRESS_CAPTURE_METHOD.AUTO_COMPLETE_GOOGLE`).
  * @returns
  */
-export const upsertAddress = async (address, config) => {
+// TODO
+export const upsertAddress = async (address) => {
   let path;
   const { email } = window.vtexjs.checkout.orderForm.clientProfileData;
 
@@ -146,21 +147,9 @@ export const upsertAddress = async (address, config) => {
     })
     .then((result) => {
       console.log('Address saved to master data:', result);
-      trackAddressEvent({
-        event: EVENT_NAME.ADDRESS_SAVED,
-        [PARAMETER.ADD_ADDRESS_STAGE]: ADD_ADDRESS_STAGE.CHECKOUT,
-        [PARAMETER.ADD_ADDRESS_METHOD]: config.add_address_method,
-        [PARAMETER.ADD_ADDRESS_CAPTURE_METHOD]: config.add_address_capture_method,
-      });
       return result;
     })
     .catch((error) => {
-      trackAddressEvent({
-        event: EVENT_NAME.ADD_ADDRESS_ERROR,
-        [PARAMETER.ADD_ADDRESS_STAGE]: ADD_ADDRESS_STAGE.CHECKOUT,
-        [PARAMETER.ADD_ADDRESS_METHOD]: config.add_address_method,
-        [PARAMETER.ADD_ADDRESS_CAPTURE_METHOD]: config.add_address_capture_method,
-      });
       catchError(`SAVE_ADDRESS_ERROR: ${error?.message}`);
     });
 };
@@ -189,7 +178,8 @@ export const updateAddressListing = (address) => {
  * @param {boolean} config.persistMasterData - boolean value to determine if an address should persist to master data
  * @returns
  */
-export const addOrUpdateAddress = async (address, config) => {
+// TODO
+export const addOrUpdateAddress = async (address, persistMasterData) => {
   if (!address.addressName) {
     const streetStr = address.street
       .replace(/[^a-zA-Z0-9]/g, ' ')
@@ -205,7 +195,7 @@ export const addOrUpdateAddress = async (address, config) => {
   DB.addOrUpdateAddress(address).then(() => updateAddressListing(address));
 
   // Add or update at the API.
-  if (config.persistMasterData) upsertAddress(address, config);
+  if (persistMasterData) upsertAddress(address);
 };
 
 export const getAddressByName = async (addressName) => DB.getAddress(addressName);
