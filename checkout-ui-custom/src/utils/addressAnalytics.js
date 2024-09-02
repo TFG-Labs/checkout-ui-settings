@@ -49,5 +49,5 @@ export const trackAddressEvent = ({ event, add_address_stage, add_address_method
   };
 
   window.dataLayer.push(payload);
-  console.log('trackAddressEvent', payload);
+  console.log('trackAddressEvent', payload); // TODO remove before deploy
 };

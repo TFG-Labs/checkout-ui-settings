@@ -107,7 +107,9 @@ const setAddress = (address, config) => {
 
       return { success: true };
     })
-    .done(() => clearLoaders())
+    .done(() => {
+      clearLoaders();
+    })
     .fail((error) => {
       // TODO simulate error
       if (config.track) {
@@ -120,6 +122,7 @@ const setAddress = (address, config) => {
       }
 
       console.error('Error setting address:', error);
+      clearLoaders();
       return { success: false, error };
     });
 };
