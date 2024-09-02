@@ -252,7 +252,7 @@ export const submitAddAddressManualForm = async (event) => {
       console.error('Set address error', { setAddressResponse });
       throw new Error('Failed to set address');
     }
-    await addOrUpdateAddress(payload);
+    await addOrUpdateAddress(payload, true);
 
     window.postMessage({ action: 'setDeliveryView', view: 'select-address' });
     postAddressSaveScroll();
