@@ -81,6 +81,14 @@ const setAddress = (address, config) => {
 
       if (errors.length > 0) {
         populateDeliveryError(errors);
+        if (config.track) {
+          trackAddressEvent({
+            event: EVENT_NAME.ADD_ADDRESS_ERROR,
+            [PARAMETER.ADD_ADDRESS_STAGE]: ADD_ADDRESS_STAGE.CHECKOUT,
+            [PARAMETER.ADD_ADDRESS_METHOD]: config.add_address_method,
+            [PARAMETER.ADD_ADDRESS_CAPTURE_METHOD]: config.add_address_capture_method,
+          });
+        }
         return { success: false, errors };
       }
 
