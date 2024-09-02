@@ -138,7 +138,7 @@ export const submitEditAddressForm = async (event) => {
     const config = {
       track: true,
       add_address_method: ADD_ADDRESS_METHOD.EDIT_ADDRESS,
-      add_address_capture_method: address?.captureMethod ? address.captureMethod.toLowerCase() : null, // TODO
+      add_address_capture_method: address?.captureMethod ? address.captureMethod.toLowerCase() : null,
     };
     const setAddressResponse = await setAddress(payload, config);
     const { success } = setAddressResponse;

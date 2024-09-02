@@ -111,7 +111,6 @@ const setAddress = (address, config) => {
       clearLoaders();
     })
     .fail((error) => {
-      // TODO simulate error
       if (config.track) {
         trackAddressEvent({
           event: EVENT_NAME.ADD_ADDRESS_ERROR,
