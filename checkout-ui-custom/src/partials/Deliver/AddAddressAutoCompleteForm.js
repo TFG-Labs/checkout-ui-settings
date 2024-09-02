@@ -8,7 +8,6 @@ import { CouldNotSaveAddressError, ShowDeliveryError } from './DeliveryError';
 import FormField from './Elements/FormField';
 import { AddressSectionHeading, ContactCard, SubmitButton } from './FormComponents';
 import { postAddressSaveScroll, provinceShortCode } from './utils';
-import { CAPTURE_METHOD } from '../../utils/const';
 
 export const ADD_ADDRESS_AUTOCOMPLETE_FORM_RECEIVER_PHONE_ID = 'bash--input-add-adress-autocomplete-form-receiverPhone';
 
