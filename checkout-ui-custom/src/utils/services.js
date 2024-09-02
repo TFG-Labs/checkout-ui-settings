@@ -43,6 +43,7 @@ export const getAddresses = async () => {
     'country',
     'tvID',
     'geoCoordinate',
+    'captureMethod'
   ].join(',');
 
   const headers = getHeadersByConfig({ cookie: true, cache: true, json: false });
@@ -154,7 +155,7 @@ export const updateAddressListing = (address) => {
   $(`input[type="radio"][name="selected-address"][value="${address.addressName}"]`).attr('checked', true);
 };
 
-export const addOrUpdateAddress = async (address) => {
+export const addOrUpdateAddress = async (address, persistMasterData) => {
   if (!address.addressName) {
     const streetStr = address.street
       .replace(/[^a-zA-Z0-9]/g, ' ')
@@ -170,7 +171,7 @@ export const addOrUpdateAddress = async (address) => {
   DB.addOrUpdateAddress(address).then(() => updateAddressListing(address));
 
   // Add or update at the API.
-  upsertAddress(address);
+  if (persistMasterData) upsertAddress(address);
 };
 
 export const getAddressByName = async (addressName) => DB.getAddress(addressName);
