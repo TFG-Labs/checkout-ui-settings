@@ -1,6 +1,5 @@
 /* eslint-disable no-new-wrappers */
 import AddressListing from '../partials/Deliver/AddressListing';
-import { ADD_ADDRESS_STAGE, EVENT_NAME, PARAMETER, trackAddressEvent } from './addressAnalytics';
 import CheckoutDB from './checkoutDB';
 import { BASE_URL_API } from './const';
 import { catchError, clearLoaders, getHeadersByConfig } from './functions';
