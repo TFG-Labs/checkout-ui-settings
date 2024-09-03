@@ -248,7 +248,7 @@ const CollectController = (() => {
       $(customPaymentBtn).removeAttr('id').attr('id', 'custom-go-to-payment');
       $(customPaymentBtn).removeAttr('data-bind');
       $(customPaymentBtn).css('display', 'block');
-      $(customPaymentBtn).text('Save & Continue');
+      $(customPaymentBtn).text('Save & continue');
 
       $('p.btn-go-to-payment-wrapper').append(customPaymentBtn);
 
