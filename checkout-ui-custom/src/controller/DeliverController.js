@@ -26,7 +26,15 @@ import {
   setCartClasses,
   updateDeliveryFeeDisplay,
 } from '../partials/Deliver/utils';
-import { AD_TYPE, STEPS } from '../utils/const';
+import {
+  ADD_ADDRESS_CAPTURE_METHOD,
+  ADD_ADDRESS_METHOD,
+  ADD_ADDRESS_STAGE,
+  EVENT_NAME,
+  PARAMETER,
+  trackAddressEvent,
+} from '../utils/addressAnalytics';
+import { AD_TYPE, DATA_VIEW, STEPS } from '../utils/const';
 import handleDeleteAddress from '../utils/deleteAddress';
 import { formatAddressSummary } from '../utils/formatAddressSummary';
 import {
@@ -91,7 +99,7 @@ const DeliverController = (() => {
     document.querySelector('#add-address-autocomplete-section').innerHTML = '';
   };
 
-  const clearddAddressAutoCompleteManual = () => {
+  const clearAddAddressAutoCompleteManual = () => {
     document.querySelector('#add-address-autocomplete-manual-section').innerHTML = '';
   };
 
@@ -242,7 +250,12 @@ const DeliverController = (() => {
     const viewTarget = $(this).data('view');
     const content = decodeURIComponent($(this).data('content'));
     $('#bash-delivery-error-container').html('');
-    window.postMessage({ action: 'setDeliveryView', view: viewTarget, content });
+    window.postMessage({
+      action: 'setDeliveryView',
+      view: viewTarget,
+      content,
+      captureMethod: $(this).data('capture-method') || null,
+    });
   });
 
   // Select address
@@ -264,7 +277,7 @@ const DeliverController = (() => {
         $('input[type="radio"][name="selected-address"]:checked').attr('checked', false);
         const addressParam = addressByName || address;
 
-        const { success: didSetAddress } = await setAddress(addressParam);
+        const { success: didSetAddress } = await setAddress(addressParam, { track: false });
         if (!didSetAddress) {
           ShowDeliveryError(CouldNotSelectAddressError(addressParam));
           console.error('Select Address - Set Address Failure');
@@ -351,28 +364,51 @@ const DeliverController = (() => {
     if (!data || !data.action) return;
 
     switch (data.action) {
-      case 'setDeliveryView':
+      case 'setDeliveryView': {
         document.querySelector('.bash--delivery-container')?.setAttribute('data-view', data.view);
 
         // Clear form fields
         clearEditAddress();
         clearAddAddressAutoComplete();
         clearManualAddress();
-        clearddAddressAutoCompleteManual();
+        clearAddAddressAutoCompleteManual();
 
-        if (data.view === 'edit-address') {
+        const trackAddressPayload = {
+          event: EVENT_NAME.ADD_ADDRESS,
+          [PARAMETER.ADD_ADDRESS_STAGE]: ADD_ADDRESS_STAGE.CHECKOUT,
+        };
+
+        // Render view and populate track event payload;
+        if (data.view === DATA_VIEW.EDIT_ADDRESS) {
           RenderEditAddress(data.content);
+          trackAddressPayload[PARAMETER.ADD_ADDRESS_METHOD] = ADD_ADDRESS_METHOD.EDIT_ADDRESS;
+          trackAddressPayload[PARAMETER.ADD_ADDRESS_CAPTURE_METHOD] = data?.captureMethod
+            ? data.captureMethod.toLowerCase()
+            : null;
         }
-        if (data.view === 'add-address-autocomplete') {
+        if (data.view === DATA_VIEW.ADD_ADDRESS_AUTOCOMPLETE) {
           RenderAddAddressAutoComplete(data.content);
+          trackAddressPayload[PARAMETER.ADD_ADDRESS_METHOD] = ADD_ADDRESS_METHOD.SEARCH_FOR_AN_ADDRESS;
+          trackAddressPayload[PARAMETER.ADD_ADDRESS_CAPTURE_METHOD] = ADD_ADDRESS_CAPTURE_METHOD.AUTO_COMPLETE_GOOGLE;
         }
-        if (data.view === 'add-address-autocomplete-manual') {
+        if (data.view === DATA_VIEW.ADD_ADDRESS_AUTOCOMPLETE_MANUAL) {
           RenderAddAddressManual('AUTOCOMPLETE_MANUAL', data.content);
+          trackAddressPayload[PARAMETER.ADD_ADDRESS_METHOD] = ADD_ADDRESS_METHOD.SEARCH_FOR_AN_ADDRESS;
+          trackAddressPayload[PARAMETER.ADD_ADDRESS_CAPTURE_METHOD] =
+            ADD_ADDRESS_CAPTURE_METHOD.MANUAL_ATTEMPTED_AUTO_COMPLETE_GOOGLE;
         }
-        if (data.view === 'manual-address') {
+        if (data.view === DATA_VIEW.MANUAL_ADDRESS) {
           RenderAddAddressManual('MANUAL');
+          trackAddressPayload[PARAMETER.ADD_ADDRESS_METHOD] = ADD_ADDRESS_METHOD.ADD_ADDRESS_MANUALLY;
+          trackAddressPayload[PARAMETER.ADD_ADDRESS_CAPTURE_METHOD] = ADD_ADDRESS_CAPTURE_METHOD.MANUAL_ENTRY;
+        }
+
+        // track address event
+        if (data.view !== DATA_VIEW.SELECT_ADDRESS && data.view !== DATA_VIEW.ADDRESS_SEARCH) {
+          trackAddressEvent(trackAddressPayload);
         }
         break;
+      }
       case 'FB_LOG':
         break;
       default:

@@ -1,4 +1,5 @@
 import { isValidNumber } from 'libphonenumber-js';
+import { ADD_ADDRESS_METHOD } from '../../utils/addressAnalytics';
 import { formatPhoneNumber } from '../../utils/phoneFields';
 import { addOrUpdateAddress, getAddressByName } from '../../utils/services';
 import setAddress from '../../utils/setAddress';
@@ -134,7 +135,12 @@ export const submitEditAddressForm = async (event) => {
     };
 
     // Apply the selected address to customers orderForm.
-    const setAddressResponse = await setAddress(payload);
+    const config = {
+      track: true,
+      add_address_method: ADD_ADDRESS_METHOD.EDIT_ADDRESS,
+      add_address_capture_method: address?.captureMethod ? address.captureMethod.toLowerCase() : null,
+    };
+    const setAddressResponse = await setAddress(payload, config);
     const { success } = setAddressResponse;
     if (!success) {
       ShowDeliveryError(CouldNotSaveAddressError());
@@ -142,6 +148,8 @@ export const submitEditAddressForm = async (event) => {
       return;
     }
     postAddressSaveScroll();
+
+    // persist address to local storage + master data
     addOrUpdateAddress(payload, false);
 
     window.postMessage({ action: 'setDeliveryView', view: 'select-address' });

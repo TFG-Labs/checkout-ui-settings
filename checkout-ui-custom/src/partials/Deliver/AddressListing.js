@@ -35,6 +35,7 @@ const AddressListing = (address) => {
     addressName,
     complement,
     receiverPhone,
+    captureMethod,
   } = address;
 
   const addressLine = [
@@ -65,7 +66,7 @@ const AddressListing = (address) => {
         <div>${contactLine}</div>  
       </div>
       <div class="address-edit">
-        <a href="#" data-view="edit-address" data-content="${addressName}">
+        <a href="#" data-view="edit-address" data-content="${addressName}" data-capture-method="${captureMethod}">
           Edit
         </a>
       </div>

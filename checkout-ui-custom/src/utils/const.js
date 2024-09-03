@@ -33,7 +33,7 @@ const PICKUP_APP = 'pickup';
 const DELIVER_APP = 'deliver';
 
 /**
- * Capture method for address analytics
+ * Capture method for master data
  */
 const CAPTURE_METHOD = {
   MANUAL_ENTRY: 'MANUAL_ENTRY',
@@ -75,6 +75,18 @@ const FURNITURE_FEE_LINK = '';
 
 const TV_CAT = '938942995';
 const SIM_CAT = '24833302';
+
+/**
+ * Represents the different views showed to the end user for address management
+ */
+export const DATA_VIEW = {
+  EDIT_ADDRESS: 'edit-address',
+  ADD_ADDRESS_AUTOCOMPLETE: 'add-address-autocomplete',
+  ADD_ADDRESS_AUTOCOMPLETE_MANUAL: 'add-address-autocomplete-manual',
+  MANUAL_ADDRESS: 'manual-address',
+  SELECT_ADDRESS: 'select-address',
+  ADDRESS_SEARCH: 'address-search',
+};
 
 export {
   AD_TYPE,

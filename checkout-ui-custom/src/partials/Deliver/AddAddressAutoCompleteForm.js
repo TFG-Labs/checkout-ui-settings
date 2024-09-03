@@ -1,4 +1,6 @@
 import { isValidNumber } from 'libphonenumber-js';
+import { ADD_ADDRESS_CAPTURE_METHOD, ADD_ADDRESS_METHOD } from '../../utils/addressAnalytics';
+import { CAPTURE_METHOD } from '../../utils/const';
 import { formatPhoneNumber } from '../../utils/phoneFields';
 import { addOrUpdateAddress } from '../../utils/services';
 import setAddress from '../../utils/setAddress';
@@ -6,7 +8,6 @@ import { CouldNotSaveAddressError, ShowDeliveryError } from './DeliveryError';
 import FormField from './Elements/FormField';
 import { AddressSectionHeading, ContactCard, SubmitButton } from './FormComponents';
 import { postAddressSaveScroll, provinceShortCode } from './utils';
-import { CAPTURE_METHOD } from '../../utils/const';
 
 export const ADD_ADDRESS_AUTOCOMPLETE_FORM_RECEIVER_PHONE_ID = 'bash--input-add-adress-autocomplete-form-receiverPhone';
 
@@ -200,8 +201,14 @@ export const submitAddAddressAutoCompleteForm = async (event) => {
     geoCoordinate: geoCoords, // for MasterData
   };
 
+  const config = {
+    track: true,
+    add_address_method: ADD_ADDRESS_METHOD.SEARCH_FOR_AN_ADDRESS,
+    add_address_capture_method: ADD_ADDRESS_CAPTURE_METHOD.AUTO_COMPLETE_GOOGLE,
+  };
+
   // Apply the selected address to customers orderForm.
-  const setAddressResponse = await setAddress(payload);
+  const setAddressResponse = await setAddress(payload, config);
   const { success } = setAddressResponse;
   if (!success) {
     ShowDeliveryError(CouldNotSaveAddressError());
@@ -209,6 +216,8 @@ export const submitAddAddressAutoCompleteForm = async (event) => {
     return;
   }
   postAddressSaveScroll();
+
+  // persist address to local storage + master data
   addOrUpdateAddress(payload, true);
 
   window.postMessage({ action: 'setDeliveryView', view: 'select-address' });
