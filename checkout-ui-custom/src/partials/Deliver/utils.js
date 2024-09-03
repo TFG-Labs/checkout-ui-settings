@@ -1,15 +1,7 @@
 // @ts-nocheck
-import {
-  AD_TYPE,
-  COLLECT_FEE,
-  DELIVERY_FEE,
-  PICKUP,
-  RICA_APP,
-  TV_APP
-} from '../../utils/const';
-import { getSpecialCategories, hideBusinessName, showBusinessName } from '../../utils/functions';
-import isInSouthAfrica from '../../utils/isInSouthAfrica';
-import { getBestPhoneNumber } from '../../utils/phoneFields';
+
+import { AD_TYPE, COLLECT_FEE, DELIVERY_FEE, RICA_APP, TV_APP } from '../../utils/const';
+import { getSpecialCategories } from '../../utils/functions';
 import usePhoneNumberFormatting from '../../utils/phoneNumberFormat';
 import { getOrderFormCustomData } from '../../utils/services';
 import { DeliveryError } from './DeliveryError';
@@ -65,96 +57,6 @@ export const getBestRecipient = ({ preferred = undefined, type = 'delivery' }) =
   if (type === 'collect') return preferred || shippingReceiverName || clientProfileName || '';
 
   return preferred || document.getElementById('client-first-name')?.value || clientProfileName || '';
-};
-
-export const populateAddressForm = (address) => {
-  const {
-    number,
-    street,
-    addressType,
-    businessName,
-    companyBuilding,
-    neighborhood,
-    postalCode,
-    state,
-    city,
-    receiverName,
-    receiverPhone,
-    complement,
-    id,
-    addressId,
-    addressName,
-    geoCoordinate,
-  } = address;
-
-  // Clear any populated fields
-  document.getElementById('bash--address-form')?.reset();
-  hideBusinessName();
-  let lat;
-  let lng;
-  try {
-    [lng, lat] = JSON.parse(JSON.stringify(geoCoordinate));
-
-    if (!isInSouthAfrica([lng, lat])) {
-      // Coordinates are most likely still at [lat, lng]
-      if (isInSouthAfrica[(lat, lng)]) {
-        lng = lat;
-        lat = lng;
-      } else {
-        // Unset the coordinates
-        lng = 0;
-        lat = 0;
-      }
-    }
-  } catch (e) {
-    console.warn('Could not parse geo coords', { address, geoCoordinate });
-  }
-
-  // Only overwrite defaults if values exist.
-  if (receiverName) document.getElementById('bash--input-receiverName').value = receiverName ?? '';
-  if (complement) document.getElementById('bash--input-complement').value = complement ?? '';
-
-  // addressId indicates that address is being edited / completed.
-  if (id || addressId) document.getElementById('bash--input-addressId').value = id || addressId; // TODO remove this?
-  if (addressName) document.getElementById('bash--input-addressName').value = addressName;
-
-  const streetLine = `${number ? `${number} ` : ''}${street}`.replace(`, ${companyBuilding}`, '');
-
-  // Address type
-  if (addressType === 'commercial') {
-    $('#radio-addressType-business').click();
-    showBusinessName({ focus: false });
-  }
-
-  if (businessName) document.getElementById('bash--input-businessName').value = businessName;
-
-  document.getElementById('bash--input-number').value = '';
-  document.getElementById('bash--input-street').value = streetLine || '';
-  document.getElementById('bash--input-companyBuilding').value = companyBuilding || '';
-  document.getElementById('bash--input-neighborhood').value = neighborhood || '';
-  document.getElementById('bash--input-city').value = city || '';
-  document.getElementById('bash--input-postalCode').value = postalCode || '';
-  document.getElementById('bash--input-state').value = provinceShortCode(state);
-  document.getElementById('bash--input-lat').value = lat || '';
-  document.getElementById('bash--input-lng').value = lng || '';
-
-  const fields = getOrderFormCustomData(PICKUP);
-
-  // Only overwrite defaults if values exist.
-  if (receiverName) document.getElementById('bash--input-receiverName').value = receiverName ?? '';
-  if (complement) document.getElementById('bash--input-complement').value = complement ?? '';
-  document.getElementById('bash--input-receiverPhone').value =
-    formatPhoneNumber(receiverPhone).trim() ||
-    getBestPhoneNumber({
-      preferred: receiverPhone,
-      type: 'delivery',
-      fields,
-    });
-  document.getElementById('bash--input-receiverPhone')?.addEventListener('onblur', (event) => {
-    event.target.value = event.target.value.trim();
-  });
-
-  $(':invalid').trigger('change');
 };
 
 export const parseAttribute = (data) => {
@@ -215,20 +117,9 @@ export const populateTVFields = async () => {
 };
 
 // Runs when you setAddress
-export const addressIsValid = (address, validateExtraFields = true) => {
-  const { items } = window.vtexjs.checkout.orderForm;
-  const { hasTVs, hasSimCards } = getSpecialCategories(items);
-
-  let requiredFields = requiredAddressFields;
+export const addressIsValid = (address) => {
+  const requiredFields = requiredAddressFields;
   const invalidFields = [];
-
-  if (hasTVs && validateExtraFields) {
-    requiredFields = [...requiredFields, ...requiredTVFields];
-  }
-
-  if (hasSimCards && validateExtraFields) {
-    requiredFields = [...requiredFields, ...requiredRicaFields];
-  }
 
   for (let i = 0; i < requiredFields.length; i++) {
     if (!address[requiredFields[i]]) invalidFields.push(requiredFields[i]);
@@ -325,4 +216,15 @@ export const showAlertBox = (alertText = 'Address saved') => {
   setTimeout(() => {
     $('.alert-container').slideUp();
   }, 5000);
+};
+
+export const postAddressSaveScroll = () => {
+  setTimeout(() => {
+    if ($('.bash--extra-fields').length > 0) {
+      document.querySelector('.bash--extra-fields').scrollIntoView({ behavior: 'smooth' });
+    } else {
+      document.getElementById('bash-delivery-options').scrollIntoView({ behavior: 'smooth' });
+    }
+  }, 500);
+  showAlertBox();
 };

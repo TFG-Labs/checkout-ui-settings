@@ -43,6 +43,7 @@ export const getAddresses = async () => {
     'country',
     'tvID',
     'geoCoordinate',
+    'captureMethod',
   ].join(',');
 
   const headers = getHeadersByConfig({ cookie: true, cache: true, json: false });
@@ -94,7 +95,10 @@ const getAddress = async (addressName, fields) => {
 };
 
 // PATCH address
-
+/**
+ *
+ * @param {Object} address
+ */
 export const upsertAddress = async (address) => {
   let path;
   const { email } = window.vtexjs.checkout.orderForm.clientProfileData;
@@ -135,8 +139,13 @@ export const upsertAddress = async (address) => {
       }
       return res;
     })
-    .then((result) => result)
-    .catch((error) => catchError(`SAVE_ADDRESS_ERROR: ${error?.message}`));
+    .then((result) => {
+      console.log('Address saved to master data:', result);
+      return result;
+    })
+    .catch((error) => {
+      catchError(`SAVE_ADDRESS_ERROR: ${error?.message}`);
+    });
 };
 
 export const updateAddressListing = (address) => {
@@ -154,7 +163,13 @@ export const updateAddressListing = (address) => {
   $(`input[type="radio"][name="selected-address"][value="${address.addressName}"]`).attr('checked', true);
 };
 
-export const addOrUpdateAddress = async (address) => {
+/**
+ *
+ * @param {Object} address
+ * @param {boolean} persistMasterData - boolean value to determine if an address should persist to master data
+ * @returns
+ */
+export const addOrUpdateAddress = async (address, persistMasterData) => {
   if (!address.addressName) {
     const streetStr = address.street
       .replace(/[^a-zA-Z0-9]/g, ' ')
@@ -170,7 +185,7 @@ export const addOrUpdateAddress = async (address) => {
   DB.addOrUpdateAddress(address).then(() => updateAddressListing(address));
 
   // Add or update at the API.
-  upsertAddress(address);
+  if (persistMasterData) upsertAddress(address);
 };
 
 export const getAddressByName = async (addressName) => DB.getAddress(addressName);
@@ -341,6 +356,5 @@ export const deleteAddress = async (addressId) => {
     $(`#address-${addressId}`).remove();
   });
 };
-
 
 export default getAddresses;
