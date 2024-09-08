@@ -12,6 +12,27 @@ const { formatPhoneNumber } = usePhoneNumberFormatting();
 
 const DB = new CheckoutDB();
 
+/**
+ *
+ * @param {string | null | number[] | string []} coOrds
+ * @return {number[] | null}
+ */
+const cleanGeoCoordinates = (coOrds) => {
+  if (Array.isArray(coOrds)) {
+    return coOrds;
+  }
+  if (typeof coOrds === 'string') {
+    let coordinates = null;
+    try {
+      coordinates = JSON.parse(coOrds);
+    } catch {
+      coordinates = null;
+    }
+    return coordinates;
+  }
+  return null;
+};
+
 export const getAddresses = async () => {
   // Try to get addresses from users local store.
 
@@ -63,11 +84,15 @@ export const getAddresses = async () => {
     .then((res) => res.json())
     .then(async (data) => {
       // Store addresses locally
-      if (data.data) DB.loadAddresses(data.data);
-      // return DB.getAddresses();
-      // API can have dups.
-      return data;
+      if (!data?.data) throw new Error('No data returned from API');
+      const apiAddresses = data.data.map((address) => ({
+        ...address,
+        geoCoordinate: cleanGeoCoordinates(address.geoCoordinate),
+      }));
+      const res = await DB.loadAddresses(apiAddresses);
+      return res;
     })
+    .then(async () => ({ data: await DB.getAddresses() }))
     .catch((error) => catchError(`GET_ADDRESSES_ERROR: ${error?.message}`));
 };
 
