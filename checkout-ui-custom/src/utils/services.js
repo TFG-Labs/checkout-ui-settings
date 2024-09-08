@@ -87,7 +87,8 @@ export const getAddresses = async () => {
       if (!data?.data) throw new Error('No data returned from API');
       const apiAddresses = data.data.map((address) => ({
         ...address,
-        geoCoordinate: cleanGeoCoordinates(address.geoCoordinate),
+        geoCoordinate: cleanGeoCoordinates(address.geoCoordinate), // for masterData
+        geoCoordinates: cleanGeoCoordinates(address.geoCoordinate), // for shippingData
       }));
       const res = await DB.loadAddresses(apiAddresses);
       return res;
