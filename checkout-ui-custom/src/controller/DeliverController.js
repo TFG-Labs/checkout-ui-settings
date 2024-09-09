@@ -38,6 +38,7 @@ import { AD_TYPE, DATA_VIEW, STEPS } from '../utils/const';
 import handleDeleteAddress from '../utils/deleteAddress';
 import { formatAddressSummary } from '../utils/formatAddressSummary';
 import {
+  clearHTML,
   clearLoaders,
   getSpecialCategories,
   hideBusinessName,
@@ -75,37 +76,29 @@ const DeliverController = (() => {
 
   const RenderEditAddress = async (addressName) => {
     const data = await getAddressByName(addressName);
-    document.querySelector('#edit-adress-section').innerHTML = EditAddressForm(data);
+    $('#edit-adress-section').html(EditAddressForm(data));
     preparePhoneField(`#${EDIT_FORM_RECEIVER_PHONE_ID}`);
   };
 
   const RenderAddAddressAutoComplete = async (address) => {
-    document.querySelector('#add-address-autocomplete-section').innerHTML = AddAddressAutoCompleteForm(address);
+    $('#add-address-autocomplete-section').html(AddAddressAutoCompleteForm(address));
     preparePhoneField(`#${ADD_ADDRESS_AUTOCOMPLETE_FORM_RECEIVER_PHONE_ID}`);
   };
 
   const RenderAddAddressManual = async (type, address) => {
     const mountPoint = type === 'MANUAL' ? '#manual-address-section' : '#add-address-autocomplete-manual-section';
 
-    document.querySelector(mountPoint).innerHTML = AddAddressManualForm({ type, address });
+    $(mountPoint).html(AddAddressManualForm({ type, address }));
     preparePhoneField(`#${ADD_ADDRESS_FORM_MANUAL_RECIEVER_PHONE_ID}`);
   };
 
-  const clearEditAddress = () => {
-    document.querySelector('#edit-adress-section').innerHTML = '';
-  };
+  const clearEditAddress = () => clearHTML('#edit-adress-section');
 
-  const clearAddAddressAutoComplete = () => {
-    document.querySelector('#add-address-autocomplete-section').innerHTML = '';
-  };
+  const clearAddAddressAutoComplete = () => clearHTML('##add-address-autocomplete-section');
 
-  const clearAddAddressAutoCompleteManual = () => {
-    document.querySelector('#add-address-autocomplete-manual-section').innerHTML = '';
-  };
+  const clearAddAddressAutoCompleteManual = () => clearHTML('add-address-autocomplete-manual-section');
 
-  const clearManualAddress = () => {
-    document.querySelector('#manual-address-section').innerHTML = '';
-  };
+  const clearManualAddress = () => clearHTML('#manual-address-section');
 
   const setupDeliver = () => {
     unblockShippingError();
