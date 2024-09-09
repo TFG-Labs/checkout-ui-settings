@@ -94,9 +94,9 @@ const DeliverController = (() => {
 
   const clearEditAddress = () => clearHTML('#edit-adress-section');
 
-  const clearAddAddressAutoComplete = () => clearHTML('##add-address-autocomplete-section');
+  const clearAddAddressAutoComplete = () => clearHTML('#add-address-autocomplete-section');
 
-  const clearAddAddressAutoCompleteManual = () => clearHTML('add-address-autocomplete-manual-section');
+  const clearAddAddressAutoCompleteManual = () => clearHTML('#add-address-autocomplete-manual-section');
 
   const clearManualAddress = () => clearHTML('#manual-address-section');
 
