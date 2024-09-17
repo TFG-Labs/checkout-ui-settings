@@ -37,10 +37,8 @@ const submitDeliveryForm = async (event) => {
 
   fullAddress = { ...address, ...dbAddress };
 
-  let shouldPersistMasterData = false;
   // Check for null geoCoordinate and set default value if necessary
   if (fullAddress.geoCoordinate === null) {
-    shouldPersistMasterData = true;
     fullAddress.geoCoordinate = ['', '']; // update masterdata
     fullAddress.geoCoordinates = ['', '']; // update shipping data
     console.warn('submitDeliveryForm - Invalid geoCoordinate, setting default empty value');
@@ -84,7 +82,7 @@ const submitDeliveryForm = async (event) => {
     console.info({ tvDataSent });
   }
 
-  await addOrUpdateAddress(fullAddress, shouldPersistMasterData);
+  await addOrUpdateAddress(fullAddress, false);
 
   // after submitting hide the delivery container
   $('.bash--delivery-container').css('display', 'none');
