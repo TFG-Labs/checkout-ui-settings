@@ -1,10 +1,10 @@
 // @ts-nocheck
+import { requiredRicaFields, requiredTVFields } from '../partials/Deliver/constants';
 import {
   CouldNotSelectAddressError,
   NoAddressSelectedError,
   ShowDeliveryError,
 } from '../partials/Deliver/DeliveryError';
-import { requiredRicaFields, requiredTVFields } from '../partials/Deliver/constants';
 import { setDeliveryLoading } from '../partials/Deliver/utils';
 import { RICA_APP, STEPS, TV_APP } from './const';
 import { clearLoaders, getSpecialCategories } from './functions';
@@ -36,6 +36,15 @@ const submitDeliveryForm = async (event) => {
   const dbAddress = await getAddressByName($(selectedAddressRadio).val());
 
   fullAddress = { ...address, ...dbAddress };
+
+  let shouldPersistMasterData = false;
+  // Check for null geoCoordinate and set default value if necessary
+  if (fullAddress.geoCoordinate === null) {
+    shouldPersistMasterData = true;
+    fullAddress.geoCoordinate = ['', '']; // update masterdata
+    fullAddress.geoCoordinates = ['', '']; // update shipping data
+    console.warn('submitDeliveryForm - Invalid geoCoordinate, setting default empty value');
+  }
 
   // Final check to validate that the selected address has no validation errors.
   const { success: didSetAddress } = await setAddress(fullAddress, { track: false });
@@ -75,7 +84,7 @@ const submitDeliveryForm = async (event) => {
     console.info({ tvDataSent });
   }
 
-  await addOrUpdateAddress(fullAddress, false);
+  await addOrUpdateAddress(fullAddress, shouldPersistMasterData);
 
   // after submitting hide the delivery container
   $('.bash--delivery-container').css('display', 'none');

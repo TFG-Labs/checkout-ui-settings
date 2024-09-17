@@ -35,6 +35,12 @@ const setAddress = (address, config) => {
   if (hasTVs) populateExtraFields(address, requiredTVFields, 'tv_');
   if (hasSimCards) populateRicaFields();
 
+  // Fix for null geoCoordinate
+  if (address.geoCoordinate === null) {
+    address.geoCoordinates = ['', ''];
+    console.warn('setAddress - Invalid geoCoordinate, setting default empty value');
+  }
+
   const { isValid, invalidFields } = addressIsValid(address);
 
   if (!isValid) {
@@ -95,7 +101,10 @@ const setAddress = (address, config) => {
       if (address.addressName) updateAddressListing(address);
 
       try {
-        updateDeliveryData({ businessName: address.businessName, receiverPhone: address.receiverPhone });
+        updateDeliveryData({
+          businessName: address.businessName,
+          receiverPhone: address.receiverPhone,
+        });
       } catch (e) {
         sendEvent({
           eventCategory: 'Checkout_SystemError',
