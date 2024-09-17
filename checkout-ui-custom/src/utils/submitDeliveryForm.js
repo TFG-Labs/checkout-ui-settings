@@ -34,15 +34,7 @@ const submitDeliveryForm = async (event) => {
   setDeliveryLoading();
 
   const dbAddress = await getAddressByName($(selectedAddressRadio).val());
-
   fullAddress = { ...address, ...dbAddress };
-
-  // Check for null geoCoordinate and set default value if necessary
-  if (fullAddress.geoCoordinate === null) {
-    fullAddress.geoCoordinate = ['', '']; // update masterdata
-    fullAddress.geoCoordinates = ['', '']; // update shipping data
-    console.warn('submitDeliveryForm - Invalid geoCoordinate, setting default empty value');
-  }
 
   // Final check to validate that the selected address has no validation errors.
   const { success: didSetAddress } = await setAddress(fullAddress, { track: false });
