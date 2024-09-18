@@ -1,10 +1,10 @@
 // @ts-nocheck
+import { requiredRicaFields, requiredTVFields } from '../partials/Deliver/constants';
 import {
   CouldNotSelectAddressError,
   NoAddressSelectedError,
   ShowDeliveryError,
 } from '../partials/Deliver/DeliveryError';
-import { requiredRicaFields, requiredTVFields } from '../partials/Deliver/constants';
 import { setDeliveryLoading } from '../partials/Deliver/utils';
 import { RICA_APP, STEPS, TV_APP } from './const';
 import { clearLoaders, getSpecialCategories } from './functions';
@@ -34,7 +34,6 @@ const submitDeliveryForm = async (event) => {
   setDeliveryLoading();
 
   const dbAddress = await getAddressByName($(selectedAddressRadio).val());
-
   fullAddress = { ...address, ...dbAddress };
 
   // Final check to validate that the selected address has no validation errors.

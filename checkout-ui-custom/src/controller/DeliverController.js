@@ -265,11 +265,12 @@ const DeliverController = (() => {
 
     if (!address) return;
 
+    let selectedAddress;
     getAddressByName(address.addressName)
       .then(async (addressByName) => {
         $('input[type="radio"][name="selected-address"]:checked').attr('checked', false);
         const addressParam = addressByName || address;
-
+        selectedAddress = addressParam;
         const { success: didSetAddress } = await setAddress(addressParam, { track: false });
         if (!didSetAddress) {
           ShowDeliveryError(CouldNotSelectAddressError(addressParam));
@@ -278,6 +279,8 @@ const DeliverController = (() => {
       })
       .catch((e) => {
         console.error('Could not get address - address selection', e?.message);
+        ShowDeliveryError(CouldNotSelectAddressError(selectedAddress));
+        console.error('Select Address - Set Address Failure');
       });
   });
 
