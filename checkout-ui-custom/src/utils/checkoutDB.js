@@ -3,7 +3,7 @@ class CheckoutDB {
     this.indexedDB =
       window.indexedDB || window.webkitIndexedDB || window.mozIndexedDB || window.msIndexedDB || window.shimIndexedDB;
 
-    const request = this.indexedDB.open('checkoutDB', 1.2);
+    const request = this.indexedDB.open('checkoutDB', 2);
 
     request.onerror = (event) => {
       console.error('CheckoutDB Error', { event });
@@ -12,12 +12,19 @@ class CheckoutDB {
 
     request.onupgradeneeded = (event) => {
       const db = event.target.result;
+      if (db.objectStoreNames.contains('addresses')) {
+        db.deleteObjectStore('addresses');
+      }
       const store = db.createObjectStore('addresses', { keyPath: 'addressName' });
-      store.createIndex('address_street', ['street'], { unique: false });
-      store.createIndex('address_addressName', ['addressName'], { unique: true });
-      store.createIndex('address_street_suburb_city_postal', ['street', 'neighborhood', 'city', 'postalCode'], {
-        unique: true,
-      });
+      if (store.indexNames.contains('address_street')) {
+        store.deleteIndex('address_street');
+      }
+      if (store.indexNames.contains('address_addressName')) {
+        store.deleteIndex('address_addressName');
+      }
+      if (store.indexNames.contains('address_street_suburb_city_postal')) {
+        store.deleteIndex('address_street_suburb_city_postal');
+      }
     };
 
     request.onsuccess = (event) => {
