@@ -42,7 +42,7 @@ class CheckoutDB {
 
       query.onsuccess = () => resolve({ success: true, addressId: query.result });
 
-      query.onerror = (error) => reject(new Error({ success: false, error: error.target.error }));
+      query.onerror = (error) => reject(new Error(error));
     });
   }
 
@@ -55,7 +55,7 @@ class CheckoutDB {
 
       query.onerror = (error) => {
         console.error('Something went wrong with getAddresses.', error);
-        reject([]);
+        reject(error);
       };
     });
   }
@@ -69,7 +69,7 @@ class CheckoutDB {
 
       query.onerror = (error) => {
         console.error('Something went wrong with getAddress.', error);
-        reject([]);
+        reject(error);
       };
     });
   }
@@ -97,7 +97,7 @@ class CheckoutDB {
 
       query.onerror = (error) => {
         console.error('Something went wrong with clearData.', error);
-        reject([]);
+        reject(error);
       };
     });
   }
