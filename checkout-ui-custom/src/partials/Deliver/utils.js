@@ -1,9 +1,10 @@
 // @ts-nocheck
 
 import { AD_TYPE, COLLECT_FEE, DELIVERY_FEE, RICA_APP, TV_APP } from '../../utils/const';
-import { getSpecialCategories } from '../../utils/functions';
+import { clearLoaders, getSpecialCategories } from '../../utils/functions';
 import usePhoneNumberFormatting from '../../utils/phoneNumberFormat';
-import { getOrderFormCustomData } from '../../utils/services';
+import { getAddresses, getOrderFormCustomData } from '../../utils/services';
+import AddressListing from './AddressListing';
 import { DeliveryError } from './DeliveryError';
 import { Alert } from './Elements/Alert';
 import { requiredAddressFields, requiredRicaFields, requiredTVFields } from './constants';
@@ -227,4 +228,22 @@ export const postAddressSaveScroll = () => {
     }
   }, 500);
   showAlertBox();
+};
+
+export const populateAddresses = async () => {
+  const addressesData = await getAddresses();
+  const addresses = addressesData?.data ?? [];
+  const addressesHtml = addresses.map((address) => AddressListing(address));
+
+  $('#bash-address-list').html(addressesHtml.join(''));
+  if ($('#back-button-select-address').hasClass('inactive')) {
+    $('#back-button-select-address').show();
+  }
+  clearLoaders();
+  if (addresses.length < 1) {
+    window.postMessage({ action: 'setDeliveryView', view: 'address-search' });
+    $('#bash--input-address-search').focus();
+    $('#back-button-select-address').hide();
+    $('#back-button-select-address').addClass('inactive');
+  }
 };
