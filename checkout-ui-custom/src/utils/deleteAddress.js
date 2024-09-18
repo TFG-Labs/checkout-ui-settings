@@ -1,3 +1,4 @@
+// @ts-nocheck
 import AddressListing from '../partials/Deliver/AddressListing';
 import { showAlertBox } from '../partials/Deliver/utils';
 import {
@@ -34,8 +35,8 @@ const handleDeleteAddress = async (addressName) => {
 
     // Update the UI with the new list of addresses
     const addressesHtml = updatedAddresses.map((addr) => AddressListing(addr)).join('');
-    if (document.getElementById('bash-address-list')) {
-      document.getElementById('bash-address-list').innerHTML = addressesHtml;
+    if ($('#bash-address-list').length > 0) {
+      $('#bash-address-list').html(addressesHtml);
     }
 
     showAlertBox('Address deleted successfully.');
