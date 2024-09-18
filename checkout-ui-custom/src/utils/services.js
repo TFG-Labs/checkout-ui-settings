@@ -35,13 +35,18 @@ const cleanGeoCoordinates = (coOrds) => {
 
 export const getAddresses = async () => {
   // Try to get addresses from users local store.
-
   const addresses = await DB.getAddresses();
   if (addresses.length > 0) return { data: addresses };
 
   // Fallback to get addresses from API.
+  let email = window.vtexjs?.checkout?.orderForm?.clientProfileData?.email;
 
-  const { email } = window?.vtexjs?.checkout?.orderForm?.clientProfileData;
+  // If the email is not available in the orderForm addresses can't be retrieved.
+  // Try to get it from the orderForm API.
+  if (!email) {
+    const orderForm = await window.vtexjs.checkout.getOrderForm();
+    email = orderForm?.clientProfileData?.email;
+  }
 
   const fields = [
     'id',
@@ -68,33 +73,34 @@ export const getAddresses = async () => {
   ].join(',');
 
   const headers = getHeadersByConfig({ cookie: true, cache: true, json: false });
-  const options = {
-    headers,
-    credentials: 'include',
-  };
-
   const cacheBust = Date.now();
 
-  return fetch(
+  const addressesFromAPI = await fetch(
     `${BASE_URL_API}masterdata/addresses?t=${cacheBust}&_fields=${fields}&_where=${encodeURIComponent(
       `userIdQuery=${email}`
     )}`,
-    options
-  )
-    .then((res) => res.json())
-    .then(async (data) => {
-      // Store addresses locally
-      if (!data?.data) throw new Error('No data returned from API');
-      const apiAddresses = data.data.map((address) => ({
-        ...address,
-        geoCoordinate: cleanGeoCoordinates(address.geoCoordinate), // for masterData
-        geoCoordinates: cleanGeoCoordinates(address.geoCoordinate), // for shippingData
-      }));
-      const res = await DB.loadAddresses(apiAddresses);
-      return res;
-    })
-    .then(async () => ({ data: await DB.getAddresses() }))
-    .catch((error) => catchError(`GET_ADDRESSES_ERROR: ${error?.message}`));
+    { headers, credentials: 'include' }
+  );
+
+  const addressesData = await addressesFromAPI.json();
+
+  if (!addressesData?.data) throw new Error('No data returned from API');
+
+  const apiAddresses = addressesData.data.map((address) => ({
+    ...address,
+    geoCoordinate: cleanGeoCoordinates(address.geoCoordinate), // for masterData
+    geoCoordinates: cleanGeoCoordinates(address.geoCoordinate), // for shippingData
+  }));
+
+  // Try to store addresses locally
+  // for faster retrieval.
+  try {
+    await DB.loadAddresses(apiAddresses);
+  } catch (e) {
+    console.error('Could Not Store Addresses Locally', e);
+  }
+
+  return { data: apiAddresses };
 };
 
 // GET Address by ID / Name?
@@ -108,7 +114,7 @@ const getAddress = async (addressName, fields) => {
 
   const response = await fetch(
     `${BASE_URL_API}masterdata/addresses/${fields}&_where=addressName=${addressName}&timestamp=${Date.now()}`,
-    options
+    { headers, credentials: 'include' }
   )
     .then((res) => res.json())
     .catch((error) => catchError(`GET_ADDRESS_ERROR: ${error?.message}`));
@@ -287,11 +293,11 @@ export const removeAddressFromDB = async (address) => {
   }
 };
 
-export const removeAddressFromOrderForm = async (addressId) => {
-  return vtexjs.checkout
+export const removeAddressFromOrderForm = async (addressId) =>
+  vtexjs.checkout
     .getOrderForm()
-    .then(function (orderForm) {
-      let shippingData = orderForm.shippingData;
+    .then((orderForm) => {
+      const { shippingData } = orderForm;
       const filterAddresses = (addresses) => addresses.filter((address) => address.addressId !== addressId);
 
       shippingData.availableAddresses = filterAddresses(shippingData.availableAddresses || []);
@@ -301,13 +307,12 @@ export const removeAddressFromOrderForm = async (addressId) => {
       // Send the updated shippingData back to VTEX
       return vtexjs.checkout.sendAttachment('shippingData', shippingData);
     })
-    .done(function (orderForm) {
+    .done((orderForm) => {
       console.log(orderForm.shippingData);
     })
-    .fail(function (error) {
+    .fail((error) => {
       console.error('Error removing address from order form:', error);
     });
-};
 
 // Remove address from MasterData
 export const removeAddressFromMasterData = async (addressId) => {
@@ -328,11 +333,10 @@ export const removeAddressFromMasterData = async (addressId) => {
     if (response.ok) {
       console.log(`Address with ID ${addressId} successfully deleted from MasterData`);
       return response.json();
-    } else {
-      const errorData = await response.json();
-      console.error(`Error deleting address from MasterData`, errorData);
-      throw new Error('Error deleting address from MasterData');
     }
+    const errorData = await response.json();
+    console.error('Error deleting address from MasterData', errorData);
+    throw new Error('Error deleting address from MasterData');
   } catch (error) {
     console.error('Error in removeAddressFromMasterData:', error);
     throw new Error(`Error deleting address from MasterData: ${error.message}`);
