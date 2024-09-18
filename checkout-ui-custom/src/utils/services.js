@@ -26,7 +26,7 @@ const cleanGeoCoordinates = (coOrds) => {
     try {
       coordinates = JSON.parse(coOrds);
     } catch {
-      coordinates = null;
+      coordinates = ['', ''];
     }
     return coordinates;
   }
@@ -173,6 +173,7 @@ export const upsertAddress = async (address) => {
     })
     .then((result) => {
       console.log('Address saved to master data:', result);
+
       return result;
     })
     .catch((error) => {

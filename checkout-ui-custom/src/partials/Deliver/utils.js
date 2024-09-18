@@ -179,7 +179,7 @@ export const updateDeliveryFeeDisplay = () => {
   if (shippingFee > 0) feeText = `R${(shippingFee / 100).toFixed(2).replace('.00', '')}`;
 
   if ($('#bash--delivery-fee').length > 0) {
-    document.getElementById('bash--delivery-fee').innerHTML = feeText;
+    $('#bash--delivery-fee').html(feeText);
   }
 };
 
