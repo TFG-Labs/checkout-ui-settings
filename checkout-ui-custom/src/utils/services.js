@@ -48,6 +48,9 @@ export const getAddresses = async () => {
     email = orderForm?.clientProfileData?.email;
   }
 
+  // Can't get email from orderForm, return empty array.
+  if (!email) return { data: [] };
+
   const fields = [
     'id',
     'addressType',
