@@ -339,10 +339,10 @@ export const removeAddressFromMasterData = async (addressId) => {
       return response.json();
     }
     const errorData = await response.json();
-    console.error('Error deleting address from MasterData', errorData);
+    console.warn('Error deleting address from MasterData', errorData);
     throw new Error('Error deleting address from MasterData');
   } catch (error) {
-    console.error('Error in removeAddressFromMasterData:', error);
+    console.warn('Error in removeAddressFromMasterData:', error);
     throw new Error(`Error deleting address from MasterData: ${error.message}`);
   }
 };

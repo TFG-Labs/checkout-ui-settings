@@ -1,6 +1,7 @@
 // @ts-nocheck
 import AddressListing from '../partials/Deliver/AddressListing';
 import { showAlertBox } from '../partials/Deliver/utils';
+import { clearLoaders } from './functions';
 import {
   getAddressByName,
   getAddresses,
@@ -11,6 +12,7 @@ import {
 
 // Handle address deletion
 const handleDeleteAddress = async (addressName) => {
+  $('#edit-adress-section').addClass('shimmer');
   try {
     const address = await getAddressByName(addressName);
 
@@ -25,7 +27,7 @@ const handleDeleteAddress = async (addressName) => {
     const addressId = address.addressId ?? address.id ?? '';
 
     await removeAddressFromMasterData(addressId).catch((error) => {
-      console.error('Error deleting address from MasterData:', error);
+      console.warn('Error deleting address from MasterData:', error);
     });
 
     // Fetch updated list of addresses
@@ -43,6 +45,8 @@ const handleDeleteAddress = async (addressName) => {
   } catch (error) {
     showAlertBox('Error deleting address.');
     console.error('Error deleting address:', error);
+  } finally {
+    clearLoaders();
   }
 };
 
