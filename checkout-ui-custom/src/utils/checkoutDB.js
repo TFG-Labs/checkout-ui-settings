@@ -32,7 +32,7 @@ class CheckoutDB {
 
   loadAddresses(addresses) {
     const queries = addresses.map((address) => this.addOrUpdateAddress(address));
-    return Promise.all(queries);
+    return Promise.allSettled(queries);
   }
 
   addOrUpdateAddress(address) {
@@ -42,7 +42,7 @@ class CheckoutDB {
 
       query.onsuccess = () => resolve({ success: true, addressId: query.result });
 
-      query.onerror = (error) => reject(new Error(error));
+      query.onerror = (error) => reject(error);
     });
   }
 
@@ -83,7 +83,7 @@ class CheckoutDB {
 
       query.onerror = (error) => {
         console.error('Something went wrong with deleteAddress.', error);
-        reject(false);
+        reject(error);
       };
     });
   }
