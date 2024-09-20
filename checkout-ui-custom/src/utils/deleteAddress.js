@@ -20,20 +20,23 @@ const handleDeleteAddress = async (addressName) => {
       console.error('Error deleting address from DB:', error);
     });
 
-    await removeAddressFromOrderForm(addressName).catch((error) => {
+    // Fire and forget - orderForm address will be set when user clicks Continue to Pay
+    removeAddressFromOrderForm(addressName).catch((error) => {
       console.error('Error deleting address from OrderForm:', error);
     });
 
     const addressId = address.addressId ?? address.id ?? '';
 
-    await removeAddressFromMasterData(addressId).catch((error) => {
+    // Fire and forget - customer can still proceed with the order if this fails
+    removeAddressFromMasterData(addressId).catch((error) => {
       console.warn('Error deleting address from MasterData:', error);
     });
 
-    // Fetch updated list of addresses
-    const { data: updatedAddresses } = await getAddresses();
     // Switch to the select-address view
     window.postMessage({ action: 'setDeliveryView', view: 'select-address' });
+
+    // Fetch updated list of addresses
+    const { data: updatedAddresses } = await getAddresses();
 
     // Update the UI with the new list of addresses
     const addressesHtml = updatedAddresses.map((addr) => AddressListing(addr)).join('');
