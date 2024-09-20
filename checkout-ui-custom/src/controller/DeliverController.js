@@ -20,6 +20,7 @@ import {
   clearRicaFields,
   customShippingDataIsValid,
   parseAttribute,
+  populateAddresses,
   populateDeliveryError,
   populateRicaFields,
   populateTVFields,
@@ -121,6 +122,8 @@ const DeliverController = (() => {
         hasFurnMixed: state.hasFurnMixed,
       })
     );
+
+    populateAddresses();
 
     if (state.hasFurn) {
       $('#shipping-data:not(.has-furniture)').addClass('has-furniture');
