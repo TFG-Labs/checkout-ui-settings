@@ -3,21 +3,53 @@ import AddressListing from '../partials/Deliver/AddressListing';
 import CheckoutDB from './checkoutDB';
 import { BASE_URL_API } from './const';
 import { catchError, clearLoaders, getHeadersByConfig } from './functions';
+import usePhoneNumberFormatting from './phoneNumberFormat';
+
+const { formatPhoneNumber } = usePhoneNumberFormatting();
 
 // API Functions
 // GET addresses
 
 const DB = new CheckoutDB();
 
+/**
+ *
+ * @param {string | null | number[] | string []} coOrds
+ * @return {number[] | null}
+ */
+const cleanGeoCoordinates = (coOrds) => {
+  if (Array.isArray(coOrds)) {
+    return coOrds;
+  }
+  if (typeof coOrds === 'string') {
+    let coordinates = null;
+    try {
+      coordinates = JSON.parse(coOrds);
+    } catch {
+      coordinates = ['', ''];
+    }
+    return coordinates;
+  }
+  return null;
+};
+
 export const getAddresses = async () => {
   // Try to get addresses from users local store.
-
   const addresses = await DB.getAddresses();
   if (addresses.length > 0) return { data: addresses };
 
   // Fallback to get addresses from API.
+  let email = window.vtexjs?.checkout?.orderForm?.clientProfileData?.email;
 
-  const { email } = window?.vtexjs?.checkout?.orderForm?.clientProfileData;
+  // If the email is not available in the orderForm addresses can't be retrieved.
+  // Try to get it from the orderForm API.
+  if (!email) {
+    const orderForm = await window.vtexjs.checkout.getOrderForm();
+    email = orderForm?.clientProfileData?.email;
+  }
+
+  // Can't get email from orderForm, return empty array.
+  if (!email) return { data: [] };
 
   const fields = [
     'id',
@@ -40,31 +72,38 @@ export const getAddresses = async () => {
     'country',
     'tvID',
     'geoCoordinate',
+    'captureMethod',
   ].join(',');
 
   const headers = getHeadersByConfig({ cookie: true, cache: true, json: false });
-  const options = {
-    headers,
-    credentials: 'include',
-  };
-
   const cacheBust = Date.now();
 
-  return fetch(
+  const addressesFromAPI = await fetch(
     `${BASE_URL_API}masterdata/addresses?t=${cacheBust}&_fields=${fields}&_where=${encodeURIComponent(
-      `userIdQuery=${email}`,
+      `userIdQuery=${email}`
     )}`,
-    options,
-  )
-    .then((res) => res.json())
-    .then(async (data) => {
-      // Store addresses locally
-      if (data.data) DB.loadAddresses(data.data);
-      // return DB.getAddresses();
-      // API can have dups.
-      return data;
-    })
-    .catch((error) => catchError(`GET_ADDRESSES_ERROR: ${error?.message}`));
+    { headers, credentials: 'include' }
+  );
+
+  const addressesData = await addressesFromAPI.json();
+
+  if (!addressesData?.data) throw new Error('No data returned from API');
+
+  const apiAddresses = addressesData.data.map((address) => ({
+    ...address,
+    geoCoordinate: cleanGeoCoordinates(address.geoCoordinate), // for masterData
+    geoCoordinates: cleanGeoCoordinates(address.geoCoordinate), // for shippingData
+  }));
+
+  // Try to store addresses locally
+  // for faster retrieval.
+  try {
+    await DB.loadAddresses(apiAddresses);
+  } catch (e) {
+    console.error('Could Not Store Addresses Locally', e);
+  }
+
+  return { data: apiAddresses };
 };
 
 // GET Address by ID / Name?
@@ -78,7 +117,7 @@ const getAddress = async (addressName, fields) => {
 
   const response = await fetch(
     `${BASE_URL_API}masterdata/addresses/${fields}&_where=addressName=${addressName}&timestamp=${Date.now()}`,
-    options,
+    { headers, credentials: 'include' }
   )
     .then((res) => res.json())
     .catch((error) => catchError(`GET_ADDRESS_ERROR: ${error?.message}`));
@@ -91,7 +130,10 @@ const getAddress = async (addressName, fields) => {
 };
 
 // PATCH address
-
+/**
+ *
+ * @param {Object} address
+ */
 export const upsertAddress = async (address) => {
   let path;
   const { email } = window.vtexjs.checkout.orderForm.clientProfileData;
@@ -132,8 +174,14 @@ export const upsertAddress = async (address) => {
       }
       return res;
     })
-    .then((result) => result)
-    .catch((error) => catchError(`SAVE_ADDRESS_ERROR: ${error?.message}`));
+    .then((result) => {
+      console.log('Address saved to master data:', result);
+
+      return result;
+    })
+    .catch((error) => {
+      catchError(`SAVE_ADDRESS_ERROR: ${error?.message}`);
+    });
 };
 
 export const updateAddressListing = (address) => {
@@ -151,7 +199,13 @@ export const updateAddressListing = (address) => {
   $(`input[type="radio"][name="selected-address"][value="${address.addressName}"]`).attr('checked', true);
 };
 
-export const addOrUpdateAddress = async (address) => {
+/**
+ *
+ * @param {Object} address
+ * @param {boolean} persistMasterData - boolean value to determine if an address should persist to master data
+ * @returns
+ */
+export const addOrUpdateAddress = async (address, persistMasterData) => {
   if (!address.addressName) {
     const streetStr = address.street
       .replace(/[^a-zA-Z0-9]/g, ' ')
@@ -167,7 +221,7 @@ export const addOrUpdateAddress = async (address) => {
   DB.addOrUpdateAddress(address).then(() => updateAddressListing(address));
 
   // Add or update at the API.
-  upsertAddress(address);
+  if (persistMasterData) upsertAddress(address);
 };
 
 export const getAddressByName = async (addressName) => DB.getAddress(addressName);
@@ -183,6 +237,10 @@ export const clearAddresses = async () => DB.clearData();
  */
 export const sendOrderFormCustomData = async (appId, data, rica = false) => {
   const { orderFormId } = window.vtexjs.checkout.orderForm;
+
+  if (data.phone) {
+    data.phone = formatPhoneNumber(data.phone, 'ZA').trim();
+  }
 
   const path = `/api/checkout/pub/orderForm/${orderFormId}/customData/${appId}`;
   const body = JSON.stringify({
@@ -212,15 +270,125 @@ export const getOrderFormCustomData = (appId) => {
   return fields;
 };
 
-export const removeFromCart = (index) => window.vtexjs.checkout
-  .updateItems([
-    {
-      index: `${index}`,
-      quantity: 0,
+export const removeFromCart = (index) =>
+  window.vtexjs.checkout
+    .updateItems([
+      {
+        index: `${index}`,
+        quantity: 0,
+      },
+    ])
+    .done(() => {
+      clearLoaders();
+    });
+
+export const removeAddressFromDB = async (address) => {
+  if (!address.addressName) {
+    return;
+  }
+
+  if (!address.addressId) address.addressId = address.addressName;
+
+  try {
+    await DB.deleteAddress(address.addressId);
+    updateAddressListing(address);
+  } catch (error) {
+    console.error('Error deleting address:', error);
+  }
+};
+
+export const removeAddressFromOrderForm = async (addressId) =>
+  vtexjs.checkout
+    .getOrderForm()
+    .then((orderForm) => {
+      const { shippingData } = orderForm;
+      const filterAddresses = (addresses) => addresses.filter((address) => address.addressId !== addressId);
+
+      shippingData.availableAddresses = filterAddresses(shippingData.availableAddresses || []);
+      shippingData.selectedAddresses = filterAddresses(shippingData.selectedAddresses || []);
+      shippingData.logisticsInfo = filterAddresses(shippingData.selectedAddresses || []);
+
+      // Send the updated shippingData back to VTEX
+      return vtexjs.checkout.sendAttachment('shippingData', shippingData);
+    })
+    .done((orderForm) => {
+      console.log(orderForm.shippingData);
+    })
+    .fail((error) => {
+      console.error('Error removing address from order form:', error);
+    });
+
+// Remove address from MasterData
+export const removeAddressFromMasterData = async (addressId) => {
+  if (!addressId) {
+    return Promise.reject(new Error('No address ID provided'));
+  }
+
+  const path = `${BASE_URL_API}masterdata/address/${addressId}`;
+  const headers = getHeadersByConfig({ cookie: true, cache: true, json: false });
+  const options = {
+    method: 'delete',
+    headers,
+    credentials: 'include',
+  };
+
+  try {
+    const response = await fetch(path, options);
+    if (response.ok) {
+      console.log(`Address with ID ${addressId} successfully deleted from MasterData`);
+      return response.json();
+    }
+    const errorData = await response.json();
+    console.warn('Error deleting address from MasterData', errorData);
+    throw new Error('Error deleting address from MasterData');
+  } catch (error) {
+    console.warn('Error in removeAddressFromMasterData:', error);
+    throw new Error(`Error deleting address from MasterData: ${error.message}`);
+  }
+};
+
+export const deleteAddressFromMasterdata = async (addressId) => {
+  const path = `${BASE_URL_API}masterdata/address/${addressId}`;
+  const headers = getHeadersByConfig({ cookie: true, cache: true, json: true });
+
+  const options = {
+    method: 'DELETE',
+    headers,
+    credentials: 'include',
+  };
+
+  return fetch(path, options)
+    .then((res) => res.json())
+    .catch((error) => catchError(`DELETE_ADDRESS_ERROR: ${error?.message}`));
+};
+
+export const deleteAddressFromOrderForm = async (addressId) => {
+  const { orderFormId } = window.vtexjs.checkout.orderForm;
+
+  const path = `/api/checkout/pub/orderForm/${orderFormId}/customData/${addressId}`;
+  const options = {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
     },
-  ])
-  .done(() => {
-    clearLoaders();
+  };
+
+  return fetch(path, options)
+    .then((res) => res.json())
+    .catch((error) => catchError(`DELETE_ORDERFORM_ADDRESS_ERROR: ${error?.message}`));
+};
+
+export const deleteAddress = async (addressId) => {
+  // Delete from Masterdata
+  await deleteAddressFromMasterdata(addressId);
+
+  // Delete from OrderForm
+  await deleteAddressFromOrderForm(addressId);
+
+  // Remove from local store and update UI
+  DB.deleteAddress(addressId).then(() => {
+    $(`#address-${addressId}`).remove();
   });
+};
 
 export default getAddresses;

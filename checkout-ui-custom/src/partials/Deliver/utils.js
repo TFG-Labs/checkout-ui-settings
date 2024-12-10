@@ -1,20 +1,15 @@
 // @ts-nocheck
-import {
-  AD_TYPE,
-  COLLECT_FEE,
-  DELIVERY_FEE,
-  FREE_SHIPPING_THRESHOLD,
-  PICKUP,
-  RICA_APP,
-  TV_APP,
-} from '../../utils/const';
-import { getSpecialCategories, hideBusinessName, isValidNumberBash, showBusinessName } from '../../utils/functions';
-import isInSouthAfrica from '../../utils/isInSouthAfrica';
-import { getBestPhoneNumber } from '../../utils/phoneFields';
-import { getOrderFormCustomData } from '../../utils/services';
+
+import { AD_TYPE, COLLECT_FEE, DELIVERY_FEE, RICA_APP, TV_APP } from '../../utils/const';
+import { clearLoaders, getSpecialCategories } from '../../utils/functions';
+import usePhoneNumberFormatting from '../../utils/phoneNumberFormat';
+import { getAddresses, getOrderFormCustomData } from '../../utils/services';
+import AddressListing from './AddressListing';
 import { DeliveryError } from './DeliveryError';
 import { Alert } from './Elements/Alert';
 import { requiredAddressFields, requiredRicaFields, requiredTVFields } from './constants';
+
+const { formatPhoneNumber, isValidNumber } = usePhoneNumberFormatting();
 
 export const setDeliveryLoading = () => {
   document.querySelector('.bash--delivery-container')?.classList.add('shimmer');
@@ -25,32 +20,7 @@ export const setPickupLoading = () => {
   document.querySelector('.vtex-omnishipping-1-x-ask')?.classList?.add('shimmer');
 };
 
-export const mapGoogleAddress = (addressComponents, geometry) => {
-  if (!addressComponents || addressComponents.length < 1) return {};
-  const streetNumber = addressComponents.find((item) => item.types.includes('street_number'))?.long_name;
-  const street = addressComponents.find((item) => item.types.includes('route'))?.long_name;
-  const neighborhood = addressComponents.find((item) => item.types.includes('sublocality'))?.long_name;
-  const city = addressComponents.find((item) => item.types.includes('locality'))?.long_name;
-  const postalCode = addressComponents.find((item) => item.types.includes('postal_code'))?.long_name;
-  const state = addressComponents.find((item) => item.types.includes('administrative_area_level_1'))?.long_name;
-
-  const coords = { lat: '', lng: '' };
-  if (geometry) {
-    coords.lat = geometry.location.lat();
-    coords.lng = geometry.location.lng();
-  }
-
-  return {
-    street: `${streetNumber ?? ''} ${street ?? ''}`.trim(),
-    neighborhood,
-    city,
-    postalCode,
-    state,
-    ...coords,
-  };
-};
-
-const provinceShortCode = (province) => {
+export const provinceShortCode = (province) => {
   switch (province) {
     case 'Select':
       return '';
@@ -88,151 +58,6 @@ export const getBestRecipient = ({ preferred = undefined, type = 'delivery' }) =
   if (type === 'collect') return preferred || shippingReceiverName || clientProfileName || '';
 
   return preferred || document.getElementById('client-first-name')?.value || clientProfileName || '';
-};
-
-const populateAddressFromSearch = (address) => {
-  const { street, neighborhood, postalCode, state, city, lat, lng } = address;
-
-  // Clear any populated fields
-  document.getElementById('bash--address-form')?.reset();
-
-  // Clear hidden ID fields to prevent overwriting existing.
-  document.getElementById('bash--input-addressId').value = '';
-  document.getElementById('bash--input-addressName').value = '';
-
-  document.getElementById('bash--input-number').value = '  ';
-  document.getElementById('bash--input-street').value = street ?? '';
-  document.getElementById('bash--input-neighborhood').value = neighborhood ?? '';
-  document.getElementById('bash--input-city').value = city ?? '';
-  document.getElementById('bash--input-postalCode').value = postalCode ?? '';
-  document.getElementById('bash--input-state').value = provinceShortCode(state);
-  document.getElementById('bash--input-lat').value = lat || '';
-  document.getElementById('bash--input-lng').value = lng || '';
-
-  // Update previously invalid fields.
-  $(':invalid').trigger('change');
-};
-
-export const populateAddressForm = (address) => {
-  const {
-    number,
-    street,
-    addressType,
-    businessName,
-    companyBuilding,
-    neighborhood,
-    postalCode,
-    state,
-    city,
-    receiverName,
-    receiverPhone,
-    complement,
-    id,
-    addressId,
-    addressName,
-    geoCoordinate,
-  } = address;
-
-  // Clear any populated fields
-  document.getElementById('bash--address-form')?.reset();
-  hideBusinessName();
-  let lat;
-  let lng;
-  try {
-    [lng, lat] = JSON.parse(JSON.stringify(geoCoordinate));
-
-    if (!isInSouthAfrica([lng, lat])) {
-      // Coordinates are most likely still at [lat, lng]
-      if (isInSouthAfrica[(lat, lng)]) {
-        lng = lat;
-        lat = lng;
-      } else {
-        // Unset the coordinates
-        lng = 0;
-        lat = 0;
-      }
-    }
-  } catch (e) {
-    console.warn('Could not parse geo coords', { address, geoCoordinate });
-  }
-
-  // Only overwrite defaults if values exist.
-  if (receiverName) document.getElementById('bash--input-receiverName').value = receiverName ?? '';
-  if (complement) document.getElementById('bash--input-complement').value = complement ?? '';
-
-  // addressId indicates that address is being edited / completed.
-  if (id || addressId) document.getElementById('bash--input-addressId').value = id || addressId; // TODO remove this?
-  if (addressName) document.getElementById('bash--input-addressName').value = addressName;
-
-  const streetLine = `${number ? `${number} ` : ''}${street}`.replace(`, ${companyBuilding}`, '');
-
-  // Address type
-  if (addressType === 'commercial') {
-    $('#radio-addressType-business').click();
-    showBusinessName({ focus: false });
-  }
-
-  if (businessName) document.getElementById('bash--input-businessName').value = businessName;
-
-  document.getElementById('bash--input-number').value = '';
-  document.getElementById('bash--input-street').value = streetLine || '';
-  document.getElementById('bash--input-companyBuilding').value = companyBuilding || '';
-  document.getElementById('bash--input-neighborhood').value = neighborhood || '';
-  document.getElementById('bash--input-city').value = city || '';
-  document.getElementById('bash--input-postalCode').value = postalCode || '';
-  document.getElementById('bash--input-state').value = provinceShortCode(state);
-  document.getElementById('bash--input-lat').value = lat || '';
-  document.getElementById('bash--input-lng').value = lng || '';
-
-  const fields = getOrderFormCustomData(PICKUP);
-
-  // Only overwrite defaults if values exist.
-  if (receiverName) document.getElementById('bash--input-receiverName').value = receiverName ?? '';
-  if (complement) document.getElementById('bash--input-complement').value = complement ?? '';
-  document.getElementById('bash--input-receiverPhone').value = getBestPhoneNumber({
-    preferred: receiverPhone,
-    type: 'delivery',
-    fields,
-  });
-
-  $(':invalid').trigger('change');
-};
-
-const checkForAddressResults = (event) => {
-  setTimeout(() => {
-    const pacContainers = document.querySelectorAll('.pac-container');
-    const hiddenPacContainers = document.querySelectorAll(".pac-container[style*='display: none']");
-    if (pacContainers?.length === hiddenPacContainers?.length && event.target?.value?.length > 3) {
-      $('#address-search-field-container:not(.no-results)').addClass('no-results');
-    } else {
-      $('#address-search-field-container.no-results').removeClass('no-results');
-    }
-  }, 250);
-};
-
-export const initGoogleAutocomplete = () => {
-  if (!window.google) return;
-
-  const input = document.getElementById('bash--input-address-search');
-  if (!input) return;
-  const autocomplete = new window.google.maps.places.Autocomplete(input, {
-    componentRestrictions: { country: 'ZA' },
-  });
-
-  window.google.maps.event.addListener(autocomplete, 'place_changed', () => {
-    const place = autocomplete.getPlace();
-    const { address_components: addressComponents, geometry } = place;
-
-    const address = mapGoogleAddress(addressComponents, geometry);
-
-    // Populate the form
-    // Set view to add-address
-    populateAddressFromSearch(address);
-    window.postMessage({ action: 'setDeliveryView', view: 'address-form' });
-    input.value = '';
-  });
-
-  input?.addEventListener('keyup', checkForAddressResults);
 };
 
 export const parseAttribute = (data) => {
@@ -293,20 +118,9 @@ export const populateTVFields = async () => {
 };
 
 // Runs when you setAddress
-export const addressIsValid = (address, validateExtraFields = true) => {
-  const { items } = window.vtexjs.checkout.orderForm;
-  const { hasTVs, hasSimCards } = getSpecialCategories(items);
-
-  let requiredFields = requiredAddressFields;
+export const addressIsValid = (address) => {
+  const requiredFields = requiredAddressFields;
   const invalidFields = [];
-
-  if (hasTVs && validateExtraFields) {
-    requiredFields = [...requiredFields, ...requiredTVFields];
-  }
-
-  if (hasSimCards && validateExtraFields) {
-    requiredFields = [...requiredFields, ...requiredRicaFields];
-  }
 
   for (let i = 0; i < requiredFields.length; i++) {
     if (!address[requiredFields[i]]) invalidFields.push(requiredFields[i]);
@@ -315,7 +129,7 @@ export const addressIsValid = (address, validateExtraFields = true) => {
   if (
     requiredFields.includes('receiverPhone') &&
     !invalidFields.includes('receiverPhone') &&
-    !isValidNumberBash(address.receiverPhone)
+    !isValidNumber(formatPhoneNumber(address.receiverPhone, 'ZA'), 'ZA')
   ) {
     invalidFields.push('receiverPhone');
     $('#bash--input-receiverPhone').addClass('invalid');
@@ -365,7 +179,7 @@ export const updateDeliveryFeeDisplay = () => {
   if (shippingFee > 0) feeText = `R${(shippingFee / 100).toFixed(2).replace('.00', '')}`;
 
   if ($('#bash--delivery-fee').length > 0) {
-    document.getElementById('bash--delivery-fee').innerHTML = feeText;
+    $('#bash--delivery-fee').html(feeText);
   }
 };
 
@@ -405,4 +219,31 @@ export const showAlertBox = (alertText = 'Address saved') => {
   }, 5000);
 };
 
-export default mapGoogleAddress;
+export const postAddressSaveScroll = () => {
+  setTimeout(() => {
+    if ($('.bash--extra-fields').length > 0) {
+      document.querySelector('.bash--extra-fields').scrollIntoView({ behavior: 'smooth' });
+    } else {
+      document.getElementById('bash-delivery-options').scrollIntoView({ behavior: 'smooth' });
+    }
+  }, 500);
+  showAlertBox();
+};
+
+export const populateAddresses = async () => {
+  const addressesData = await getAddresses();
+  const addresses = addressesData?.data ?? [];
+  const addressesHtml = addresses.map((address) => AddressListing(address));
+
+  $('#bash-address-list').html(addressesHtml.join(''));
+  if ($('#back-button-select-address').hasClass('inactive')) {
+    $('#back-button-select-address').show();
+  }
+  clearLoaders();
+  if (addresses.length < 1) {
+    window.postMessage({ action: 'setDeliveryView', view: 'address-search' });
+    $('#bash--input-address-search').focus();
+    $('#back-button-select-address').hide();
+    $('#back-button-select-address').addClass('inactive');
+  }
+};

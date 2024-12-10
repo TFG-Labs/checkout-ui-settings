@@ -1,50 +1,50 @@
-import { requiredAddressFields, requiredTVFields, validAddressTypes } from '../partials/Deliver/constants';
+import { requiredTVFields, validAddressTypes } from '../partials/Deliver/constants';
 import {
   addressIsValid,
-  populateAddressForm,
   populateDeliveryError,
   populateExtraFields,
   populateRicaFields,
-  setDeliveryLoading
+  setDeliveryLoading,
 } from '../partials/Deliver/utils';
+import { ADD_ADDRESS_STAGE, EVENT_NAME, PARAMETER, trackAddressEvent } from './addressAnalytics';
 import { AD_TYPE, DELIVER_APP } from './const';
 import { clearLoaders, getSpecialCategories } from './functions';
 import sendEvent from './sendEvent';
 import { sendOrderFormCustomData, updateAddressListing } from './services';
 
-const updateDeliveryData = ({ businessName, receiverPhone }) => sendOrderFormCustomData(DELIVER_APP, {
-  jsonString: JSON.stringify(
-    {
+const updateDeliveryData = ({ businessName, receiverPhone }) =>
+  sendOrderFormCustomData(DELIVER_APP, {
+    jsonString: JSON.stringify({
       businessName: businessName || '',
-      receiverPhone: receiverPhone || ''
-    }
-  )
-});
+      receiverPhone: receiverPhone || '',
+    }),
+  });
 
-const setAddress = (address, options = { validateExtraFields: true }) => {
-  const { validateExtraFields } = options;
+/**
+ * @param {Object} config
+ * @param {ADD_ADDRESS_METHOD[keyof typeof ADD_ADDRESS_METHOD]} config.add_address_method -The initial view to add the address. Use one of the values from `ADD_ADDRESS_METHOD` (e.g., `ADD_ADDRESS_METHOD.SEARCH_FOR_AN_ADDRESS`).
+ * @param {ADD_ADDRESS_CAPTURE_METHOD[keyof typeof ADD_ADDRESS_CAPTURE_METHOD]} config.add_address_capture_method The method used to capture the address. Use one of the values from `ADD_ADDRESS_CAPTURE_METHOD` (e.g., `ADD_ADDRESS_CAPTURE_METHOD.AUTO_COMPLETE_GOOGLE`).
+ * @param {boolean} config.track - Whether to track the address event or not.
+ * @returns
+ */
+
+const setAddress = (address, config) => {
   const { items } = window.vtexjs.checkout.orderForm;
   const { hasTVs, hasSimCards } = getSpecialCategories(items);
 
   if (hasTVs) populateExtraFields(address, requiredTVFields, 'tv_');
   if (hasSimCards) populateRicaFields();
 
-  const { isValid, invalidFields } = addressIsValid(address, validateExtraFields);
+  // Fix for null geoCoordinate
+  if (address.geoCoordinate === null) {
+    address.geoCoordinates = ['', ''];
+    console.warn('setAddress - Invalid geoCoordinate, setting default empty value');
+  }
+
+  const { isValid, invalidFields } = addressIsValid(address);
 
   if (!isValid) {
     console.error({ invalidFields });
-    populateAddressForm(address);
-    $('#bash--address-form').addClass('show-form-errors');
-    if (validateExtraFields) $('#bash--delivery-form')?.addClass('show-form-errors');
-    $(`#bash--input-${invalidFields[0]}`).focus();
-
-    if (requiredAddressFields.includes(invalidFields[0])) {
-      window.postMessage({
-        action: 'setDeliveryView',
-        view: 'address-edit',
-      });
-    }
-
     return { success: false, error: 'Invalid address details.' };
   }
 
@@ -87,30 +87,60 @@ const setAddress = (address, options = { validateExtraFields: true }) => {
 
       if (errors.length > 0) {
         populateDeliveryError(errors);
-        window.postMessage({
-          action: 'setDeliveryView',
-          view: 'address-form',
-        });
-
+        if (config.track) {
+          trackAddressEvent({
+            event: EVENT_NAME.ADD_ADDRESS_ERROR,
+            [PARAMETER.ADD_ADDRESS_STAGE]: ADD_ADDRESS_STAGE.CHECKOUT,
+            [PARAMETER.ADD_ADDRESS_METHOD]: config.add_address_method,
+            [PARAMETER.ADD_ADDRESS_CAPTURE_METHOD]: config.add_address_capture_method,
+          });
+        }
         return { success: false, errors };
       }
 
       if (address.addressName) updateAddressListing(address);
 
       try {
-        updateDeliveryData({ businessName: address.businessName, receiverPhone: address.receiverPhone });
+        updateDeliveryData({
+          businessName: address.businessName,
+          receiverPhone: address.receiverPhone,
+        });
       } catch (e) {
         sendEvent({
           eventCategory: 'Checkout_SystemError',
           action: 'OrderFormFailed',
           label: 'Could not update businessName and/or receiverPhone ',
-          description: 'Could not update businessName and/or receiverPhone.'
+          description: 'Could not update businessName and/or receiverPhone.',
+        });
+      }
+      if (config.track) {
+        trackAddressEvent({
+          event: EVENT_NAME.ADDRESS_SAVED,
+          [PARAMETER.ADD_ADDRESS_STAGE]: ADD_ADDRESS_STAGE.CHECKOUT,
+          [PARAMETER.ADD_ADDRESS_METHOD]: config.add_address_method,
+          [PARAMETER.ADD_ADDRESS_CAPTURE_METHOD]: config.add_address_capture_method,
         });
       }
 
       return { success: true };
     })
-    .done(() => clearLoaders());
+    .done(() => {
+      clearLoaders();
+    })
+    .fail((error) => {
+      if (config.track) {
+        trackAddressEvent({
+          event: EVENT_NAME.ADD_ADDRESS_ERROR,
+          [PARAMETER.ADD_ADDRESS_STAGE]: ADD_ADDRESS_STAGE.CHECKOUT,
+          [PARAMETER.ADD_ADDRESS_METHOD]: config.add_address_method,
+          [PARAMETER.ADD_ADDRESS_CAPTURE_METHOD]: config.add_address_capture_method,
+        });
+      }
+
+      console.error('Error setting address:', error);
+      clearLoaders();
+      return { success: false, error };
+    });
 };
 
 export default setAddress;

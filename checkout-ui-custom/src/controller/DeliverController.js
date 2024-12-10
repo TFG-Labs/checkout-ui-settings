@@ -1,21 +1,45 @@
 // @ts-nocheck
 /* eslint-disable func-names */
+import AddAddressAutoCompleteForm, {
+  ADD_ADDRESS_AUTOCOMPLETE_FORM_RECEIVER_PHONE_ID,
+  submitAddAddressAutoCompleteForm,
+} from '../partials/Deliver/AddAddressAutoCompleteForm';
+import AddAddressManualForm, {
+  ADD_ADDRESS_FORM_MANUAL_RECIEVER_PHONE_ID,
+  submitAddAddressManualForm,
+} from '../partials/Deliver/AddAddressManualForm';
 import DeliverContainer from '../partials/Deliver/DeliverContainer';
+import { CouldNotSelectAddressError, ShowDeliveryError } from '../partials/Deliver/DeliveryError';
+
+import EditAddressForm, {
+  EDIT_FORM_RECEIVER_PHONE_ID,
+  submitEditAddressForm,
+} from '../partials/Deliver/EditAddressForm';
 import ExtraFieldsContainer from '../partials/Deliver/ExtraFieldsContainer';
 import {
   clearRicaFields,
   customShippingDataIsValid,
   parseAttribute,
-  populateAddressForm,
+  populateAddresses,
   populateDeliveryError,
   populateRicaFields,
   populateTVFields,
   setCartClasses,
   updateDeliveryFeeDisplay,
 } from '../partials/Deliver/utils';
-import { AD_TYPE, STEPS } from '../utils/const';
-import formatAddressSummary from '../utils/formatAddressSummary';
 import {
+  ADD_ADDRESS_CAPTURE_METHOD,
+  ADD_ADDRESS_METHOD,
+  ADD_ADDRESS_STAGE,
+  EVENT_NAME,
+  PARAMETER,
+  trackAddressEvent,
+} from '../utils/addressAnalytics';
+import { AD_TYPE, DATA_VIEW, STEPS } from '../utils/const';
+import handleDeleteAddress from '../utils/deleteAddress';
+import { formatAddressSummary } from '../utils/formatAddressSummary';
+import {
+  clearHTML,
   clearLoaders,
   getSpecialCategories,
   hideBusinessName,
@@ -26,7 +50,6 @@ import { preparePhoneField } from '../utils/phoneFields';
 import sendEvent from '../utils/sendEvent';
 import { clearAddresses, getAddressByName, removeFromCart } from '../utils/services';
 import setAddress from '../utils/setAddress';
-import submitAddressForm from '../utils/submitAddressForm';
 import submitDeliveryForm from '../utils/submitDeliveryForm';
 
 const DeliverController = (() => {
@@ -52,6 +75,32 @@ const DeliverController = (() => {
     }
   };
 
+  const RenderEditAddress = async (addressName) => {
+    const data = await getAddressByName(addressName);
+    $('#edit-adress-section').html(EditAddressForm(data));
+    preparePhoneField(`#${EDIT_FORM_RECEIVER_PHONE_ID}`);
+  };
+
+  const RenderAddAddressAutoComplete = async (address) => {
+    $('#add-address-autocomplete-section').html(AddAddressAutoCompleteForm(address));
+    preparePhoneField(`#${ADD_ADDRESS_AUTOCOMPLETE_FORM_RECEIVER_PHONE_ID}`);
+  };
+
+  const RenderAddAddressManual = async (type, address) => {
+    const mountPoint = type === 'MANUAL' ? '#manual-address-section' : '#add-address-autocomplete-manual-section';
+
+    $(mountPoint).html(AddAddressManualForm({ type, address }));
+    preparePhoneField(`#${ADD_ADDRESS_FORM_MANUAL_RECIEVER_PHONE_ID}`);
+  };
+
+  const clearEditAddress = () => clearHTML('#edit-adress-section');
+
+  const clearAddAddressAutoComplete = () => clearHTML('#add-address-autocomplete-section');
+
+  const clearAddAddressAutoCompleteManual = () => clearHTML('#add-address-autocomplete-manual-section');
+
+  const clearManualAddress = () => clearHTML('#manual-address-section');
+
   const setupDeliver = () => {
     unblockShippingError();
     if ($('#bash--delivery-container').length) return;
@@ -73,6 +122,8 @@ const DeliverController = (() => {
         hasFurnMixed: state.hasFurnMixed,
       })
     );
+
+    populateAddresses();
 
     if (state.hasFurn) {
       $('#shipping-data:not(.has-furniture)').addClass('has-furniture');
@@ -194,13 +245,13 @@ const DeliverController = (() => {
     e.preventDefault();
     const viewTarget = $(this).data('view');
     const content = decodeURIComponent($(this).data('content'));
-    window.postMessage({ action: 'setDeliveryView', view: viewTarget, content });
-  });
-
-  // Clear form on adding new address
-  $(document).on('click', '#no-address-search-results', () => {
-    document.getElementById('bash--address-form').reset();
-    document.getElementById('bash--input-street').focus();
+    $('#bash-delivery-error-container').html('');
+    window.postMessage({
+      action: 'setDeliveryView',
+      view: viewTarget,
+      content,
+      captureMethod: $(this).data('capture-method') || null,
+    });
   });
 
   // Select address
@@ -217,14 +268,22 @@ const DeliverController = (() => {
 
     if (!address) return;
 
+    let selectedAddress;
     getAddressByName(address.addressName)
-      .then((addressByName) => {
-        setAddress(addressByName || address, { validateExtraFields: false });
+      .then(async (addressByName) => {
         $('input[type="radio"][name="selected-address"]:checked').attr('checked', false);
-        $(this).attr('checked', true);
+        const addressParam = addressByName || address;
+        selectedAddress = addressParam;
+        const { success: didSetAddress } = await setAddress(addressParam, { track: false });
+        if (!didSetAddress) {
+          ShowDeliveryError(CouldNotSelectAddressError(addressParam));
+          console.error('Select Address - Set Address Failure');
+        }
       })
       .catch((e) => {
         console.error('Could not get address - address selection', e?.message);
+        ShowDeliveryError(CouldNotSelectAddressError(selectedAddress));
+        console.error('Select Address - Set Address Failure');
       });
   });
 
@@ -266,8 +325,11 @@ const DeliverController = (() => {
     setTimeout(() => document.getElementById('shipping-option-pickup-in-point').click(), 200);
   });
 
-  $(document).on('submit', '#bash--address-form', submitAddressForm);
+  // submit address form listeners
+  $(document).on('submit', '#bash--add-address-manual-form', submitAddAddressManualForm);
   $(document).on('submit', '#bash--delivery-form', submitDeliveryForm);
+  $(document).on('submit', '#bash--edit-address-form', submitEditAddressForm);
+  $(document).on('submit', '#bash--add-address-autocomplete-form', submitAddAddressAutoCompleteForm);
 
   $(document).on('click', '.remove-cart-item', function (e) {
     e.preventDefault();
@@ -286,26 +348,66 @@ const DeliverController = (() => {
     $(this).removeClass('invalid');
   });
 
+  // event listener for delete address
+  $(document).on('click', '#btn-delete-address', (e) => {
+    e.preventDefault();
+    const addressName = $('#bash--input-addressName').val();
+    if (confirm('Please note: Deleting this address will not delete any pending orders to this address.')) {
+      handleDeleteAddress(addressName);
+    }
+  });
+
   // Form validation
   window.addEventListener('message', (event) => {
     const { data } = event;
     if (!data || !data.action) return;
 
     switch (data.action) {
-      case 'setDeliveryView':
+      case 'setDeliveryView': {
         document.querySelector('.bash--delivery-container')?.setAttribute('data-view', data.view);
-        if (data.view === 'address-form' || data.view === 'address-edit') {
-          preparePhoneField('#bash--input-receiverPhone');
-          if (data.content) {
-            try {
-              const address = JSON.parse(decodeURIComponent($(`#${data.content}`).data('address')));
-              populateAddressForm(address);
-            } catch (e) {
-              console.warn('Could not parse address Json', data.content);
-            }
-          }
+
+        // Clear form fields
+        clearEditAddress();
+        clearAddAddressAutoComplete();
+        clearManualAddress();
+        clearAddAddressAutoCompleteManual();
+
+        const trackAddressPayload = {
+          event: EVENT_NAME.ADD_ADDRESS,
+          [PARAMETER.ADD_ADDRESS_STAGE]: ADD_ADDRESS_STAGE.CHECKOUT,
+        };
+
+        // Render view and populate track event payload;
+        if (data.view === DATA_VIEW.EDIT_ADDRESS) {
+          RenderEditAddress(data.content);
+          trackAddressPayload[PARAMETER.ADD_ADDRESS_METHOD] = ADD_ADDRESS_METHOD.EDIT_ADDRESS;
+          trackAddressPayload[PARAMETER.ADD_ADDRESS_CAPTURE_METHOD] = data?.captureMethod
+            ? data.captureMethod.toLowerCase()
+            : null;
+        }
+        if (data.view === DATA_VIEW.ADD_ADDRESS_AUTOCOMPLETE) {
+          RenderAddAddressAutoComplete(data.content);
+          trackAddressPayload[PARAMETER.ADD_ADDRESS_METHOD] = ADD_ADDRESS_METHOD.SEARCH_FOR_AN_ADDRESS;
+          trackAddressPayload[PARAMETER.ADD_ADDRESS_CAPTURE_METHOD] = ADD_ADDRESS_CAPTURE_METHOD.AUTO_COMPLETE_GOOGLE;
+        }
+        if (data.view === DATA_VIEW.ADD_ADDRESS_AUTOCOMPLETE_MANUAL) {
+          RenderAddAddressManual('AUTOCOMPLETE_MANUAL', data.content);
+          trackAddressPayload[PARAMETER.ADD_ADDRESS_METHOD] = ADD_ADDRESS_METHOD.SEARCH_FOR_AN_ADDRESS;
+          trackAddressPayload[PARAMETER.ADD_ADDRESS_CAPTURE_METHOD] =
+            ADD_ADDRESS_CAPTURE_METHOD.MANUAL_ATTEMPTED_AUTO_COMPLETE_GOOGLE;
+        }
+        if (data.view === DATA_VIEW.MANUAL_ADDRESS) {
+          RenderAddAddressManual('MANUAL');
+          trackAddressPayload[PARAMETER.ADD_ADDRESS_METHOD] = ADD_ADDRESS_METHOD.ADD_ADDRESS_MANUALLY;
+          trackAddressPayload[PARAMETER.ADD_ADDRESS_CAPTURE_METHOD] = ADD_ADDRESS_CAPTURE_METHOD.MANUAL_ENTRY;
+        }
+
+        // track address event
+        if (data.view !== DATA_VIEW.SELECT_ADDRESS && data.view !== DATA_VIEW.ADDRESS_SEARCH) {
+          trackAddressEvent(trackAddressPayload);
         }
         break;
+      }
       case 'FB_LOG':
         break;
       default:
@@ -315,7 +417,6 @@ const DeliverController = (() => {
 
   // Clear local checkout DB on ext.
   // window.addEventListener('beforeunload', clearAddresses);
-
   return {
     state,
     init: () => {},

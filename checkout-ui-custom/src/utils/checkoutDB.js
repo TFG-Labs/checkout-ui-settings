@@ -3,105 +3,87 @@ class CheckoutDB {
     this.indexedDB =
       window.indexedDB || window.webkitIndexedDB || window.mozIndexedDB || window.msIndexedDB || window.shimIndexedDB;
 
-    this.checkoutDB = indexedDB.open('checkoutDB', 1.2);
+    this.db = null;
+    this.dbPromise = new Promise((resolve, reject) => {
+      const request = this.indexedDB.open('checkoutDB', 1.2);
 
-    this.checkoutDB.onerror = (event) => {
-      console.error('CheckoutDB Error', { event });
-      throw new Error('Could not load checkoutDB');
-    };
-
-    this.checkoutDB.onupgradeneeded = () => {
-      const db = this.checkoutDB.result;
-      const store = db.createObjectStore('addresses', { keyPath: 'addressName' });
-      store.createIndex('address_street', ['street'], { unique: false });
-      store.createIndex('address_addressName', ['addressName'], { unique: true });
-      store.createIndex('address_street_suburb_city_postal', ['street', 'neighborhood', 'city', 'postalCode'], {
-        unique: true,
-      });
-    };
-
-    this.checkoutDB.onsuccess = () => {
-      const db = this.checkoutDB.result;
-      const transaction = db.transaction('addresses', 'readwrite');
-      this.addresses = transaction.objectStore('addresses');
-
-      // Close DB connection
-      transaction.oncomplete = () => {
-        // db.close();
+      request.onerror = (event) => {
+        console.error('CheckoutDB Error', { event });
+        reject(new Error('Could not load checkoutDB'));
       };
-    };
+
+      request.onupgradeneeded = (event) => {
+        const db = event.target.result;
+        const store = db.createObjectStore('addresses', { keyPath: 'addressName' });
+        store.createIndex('address_street', ['street'], { unique: false });
+        store.createIndex('address_addressName', ['addressName'], { unique: true });
+        store.createIndex('address_street_suburb_city_postal', ['street', 'neighborhood', 'city', 'postalCode'], {
+          unique: true,
+        });
+      };
+
+      request.onsuccess = (event) => {
+        this.db = event.target.result;
+        resolve(this.db);
+      };
+    });
   }
 
-  store() {
-    const db = this.checkoutDB.result;
-    const transaction = db.transaction('addresses', 'readwrite');
+  async getStore() {
+    if (!this.db) {
+      await this.dbPromise; // Wait for the database to be initialized
+    }
+    const transaction = this.db.transaction('addresses', 'readwrite');
     return transaction.objectStore('addresses');
   }
 
-  loadAddresses(addresses) {
+  async loadAddresses(addresses) {
     const queries = addresses.map((address) => this.addOrUpdateAddress(address));
-    return Promise.all(queries).then((values) => values);
+    return Promise.allSettled(queries);
   }
 
-  addOrUpdateAddress(address) {
-    const thisDb = this;
+  async addOrUpdateAddress(address) {
+    const store = await this.getStore();
+    const query = store.put(address);
     return new Promise((resolve, reject) => {
-      const query = thisDb.store().put(address);
-
-      query.onsuccess = () => {
-        resolve({ success: true, addressId: query.result });
-      };
-
-      query.onerror = (error) => {
-        reject(new Error({ sucess: false, error: error?.target?.error }));
-      };
+      query.onsuccess = () => resolve({ success: true, addressId: query.result });
+      query.onerror = (error) => reject(error);
     });
   }
 
-  getAddresses() {
-    const thisDb = this;
-    return new Promise((resolve) => {
-      const query = thisDb.store().getAll();
-
+  async getAddresses() {
+    const store = await this.getStore();
+    const query = store.getAll();
+    return new Promise((resolve, reject) => {
       query.onsuccess = () => resolve(query.result);
-
-      query.onerror = () => {
-        console.error('Something wrong with getAddresses ? ...');
-        resolve([]);
-      };
+      query.onerror = (error) => reject(error);
     });
   }
 
-  getAddress(id) {
-    const thisDb = this;
-    return new Promise((resolve) => {
-      const query = thisDb.store().get(id);
-
+  async getAddress(id) {
+    const store = await this.getStore();
+    const query = store.get(id);
+    return new Promise((resolve, reject) => {
       query.onsuccess = () => resolve(query.result);
-
-      query.onerror = () => {
-        console.error('Something wrong with getAddress ? ...');
-        resolve([]);
-      };
+      query.onerror = (error) => reject(error);
     });
   }
 
-  deleteAddress(id) {
-    const query = this.addresses.delete(id);
-    query.onsuccess = () => query.result;
+  async deleteAddress(id) {
+    const store = await this.getStore();
+    const query = store.delete(id);
+    return new Promise((resolve, reject) => {
+      query.onsuccess = () => resolve(true);
+      query.onerror = (error) => reject(error);
+    });
   }
 
-  clearData() {
-    const thisDb = this;
-    return new Promise((resolve) => {
-      const query = thisDb.store().clear();
-
+  async clearData() {
+    const store = await this.getStore();
+    const query = store.clear();
+    return new Promise((resolve, reject) => {
       query.onsuccess = () => resolve(query.result);
-
-      query.onerror = () => {
-        console.error('Something wrong with clearData ? ...');
-        resolve([]);
-      };
+      query.onerror = (error) => reject(error);
     });
   }
 }

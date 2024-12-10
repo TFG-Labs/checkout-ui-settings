@@ -1,3 +1,4 @@
+import usePhoneNumberFormatting from './phoneNumberFormat';
 /**
  * validatePhoneNumber
  * Determine if number is valid.
@@ -22,6 +23,7 @@ export const validatePhoneNumber = (tel) => {
  * @returns string
  */
 
+// eslint-disable-next-line no-unused-vars
 const formattedPhoneNumber = (value, isBackSpace = false) => {
   value = value.replace(/[^0-9+*#]+/g, '').trim();
 
@@ -64,39 +66,47 @@ const formattedPhoneNumber = (value, isBackSpace = false) => {
  *
  * @param  input - string css selector to the element.
  */
+
 export const preparePhoneField = (input) => {
+  const { formatPhoneNumber, isValidNumber } = usePhoneNumberFormatting();
   const phoneInput = document.querySelector(input);
   if (!phoneInput) return;
   phoneInput.setAttribute('type', 'tel');
   phoneInput.setAttribute('maxlength', 12);
-  phoneInput.value = formattedPhoneNumber(phoneInput.value);
 
   const $phoneInput = $(input);
   $phoneInput.keyup((e) => {
     const value = e.currentTarget.value.replace(/[^0-9+*#]+/g, '').trim();
-    let displayValue = value;
+    const displayValue = value;
 
+    // eslint-disable-next-line no-unused-vars
     const isBackSpace = e.keyCode === 8;
-    displayValue = formattedPhoneNumber(value, !isBackSpace);
+    const testValue = formatPhoneNumber(value, 'ZA');
 
-    $phoneInput.parent('.text').removeClass('error');
-    $phoneInput.parent('.text').find('span.error').hide();
-    $phoneInput.val(displayValue);
+    if (isValidNumber(testValue)) {
+      $phoneInput.parent('.text').removeClass('error');
+      $phoneInput.parent('.text').find('span.error').hide();
+    }
+    $phoneInput.val(displayValue.trim());
   });
 };
 
 export const getBestPhoneNumber = ({ preferred = undefined, type = 'profile', fields }) => {
   if (type === 'collect') {
-    return preferred || fields?.phone
-      || document?.getElementById('client-phone')?.value
-      || window.vtexjs.checkout.orderForm?.clientProfileData?.phone
-      || '';
+    return (
+      preferred ||
+      fields?.phone ||
+      document?.getElementById('client-phone')?.value ||
+      window.vtexjs.checkout.orderForm?.clientProfileData?.phone ||
+      ''
+    );
   }
 
-  return (preferred
-    || window.vtexjs.checkout.orderForm?.clientProfileData?.phone
-    || document?.getElementById('client-phone')?.value
-    || ''
+  return (
+    preferred ||
+    window.vtexjs.checkout.orderForm?.clientProfileData?.phone ||
+    document?.getElementById('client-phone')?.value ||
+    ''
   );
 };
 

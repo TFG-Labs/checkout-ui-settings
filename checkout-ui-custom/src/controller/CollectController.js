@@ -3,11 +3,22 @@ import { InputError } from '../partials';
 import { PickupPhoneField } from '../partials/AddressForm';
 import PickupContainer from '../partials/Collect/PickupContainer';
 import { getBestRecipient, setPickupLoading } from '../partials/Deliver/utils';
+import {
+  COLLECTION_VALIDATION_ERROR,
+  CUSTOM_PICKUP_COMPLEMENT,
+  getParentElement,
+  isValidField,
+  PICKUP_RECEIVER,
+} from '../utils/collectionField';
 import { AD_TYPE, GEOLOCATE, MANUAL, NONE, PICKUP, PICKUP_APP, STEPS } from '../utils/const';
-import { clearLoaders, getSpecialCategories, isValidNumberBash, scrollToInvalidField } from '../utils/functions';
+import { clearLoaders, getSpecialCategories, scrollToInvalidField } from '../utils/functions';
 import { getBestPhoneNumber } from '../utils/phoneFields';
+import usePhoneNumberFormatting from '../utils/phoneNumberFormat';
+import { postMessage } from '../utils/postMessage';
 import sendEvent from '../utils/sendEvent';
 import { getOrderFormCustomData, sendOrderFormCustomData } from '../utils/services';
+
+const { formatPhoneNumber, isValidNumber } = usePhoneNumberFormatting();
 
 const CollectController = (() => {
   const state = {
@@ -140,21 +151,8 @@ const CollectController = (() => {
 
   const checkFields = (fields) => {
     fields.forEach((field) => {
-      let isValid = true;
-      let parent;
-
-      switch (field) {
-        case 'pickup-receiver':
-          isValid = !($(`#${field}`).length > 0 && !$(`#${field}`).attr('disabled') && !$(`#${field}`).val());
-          parent = '.shp-pickup-receiver';
-          break;
-        case 'custom-pickup-complement':
-          isValid = isValidNumberBash($(`#${field}`).val());
-          parent = '#box-pickup-complement';
-          break;
-        default:
-          break;
-      }
+      const isValid = isValidField(field);
+      const parent = getParentElement(field);
 
       if (!isValid) {
         $(parent).addClass('error');
@@ -163,13 +161,7 @@ const CollectController = (() => {
         scrollToInvalidField();
         state.validForm = false;
 
-        window.postMessage(
-          {
-            type: 'COLLECTION_VALIDATION_ERROR',
-            message: `${field} is invalid`,
-          },
-          '*'
-        );
+        postMessage(COLLECTION_VALIDATION_ERROR, `${field} is invalid`);
       } else {
         $(parent).removeClass('error');
       }
@@ -179,7 +171,7 @@ const CollectController = (() => {
   const checkForm = () => {
     $('span.help.error').remove();
     state.validForm = true;
-    checkFields(['pickup-receiver', 'custom-pickup-complement']);
+    checkFields([PICKUP_RECEIVER, CUSTOM_PICKUP_COMPLEMENT]);
   };
 
   const saveCollectFields = () => {
@@ -242,7 +234,7 @@ const CollectController = (() => {
       $('.btn-go-to-payment-wrapper').before(PickupPhoneField);
     }
 
-    if (phoneNumber) $('#custom-pickup-complement').val(phoneNumber).css('border', 0);
+    if (isValidNumber(phoneNumber)) $('#custom-pickup-complement').val(phoneNumber).css('border', 0);
   };
 
   //! TODO: al merger a develop podemos refactorizar esta función llevándola a utils
@@ -256,6 +248,7 @@ const CollectController = (() => {
       $(customPaymentBtn).removeAttr('id').attr('id', 'custom-go-to-payment');
       $(customPaymentBtn).removeAttr('data-bind');
       $(customPaymentBtn).css('display', 'block');
+      $(customPaymentBtn).text('Save & continue');
 
       $('p.btn-go-to-payment-wrapper').append(customPaymentBtn);
 

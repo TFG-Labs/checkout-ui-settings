@@ -41,6 +41,7 @@
   },
   "keywords": [],
   "dependencies": {
-    "@sentry/browser": "^7.45.0"
+    "@sentry/browser": "^7.45.0",
+    "libphonenumber-js": "^1.10.58"
   }
 }

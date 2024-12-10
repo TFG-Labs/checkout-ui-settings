@@ -32,6 +32,15 @@ const PICKUP_APP = 'pickup';
 
 const DELIVER_APP = 'deliver';
 
+/**
+ * Capture method for master data
+ */
+const CAPTURE_METHOD = {
+  MANUAL_ENTRY: 'MANUAL_ENTRY',
+  AUTO_COMPLETE_GOOGLE: 'AUTO_COMPLETE_GOOGLE',
+  MANUAL_ATTEMPTED_AUTOCOMPLETE_GOOGLE: 'MANUAL_ATTEMPTED_AUTOCOMPLETE_GOOGLE',
+};
+
 // Furniture fees Url
 const FURNITURE_FEES =
   'http://image.tfgmedia.co.za/image/1/process/500x790?source=http://cdn.tfgmedia.co.za' +
@@ -67,9 +76,22 @@ const FURNITURE_FEE_LINK = '';
 const TV_CAT = '938942995';
 const SIM_CAT = '24833302';
 
+/**
+ * Represents the different views showed to the end user for address management
+ */
+export const DATA_VIEW = {
+  EDIT_ADDRESS: 'edit-address',
+  ADD_ADDRESS_AUTOCOMPLETE: 'add-address-autocomplete',
+  ADD_ADDRESS_AUTOCOMPLETE_MANUAL: 'add-address-autocomplete-manual',
+  MANUAL_ADDRESS: 'manual-address',
+  SELECT_ADDRESS: 'select-address',
+  ADDRESS_SEARCH: 'address-search',
+};
+
 export {
   AD_TYPE,
   BASE_URL_API,
+  CAPTURE_METHOD,
   COUNTRIES,
   COUNTRIES_AVAILABLES,
   DELIVER_APP,
