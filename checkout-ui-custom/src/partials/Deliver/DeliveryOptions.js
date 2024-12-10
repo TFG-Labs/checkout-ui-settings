@@ -5,9 +5,9 @@ import Radio from './Elements/Radio';
 import FurnitureDeliveryOptions from './FurnitureDelivery';
 
 const DeliveryOptions = ({ hasFurnOnly, hasFurnitureMixed }) => {
-  let deliveryMessage = 'Delivery within 3 - 5 working days';
+  let deliveryMessage = 'Delivery within 5 - 7 working days';
 
-  if (hasFurnitureMixed) deliveryMessage = 'Delivery within 3 - 10 working days';
+  if (hasFurnitureMixed) deliveryMessage = 'Delivery within 5 - 10 working days';
   if (hasFurnOnly) deliveryMessage = 'Delivery within 5 - 10 working days';
 
   // Update the message in the Delivery Summary.
