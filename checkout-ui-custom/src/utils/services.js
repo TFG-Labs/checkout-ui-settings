@@ -26,7 +26,7 @@ const cleanGeoCoordinates = (coOrds) => {
     try {
       coordinates = JSON.parse(coOrds);
     } catch {
-      coordinates = ['', ''];
+      coordinates = [];
     }
     return coordinates;
   }

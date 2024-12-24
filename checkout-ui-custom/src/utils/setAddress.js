@@ -35,12 +35,6 @@ const setAddress = (address, config) => {
   if (hasTVs) populateExtraFields(address, requiredTVFields, 'tv_');
   if (hasSimCards) populateRicaFields();
 
-  // Fix for null geoCoordinate
-  if (address.geoCoordinate === null) {
-    address.geoCoordinates = ['', ''];
-    console.warn('setAddress - Invalid geoCoordinate, setting default empty value');
-  }
-
   const { isValid, invalidFields } = addressIsValid(address);
 
   if (!isValid) {
