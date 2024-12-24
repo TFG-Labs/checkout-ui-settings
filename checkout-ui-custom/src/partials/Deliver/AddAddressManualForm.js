@@ -236,7 +236,13 @@ export const submitAddAddressManualForm = async (event) => {
   // UPDATE PAYLOAD
   payload.receiverPhone = receiverPhone;
   payload.isDisposable = false;
-  const geoCoords = [parseFloat(payload.lng) || '', parseFloat(payload.lat) || ''];
+
+  let geoCoords = [];
+
+  if (payload.lng && payload.lat) {
+    geoCoords = [parseFloat(payload.lng), parseFloat(payload.lat)];
+  }
+
   payload.geoCoordinate = geoCoords; // for MasterData
   payload.geoCoordinates = geoCoords; // for shippingData
   payload.captureMethod =
